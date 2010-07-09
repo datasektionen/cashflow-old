@@ -4,6 +4,7 @@ gem 'rails', '3.0.0.beta4'
 gem 'capistrano'
 gem 'haml'
 gem 'compass', '>0.10.1'
+gem 'workflow'
 
 group :production do
   gem 'mysql'
