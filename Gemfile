@@ -5,6 +5,8 @@ gem 'capistrano'
 gem 'haml'
 gem 'compass', '>0.10.1'
 gem 'workflow'
+gem 'authlogic'
+gem 'rubycas-client'
 
 group :production do
   gem 'mysql'
@@ -24,4 +26,5 @@ group :test do
   gem 'rspec-rails'
   gem 'spork'
   gem 'launchy'    # So you can do Then show me the page
+  gem 'factory_girl_rails'
 end
