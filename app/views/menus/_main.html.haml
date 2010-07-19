@@ -1,0 +1,10 @@
+%ul
+  - unless @current_user
+    %li= link_to "Logga in", login_path
+  - else
+    %li.active= link_to "Min sida"
+    %li= link_to "Inköp"
+    %li= link_to "Användare"
+    %li= link_to "Affärsenheter"
+    %li= link_to "Produkttyper"
+    %li= link_to "Logga ut", logout_path
