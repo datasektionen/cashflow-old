@@ -1,0 +1,3 @@
+production: &production
+  host: ldap.sys.kth.se
+  base: ou=Addressbook,dc=kth,dc=se
