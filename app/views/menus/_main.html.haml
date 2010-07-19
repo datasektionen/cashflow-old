@@ -1,5 +1,5 @@
 %ul
-  - unless @current_user
+  - unless logged_in?
     %li= link_to "Logga in", login_path
   - else
     %li.active= link_to "Min sida"
