@@ -5,8 +5,13 @@ describe Person do
     @person = Person.new
   end
   
+  it "should have a default role of \"user\"" do
+    @person.role.should == "user"
+  end
+  
   %w[first_name last_name email ugid login role].each do |attribute|
     it "should be invalid without a #{attribute}" do
+      @person.send("#{attribute}=", nil)
       @person.should be_invalid
       @person.errors.should_not be_nil
       @person.errors[attribute.to_sym].should_not be_empty
