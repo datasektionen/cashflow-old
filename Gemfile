@@ -19,7 +19,7 @@ end
 
 # Gems for test environment
 group :test do
-  gem "rspec-rails", "~> 2.0.0.beta.13"
+  gem "rspec-rails", "~> 2.0.0.beta.20"
   gem 'capybara'
   gem 'database_cleaner'
   gem 'cucumber-rails'
