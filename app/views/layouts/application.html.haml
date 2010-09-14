@@ -1,26 +1,27 @@
 !!!
-%html
+%html{:lang => "en"}
   %head
-    %title 
-      Cashflow
-      - if @page_title
-        >= "-- #{@page_title}"
-    = stylesheet_link_tag 'screen'
-        
-    = javascript_include_tag 'jquery'
-    = javascript_include_tag 'jquery.dataTables'
-
-    = csrf_meta_tag
+    %meta{:charset => "utf-8"}
+    %title Cashflow
+    / [if lt IE 9]
+      = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
     
-  %body.bp
-    #root
-      #header
-        %nav#main_menu
-          = render :partial => 'menus/main'
-        %h1 Skulder & Inköp
+    = stylesheet_link_tag 'screen.css'
+    %meta{:name => "viewport", :content => "initial-scale=1.0, width=device-width, maximum-scale=1.0"}
+    = javascript_include_tag 'jquery'
+  %body
+    %nav#apps.horizontal
+      %ul
+        %li STÖn
+        %li Cashflow
+        %li Redmine
+        
+    %header
+      %nav#main_menu
+        = render :partial => 'menus/main'
+      %h1 Skulder & Inköp
+    #container
       = yield(:content) or yield
-      #root_footer
-    #footer
+    %footer
       :textile
         Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Martin Frost":http://www.d.kth.se/people/blame 2010. För att rapportera eventuella buggar, klicka "här":https://www.d.kth.se/redmine/projects/cashflow/issues/new.
-        
