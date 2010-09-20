@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.0.beta4'
+gem 'rails', '3.0.0'
 gem 'capistrano'
 gem 'haml', '>3.0.0'
 gem 'compass', '>0.10.1'
@@ -19,7 +19,7 @@ end
 
 # Gems for test environment
 group :test do
-  gem "rspec-rails", ">= 2.0.0.beta.13"
+  gem "rspec-rails", "~> 2.0.0.beta.13"
   gem 'capybara'
   gem 'database_cleaner'
   gem 'cucumber-rails'
