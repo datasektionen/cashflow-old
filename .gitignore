@@ -10,3 +10,4 @@ public/stylesheets/compiled/ie.css
 public/stylesheets/compiled/print.css
 public/stylesheets/compiled/screen.cssconfig/database.yml
 public/stylesheets/compiled/
+config/database.yml
