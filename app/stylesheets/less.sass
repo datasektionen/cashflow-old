@@ -96,10 +96,19 @@ body
  * 1      2
  * 120px  264px   (24px gutters)
  */
-@media only screen and (max-width: 767px)
+ 
+/* iPhone landscape view */
+@media only screen and (max-width: 480px) 
+  body
+    padding: 0 0
+    width: 480px
+
+/* iPhone portrait view*/
+@media only screen and (max-width: 320px)
   body
     padding: 0 0
     width: 320px
+
 
 
 /*  8-column, 1224 px layout for desktops and laptops
@@ -123,29 +132,3 @@ body
   
   #container
     background: rgb(255,158,97)
-
-div#container
-  padding: 0.5em
-
-body
-  margin-left: auto
-  margin-right: auto
-
-body header
-  border-bottom: 1px solid black
-
-nav#apps
-  /* width: 100% */
-  background-color: $black
-  color: $white
-
-nav.horizontal ul
-  list-style: none
-  height: 1.5em
-
-nav.horizontal ul li
-  float: left
-  /* padding-right: 1em */
-  
-body article
-  text-align: justify
