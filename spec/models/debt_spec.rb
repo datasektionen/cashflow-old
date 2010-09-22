@@ -5,7 +5,7 @@ describe Debt do
     @debt = Factory :debt
   end
   
-  %w[description amount workflow_state].each do |attribute|
+  %w[description amount].each do |attribute|
     it "should be invalid without an attribute #{attribute}" do
       @debt.send("#{attribute}=", nil)
       @debt.should be_invalid
