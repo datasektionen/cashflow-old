@@ -26,14 +26,14 @@ describe Debt do
     @debt.workflow_state.should == "new"
   end
   
-  it "should be able to cancel a new debt" do
+  it "should be cancelable when new" do
     @debt.cancel!
     @debt.save
     @debt.should be_valid
     @debt.should be_cancelled
   end
   
-  it "should not be able to cancel a paid debt" do
+  it "should not be cancelable once paid" do
     @debt.pay!
     @debt.should be_valid
     @debt.should be_paid
