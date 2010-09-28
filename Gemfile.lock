@@ -95,6 +95,7 @@ GEM
       treetop (>= 1.4.5)
     mime-types (1.16)
     mysql (2.8.1)
+    net-ldap (0.1.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -103,6 +104,7 @@ GEM
     net-ssh-gateway (1.0.1)
       net-ssh (>= 1.99.1)
     nokogiri (1.4.3.1)
+    paper_trail (1.5.2)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -173,6 +175,8 @@ DEPENDENCIES
   haml (> 3.0.0)
   launchy
   mysql
+  net-ldap
+  paper_trail
   rails (= 3.0.0)
   rspec-rails (~> 2.0.0.beta.20)
   ruby-debug

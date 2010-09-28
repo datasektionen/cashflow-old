@@ -8,6 +8,8 @@ gem 'workflow'
 gem 'authlogic', :git => 'git://github.com/odorcicd/authlogic.git', :branch => 'rails3'
 gem 'rubycas-client'
 gem 'RedCloth'
+gem 'net-ldap'
+gem 'paper_trail'
 group :production do
   gem 'mysql'
 end

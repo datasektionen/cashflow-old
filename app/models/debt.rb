@@ -1,6 +1,7 @@
 class Debt < ActiveRecord::Base
   include Workflow
-
+  has_paper_trail
+  
   validates_presence_of [:description, :amount, :person, :author, :business_unit]
   attr_protected :workflow_state
   
