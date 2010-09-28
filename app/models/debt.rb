@@ -11,10 +11,9 @@ class Debt < ActiveRecord::Base
   workflow do
     state :new do
       event :cancel, :transitions_to => :cancelled
-      # event :confirm, :transitions_to => :confirmed
+      event :pay, :transitions_to => :paid
     end
-    
+    state :paid
     state :cancelled
-    
   end
 end

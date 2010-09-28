@@ -32,4 +32,11 @@ describe Debt do
     @debt.should be_valid
     @debt.should be_cancelled
   end
+  
+  it "should not be able to cancel a paid debt" do
+    @debt.pay!
+    @debt.should be_valid
+    @debt.should be_paid
+    pending "TODO: validate what transitions are available or something."
+  end
 end
