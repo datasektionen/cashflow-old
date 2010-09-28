@@ -9,7 +9,7 @@ module AuthlogicCas
     module Methods
       def self.included(klass)
         klass.class_eval do
-          # persist.reject{|cb| [:persist_by_params,:persist_by_session,:persist_by_http_auth].include?(cb.method)}
+          persist.reject{|cb| [:persist_by_params,:persist_by_session,:persist_by_http_auth].include?(cb.method)}
           persist :persist_by_cas, :if => :authenticating_with_cas?
         end
       end
@@ -22,6 +22,7 @@ module AuthlogicCas
 
       def persist_by_cas
         session_key = CASClient::Frameworks::Rails::Filter.client.username_session_key
+
         unless controller.session[session_key].blank?
           self.attempted_record = search_for_record("find_by_#{klass.login_field}", controller.session[session_key])
         end
