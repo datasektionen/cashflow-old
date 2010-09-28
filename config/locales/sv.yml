@@ -152,6 +152,13 @@
       # For example,
       #   user: "Dude"
       # will translate User model name to "Dude"
+    models:
+      business_unit: "Affärsenhet"
+      debt: "Skuld"
+      person: "Person"
+      product_type: "Produktkategori"
+      purchase: "Inköp"
+      purchase_item: "Inköpsdel"
 
     # Translate model attribute names. Used in Model.human_attribute_name(attribute).
     #attributes:
@@ -159,6 +166,21 @@
       #   user:
       #     login: "Handle"
       # will translate User attribute "login" as "Handle"
+    attributes:
+      debt:
+        author: "Skapad av"
+        amount: "Summa"
+        description: "Beskrivning"
+        workflow_state: "Status"
+      person:
+        first_name: "Förnamn"
+        last_name: "Efternamn"
+        login: "KTH-användarnamn"
+        ugid: "KTH-ugid"
+        email: "E-post"
+        bank_clearing_number: "Clearingnummer"
+        bank_account_number: "Kontonummer"
+        role: "Användarroll"
 
   date:
     formats:
