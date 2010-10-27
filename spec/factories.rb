@@ -58,7 +58,6 @@ Factory.define :person, :class => Person do |f|
   f.last_name "Frost"
   f.email { Factory.next :email }
   f.ugid { Factory.next :ugid}
-  f.role "user"
 end
 
 Factory.define :purchase do |f|
