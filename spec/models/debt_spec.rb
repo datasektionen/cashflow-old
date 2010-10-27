@@ -90,7 +90,7 @@ describe Debt do
     new_person = Factory :person
     @debt.update_attributes(:person_id => new_person.id)
     @debt.save.should be_true
-    @debt.person.should_not ==(new_person)
+    @debt.reload.person.should_not ==(new_person)
 
     @debt.person = new_person
     @debt.save.should be_true
