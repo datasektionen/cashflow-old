@@ -10,6 +10,7 @@ gem 'rubycas-client'
 gem 'RedCloth'
 gem 'net-ldap'
 gem 'paper_trail'
+gem 'cancan'
 group :production do
   gem 'mysql'
 end
