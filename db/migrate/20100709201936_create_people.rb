@@ -9,7 +9,7 @@ class CreatePeople < ActiveRecord::Migration
       t.string :bank_clearing_number, :null => false, :default => ""
       t.string :bank_account_number, :null => false, :default => ""
       t.string :persistence_token
-      t.string :role, :null => false, :default => "user"
+      t.string :role, :null => false, :default => ""
       t.timestamps
     end
   end
