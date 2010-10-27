@@ -5,8 +5,8 @@ describe Person do
     @person = Person.new
   end
   
-  it "should have a default role of \"user\"" do
-    @person.role.should == "user"
+  it "should have a default role of \"\"" do
+    @person.role.should == ""
   end
   
   %w[first_name last_name email ugid login role].each do |attribute|
