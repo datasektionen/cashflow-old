@@ -3,7 +3,7 @@ class Person < ActiveRecord::Base
     c.login_field = 'ugid'
   end
   
-  validates_presence_of :first_name, :last_name, :login, :email, :ugid, :role
+  validates_presence_of :first_name, :last_name, :login, :email, :ugid
   attr_accessible :email
   
   
