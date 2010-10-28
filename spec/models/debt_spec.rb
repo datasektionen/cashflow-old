@@ -33,7 +33,13 @@ describe Debt do
     @debt.should be_cancelled
   end
   
-  %w[paid bookkept finalized cancelled].each do |state|
+  it "should not be editable once finalized" do
+    @debt.update_attribute(:workflow_state, "finalized")
+    @debt.save.should be_false
+  end
+  
+  # finalized not present here since a Debt should never be editable at all when finalized
+  %w[paid bookkept cancelled].each do |state|
     it "should not be cancelable once #{state}" do
       @debt.workflow_state = state
       @debt.save
