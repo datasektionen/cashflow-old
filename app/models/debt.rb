@@ -10,6 +10,8 @@ class Debt < ActiveRecord::Base
   belongs_to :author, :class_name => "Person", :foreign_key => "created_by_id"
   belongs_to :business_unit
 
+  validate :locked_when_finalized
+
   # workflow for the Debt model:
   # 
   #         :pay --> (paid) -- :keep --> (finalized)
@@ -37,5 +39,9 @@ class Debt < ActiveRecord::Base
     state :finalized
     # cancelled (duh)
     state :cancelled
+  end
+  
+  def locked_when_finalized
+    errors.add(:base, "Du kan inte redigera en avslutad skuld") if finalized?
   end
 end
