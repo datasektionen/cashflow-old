@@ -125,6 +125,24 @@ describe Purchase do
     @purchase.should be_finalized
   end
   
-  pending "TODO: verifiera workflow"
-  pending "add some examples to (or delete) #{__FILE__}"
+  %w[paid bookkept finalized confirmed].each do |state|
+    it "should not be cancellable when #{state}" do
+      @purchase.update_attribute(:workflow_state, state)
+      lambda {@purchase.cancel!}.should raise_error
+    end
+  end
+
+  %w[cancelled finalized].each do |state|
+    %w[confirm pay edit bookkeep].each do |action|
+      it "should throw exception on ##{action}! when #{state}" do
+        @purchase.update_attribute(:workflow_state, state)
+        lambda {@purchase.send("#{action}!")}.should raise_error
+      end
+    end
+  end
+
+  it "should not be editable once finalized" do
+    @purchase.update_attribute(:workflow_state, "finalized")
+    @purchase.save.should be_false
+  end
 end
