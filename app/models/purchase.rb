@@ -9,7 +9,7 @@ class Purchase < ActiveRecord::Base
   
   validates_presence_of :person, :created_by, :updated_by, :business_unit, :description, :purchased_at
   
-  validate :cannot_purchase_stuff_in_the_future
+  validate :cannot_purchase_stuff_in_the_future, :locked_when_finalized
   
   attr_readonly :person, :person_id
   
@@ -64,5 +64,9 @@ class Purchase < ActiveRecord::Base
       errors.add(:base, "Du kan inte ha köpt in något i framtiden. Har du uppfunnit en tidsmaskin får du gärna kontakta mig på frost@ceri.se.")
       errors.add(:purchased_at, "får inte vara senare än dagens datum")
     end
+  end
+  
+  def locked_when_finalized
+    errors.add(:base, "Du kan inte ändra ett avslutat inköp") if finalized?
   end
 end

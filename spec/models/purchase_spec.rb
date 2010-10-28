@@ -78,6 +78,71 @@ describe Purchase do
     @purchase.errors[:purchased_at].should_not be_empty
   end
   
-  pending "TODO: verifiera workflow"
-  pending "add some examples to (or delete) #{__FILE__}"
+  %w[new edited].each do |state|
+    it "should be cancellable when #{state}" do
+      @purchase.update_attribute(:workflow_state, state)
+      lambda {@purchase.cancel!}.should_not raise_error
+    end
+  end
+  
+  %w[new confirmed].each do |state|
+    it "should be editable when #{state}" do
+      @purchase.update_attribute(:workflow_state, state)
+      lambda {@purchase.edit!}.should_not raise_error
+    end
+  end
+  
+  %w[new edited].each do |state|
+    it "should be confirmable when #{state}" do
+      @purchase.update_attribute(:workflow_state, state)
+      lambda {@purchase.confirm!}.should_not raise_error
+    end
+  end
+  
+  %w[confirmed paid].each do |state|
+    it "should be bookkeepable when #{state}" do
+      @purchase.update_attribute(:workflow_state, state)
+      lambda {@purchase.keep!}.should_not raise_error
+    end
+  end
+  
+  %w[confirmed bookkept].each do |state|
+    it "should be payable when #{state}" do
+      @purchase.update_attribute(:workflow_state, state)
+      lambda {@purchase.pay!}.should_not raise_error
+    end
+  end
+  
+  it "should be finalized when both paid and bookkept (in any order)" do
+    @purchase.update_attribute(:workflow_state, "confirmed")
+    lambda {@purchase.pay!}.should_not raise_error
+    lambda {@purchase.keep!}.should_not raise_error
+    @purchase.should be_finalized
+    
+    @purchase.update_attribute(:workflow_state, "confirmed")
+    lambda {@purchase.keep!}.should_not raise_error
+    lambda {@purchase.pay!}.should_not raise_error
+    @purchase.should be_finalized
+  end
+  
+  %w[paid bookkept finalized confirmed].each do |state|
+    it "should not be cancellable when #{state}" do
+      @purchase.update_attribute(:workflow_state, state)
+      lambda {@purchase.cancel!}.should raise_error
+    end
+  end
+
+  %w[cancelled finalized].each do |state|
+    %w[confirm pay edit bookkeep].each do |action|
+      it "should throw exception on ##{action}! when #{state}" do
+        @purchase.update_attribute(:workflow_state, state)
+        lambda {@purchase.send("#{action}!")}.should raise_error
+      end
+    end
+  end
+
+  it "should not be editable once finalized" do
+    @purchase.update_attribute(:workflow_state, "finalized")
+    @purchase.save.should be_false
+  end
 end

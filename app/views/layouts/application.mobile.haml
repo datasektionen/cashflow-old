@@ -9,19 +9,19 @@
       = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
     
     = stylesheet_link_tag 'less'
-    = stylesheet_link_tag 'structure'
-    
     - if is_mobile_device?
       = stylesheet_link_tag 'mobile'
     - else
       = stylesheet_link_tag 'screen'
+    
+    = yield(:stylesheets)
+    = yield(:javascripts)
   %body
     = session_change_link
     = render :partial => 'menus/apps'
     %header.main
       %nav#main_menu.horizontal
         = render :partial => 'menus/main'
-      %h1 Skulder & Inköp
     #container
       = yield(:content) or yield
     %footer.main

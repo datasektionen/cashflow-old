@@ -1,8 +1,11 @@
 class ApplicationController < ActionController::Base
+  layout 'application'
+
+  protect_from_forgery
+  has_mobile_fu
+  
   before_filter :cas_filter
   before_filter :current_user
-  protect_from_forgery
-  layout 'application'
   
   private
   def cas_filter
