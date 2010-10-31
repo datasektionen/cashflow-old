@@ -1,14 +1,17 @@
 %h1= t('.title')
-%p= link_to t('.new_product_type'), new_product_type_path
 
-%table
+%table.datatable
   %thead
     %tr
-      %th{:colspan => 3}= t 'actions'
+      %th= t 'activerecord.attributes.product_type.name'
+      %th= t 'activerecord.attributes.product_type.description'
+      %th.actions{:colspan => 2}
   
   %tbody
     - for product_type in @product_types
       %tr{ :class => cycle(:odd, :even) }
-        %td.action= link_to t('show'), product_type
-        %td.action= link_to t('edit'), edit_product_type_path(product_type)
-        %td.action= link_to t('destroy'), product_type, :confirm => t('are_you_sure'), :method => :delete
+        %td= link_to product_type, product_type
+        %td= product_type.description
+        %td
+          = link_to t('edit'), edit_product_type_path(product_type)
+          = button_to t('destroy'), product_type, :confirm => t('are_you_sure'), :method => :delete

@@ -1,11 +1,6 @@
-= form_for(@product_type) do |f|
-  - if @product_type.errors.any?
-    #errorExplanation
-      %h2= "#{pluralize(@product_type.errors.count, 'error')} prohibited this user from being saved:"
-      %ul
-      - @product_type.errors.full_messages.each do |msg|
-        %li= msg
-  
-
-  .actions
-    = f.submit
+- semantic_form_for(@product_type) do |form|
+ - form.inputs :name => "Attribut" do
+  = form.input :name
+  = form.input :description
+ - form.buttons do
+  = form.commit_button :commit

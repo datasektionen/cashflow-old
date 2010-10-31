@@ -1,4 +1,7 @@
 class ProductTypesController < ApplicationController
+  before_filter :get_type, :only => [:show, :edit, :update, :destroy]
+  before_filter :get_items, :only => [:show, :edit, :update, :destroy]
+  
   # GET /product_types
   # GET /product_types.xml
   def index
@@ -13,8 +16,6 @@ class ProductTypesController < ApplicationController
   # GET /product_types/1
   # GET /product_types/1.xml
   def show
-    @product_type = ProductType.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @product_type }
@@ -34,7 +35,6 @@ class ProductTypesController < ApplicationController
 
   # GET /product_types/1/edit
   def edit
-    @product_type = ProductType.find(params[:id])
   end
 
   # POST /product_types
@@ -56,8 +56,6 @@ class ProductTypesController < ApplicationController
   # PUT /product_types/1
   # PUT /product_types/1.xml
   def update
-    @product_type = ProductType.find(params[:id])
-
     respond_to do |format|
       if @product_type.update_attributes(params[:product_type])
         format.html { redirect_to(@product_type, :notice => 'Product type was successfully updated.') }
@@ -79,5 +77,19 @@ class ProductTypesController < ApplicationController
       format.html { redirect_to(product_types_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  protected
+  def get_type
+    @product_type = ProductType.find(params[:id])
+  end
+  def get_items
+    @items = [{:key   => :show_product_type, 
+               :name  => @product_type.name, 
+               :url   => product_type_path(@product_type)},
+              { :key => :edit_product_type,
+                :name => "Redigera",
+                :url => edit_product_type_path(@product_type)},
+             ]
   end
 end

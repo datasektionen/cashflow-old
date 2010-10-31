@@ -1,6 +1,4 @@
-%h1= t '.title'
-%p
-  = link_to t('back'), product_types_path
-  = link_to t('edit'), edit_product_type_path(@product_type)
+%h1= @product_type
 
-%dl
+%article
+  %p= @product_type.description
