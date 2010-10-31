@@ -56,6 +56,8 @@ Cashflow::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
   
+  resources :product_types
+  
   match 'login', :to => "person_sessions#new"
   match 'logout', :to => "person_sessions#destroy"
   root :to => "welcome#index"
