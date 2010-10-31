@@ -23,7 +23,8 @@
       %header.main
         %h1 Skulder & Inköp
         %nav#main_menu.horizontal
-          = render :partial => 'menus/main'
+          / = render :partial => 'menus/main'
+          = render_navigation
       %section#content
         = yield(:content) or yield
     %footer.main
