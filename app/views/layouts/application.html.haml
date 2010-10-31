@@ -5,15 +5,12 @@
     %title Cashflow
     %meta{:name => "viewport", :content => "initial-scale=1.0, width=device-width, maximum-scale=1.0"}
     = javascript_include_tag 'jquery'
-    = javascript_include_tag 'jquery-ui.js'
     = javascript_include_tag 'jquery.dataTables.js'
     / [if lt IE 9]
       = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
     
     = javascript_include_tag 'rails'
-    
     = stylesheet_link_tag 'less'
-    
     - if is_mobile_device?
       = stylesheet_link_tag 'mobile'
     - else
@@ -25,9 +22,9 @@
       = render :partial => 'menus/apps'
       %header.main
         %h1 Cashflow
-        %nav#main_menu.horizontal
-          / = render :partial => 'menus/main'
-          = render_navigation(:level => 1)
+        - if logged_in?
+          %nav#main_menu.horizontal
+            = render_navigation(:level => 1)
       %section#content
         = yield(:content) or yield
     %footer.main
