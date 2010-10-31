@@ -1,5 +1,5 @@
 common: 
-  ldap_base: ou=Addressbook,dc=kth,dc=se
+  ldap_basedn: ou=Addressbook,dc=kth,dc=se
 
 production: &production
   ldap_host: ldap.sys.kth.se
