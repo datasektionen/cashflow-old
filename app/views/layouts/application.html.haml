@@ -9,6 +9,7 @@
       = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
     
     = stylesheet_link_tag 'less'
+    = stylesheet_link_tag 'sticky'
     = stylesheet_link_tag 'structure'
     
     - if is_mobile_device?
@@ -16,14 +17,15 @@
     - else
       = stylesheet_link_tag 'screen'
   %body
-    = session_change_link
-    = render :partial => 'menus/apps'
-    %header.main
-      %nav#main_menu.horizontal
-        = render :partial => 'menus/main'
-      %h1 Skulder & Inköp
-    #container
-      = yield(:content) or yield
+    #root
+      = session_change_link
+      = render :partial => 'menus/apps'
+      %header.main
+        %h1 Skulder & Inköp
+        %nav#main_menu.horizontal
+          = render :partial => 'menus/main'
+      %section#content
+        = yield(:content) or yield
     %footer.main
       :textile
         Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Martin Frost":http://www.d.kth.se/people/blame 2010. För att rapportera eventuella buggar, klicka "här":https://www.d.kth.se/redmine/projects/cashflow/issues/new.
