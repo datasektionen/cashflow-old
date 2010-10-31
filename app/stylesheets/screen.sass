@@ -1,5 +1,6 @@
 @import 'partials/colors'
 @import 'partials/structure'
+@import 'partials/formtastic'
 
 /* Typography presets
  * ------------------
@@ -11,8 +12,8 @@
   letter-spacing: -2px
 
 .huge, h1
-  font-size: 68px
-  line-height: 72px
+  font-size: 60px
+  line-height: 64px
   letter-spacing: -2px
 
 .large, h2
@@ -32,6 +33,26 @@
   line-height: 18px
 
 nav#main_menu
-  background-color: #ccc
   border-top: 1px solid black
   overflow: auto
+
+section#content
+  h1
+    font-size: 42px
+
+table.datatable
+  border-collapse: collapse
+  thead
+    background-color: #eee
+    tr
+      th
+        border-spacing: 0px
+        padding: 0 5px
+        text-align: left
+        
+  tbody
+    tr
+      td
+        padding: 0 5px
+      td:last-child *
+        display: inline

@@ -5,23 +5,26 @@
     %title Cashflow
     %meta{:name => "viewport", :content => "initial-scale=1.0, width=device-width, maximum-scale=1.0"}
     = javascript_include_tag 'jquery'
+    = javascript_include_tag 'jquery-ui.js'
+    = javascript_include_tag 'jquery.dataTables.js'
     / [if lt IE 9]
       = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
     
+    = javascript_include_tag 'rails'
+    
     = stylesheet_link_tag 'less'
-    = stylesheet_link_tag 'sticky'
-    = stylesheet_link_tag 'structure'
     
     - if is_mobile_device?
       = stylesheet_link_tag 'mobile'
     - else
       = stylesheet_link_tag 'screen'
+      = stylesheet_link_tag 'sticky'
   %body
     #root
       = session_change_link
       = render :partial => 'menus/apps'
       %header.main
-        %h1 Skulder & Inköp
+        %h1 Cashflow
         %nav#main_menu.horizontal
           / = render :partial => 'menus/main'
           = render_navigation(:level => 1)

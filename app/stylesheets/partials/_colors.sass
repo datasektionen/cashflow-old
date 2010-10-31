@@ -21,21 +21,37 @@ nav#apps
     a
       color: $cerise
 
-nav#main_menu
+nav
   li
     a, a:visited
       color: $black
     a:hover
       color: $cerise
-  li.active
+  li.selected
     a
-      color: $cerise
+      border-bottom: 1px solid $cerise
 
-.session-change
-  color: $white
+
+a.session-change, a.session-change:visited
+  color: white
+  border-bottom: 0
 
 footer.main
   p
     color: #666
     a, a:visited
       color: #333
+
+body
+  background-color: #eee
+  
+  #root
+    background-color: white
+    
+a, a:visited
+  color: black
+  text-decoration: none
+  border-bottom: 1px dotted black
+a:hover
+  border-bottom: 1px solid black
+  color: $cerise

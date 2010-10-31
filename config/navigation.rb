@@ -48,7 +48,8 @@ SimpleNavigation::Configuration.run do |navigation|
       # sub_nav.item :key_2_1, 'name', url, options
     # end
     
-    primary.item :product_types, "Produkttyper", product_types_path do |sub|
+    primary.item :product_types, "Produkttyper", product_types_path, :highlights_on => /\/product_types/ do |sub|
+      sub.item :all_product_types, "Alla produkttyper", product_types_path
       sub.item :new_product_type, "Ny produkttyp", new_product_type_path
     end
 

@@ -4,7 +4,7 @@
 #   * Sven Dahlstrand (sven.dahlstrand@gmail.com)
 #   * Henrik Nyh (henrik@nyh.se)
 
-"sv-SE":
+"sv":
   number:
     # Used in number_with_delimiter()
     # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
@@ -156,7 +156,7 @@
       business_unit: "Affärsenhet"
       debt: "Skuld"
       person: "Person"
-      product_type: "Produktkategori"
+      product_type: "Produkttyp"
       purchase: "Inköp"
       purchase_item: "Inköpsdel"
 
@@ -181,6 +181,9 @@
         bank_clearing_number: "Clearingnummer"
         bank_account_number: "Kontonummer"
         role: "Användarroll"
+      product_type:
+        name: "Namn"
+        description: "Beskrivning"
 
   date:
     formats:
@@ -217,3 +220,24 @@
     select:
       # default value for :prompt => true in FormOptionsHelper
       prompt: "Välj"
+
+  back: "Tillbaka"
+
+# models
+  product_types:
+    index:
+      title: "Produkttyper"
+      new_product_type: "Skapa ny produkttyp"
+    new:
+      title: "Ny produkttyp"
+      create: "Skapa"
+    edit:
+      title: "Redigera produkttyp"
+  formtastic:
+    actions:
+      commit: "Skapa %{model}"
+      update: "Uppdatera"
+  
+  edit: "Redigera"
+  destroy: "Ta bort"
+  are_you_sure: "Är du säker?"
