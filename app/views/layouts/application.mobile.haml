@@ -20,8 +20,8 @@
     = session_change_link
     = render :partial => 'menus/apps'
     %header.main
-      %nav#main_menu.horizontal
-        = render :partial => 'menus/main'
+      / %nav#main_menu.horizontal
+      /   = render :partial => 'menus/main'
     #container
       = yield(:content) or yield
     %footer.main
