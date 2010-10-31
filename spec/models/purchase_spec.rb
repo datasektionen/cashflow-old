@@ -145,4 +145,22 @@ describe Purchase do
     @purchase.update_attribute(:workflow_state, "finalized")
     @purchase.save.should be_false
   end
+  
+  it "should cascade delete its related purchase items" do
+    @purchase.items.should be_empty
+    pi = Factory.build(:purchase_item)
+    pi.purchase = @purchase
+    pi.save
+
+    item = @purchase.reload.items.first
+    
+    item.should_not be_nil
+    
+    item_id = item.id
+    purchase_id = @purchase.id
+    
+    @purchase.destroy
+    Purchase.exists?(:id => purchase_id).should be_false
+    PurchaseItem.exists?(:id => item_id).should be_false
+  end
 end
