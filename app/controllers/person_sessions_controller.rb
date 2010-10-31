@@ -3,6 +3,9 @@ class PersonSessionsController < ApplicationController
   layout 'application'
   
   def new
+    unless Person.exists?(:ugid => session[:cas_user])
+      Person.create_from_ldap(:ugid => session[:cas_user])
+    end
     redirect_to root_path
   end
     
