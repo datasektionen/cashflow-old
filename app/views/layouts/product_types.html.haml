@@ -1,7 +1,5 @@
 - content_for :content do
   %nav.right
-    %ul
-      %li= link_to "Ny produkttyp"
-      = yield(:submenu)
+    = render_navigation(:level => 2)
   = yield
 = render :file => 'layouts/application'
