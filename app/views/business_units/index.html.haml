@@ -1,0 +1,20 @@
+%h1= t('.title')
+
+%table.datatable
+  %thead
+    %tr
+      %th Namn
+      %th Förkortning
+      %th Aktiv
+      %th.actions
+  
+  %tbody
+    - for business_unit in @business_units
+      %tr{ :class => cycle(:odd, :even) }
+        %td= link_to business_unit.name, business_unit_path(business_unit)
+        %td= business_unit.short_name
+        %td= business_unit.active_text
+        %td
+          = link_to t('edit'), edit_business_unit_path(business_unit)
+          = button_to t('destroy'), business_unit, :confirm => t('are_you_sure'), :method => :delete
+          

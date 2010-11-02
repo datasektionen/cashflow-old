@@ -233,10 +233,19 @@
       create: "Skapa"
     edit:
       title: "Redigera produkttyp"
+  business_units:
+    index:
+      title: "Affärsenheter"
+      new_product_type: "Skapa ny affärsenhet"
+    new:
+      title: "Ny affärsenhet"
+      create: "Skapa"
+    edit:
+      title: "Redigera affärsenhet"
   formtastic:
     actions:
       commit: "Skapa %{model}"
-      update: "Uppdatera"
+      update: "Uppdatera %{model}"
   
   edit: "Redigera"
   destroy: "Ta bort"

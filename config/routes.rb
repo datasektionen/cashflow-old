@@ -57,6 +57,7 @@ Cashflow::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
   
   resources :product_types
+  resources :business_units
   
   match 'login', :to => "person_sessions#new"
   match 'logout', :to => "person_sessions#destroy"

@@ -1,0 +1,8 @@
+- semantic_form_for(@business_unit) do |form|
+ - form.inputs :name => "Attribut" do
+  = form.input :name
+  = form.input :short_name
+  = form.input :description
+  = form.input :active
+ - form.buttons do
+  = form.commit_button :commit

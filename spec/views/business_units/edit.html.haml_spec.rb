@@ -1,0 +1,17 @@
+require 'spec_helper'
+
+describe "business_units/edit.html.haml" do
+  before(:each) do
+    @business_unit = assign(:business_unit, stub_model(BusinessUnit,
+      :new_record? => false
+    ))
+  end
+
+  it "renders the edit business_unit form" do
+    render
+
+    # Run the generator again with the --webrat-matchers flag if you want to use webrat matchers
+    assert_select "form", :action => business_unit_path(@business_unit), :method => "post" do
+    end
+  end
+end
