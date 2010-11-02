@@ -71,7 +71,9 @@ class ProductTypesController < ApplicationController
   # DELETE /product_types/1.xml
   def destroy
     @product_type = ProductType.find(params[:id])
-    @product_type.destroy
+    unless @product_type.destroy
+      flash[:error] = "Produkttypen kunde inte tas bort"
+    end
 
     respond_to do |format|
       format.html { redirect_to(product_types_url) }
