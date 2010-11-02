@@ -180,6 +180,7 @@
         email: "E-post"
         bank_clearing_number: "Clearingnummer"
         bank_account_number: "Kontonummer"
+        bank_name: "Banknamn"
         role: "Användarroll"
       product_type:
         name: "Namn"
@@ -227,7 +228,6 @@
   product_types:
     index:
       title: "Produkttyper"
-      new_product_type: "Skapa ny produkttyp"
     new:
       title: "Ny produkttyp"
       create: "Skapa"
@@ -236,12 +236,21 @@
   business_units:
     index:
       title: "Affärsenheter"
-      new_product_type: "Skapa ny affärsenhet"
     new:
       title: "Ny affärsenhet"
       create: "Skapa"
     edit:
       title: "Redigera affärsenhet"
+  people:
+    index:
+      title: "Användare"
+    new:
+      title: "Lägg till användare"
+      create: "Skapa"
+    edit:
+      title: "Redigera användare"
+      
+
   formtastic:
     actions:
       commit: "Skapa %{model}"
@@ -250,3 +259,11 @@
   edit: "Redigera"
   destroy: "Ta bort"
   are_you_sure: "Är du säker?"
+  state:
+    new:        "Ny"
+    confirmed:  "Bekräftad"
+    edited:     "Ändrad"
+    paid:       "Utbetalad"
+    bookkept:   "Bokförd"
+    cancelled:  "Avslagen"
+    finalized:  "Avslutad"

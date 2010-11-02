@@ -58,6 +58,7 @@ Cashflow::Application.routes.draw do
   
   resources :product_types
   resources :business_units
+  resources :people
   
   match 'login', :to => "person_sessions#new"
   match 'logout', :to => "person_sessions#destroy"

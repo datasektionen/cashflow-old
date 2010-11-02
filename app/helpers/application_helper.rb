@@ -10,4 +10,8 @@ module ApplicationHelper
       link_to "Logga in", login_path, :class => "session-change"
     end
   end
+  
+  def money_format(amount)
+    ("%0.2f" % amount.to_f).gsub('.',',')
+  end
 end

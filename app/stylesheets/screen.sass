@@ -42,6 +42,9 @@ section#content
 
 table.datatable
   border-collapse: collapse
+  tr
+    td
+      padding: 0 5px
   thead
     background-color: #eee
     tr
@@ -52,7 +55,14 @@ table.datatable
         
   tbody
     tr
-      td
-        padding: 0 5px
       td:last-child *
         display: inline
+  tfoot
+    tr
+      td
+        border-top: 1px solid #ccc
+
+fieldset
+  border-top: 1px solid black
+  /* float: left */
+  legend

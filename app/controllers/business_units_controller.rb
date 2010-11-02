@@ -83,10 +83,10 @@ class BusinessUnitsController < ApplicationController
     @business_unit = BusinessUnit.find(params[:id])
   end
   def get_items
-    @items = [{:key   => :show_product_type, 
+    @items = [{:key   => :show_business_unit, 
                :name  => @business_unit.name, 
                :url   => business_unit_path(@business_unit)},
-              {:key   => :edit_product_type,
+              {:key   => :edit_business_unit,
                :name  => "Redigera",
                :url   => edit_business_unit_path(@business_unit)},
              ]

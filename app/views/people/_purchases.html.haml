@@ -1,0 +1,24 @@
+%fieldset
+  %legend Inköp
+  %table.datatable
+    %thead
+      %tr
+        %th ID
+        %th Beskrivning
+        %th Summa (SEK)
+        %th Inköpt
+        %th Status
+        %th
+    %tbody
+      - person.purchases.each do |purchase|
+        %tr
+          %td= purchase.id
+          %td= purchase.description
+          %td= money_format purchase.amount
+          %td=l purchase.purchased_at
+          %td= t "state.#{purchase.workflow_state}"
+          %td
+            / # TODO: add these when the routes are available
+            / # = link_to "Redigera", edit_debt_path(debt)
+            / # = button_to "Ta bort", debt, :method => :delete, :confirm => t('are_you_sure')
+          

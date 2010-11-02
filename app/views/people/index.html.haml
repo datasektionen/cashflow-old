@@ -1,0 +1,19 @@
+%h1= t('.title')
+
+%table.datatable
+  %thead
+    %tr
+      %th KTH-ID
+      %th Namn (användarnamn)
+      %th E-post
+      %th.actions{:colspan => 3}
+  
+  %tbody
+    - for person in @people
+      %tr{ :class => cycle(:odd, :even) }
+        %td= link_to person.ugid, person_path(person)
+        %td= link_to person.cn,   person_path(person)
+        %td= person.email
+        %td.actions
+          = link_to t('edit'), edit_person_path(person)
+          = link_to t('destroy'), person, :confirm => t('are_you_sure'), :method => :delete

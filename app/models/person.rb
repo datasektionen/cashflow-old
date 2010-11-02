@@ -2,15 +2,43 @@ class Person < ActiveRecord::Base
   acts_as_authentic do |c|
     c.login_field = 'ugid'
   end
-  
+
+  ROLES = {"Kassör" => "cashier", "Administratör" => "admin"}
+
   validates_presence_of :first_name, :last_name, :login, :email, :ugid
-  attr_accessible :email
+  attr_accessible :email, :bank_clearing_number, :bank_account_number
+  attr_accessor :bank_name
+  
+  has_many :debts, :dependent => :restrict
+  has_many :purchases, :dependent => :restrict
   
   # String representation of a user.
   # Basically the same as the cn column in the LDAP server, that is:
   # "Firstname Lastname (username)"
   def to_s
+    cn
+  end
+  
+  def cn
     "%s %s (%s)" % [first_name, last_name, login]
+  end
+  
+  def name
+    "%s %s" % [first_name, last_name]
+  end
+  
+  def bank_name
+    # TODO: parse from clearing number
+  end
+  
+  # TODO: rewrite this so it properly reflects only debts not paid (and not cancelled)
+  def total_debt_amount
+    debts.inject(0) {|sum,x| sum += x.amount }
+  end
+  
+  # TODO: write this so it properly reflects only amounts of purchases not paid (and not cancelled)
+  def total_purchased_amount
+    purchases.inject(0) {|sum,x| sum += x.amount}
   end
   
   # search KTH's LDAP server for a user.
