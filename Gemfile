@@ -12,6 +12,7 @@ gem 'paper_trail'
 gem 'cancan'
 gem 'formtastic', '~> 1.1.0'
 gem 'simple-navigation'
+gem 'jquery-rails'
 group :production do
   gem 'mysql'
 end
