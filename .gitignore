@@ -10,3 +10,4 @@ config/database.yml
 public/stylesheets/*.css
 .sass-cache/
 config/configuration.yml
+coverage/
