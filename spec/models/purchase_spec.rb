@@ -10,8 +10,8 @@ describe Purchase do
   end
   
   after(:each) do
-    @purchase.person.destroy if @purchase.person
     @purchase.destroy
+    @purchase.person.destroy if @purchase.person
   end
   
   it "should be invalid without an owner" do
