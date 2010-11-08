@@ -6,6 +6,8 @@ class Person < ActiveRecord::Base
   ROLES = {"Kassör" => "cashier", "Administratör" => "admin"}
 
   validates_presence_of :first_name, :last_name, :login, :email, :ugid
+  validates :email, :email => true
+  
   attr_accessible :email, :bank_clearing_number, :bank_account_number
   attr_accessor :bank_name
   
