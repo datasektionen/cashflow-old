@@ -10,7 +10,7 @@ gem 'RedCloth'
 gem 'net-ldap'
 gem 'paper_trail'
 gem 'cancan'
-gem 'formtastic', '~> 1.1.0'
+gem 'formtastic', :git => 'git://github.com/justinfrench/formtastic.git', :branch => 'master'
 gem 'simple-navigation'
 gem 'jquery-rails'
 group :production do
