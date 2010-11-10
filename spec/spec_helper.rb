@@ -24,4 +24,9 @@ RSpec.configure do |config|
   # examples within a transaction, comment the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  
+  local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
+  CASClient::Frameworks::Rails::Filter.fake(local_config[:yourself][:ugid])
+  
 end
+
