@@ -70,7 +70,6 @@ class ProductTypesController < ApplicationController
   # DELETE /product_types/1
   # DELETE /product_types/1.xml
   def destroy
-    @product_type = ProductType.find(params[:id])
     unless @product_type.destroy
       flash[:error] = "Produkttypen kunde inte tas bort"
     end

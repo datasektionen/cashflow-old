@@ -25,6 +25,7 @@ class BusinessUnitsController < ApplicationController
   # GET /business_units/new
   # GET /business_units/new.xml
   def new
+    @business_unit = BusinessUnit.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @business_unit }
