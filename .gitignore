@@ -11,4 +11,4 @@ public/stylesheets/*.css
 .sass-cache/
 config/configuration.yml
 coverage/
-.rake_tasks
+config/local.yml
