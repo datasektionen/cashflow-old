@@ -1,6 +1,6 @@
-- semantic_form_for(@product_type) do |form|
- - form.inputs :name => "Attribut" do
+= semantic_form_for(@product_type) do |form|
+ = form.inputs :name => "Attribut" do
   = form.input :name
   = form.input :description
- - form.buttons do
+ = form.buttons do
   = form.commit_button :commit
