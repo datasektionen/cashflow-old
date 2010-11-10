@@ -2,3 +2,6 @@ Howto do test searches against ldap.kth.se
 
 ssh -L 9999:ldap.kth.se:389 blame@my.nada.kth.se
 ldapsearch -x -h localhost -p 9999 -b ou=Addressbook,dc=kth,dc=se ugUsername=blame
+
+
+Insert your ugid into config/local.yml in order to get the controller specs to work properly (otherwise the test code can't log in)
