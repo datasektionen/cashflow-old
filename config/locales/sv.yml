@@ -249,12 +249,12 @@
       create: "Skapa"
     edit:
       title: "Redigera användare"
+      commit: "Uppdatera"
       
 
   formtastic:
     actions:
-      commit: "Skapa %{model}"
-      update: "Uppdatera %{model}"
+      commit: "Spara %{model}"
   
   edit: "Redigera"
   destroy: "Ta bort"

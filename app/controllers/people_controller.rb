@@ -95,6 +95,11 @@ class PeopleController < ApplicationController
                 :name => "Redigera",
                 :url => edit_person_path(@person)},
              ]
+    if is_mobile_device?
+      @items.unshift({ :key => :people_list,
+                  :name => "Tillbaka",
+                  :url => people_path})
+    end
   end
   
 end
