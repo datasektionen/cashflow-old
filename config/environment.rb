@@ -6,7 +6,6 @@ require File.expand_path('../application', __FILE__)
 module Cashflow
   class Application < Rails::Application
     attr_accessor :settings
-    config.i18n.default_locale = :sv
     config.encoding = "utf-8"
   end
 end
