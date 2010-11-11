@@ -11,7 +11,8 @@ module ApplicationHelper
     end
   end
   
-  def money_format(amount)
-    ("%0.2f" % amount.to_f).gsub('.',',')
+  def currency(amount)
+    number_to_currency(amount)
+    # ("%0.2f" % amount.to_f).gsub('.',',')
   end
 end
