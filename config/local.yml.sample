@@ -1,2 +1,7 @@
 :yourself:
+:yourself:
+  :first_name: YOUR_FIRST_NAME
+  :last_name: YOUR_LAST_NAME
+  :email: YOUR_LOGIN_HERE@kth.se
+  :login: YOUR_LOGIN_HERE
   :ugid: YOUR_UGID_HERE
