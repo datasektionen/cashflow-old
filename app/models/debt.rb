@@ -11,6 +11,8 @@ class Debt < ActiveRecord::Base
   belongs_to :business_unit
 
   validate :locked_when_finalized
+  
+  scope :unpaid, where(:workflow_state => %w[new bookkept])
 
   # workflow for the Debt model:
   # 

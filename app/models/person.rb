@@ -35,12 +35,12 @@ class Person < ActiveRecord::Base
   
   # TODO: rewrite this so it properly reflects only debts not paid (and not cancelled)
   def total_debt_amount
-    debts.inject(0) {|sum,x| sum += x.amount }
+    debts.unpaid.inject(0) {|sum,x| sum += x.amount }.to_f
   end
   
   # TODO: write this so it properly reflects only amounts of purchases not paid (and not cancelled)
   def total_purchased_amount
-    purchases.inject(0) {|sum,x| sum += x.amount}
+    purchases.unpaid.inject(0) {|sum,x| sum += x.total}.to_f
   end
   
   # search KTH's LDAP server for a user.
@@ -67,7 +67,6 @@ class Person < ActiveRecord::Base
     
     # if we don't have any filters, we won't have to search
     return nil if filters.empty?
-    
     # map filters to proper ldap filters,
     # and join them into a big query
     filter = filters.map do |k,v|

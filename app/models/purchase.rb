@@ -15,6 +15,8 @@ class Purchase < ActiveRecord::Base
   
   attr_readonly :person, :person_id
   
+  scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
+  
   # workflow for Purchase model
   #                                   :keep --> (bookkept) -- :pay --
   #                                /                                  \
@@ -57,6 +59,11 @@ class Purchase < ActiveRecord::Base
     state :finalized
     
     state :cancelled
+  end
+
+  # calculate total amount for purchase items
+  def total
+    items.inject(0) {|sum,i| sum += i.amount }
   end
   
   protected
