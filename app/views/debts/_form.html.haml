@@ -1,0 +1,11 @@
+= form_for(@debt) do |f|
+  - if @debt.errors.any?
+    #errorExplanation
+      %h2= "#{pluralize(@debt.errors.count, 'error')} prohibited this user from being saved:"
+      %ul
+      - @debt.errors.full_messages.each do |msg|
+        %li= msg
+  
+
+  .actions
+    = f.submit
