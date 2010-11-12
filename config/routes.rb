@@ -1,9 +1,7 @@
 Cashflow::Application.routes.draw do  
   resources :product_types
   resources :business_units
-  resources :purchases do
-    resources :items, :controller => "purchase_items"
-  end
+  resources :purchases
   resources :debts
   
   resources :people
@@ -12,9 +10,7 @@ Cashflow::Application.routes.draw do
   # Det skulle också vara vettigt för icke-admin/kassör/revisor, då de ändå bara ska kunna se sina egna inköp/skulder.
   # resources :people do
   #   resources :debts
-  #   resources :purchases do
-  #     resources :items, :controller => "purchase_items"
-  #   end
+  #   resources :purchases
   # end
   
   match 'login', :to => "person_sessions#new"
