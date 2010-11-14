@@ -25,7 +25,7 @@
         - if logged_in?
           %nav#main_menu.horizontal
             = render_navigation(:level => 1)
-      %section#content
+      %section.clearfix#content
         = yield(:content) or yield
     %footer.main
       :textile
