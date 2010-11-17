@@ -18,7 +18,6 @@
           %td=l purchase.purchased_at
           %td=t "state.#{purchase.workflow_state}"
           %td
-            / # TODO: add these when the routes are available
-            / # = link_to "Redigera", edit_debt_path(debt)
-            / # = button_to "Ta bort", debt, :method => :delete, :confirm => t('are_you_sure')
+            = link_to "Redigera", edit_debt_path(debt)
+            = button_to "Ta bort", debt, :method => :delete, :confirm => t('are_you_sure')
           

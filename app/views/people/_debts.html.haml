@@ -16,9 +16,8 @@
           %td.money= currency debt.amount
           %td= t "state.#{debt.workflow_state}"
           %td
-            / # TODO: add these when we have the routes
-            / # = link_to "Redigera", edit_debt_path(debt)
-            / # = button_to "Ta bort", debt, :method => :delete, :confirm => t('are_you_sure')
+            = link_to "Redigera", edit_debt_path(debt)
+            = button_to "Ta bort", debt, :method => :delete, :confirm => t('are_you_sure')
     %tfoot
       %tr
         %td.bold{:colspan => 2} Total

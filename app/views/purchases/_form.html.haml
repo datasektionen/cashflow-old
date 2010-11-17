@@ -1,11 +1,10 @@
-= form_for(@purchase) do |f|
-  - if @purchase.errors.any?
-    #errorExplanation
-      %h2= "#{pluralize(@purchase.errors.count, 'error')} prohibited this user from being saved:"
-      %ul
-      - @purchase.errors.full_messages.each do |msg|
-        %li= msg
+= semantic_form_for @purchase do |form|
+  = form.inputs :name => "Beskrivning" do
+    = form.input :business_unit, :collection => BusinessUnit.all
+    = form.input :description, :as => :text
   
-
-  .actions
-    = f.submit
+  = form.inputs :name => "Inköpsdelar", :for => :items, :class => "inputs purchase_items" do |item|
+    = item.input :amount
+    = item.input :comment
+    = item.input :product_type, :collection => ProductType.all
+    %li= link_to "Lägg till inköpsdel", "#", :id => "add_purchase_item"
