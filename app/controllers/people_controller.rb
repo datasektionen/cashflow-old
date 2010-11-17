@@ -85,7 +85,13 @@ class PeopleController < ApplicationController
   
   protected
   def get_person
-    @person = Person.find(params[:id])
+    if params[:username]
+      @person = Person.find_by_login(params[:username])
+    elsif params[:ugid]
+      @person = Person.find_by_ugid(params[:ugid])
+    else
+      @person = Person.find(params[:id])
+    end
   end
   def get_items
     @items = [{:key   => :show_person, 

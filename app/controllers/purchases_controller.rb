@@ -25,6 +25,7 @@ class PurchasesController < ApplicationController
   # GET /purchases/new.xml
   def new
     @purchase = Purchase.new
+    @purchase.items.build
 
     respond_to do |format|
       format.html # new.html.erb
