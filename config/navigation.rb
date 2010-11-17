@@ -3,7 +3,7 @@ SimpleNavigation::Configuration.run do |navigation|
   navigation.items do |primary|
     primary.item :my_page, 'Min sida', "#"
     primary.item :purchases, 'Inköp', '#'
-    primary.item :people, "Användare", people_path
+    primary.item :people, "Användare", people_path, :highlights_on => /\/people/
     primary.item :business_units, "Affärsenheter", business_units_path, :highlights_on => /\/business_units/ do |sub|
       sub.item :all_business_units, "Alla affärsenheter", business_units_path
       sub.item :new_business_unit, "Ny affärsenhet", new_business_unit_path
