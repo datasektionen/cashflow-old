@@ -15,6 +15,8 @@ class Purchase < ActiveRecord::Base
   
   attr_readonly :person, :person_id
   
+  accepts_nested_attributes_for :items
+  
   scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
   
   # workflow for Purchase model

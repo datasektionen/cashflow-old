@@ -33,12 +33,10 @@ class Person < ActiveRecord::Base
     # TODO: parse from clearing number
   end
   
-  # TODO: rewrite this so it properly reflects only debts not paid (and not cancelled)
   def total_debt_amount
     debts.unpaid.inject(0) {|sum,x| sum += x.amount }.to_f
   end
   
-  # TODO: write this so it properly reflects only amounts of purchases not paid (and not cancelled)
   def total_purchased_amount
     purchases.unpaid.inject(0) {|sum,x| sum += x.total}.to_f
   end
