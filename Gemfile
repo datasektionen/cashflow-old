@@ -20,6 +20,7 @@ end
 group :development do
   gem 'sqlite3-ruby', :require => 'sqlite3'
   gem 'ruby-debug'
+  gem 'mongrel'
 end
 
 # Gems for test environment
