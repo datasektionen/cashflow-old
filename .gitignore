@@ -12,3 +12,4 @@ public/stylesheets/*.css
 config/configuration.yml
 coverage/
 config/local.yml
+public/stylesheets/compiled
