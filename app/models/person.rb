@@ -96,4 +96,8 @@ class Person < ActiveRecord::Base
       nil
     end
   end
+
+  def to_param
+    login
+  end
 end
