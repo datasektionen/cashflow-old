@@ -94,5 +94,8 @@ describe Ability do
       @ability.should_not be_able_to(:edit, BusinessUnit.new)
     end
 
+    it "should be able to read people" do
+      @ability.should be_able_to(:read, Person.new)
+    end
   end
 end
