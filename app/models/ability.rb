@@ -21,6 +21,7 @@ class Ability
       # Ordinary users can only edit themselves
       can :manage, Person, :id => user.id
       cannot :create, Person
+      can :read, Debt, :person_id => user.id
     end
     can :manage, Purchase, :person_id => user.id
   end
