@@ -60,6 +60,8 @@ class PurchasesController < ApplicationController
   # PUT /purchases/1.xml
   def update
     @purchase = Purchase.find(params[:id])
+    @purchase.updated_by = current_user
+    
 
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
