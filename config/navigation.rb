@@ -10,7 +10,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :debts, "Skulder", debts_path, :highlights_on => /\/debts/ do |sub|
       sub.item :all_debts, "Alla skulder", debts_path
       if can?(:create, Debt)
-        sub.item :new_debts, "Ny skuld", new_debts_path
+        sub.item :new_debts, "Ny skuld", new_debt_path
       end
     end
 
