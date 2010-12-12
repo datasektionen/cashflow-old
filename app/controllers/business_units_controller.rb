@@ -1,5 +1,5 @@
 class BusinessUnitsController < ApplicationController
-  before_filter :get_unit, :only => [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
 
   # GET /business_units
@@ -80,9 +80,6 @@ class BusinessUnitsController < ApplicationController
   end
   
   protected
-  def get_unit
-    @business_unit = BusinessUnit.find(params[:id])
-  end
   def get_items
     @items = [{:key   => :show_business_unit, 
                :name  => @business_unit.name, 
@@ -92,5 +89,4 @@ class BusinessUnitsController < ApplicationController
                :url   => edit_business_unit_path(@business_unit)},
              ]
   end
-  
 end

@@ -1,7 +1,7 @@
 class ProductTypesController < ApplicationController
-  before_filter :get_type, :only => [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
-  
+
   # GET /product_types
   # GET /product_types.xml
   def index
@@ -79,11 +79,8 @@ class ProductTypesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   protected
-  def get_type
-    @product_type = ProductType.find(params[:id])
-  end
   def get_items
     @items = [{:key   => :show_product_type, 
                :name  => @product_type.name, 
