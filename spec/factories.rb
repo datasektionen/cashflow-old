@@ -84,6 +84,11 @@ Factory.define :admin, :parent => :person do |f|
   f.role "admin"
 end
 
-Factory.define :cashier, :parent => :person do |f|
-  f.role "cashier"
+Factory.define :treasurer, :parent => :person do |f|
+  f.role "treasurer"
 end
+
+Factory.define :accountant, :parent => :person do |f|
+  f.role "accountant"
+end
+

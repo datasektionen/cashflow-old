@@ -100,4 +100,8 @@ class Person < ActiveRecord::Base
   def to_param
     login
   end
+
+  def is?(role)
+    self.role == role.to_s
+  end
 end
