@@ -18,8 +18,5 @@ class Ability
       # Ordinary users can only edit themselves
       can :manage, Person, :id => user.id
     end
-    # Anyone can read other people
-    can :read, Person
-    can :read, ProductType
   end
 end
