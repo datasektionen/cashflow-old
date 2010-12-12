@@ -1,5 +1,6 @@
 class PurchasesController < ApplicationController
   load_and_authorize_resource
+  before_filter :get_items, :only => [:show, :edit, :update, :destroy]
 
   # GET /purchases
   # GET /purchases.xml
@@ -15,8 +16,6 @@ class PurchasesController < ApplicationController
   # GET /purchases/1
   # GET /purchases/1.xml
   def show
-    @purchase = Purchase.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @purchase }
@@ -37,7 +36,6 @@ class PurchasesController < ApplicationController
 
   # GET /purchases/1/edit
   def edit
-    @purchase = Purchase.find(params[:id])
   end
 
   # POST /purchases
@@ -61,9 +59,7 @@ class PurchasesController < ApplicationController
   # PUT /purchases/1
   # PUT /purchases/1.xml
   def update
-    @purchase = Purchase.find(params[:id])
     @purchase.updated_by = current_user
-    
 
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
@@ -79,12 +75,21 @@ class PurchasesController < ApplicationController
   # DELETE /purchases/1
   # DELETE /purchases/1.xml
   def destroy
-    @purchase = Purchase.find(params[:id])
     @purchase.destroy
 
     respond_to do |format|
       format.html { redirect_to(purchases_url) }
       format.xml  { head :ok }
     end
+  end
+  protected
+  def get_items
+    @items = [{:key   => :show_purchase_path,
+               :name  => @purchase.name,
+               :url   => purchase_path(@purchase)},
+              {:key   => :edit_purchase_path,
+               :name  => "Redigera",
+               :url   => edit_purchase_path(@purchase)},
+             ]
   end
 end
