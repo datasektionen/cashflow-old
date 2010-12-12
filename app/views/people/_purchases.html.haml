@@ -14,10 +14,10 @@
         %tr
           %td= purchase.id
           %td= purchase.description
-          %td= currency purchase.amount
-          %td=l purchase.purchased_at
-          %td=t "state.#{purchase.workflow_state}"
+          %td= currency purchase.total
+          %td= short_time purchase.purchased_at
+          %td= status purchase
           %td
-            = link_to "Redigera", edit_debt_path(debt)
-            = button_to "Ta bort", debt, :method => :delete, :confirm => t('are_you_sure')
+            = link_to "Redigera", edit_purchase_path(purchase)
+            = button_to "Ta bort", purchase, :method => :delete, :confirm => t('are_you_sure')
           
