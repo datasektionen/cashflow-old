@@ -11,6 +11,7 @@ class Ability
       can :create, Person
       
       can :manage, ProductType
+      can :manage, BusinessUnit
     elsif user.is? :accountant
       # Accountants should be able to read everything
       can :read, :all
