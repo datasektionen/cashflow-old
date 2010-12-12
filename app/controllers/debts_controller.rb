@@ -1,4 +1,6 @@
 class DebtsController < ApplicationController
+  load_and_authorize_resource
+
   # GET /debts
   # GET /debts.xml
   def index
@@ -13,8 +15,6 @@ class DebtsController < ApplicationController
   # GET /debts/1
   # GET /debts/1.xml
   def show
-    @debt = Debt.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @debt }
@@ -34,7 +34,6 @@ class DebtsController < ApplicationController
 
   # GET /debts/1/edit
   def edit
-    @debt = Debt.find(params[:id])
   end
 
   # POST /debts
@@ -56,7 +55,6 @@ class DebtsController < ApplicationController
   # PUT /debts/1
   # PUT /debts/1.xml
   def update
-    @debt = Debt.find(params[:id])
 
     respond_to do |format|
       if @debt.update_attributes(params[:debt])
