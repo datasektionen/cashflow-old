@@ -54,6 +54,7 @@ describe Ability do
 
     it "should be able to manage purchases" do
       @ability.should be_able_to(:manage, Purchase.new)
+      @ability.should be_able_to(:manage, PurchaseItem.new)
     end
 
     it "should be able to manage debts" do
@@ -140,6 +141,10 @@ describe Ability do
 
     it "should not be able to manage debts" do
       @ability.should_not be_able_to(:manage, Debt.new)
+    end
+
+    it "should be able to create new purchases for itself" do
+      @ability.should be_able_to(:manage, @user.purchases.new)
     end
   end
 end

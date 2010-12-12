@@ -10,10 +10,7 @@ class Ability
       # Treasurers can create users in order to put them in debt
       can :create, Person
       
-      can :manage, ProductType
-      can :manage, BusinessUnit
-      can :manage, Purchase
-      can :manage, Debt
+      can :manage, [ProductType, BusinessUnit, Purchase, PurchaseItem, Debt]
     elsif user.is? :accountant
       # Accountants should be able to read everything
       can :read, :all
@@ -21,8 +18,8 @@ class Ability
       # Ordinary users can only edit themselves
       can :manage, Person, :id => user.id
       cannot :create, Person
-      can :read, Debt, :person_id => user.id
     end
     can :manage, Purchase, :person_id => user.id
+    can :read, Debt, :person_id => user.id
   end
 end
