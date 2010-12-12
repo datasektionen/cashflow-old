@@ -60,15 +60,15 @@ describe Ability do
     end
 
     it "should not be able to edit product types" do
-      @ability.should_not be_able_to(:edit, ProductType.new)
+      @ability.should_not be_able_to(:manage, ProductType.new)
     end
 
     it "should not be able to edit business units" do
-      @ability.should_not be_able_to(:edit, BusinessUnit.new)
+      @ability.should_not be_able_to(:manage, BusinessUnit.new)
     end
 
     it "should not be able to edit an arbitrary user" do
-      @ability.should_not be_able_to(:edit, Person.new)
+      @ability.should_not be_able_to(:manage, Person.new)
     end
 
     it "should not be able to create a new person" do
