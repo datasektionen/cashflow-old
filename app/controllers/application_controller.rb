@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   before_filter :cas_filter
   before_filter :current_user
   
+  helper_method :current_user
+
   private
   def cas_filter
     CASClient::Frameworks::Rails::Filter.filter(self)
