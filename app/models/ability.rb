@@ -18,6 +18,7 @@ class Ability
     else
       # Ordinary users can only edit themselves
       can :manage, Person, :id => user.id
+      cannot :create, Person
     end
   end
 end

@@ -35,6 +35,10 @@ describe Ability do
       @ability = Ability.new(@user)
     end
 
+    it "should be able to import people" do
+      @ability.should be_able_to(:create, Person)
+    end
+
     it "should be able to manage product types" do
       @ability.should be_able_to(:manage, ProductType.new)
     end
@@ -52,6 +56,14 @@ describe Ability do
 
     it "should not be able to edit business units" do
       @ability.should_not be_able_to(:edit, BusinessUnit.new)
+    end
+
+    it "should not be able to edit an arbitrary user" do
+      @ability.should_not be_able_to(:edit, Person.new)
+    end
+
+    it "should not be able to create a new person" do
+      @ability.should_not be_able_to(:create, Person)
     end
   end
 
