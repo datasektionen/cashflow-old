@@ -27,6 +27,7 @@ end
 group :test do
   gem "rspec-rails", "~> 2.0.0"
   gem 'rcov'
+  gem 'shoulda'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'cucumber-rails'
