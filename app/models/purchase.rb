@@ -68,6 +68,11 @@ class Purchase < ActiveRecord::Base
     items.inject(0) {|sum,i| sum += i.amount }
   end
   
+
+  def name
+    "%s-%d" % [self.person.to_param, self.id]
+  end
+
   protected
   
   def cannot_purchase_stuff_in_the_future
