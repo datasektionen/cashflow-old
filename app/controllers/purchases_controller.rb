@@ -1,8 +1,10 @@
 class PurchasesController < ApplicationController
+  load_and_authorize_resource
+
   # GET /purchases
   # GET /purchases.xml
   def index
-    @purchases = Purchase.all
+    @purchases = Purchase.accessible_by(current_ability)
 
     respond_to do |format|
       format.html # index.html.erb

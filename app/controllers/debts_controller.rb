@@ -2,7 +2,7 @@ class DebtsController < ApplicationController
   # GET /debts
   # GET /debts.xml
   def index
-    @debts = Debt.all
+    @debts = Debt.accessible_by(current_ability)
 
     respond_to do |format|
       format.html # index.html.erb
