@@ -46,12 +46,12 @@ describe Ability do
       @ability = Ability.new(@user)
     end
 
-    it "should be able to read product types" do
-      @ability.should be_able_to(:read, ProductType.new)
-    end
-
     it "should not be able to edit product types" do
       @ability.should_not be_able_to(:edit, ProductType.new)
+    end
+
+    it "should not be able to edit business units" do
+      @ability.should_not be_able_to(:edit, BusinessUnit.new)
     end
   end
 
@@ -68,5 +68,14 @@ describe Ability do
     it "should not be able to edit product types" do
       @ability.should_not be_able_to(:edit, ProductType.new)
     end
+
+    it "should be able to read business units" do
+      @ability.should be_able_to(:read, BusinessUnit.new)
+    end
+
+    it "should not be able to edit business units" do
+      @ability.should_not be_able_to(:edit, BusinessUnit.new)
+    end
+
   end
 end

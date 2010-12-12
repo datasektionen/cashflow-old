@@ -40,7 +40,7 @@ Factory.define :debt do |f|
   f.amount { rand(1000) }
   f.person { Factory :person }
   f.business_unit { Factory :business_unit }
-  f.author { Factory :cashier }
+  f.author { Factory :treasurer }
 end
 
 Factory.define :business_unit do |f|
