@@ -86,6 +86,14 @@ describe Ability do
     it "should be able to edit its own purchases" do
       @ability.should be_able_to(:edit, @user.purchases.new)
     end
+
+    it "should be able to read its own debts" do
+      @ability.should be_able_to(:read, @user.debts.new)
+    end
+
+    it "should not be able to edit its own debts" do
+      @ability.should_not be_able_to(:edit, @user.debts.new)
+    end
   end
 
   describe "accountant" do
