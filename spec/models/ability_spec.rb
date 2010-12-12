@@ -1,4 +1,5 @@
 require "spec_helper"
+require 'cancan'
 require 'cancan/matchers'
 
 describe Ability do
@@ -37,6 +38,10 @@ describe Ability do
 
     it "should be able to import people" do
       @ability.should be_able_to(:create, Person)
+    end
+
+    it "should not be able to manage people" do
+      @ability.should_not be_able_to(:manage, Person.new)
     end
 
     it "should be able to manage product types" do
