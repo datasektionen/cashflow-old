@@ -185,6 +185,13 @@
       product_type:
         name: "Namn"
         description: "Beskrivning"
+      purchase:
+        business_unit: "Affärsenhet"
+        description: "Beskrivning"
+      purchase_item:
+        amount: "Summa"
+        comment: "Kommentar"
+        product_type: "Produkttyp"
 
   date:
     formats:
@@ -257,9 +264,10 @@
       commit: "Spara %{model}"
   
   edit: "Redigera"
+  show: "Visa"
   destroy: "Ta bort"
   are_you_sure: "Är du säker?"
-  state:
+  workflow_state:
     new:        "Ny"
     confirmed:  "Bekräftad"
     edited:     "Ändrad"

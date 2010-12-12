@@ -7,10 +7,7 @@ describe PurchaseItem do
   
   %w[purchase product_type].each do |relation|
     it "should belong to a #{relation}" do
-      @item.send(relation).should_not be_nil
-      @item.send("#{relation}=", nil)
-      @item.should_not be_valid
-      @item.errors[relation.to_sym].should_not be_empty
+      @item.should belong_to(relation.to_sym)
     end
   end
   

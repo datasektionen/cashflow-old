@@ -41,7 +41,9 @@ class PurchasesController < ApplicationController
   # POST /purchases
   # POST /purchases.xml
   def create
-    @purchase = Purchase.new(params[:purchase])
+    @purchase = current_user.purchases.new(params[:purchase])
+    @purchase.updated_by = current_user
+    @purchase.created_by = current_user
 
     respond_to do |format|
       if @purchase.save

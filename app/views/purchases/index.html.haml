@@ -1,5 +1,4 @@
-%h1= t('.title')
-%p= link_to t('.new_purchase'), new_purchase_path
+%h1 Inköp
 
 %table.datatable
   %thead
@@ -13,19 +12,19 @@
       %th Registrerad
       %th Status
       
-      %th{:colspan => 3}= t 'actions'
+      %th
   
   %tbody
     - for purchase in @purchases
       %tr{ :class => cycle(:odd, :even) }
-        %td= purchase.id
+        %td= link_to purchase.id, purchase
         %td= purchase.description
         %td= purchase.total
-        %td=l purchase.purchased_at
+        %td= short_time purchase.purchased_at
         %td= purchase.person
         %td= purchase.business_unit
-        %td=l purchase.created_at
-        %td= purchase.status
-        %td.action= link_to t('show'), purchase
-        %td.action= link_to t('edit'), edit_purchase_path(purchase)
-        %td.action= link_to t('destroy'), purchase, :confirm => t('are_you_sure'), :method => :delete
+        %td= short_time purchase.created_at
+        %td= status purchase
+        %td
+          = link_to t('edit'), edit_purchase_path(purchase)
+          = link_to t('destroy'), purchase, :confirm => t('are_you_sure'), :method => :delete
