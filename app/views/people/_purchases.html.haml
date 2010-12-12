@@ -20,4 +20,9 @@
           %td
             = link_to "Redigera", edit_purchase_path(purchase)
             = button_to "Ta bort", purchase, :method => :delete, :confirm => t('are_you_sure')
-          
+    %tfoot
+      %tr
+        %th{:colspan => 2} Total
+        %td= currency person.total_purchased_amount
+        %th{:colspan => 3}
+
