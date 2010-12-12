@@ -3,7 +3,7 @@ class Person < ActiveRecord::Base
     c.login_field = 'ugid'
   end
 
-  ROLES = {"Kassör" => "cashier", "Administratör" => "admin"}
+  ROLES = {"Kassör" => "treasurer", "Administratör" => "admin", "Revisor" => "accountant"}
 
   validates_presence_of :first_name, :last_name, :login, :email, :ugid
   validates :email, :email => true
