@@ -12,6 +12,8 @@ class Ability
       
       can :manage, ProductType
       can :manage, BusinessUnit
+      can :manage, Purchase
+      can :manage, Debt
     elsif user.is? :accountant
       # Accountants should be able to read everything
       can :read, :all
@@ -20,5 +22,6 @@ class Ability
       can :manage, Person, :id => user.id
       cannot :create, Person
     end
+    can :manage, Purchase, :person_id => user.id
   end
 end

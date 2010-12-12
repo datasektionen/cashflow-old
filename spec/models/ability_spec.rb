@@ -51,6 +51,14 @@ describe Ability do
     it "should be able to manage business units" do
       @ability.should be_able_to(:manage, BusinessUnit.new)
     end
+
+    it "should be able to manage purchases" do
+      @ability.should be_able_to(:manage, Purchase.new)
+    end
+
+    it "should be able to manage debts" do
+      @ability.should be_able_to(:manage, Debt.new)
+    end
   end
 
   describe "ordinary user" do
@@ -73,6 +81,10 @@ describe Ability do
 
     it "should not be able to create a new person" do
       @ability.should_not be_able_to(:create, Person)
+    end
+
+    it "should be able to edit its own purchases" do
+      @ability.should be_able_to(:edit, @user.purchases.new)
     end
   end
 
@@ -104,6 +116,22 @@ describe Ability do
 
     it "should not be able to edit arbitrary people" do
       @ability.should_not be_able_to(:edit, Person.new)
+    end
+
+    it "should be able to read purchases" do
+      @ability.should be_able_to(:read, Purchase.new)
+    end
+
+    it "should be able to read debts" do
+      @ability.should be_able_to(:read, Debt.new)
+    end
+
+    it "should not be able to manage purchases" do
+      @ability.should_not be_able_to(:manage, Purchase.new)
+    end
+
+    it "should not be able to manage debts" do
+      @ability.should_not be_able_to(:manage, Debt.new)
     end
   end
 end
