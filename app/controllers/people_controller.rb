@@ -58,7 +58,10 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-
+    if params[:person][:role] && current_user.is?(:admin)
+      @person.role = params[:person][:role]
+      @person.save
+    end
     respond_to do |format|
       if @person.update_attributes(params[:person])
         format.html { redirect_to(@person, :notice => 'Person was successfully updated.') }
