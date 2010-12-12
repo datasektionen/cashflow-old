@@ -1,6 +1,34 @@
-%h1= t '.title'
-%p
-  = link_to t('back'), purchases_path
-  = link_to t('edit'), edit_purchase_path(@purchase)
+%h1 Inköp
 
 %dl
+  %dt Inköpt av
+  %dd= @purchase.person
+  %dt Inköpt
+  %dd= short_time @purchase.purchased_at
+  %dt Beskrivning
+  %dd= @purchase.description
+  %dt Total summa
+  %dd= currency @purchase.total
+  %dt Status
+  %dd= status @purchase
+  %dt Senast uppdaterad
+  %dd= short_time @purchase.updated_at 
+  %dt Uppdaterad av
+  %dd= @purchase.updated_by
+
+%fieldset
+  %legend Inköpsdelar
+  %table
+    %thead
+      %tr
+        %th Kommentar
+        %th Summa
+    %tbody
+      - @purchase.items.each do |item|
+        %tr
+          %td= item.comment
+          %td= currency item.amount
+    %tfoot
+      %tr
+        %th Total
+        %th= currency @purchase.total
