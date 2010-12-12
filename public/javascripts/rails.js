@@ -195,5 +195,7 @@ $(document).ready(function(){
     }
     $("#add_purchase_item").parent('li').before($(item_fields));
   });
+
+  $('input.ui-datepicker').datepicker({dateFormat: 'yy-mm-dd'});
 })
 

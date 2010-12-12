@@ -4,7 +4,8 @@
     %meta{:charset => "utf-8"}
     %title Cashflow
     %meta{:name => "viewport", :content => "initial-scale=1.0, width=device-width, maximum-scale=1.0"}
-    = javascript_include_tag 'jquery'
+    = javascript_include_tag 'jquery.min.js'
+    = javascript_include_tag 'jquery-ui.min.js'
     = javascript_include_tag 'jquery.dataTables.js'
     / [if lt IE 9]
       = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
@@ -16,6 +17,7 @@
     - else
       = stylesheet_link_tag 'screen'
       = stylesheet_link_tag 'sticky'
+      = stylesheet_link_tag 'jquery-ui.css'
   %body
     #root
       = session_change_link
