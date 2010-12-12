@@ -47,6 +47,10 @@ describe Ability do
     it "should be able to manage product types" do
       @ability.should be_able_to(:manage, ProductType.new)
     end
+    
+    it "should be able to manage business units" do
+      @ability.should be_able_to(:manage, BusinessUnit.new)
+    end
   end
 
   describe "ordinary user" do
@@ -96,6 +100,10 @@ describe Ability do
 
     it "should be able to read people" do
       @ability.should be_able_to(:read, Person.new)
+    end
+
+    it "should not be able to edit arbitrary people" do
+      @ability.should_not be_able_to(:edit, Person.new)
     end
   end
 end
