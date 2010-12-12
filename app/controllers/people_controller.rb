@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_filter :get_person, :only => [:show, :edit, :update, :destroy]
+  load_and_authorize_resource :find_by => :login
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
   
   
@@ -17,7 +17,6 @@ class PeopleController < ApplicationController
   # GET /people/1
   # GET /people/1.xml
   def show
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @person }
@@ -87,9 +86,6 @@ class PeopleController < ApplicationController
   end
   
   protected
-  def get_person
-    @person = Person.find_by_login(params[:id])
-  end
   def get_items
     @items = [{:key   => :show_person, 
                :name  => @person.name, 
@@ -104,5 +100,5 @@ class PeopleController < ApplicationController
                   :url => people_path})
     end
   end
-  
 end
+
