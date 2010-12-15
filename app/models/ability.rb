@@ -20,7 +20,7 @@ class Ability
       cannot :create, Person
       cannot :confirm, Purchase
     end
-    can [:create, :edit, :show], Purchase, :person_id => user.id
+    can [:read, :create, :edit, :update, :show], Purchase, :person_id => user.id
     can :read, Debt, :person_id => user.id
   end
 end

@@ -15,6 +15,9 @@ class Purchase < ActiveRecord::Base
   
   attr_readonly :person, :person_id
   
+  before_save :generate_slug
+  after_create :generate_slug
+
   accepts_nested_attributes_for :items
   
   scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
@@ -68,11 +71,6 @@ class Purchase < ActiveRecord::Base
     items.inject(0) {|sum,i| sum += i.amount }
   end
   
-
-  def name
-    "%s-%d" % [self.person.to_param, self.id]
-  end
-
   # Check whether a purchase is editable
   # A purchase is editable if it's in any of the "new", "edited" or "confirmed" states.
   def editable?
@@ -89,6 +87,10 @@ class Purchase < ActiveRecord::Base
     ["confirmed", "bookkept"].include?(self.workflow_state)
   end
 
+  def to_param
+    slug
+  end
+
   protected
   
   def cannot_purchase_stuff_in_the_future
@@ -100,5 +102,17 @@ class Purchase < ActiveRecord::Base
   
   def locked_when_finalized
     errors.add(:base, "Du kan inte ändra ett avslutat inköp") if finalized?
+  end
+
+  def generate_slug
+    return true if new_record?
+    slug = "%s%d-%d" % [self.business_unit.short_name, self.created_at.year, self.id]
+    if self.slug.blank?
+      Purchase.paper_trail_off
+      self.update_attribute(:slug, slug)
+      Purchase.paper_trail_on
+    else
+      self.slug = slug
+    end
   end
 end

@@ -1,5 +1,5 @@
 class PurchasesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :find_by => :slug
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
 
   # GET /purchases
@@ -19,7 +19,7 @@ class PurchasesController < ApplicationController
     @state_versions = []
     pv = @purchase
     until pv.nil?
-      @state_versions << OpenStruct.new(:version_date => pv.updated_at, :workflow_state => pv.workflow_state, :updated_by => pv.updated_by)
+      @state_versions << OpenStruct.new(:version_date => pv.updated_at || pv.created_at, :workflow_state => pv.workflow_state, :updated_by => pv.updated_by)
       pv = pv.previous_version
     end
 
@@ -121,7 +121,7 @@ class PurchasesController < ApplicationController
   protected
   def get_items
     @items = [{:key   => :show_purchase_path,
-               :name  => @purchase.name,
+               :name  => @purchase.slug,
                :url   => purchase_path(@purchase)},
     ]
     if @purchase.editable?

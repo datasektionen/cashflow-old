@@ -8,6 +8,7 @@ class CreatePurchases < ActiveRecord::Migration
       t.integer     :updated_by_id,     :null => false                    # last updated by
       t.references  :business_unit,     :null => false
       t.date        :purchased_at,      :null => false
+      t.string      :slug,              :null => false, :default => ""
       t.timestamps
     end
   end

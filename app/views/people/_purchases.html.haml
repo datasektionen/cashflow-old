@@ -3,7 +3,6 @@
   %table.datatable
     %thead
       %tr
-        %th ID
         %th Beskrivning
         %th Summa (SEK)
         %th Inköpt
@@ -12,17 +11,15 @@
     %tbody
       - person.purchases.each do |purchase|
         %tr
-          %td= purchase.id
-          %td= purchase.description
+          %td= link_to purchase.description, purchase
           %td= currency purchase.total
           %td= short_time purchase.purchased_at
           %td= status purchase
           %td
             = link_to "Redigera", edit_purchase_path(purchase)
-            = button_to "Ta bort", purchase, :method => :delete, :confirm => t('are_you_sure')
     %tfoot
       %tr
-        %th{:colspan => 2} Total
+        %th Total
         %td= currency person.total_purchased_amount
         %th{:colspan => 3}
 
