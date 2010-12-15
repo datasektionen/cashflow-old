@@ -73,6 +73,22 @@ class Purchase < ActiveRecord::Base
     "%s-%d" % [self.person.to_param, self.id]
   end
 
+  # Check whether a purchase is editable
+  # A purchase is editable if it's in any of the "new", "edited" or "confirmed" states.
+  def editable?
+    ["new", "edited", "confirmed"].include?(self.workflow_state)
+  end
+
+  # Check whether a purchase is bookkeepable
+  def keepable?
+    ["confirmed", "payed"].include?(self.workflow_state)
+  end
+
+  # Check whether a purchase is payable
+  def payable?
+    ["confirmed", "bookkept"].include?(self.workflow_state)
+  end
+
   protected
   
   def cannot_purchase_stuff_in_the_future

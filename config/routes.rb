@@ -1,7 +1,14 @@
 Cashflow::Application.routes.draw do  
   resources :product_types
   resources :business_units
-  resources :purchases
+  resources :purchases do
+    member do
+      put :confirm
+      put :pay
+      put :keep
+      put :cancel
+    end
+  end
   resources :debts
   
   resources :people do

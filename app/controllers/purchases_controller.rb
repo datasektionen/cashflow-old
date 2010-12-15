@@ -16,6 +16,13 @@ class PurchasesController < ApplicationController
   # GET /purchases/1
   # GET /purchases/1.xml
   def show
+    @state_versions = []
+    pv = @purchase
+    until pv.nil?
+      @state_versions << OpenStruct.new(:version_date => pv.updated_at, :workflow_state => pv.workflow_state, :updated_by => pv.updated_by)
+      pv = pv.previous_version
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @purchase }
@@ -60,6 +67,7 @@ class PurchasesController < ApplicationController
   # PUT /purchases/1.xml
   def update
     @purchase.updated_by = current_user
+    @purchase.workflow_state = "edited"
 
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
@@ -75,21 +83,53 @@ class PurchasesController < ApplicationController
   # DELETE /purchases/1
   # DELETE /purchases/1.xml
   def destroy
-    @purchase.destroy
+    #@purchase.destroy
 
     respond_to do |format|
       format.html { redirect_to(purchases_url) }
       format.xml  { head :ok }
     end
   end
+
+  def confirm
+    @purchase.confirm!
+    respond_to do |format|
+      format.html { redirect_to(purchase_path(@purchase))}
+    end
+  end
+  def pay
+    @purchase.pay!
+    respond_to do |format|
+      format.html { redirect_to(purchase_path(@purchase))}
+    end
+  end
+
+  def keep
+    @purchase.keep!
+    respond_to do |format|
+      format.html { redirect_to(purchase_path(@purchase))}
+    end
+  end
+
+  def cancel
+    @purchase.cancel!
+    respond_to do |format|
+      format.html { redirect_to(purchase_path(@purchase))}
+    end
+  end
+
   protected
   def get_items
     @items = [{:key   => :show_purchase_path,
                :name  => @purchase.name,
                :url   => purchase_path(@purchase)},
-              {:key   => :edit_purchase_path,
-               :name  => "Redigera",
-               :url   => edit_purchase_path(@purchase)},
-             ]
+    ]
+    if @purchase.editable?
+      @items << { 
+        :key   => :edit_purchase_path,
+        :name  => "Redigera",
+        :url   => edit_purchase_path(@purchase)
+      }
+    end
   end
 end

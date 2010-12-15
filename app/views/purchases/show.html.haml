@@ -1,4 +1,6 @@
 %h1 Inköp
+- if can?(:manage, Purchase)
+  = render :partial => "modify_form", :locals => {:purchase => @purchase}
 
 %dl
   %dt Inköpt av
@@ -32,3 +34,19 @@
       %tr
         %th Total
         %th= currency @purchase.total
+
+%fieldset
+  %legend Historik
+  %table
+    %thead
+      %tr
+        %th Status
+        %th Tidpunkt
+        %th Person
+    %tbody
+      - @state_versions.each do |version|
+        %tr
+          %td= status version
+          %td= short_time version.version_date
+          %td= link_to version.updated_by, version.updated_by
+      
