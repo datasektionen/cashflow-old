@@ -1,5 +1,5 @@
 class BusinessUnitsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :find_by => :short_name
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
 
   # GET /business_units
