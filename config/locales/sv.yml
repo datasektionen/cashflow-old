@@ -275,3 +275,17 @@
     bookkept:   "Bokförd"
     cancelled:  "Avslagen"
     finalized:  "Avslutad"
+
+  resources: 
+    people: "personer"
+    product_types: "produkttyper"
+    business_units: "affarsenheter"
+    purchases: "inkop"
+    debts: "skulder"
+  path_names:
+    new: "ny"
+    edit: "redigera"
+  routes:
+    purchases:
+      path_names:
+        new: "nytt"
