@@ -88,6 +88,15 @@ describe Ability do
       @ability.should be_able_to(:edit, @user.purchases.new)
     end
 
+    it "should not be able to confirm its own purchases" do
+      @ability.should_not be_able_to(:confirm, @user.purchases.new)
+    end
+
+    it "should not be able to pay/bookkeep its own purchases" do
+      @ability.should_not be_able_to(:pay, @user.purchases.new(:workflow_state => "confirmed"))
+      @ability.should_not be_able_to(:keep, @user.purchases.new(:workflow_state => "confirmed"))
+    end
+
     it "should be able to read its own debts" do
       @ability.should be_able_to(:read, @user.debts.new)
     end
@@ -144,7 +153,24 @@ describe Ability do
     end
 
     it "should be able to create new purchases for itself" do
-      @ability.should be_able_to(:manage, @user.purchases.new)
+      @ability.should be_able_to(:create, @user.purchases.new)
+      @ability.should be_able_to(:edit, @user.purchases.new)
+    end
+
+    it "should be able to view its own purchases" do
+      @ability.should be_able_to(:show, @user.purchases.new)
+    end
+
+    it "should not be able to confirm its own purchases" do
+      @ability.should_not be_able_to(:confirm, @user.purchases.new)
+    end
+
+    it "should not be able to pay/bookkeep its own purchases" do
+      @ability.should_not be_able_to(:pay, @user.purchases.new(:workflow_state => "confirmed"))
+      @ability.should_not be_able_to(:keep, @user.purchases.new(:workflow_state => "confirmed"))
+    end
+    it "should not be able to cancel its own purchases" do
+      @ability.should_not be_able_to(:cancel, @user.purchases.new)
     end
   end
 end
