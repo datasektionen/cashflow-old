@@ -6,3 +6,5 @@
 
 %article= @business_unit.description
 
+= render :partial => 'purchases/list', :locals => {:purchases => @business_unit.purchases}
+

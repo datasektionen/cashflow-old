@@ -1,0 +1,16 @@
+%table.datatable
+  %thead
+    %tr
+      %th ID
+      %th Beskrivning
+      %th Summa (SEK)
+      %th Inköpt
+      %th Status
+  %tbody
+    - purchases.each do |purchase|
+      %tr
+        %td= link_to purchase.slug, purchase
+        %td= link_to purchase.description, purchase
+        %td= currency purchase.total
+        %td= short_time purchase.purchased_at
+        %td= status purchase
