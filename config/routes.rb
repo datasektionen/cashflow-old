@@ -1,5 +1,5 @@
 Cashflow::Application.routes.draw do  
-  localized(['sv'], :verbose => true) do
+  localized(['sv']) do
     resources :product_types
     resources :business_units
     resources :purchases do
