@@ -122,7 +122,7 @@ var Bank = {
 
     } else if (clr === 9460) {
       return "GE Money Bank";
-    } else if (clr = 9469) {
+    } else if (clr === 9469) {
       return "GE Money Bank";
 
     } else if (9500 <= clr && clr <= 9547) {
