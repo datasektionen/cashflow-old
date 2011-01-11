@@ -289,3 +289,6 @@
     purchases:
       path_names:
         new: "nytt"
+    people:
+      path_names:
+        search: "sok"

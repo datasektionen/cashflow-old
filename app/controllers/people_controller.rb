@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  load_and_authorize_resource :find_by => :login
+  load_and_authorize_resource :find_by => :login, :except => :search
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
   
   
@@ -41,7 +41,10 @@ class PeopleController < ApplicationController
   # POST /people
   # POST /people.xml
   def create
-    @person = Person.new(params[:person])
+    search_options = params[:person].slice(*%w[login ugid email])
+    @person = Person.where(search_options).first
+    @person ||= Person.from_ldap(search_options)
+    
 
     respond_to do |format|
       if @person.save
@@ -85,6 +88,22 @@ class PeopleController < ApplicationController
     end
   end
   
+  def search
+    search_options = params.slice(*%w[login ugid email])
+    person = Person.where(search_options).first
+    already_imported = ! person.blank?
+    person ||= Person.from_ldap(search_options)
+    respond_to do |format|
+      format.json do
+        if already_imported
+          render :json => {:person => {:name => person.name}, :error => "Användaren finns redan", :url => person_url(person)}
+        else
+          render :json => person
+        end
+      end
+    end
+  end
+
   protected
   def get_items
     @items = [{:key   => :show_person, 
