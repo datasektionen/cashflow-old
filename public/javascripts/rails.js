@@ -197,5 +197,5 @@ $(document).ready(function(){
   });
 
   $('input.ui-datepicker').datepicker({dateFormat: 'yy-mm-dd'});
-})
+});
 
