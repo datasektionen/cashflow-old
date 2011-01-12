@@ -1,0 +1,9 @@
+- content_for :content do
+  %nav#sub_menu.horizontal
+    - if @items
+      = render_navigation(:items => @items)
+    - else
+      = render_navigation(:level => 2)
+  = yield
+= render :file => 'layouts/application'
+
