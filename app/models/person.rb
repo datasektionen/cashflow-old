@@ -8,8 +8,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :login, :email, :ugid
   validates :email, :email => true
   
-  attr_accessible :email, :bank_clearing_number, :bank_account_number
-  attr_accessor :bank_name
+  attr_accessible :email, :bank_clearing_number, :bank_account_number, :bank_name
   
   has_many :debts, :dependent => :restrict
   has_many :purchases, :dependent => :restrict
@@ -27,10 +26,6 @@ class Person < ActiveRecord::Base
   
   def name
     "%s %s" % [first_name, last_name]
-  end
-  
-  def bank_name
-    # TODO: parse from clearing number
   end
   
   def total_debt_amount
