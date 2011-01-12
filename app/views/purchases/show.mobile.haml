@@ -1,0 +1,6 @@
+%h1 Inköp
+
+= render :partial => 'info.html.haml', :locals => {:purchase => @purchase}
+= render :partial => 'items.html.haml', :locals => {:purchase => @purchase}
+= render :partial => 'history.html.haml', :locals => {:state_versions => @state_versions}
+
