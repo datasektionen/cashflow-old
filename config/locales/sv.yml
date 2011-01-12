@@ -257,6 +257,9 @@
     edit:
       title: "Redigera användare"
       commit: "Uppdatera"
+  purchases:
+    edit:
+      title: "Redigera inköp"
       
 
   formtastic:
