@@ -1,0 +1,16 @@
+#{@administrator.name} har nu registrerat ditt inköp ##{@purchase.id} som betald, du borde få pengarna inom några dagar.
+
+Ersättningen täcker:
+Beskrivning:        #{ @purchase.description }
+Kvittodatum:        #{ short_time @purchase.purchased_at }
+Affärsenhet/nämd:   #{ @purchase.business_unit.name }
+Registreringsdatum: #{ short_time @purchase.created_at }
+Varor:
+- @purchase.purchase_items.each do |item|
+  = "%s\t%s\t%s" % [currency item.amount, item.product_type, item.comment]
+
+Summa: #{currency @purchase.total}
+
+:textile
+  Detta är ett mail från "Cashflow":#{root_url}. Du får det för att du har registrerat att du vill ha ersättning för utlägg.
+

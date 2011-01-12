@@ -10,7 +10,13 @@ Cashflow::Application.routes.draw do
         put :cancel
       end
     end
-    resources :debts
+    resources :debts do
+      member do
+        put :pay
+        put :keep
+        put :cancel
+      end
+    end
 
     resources :people do
       collection do
