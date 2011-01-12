@@ -1,0 +1,16 @@
+%dl
+  %dt Inköpt av
+  %dd= purchase.person
+  %dt Inköpt
+  %dd= short_time purchase.purchased_at
+  %dt Beskrivning
+  %dd= purchase.description
+  %dt Total summa
+  %dd= currency purchase.total
+  %dt Status
+  %dd= status purchase
+  %dt Senast uppdaterad
+  %dd= short_time purchase.updated_at 
+  %dt Uppdaterad av
+  %dd= purchase.updated_by
+

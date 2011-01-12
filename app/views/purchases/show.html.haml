@@ -2,51 +2,7 @@
 - if can?(:manage, Purchase)
   = render :partial => "modify_form", :locals => {:purchase => @purchase}
 
-%dl
-  %dt Inköpt av
-  %dd= @purchase.person
-  %dt Inköpt
-  %dd= short_time @purchase.purchased_at
-  %dt Beskrivning
-  %dd= @purchase.description
-  %dt Total summa
-  %dd= currency @purchase.total
-  %dt Status
-  %dd= status @purchase
-  %dt Senast uppdaterad
-  %dd= short_time @purchase.updated_at 
-  %dt Uppdaterad av
-  %dd= @purchase.updated_by
+= render :partial => 'info', :locals => {:purchase => @purchase}
+= render :partial => 'items', :locals => {:purchase => @purchase}
+= render :partial => 'history', :locals => {:state_versions => @state_versions}
 
-%fieldset
-  %legend Inköpsdelar
-  %table
-    %thead
-      %tr
-        %th Kommentar
-        %th Summa
-    %tbody
-      - @purchase.items.each do |item|
-        %tr
-          %td= item.comment
-          %td= currency item.amount
-    %tfoot
-      %tr
-        %th Total
-        %th= currency @purchase.total
-
-%fieldset
-  %legend Historik
-  %table
-    %thead
-      %tr
-        %th Status
-        %th Tidpunkt
-        %th Person
-    %tbody
-      - @state_versions.each do |version|
-        %tr
-          %td= status version
-          %td= short_time version.version_date
-          %td= link_to version.updated_by, version.updated_by
-      
