@@ -48,9 +48,9 @@ class PurchasesController < ApplicationController
   # POST /purchases
   # POST /purchases.xml
   def create
-    @purchase = current_user.purchases.new(params[:purchase])
-    @purchase.updated_by = current_user
-    @purchase.created_by = current_user
+    @purchase = @current_user.purchases.new(params[:purchase])
+    @purchase.updated_by = @current_user
+    @purchase.created_by = @current_user
 
     respond_to do |format|
       if @purchase.save
@@ -66,7 +66,7 @@ class PurchasesController < ApplicationController
   # PUT /purchases/1
   # PUT /purchases/1.xml
   def update
-    @purchase.updated_by = current_user
+    @purchase.updated_by = @current_user
     @purchase.workflow_state = "edited"
 
     respond_to do |format|
