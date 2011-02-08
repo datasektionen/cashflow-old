@@ -17,7 +17,7 @@ gem 'i18n_routing'
 
 group :production do
   gem 'mysql'
-  gem 'activerecord-mysql2-adapter'
+  gem 'mysql2'
 end
 
 group :development do
