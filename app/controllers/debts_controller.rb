@@ -43,6 +43,7 @@ class DebtsController < ApplicationController
 
     respond_to do |format|
       if @debt.save
+        Notifier.debt_created(@debt, current_user).deliver
         format.html { redirect_to(@debt, :notice => 'Debt was successfully created.') }
         format.xml  { render :xml => @debt, :status => :created, :location => @debt }
       else
@@ -71,11 +72,34 @@ class DebtsController < ApplicationController
   # DELETE /debts/1.xml
   def destroy
     @debt = Debt.find(params[:id])
-    @debt.destroy
+    #@debt.destroy
 
     respond_to do |format|
       format.html { redirect_to(debts_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  def cancel
+    @debt.cancel!
+    Notifier.debt_cancelled(@debt, current_user).deliver
+    respond_to do |format|
+      format.html { redirect_to(debt_path(@debt)) }
+    end
+  end
+
+  def pay
+    @debt.pay!
+    Notifier.debt_paid(@debt, current_user).deliver
+    respond_to do |format|
+      format.html { redirect_to(debt_path(@debt)) }
+    end
+  end
+  
+  def keep
+    @debt.keep!
+    respond_to do |format|
+      format.html { redirect_to(debt_path(@debt)) }
     end
   end
 end

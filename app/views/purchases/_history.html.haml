@@ -1,0 +1,15 @@
+%fieldset
+  %legend Historik
+  %table
+    %thead
+      %tr
+        %th Status
+        %th Tidpunkt
+        %th Person
+    %tbody
+      - state_versions.each do |version|
+        %tr
+          %td= status version
+          %td= short_time version.version_date
+          %td= link_to version.updated_by, version.updated_by
+

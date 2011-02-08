@@ -5,7 +5,7 @@ class PurchasesController < ApplicationController
   # GET /purchases
   # GET /purchases.xml
   def index
-    @purchases = Purchase.accessible_by(current_ability)
+    @purchases = Purchase.accessible_by(current_ability).order("created_at desc")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -93,12 +93,14 @@ class PurchasesController < ApplicationController
 
   def confirm
     @purchase.confirm!
+    Notifier.purchase_approved(@purchase, current_user).deliver
     respond_to do |format|
       format.html { redirect_to(purchase_path(@purchase))}
     end
   end
   def pay
     @purchase.pay!
+    Notifier.purchase_paid(@purchase, current_user).deliver
     respond_to do |format|
       format.html { redirect_to(purchase_path(@purchase))}
     end
@@ -113,6 +115,7 @@ class PurchasesController < ApplicationController
 
   def cancel
     @purchase.cancel!
+    Notifier.purchase_denied(@purchase, current_user).deliver
     respond_to do |format|
       format.html { redirect_to(purchase_path(@purchase))}
     end

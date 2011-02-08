@@ -10,9 +10,19 @@ Cashflow::Application.routes.draw do
         put :cancel
       end
     end
-    resources :debts
+    resources :debts do
+      member do
+        put :pay
+        put :keep
+        put :cancel
+      end
+    end
 
-    resources :people
+    resources :people do
+      collection do
+        get :search
+      end
+    end
 
     # TODO: borde vi ha kanske nästla purchases och debts under people också?
     # Det skulle kinda make sense för mobil-appen, om man inte vill rendera all den infon på people#show

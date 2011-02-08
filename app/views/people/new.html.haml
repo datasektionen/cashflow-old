@@ -1,2 +1,46 @@
 %h1= t '.title'
-= render 'form'
+
+= semantic_form_for(@person) do |form|
+  = form.inputs :name => "Personuppgifter" do
+    = form.input :first_name, :input_html => {:disabled => true}
+    = form.input :last_name, :input_html => {:disabled => true}
+    = form.input :login, :input_html => {:class => "search"}
+    = form.input :email, :as => :email, :input_html => {:class => "search"}
+    = form.input :ugid, :input_html => {:class => "search"}
+    - if current_user.is?(:admin)
+      = form.input :role, :as => :select, :collection => Person::ROLES 
+  = form.buttons do
+    = form.commit_button :commit
+
+- # TODO: refactor this javascript and put it into a .js file somewhere
+:javascript
+  $(".search").blur(function (x) {
+    var param = $(this).val();
+    var search_param = $(this).attr('name').replace(/person\[(\w+)\]/, '$1');
+    if(param){
+      $.get("/people/search.json?" + search_param + "=" + param, 
+            function (data) {
+              var person = data.person;
+              if (!data.error) {
+                $("input[name$='person[first_name]']").val(person.first_name);
+                $("input[name$='person[last_name]']").val(person.last_name);
+                $("input[name$='person[login]']").val(person.login);
+                $("input[name$='person[email]']").val(person.email);
+                $("input[name$='person[ugid]']").val(person.ugid);
+              } else {
+                clearInputs();
+                $("form#new_person").prepend("<p class='error'>Användaren <a href='"+data.url+"'>"+data.person.name +"</a> finns redan.</p>");
+              }
+            }
+      );
+    }
+  });
+
+  function clearInputs () {
+    $("input[name$='person[first_name]']").val('');
+    $("input[name$='person[last_name]']").val('');
+    $("input[name$='person[login]']").val('');
+    $("input[name$='person[email]']").val('');
+    $("input[name$='person[ugid]']").val('');
+  };
+

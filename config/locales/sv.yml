@@ -257,6 +257,9 @@
     edit:
       title: "Redigera användare"
       commit: "Uppdatera"
+  purchases:
+    edit:
+      title: "Redigera inköp"
       
 
   formtastic:
@@ -289,3 +292,6 @@
     purchases:
       path_names:
         new: "nytt"
+    people:
+      path_names:
+        search: "sok"

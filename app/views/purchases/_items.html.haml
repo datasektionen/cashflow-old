@@ -1,0 +1,17 @@
+%fieldset
+  %legend Inköpsdelar
+  %table
+    %thead
+      %tr
+        %th Kommentar
+        %th Summa
+    %tbody
+      - purchase.items.each do |item|
+        %tr
+          %td= item.comment
+          %td= currency item.amount
+    %tfoot
+      %tr
+        %th Total
+        %th= currency purchase.total
+

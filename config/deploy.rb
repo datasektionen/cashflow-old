@@ -1,26 +1,21 @@
 require 'capistrano/ext/multistage'
-set :stages, %w[staging production]
+set :stages, %w(staging production)
 set :default_stage, "staging"
 
-set :application, "Cashflow"
-set :repository,  "git@git.d.ths.kth.se:cashflow.git"
-set :scm, :git
-
-set :deploy_to, "/var/rails/#{application}"
+set :application, "cashflow"
+set :repository, "git@turtle-soup.ben-and-jerrys.stacken.kth.se:cashflow.git"
+set :scm, "git"
+set :deploy_to, "/var/rails/#{application}" # Will be updated for each stage with stage specific path.
 set :user, "capistrano"
 set :use_sudo, false
-set :ssh_options, {:forward_agent => true}
 set :rails_env, "migration"
 set :tmp_path, "/var/tmp/rails"
 set :keep_releases, 3
+ssh_options[:forward_agent] = true
 
-role :web, "magic-brownies.ben-and-jerrys.stacken.kth.se"                          # Your HTTP server, Apache/etc
-role :app, "magic-brownies.ben-and-jerrys.stacken.kth.se"                          # This may be the same as your `Web` server
-role :db,  "magic-brownies.ben-and-jerrys.stacken.kth.se", :primary => true # This is where Rails migrations will run
-
-# If you are using Passenger mod_rails uncomment this:
-# if you're still using the script/reapear helper you will need
-# these http://github.com/rails/irs_process_scripts
+role :app, "magic-brownies.ben-and-jerrys.stacken.kth.se"
+role :web, "magic-brownies.ben-and-jerrys.stacken.kth.se"
+role :db,  "magic-brownies.ben-and-jerrys.stacken.kth.se", :primary => true
 
 namespace :deploy do
   task :start do ; end
@@ -44,13 +39,32 @@ namespace :deploy do
 
   desc "Set permissions for public/{stylesheets,javascripts}"
   task :set_permissions do
-    run "setfacl -m u:www-data:rwx #{release_path}/public/{stylesheets,javascripts}"
-    run "setfacl -d -m u:www-data:rwx #{release_path}/public/{stylesheets,javascripts}"
+    #run "setfacl -m user:www-data:rwx #{release_path}/public/{stylesheets,javascripts}"
+    #run "setfacl -d -m user:www-data:rwx #{release_path}/public/{stylesheets,javascripts}"
   end
-  
-  after "deploy:update_code", "deploy:update_config"
-  after "deploy:update_code", "deploy:symlink_tmp"
-  # after "deploy:update_code", "deploy:update_revision_partial"
-  after "deploy:update", "deploy:cleanup"
-    
+
+  after  "deploy:update_code", "deploy:update_config"
+  after  "deploy:update_code", "deploy:symlink_tmp"
+  after  "deploy:update_code", "deploy:set_permissions"
+  after  "deploy:update", "deploy:cleanup"
 end
+
+namespace :bundler do
+  namespace :bundler do  
+    task :create_symlink, :roles => :app do
+      set :bundle_dir, 'vendor/bundle'
+      set :shared_bundle_path, File.join(shared_path, 'bundle')
+      
+      run " cd #{release_path} && rm -rf #{bundle_dir}" # in the event it already exists..?
+      run "mkdir -p #{shared_bundle_path} && cd #{release_path} && ln -s #{shared_bundle_path} #{bundle_dir}"
+    end
+  end
+
+  task :bundle_new_release, :roles => :app do
+    bundler.create_symlink
+    run "cd #{release_path} ; bundle install --path #{shared_bundle_path} --without development test"
+  end
+end
+ 
+after 'deploy:update_code', 'bundler:bundle_new_release'
+
