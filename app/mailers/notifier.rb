@@ -1,7 +1,7 @@
 class Notifier < ActionMailer::Base
   add_template_helper(ApplicationHelper)
   default :from => "noreply@d.ths.kth.se"
-  default_url_options[:host] = Cashflow::Appliation.settings["default_host"]
+  default_url_options[:host] = Cashflow::Application.settings["default_host"]
 
   def purchase_approved(purchase, administrator)
     @purchase = purchase
