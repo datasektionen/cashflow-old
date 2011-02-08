@@ -14,8 +14,10 @@ gem 'formtastic', :git => 'git://github.com/justinfrench/formtastic.git', :branc
 gem 'simple-navigation'
 gem 'jquery-rails'
 gem 'i18n_routing'
+
 group :production do
   gem 'mysql'
+  gem 'activerecord-mysql2-adapter'
 end
 
 group :development do
