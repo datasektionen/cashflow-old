@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/justinfrench/formtastic.git
-  revision: f53e74a85587e035bac51a640c987b60911dc514
+  revision: bf3ed652cd2b8d063877472e4980bb4d7a1e8729
   branch: master
   specs:
     formtastic (1.2.3)
@@ -121,7 +121,6 @@ GEM
       daemons (>= 1.0.3)
       fastthread (>= 1.0.1)
       gem_plugin (>= 0.2.3)
-    mysql (2.8.1)
     mysql2 (0.2.6)
     net-ldap (0.1.1)
     net-scp (1.0.4)
@@ -215,7 +214,6 @@ DEPENDENCIES
   jquery-rails
   launchy
   mongrel
-  mysql
   mysql2
   net-ldap
   paper_trail

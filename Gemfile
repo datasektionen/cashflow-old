@@ -16,7 +16,6 @@ gem 'jquery-rails'
 gem 'i18n_routing'
 
 group :production do
-  gem 'mysql'
   gem 'mysql2'
 end
 
