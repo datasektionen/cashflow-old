@@ -60,6 +60,10 @@ describe Ability do
     it "should be able to manage debts" do
       @ability.should be_able_to(:manage, Debt.new)
     end
+
+    it "should be able to manage itself" do
+      @ability.should be_able_to(:manage, @user)
+    end
   end
 
   describe "ordinary user" do
