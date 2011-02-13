@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_ability
-    Ability.new(current_user)
+    @current_ability ||= Ability.new(current_user || current_user_session.try(:person))
   end
 
   rescue_from CanCan::AccessDenied do |exception|

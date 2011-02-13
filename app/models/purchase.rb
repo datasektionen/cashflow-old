@@ -1,6 +1,7 @@
 class Purchase < ActiveRecord::Base
   include Workflow
   has_paper_trail
+  has_friendly_id :slug
   
   belongs_to :person
   belongs_to :created_by, :class_name => "Person", :foreign_key => "created_by_id"
@@ -85,10 +86,6 @@ class Purchase < ActiveRecord::Base
   # Check whether a purchase is payable
   def payable?
     ["confirmed", "bookkept"].include?(self.workflow_state)
-  end
-
-  def to_param
-    slug
   end
 
   protected

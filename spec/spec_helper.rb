@@ -3,10 +3,14 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'authlogic/test_case'
+include Authlogic::TestCase
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+
+local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
 
 RSpec.configure do |config|
   # == Mock Framework
@@ -25,8 +29,16 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
   
-  local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
   CASClient::Frameworks::Rails::Filter.fake(local_config[:yourself][:ugid])
+
   
+end
+
+Person.create_from_ldap(:ugid => local_config[:yourself][:ugid])
+def login
+  session[:cas_user] = local_config[:yourself][:ugid]
+  session.update
+  @current_user = Person.find_by_ugid(session[:cas_user])
+  @current_user_session = PersonSession.create(@current_user)
 end
 

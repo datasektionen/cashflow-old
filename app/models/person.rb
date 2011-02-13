@@ -12,6 +12,8 @@ class Person < ActiveRecord::Base
   
   has_many :debts, :dependent => :restrict
   has_many :purchases, :dependent => :restrict
+
+  has_friendly_id :login
   
   # String representation of a user.
   # Basically the same as the cn column in the LDAP server, that is:
@@ -90,10 +92,6 @@ class Person < ActiveRecord::Base
     else
       nil
     end
-  end
-
-  def to_param
-    login
   end
 
   def is?(role)

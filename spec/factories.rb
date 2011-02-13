@@ -67,6 +67,7 @@ end
 Factory.define :purchase do |f|
   f.person        { Factory :person }
   f.description   { "test purchase" }
+  f.slug          { "test" }
   f.created_by    { Factory :person }
   f.updated_by    { Factory :person }
   f.business_unit { Factory :business_unit }
