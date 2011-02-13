@@ -49,6 +49,7 @@ GEM
     activesupport (3.0.0)
     arel (1.0.1)
       activesupport (~> 3.0.0)
+    babosa (0.2.2)
     builder (2.1.2)
     cancan (1.5.1)
     capistrano (2.5.19)
@@ -93,6 +94,8 @@ GEM
     fastthread (1.0.7)
     ffi (0.6.3)
       rake (>= 0.8.7)
+    friendly_id (3.2.1)
+      babosa (~> 0.2.1)
     gem_plugin (0.2.3)
     gherkin (2.3.3)
       json (~> 1.4.6)
@@ -209,6 +212,7 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails
   formtastic!
+  friendly_id
   haml (> 3.0.0)
   i18n_routing
   jquery-rails
@@ -219,7 +223,7 @@ DEPENDENCIES
   paper_trail
   rails (= 3.0.0)
   rcov
-  rspec-rails (~> 2.0.0)
+  rspec-rails
   ruby-debug
   rubycas-client
   shoulda

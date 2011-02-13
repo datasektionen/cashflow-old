@@ -14,6 +14,7 @@ gem 'formtastic', :git => 'git://github.com/justinfrench/formtastic.git', :branc
 gem 'simple-navigation'
 gem 'jquery-rails'
 gem 'i18n_routing'
+gem 'friendly_id'
 
 group :production do
   gem 'mysql2'
@@ -27,7 +28,7 @@ end
 
 # Gems for test environment
 group :test do
-  gem "rspec-rails", "~> 2.0.0"
+  gem "rspec-rails"
   gem 'rcov'
   gem 'shoulda'
   gem 'capybara'
