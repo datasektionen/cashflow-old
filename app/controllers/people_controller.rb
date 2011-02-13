@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  load_and_authorize_resource :find_by => :login, :except => :search
+  load_and_authorize_resource :except => :search
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
   
   

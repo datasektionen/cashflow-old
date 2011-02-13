@@ -8,6 +8,12 @@ describe PeopleController do
     end
   end
 
+  before(:each) do
+    activate_authlogic
+    @current_user = Factory :admin
+    @current_user_session = PersonSession.create(@current_user)
+  end
+
   describe "GET index" do
     it "assigns all people as @people" do
       Person.stub(:all) { [mock_person] }

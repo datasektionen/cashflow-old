@@ -1,5 +1,5 @@
 class PurchasesController < ApplicationController
-  load_and_authorize_resource :find_by => :slug
+  load_and_authorize_resource
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
 
   # GET /purchases

@@ -8,6 +8,12 @@ describe ProductTypesController do
     end
   end
 
+  before(:each) do
+    activate_authlogic
+    @current_user = Factory :admin
+    @current_user_session = PersonSession.create(@current_user)
+  end
+
   describe "GET index" do
     it "assigns all product_types as @product_types" do
       ProductType.stub(:all) { [mock_product_type] }
