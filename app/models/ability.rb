@@ -12,15 +12,18 @@ class Ability
       
       can :manage, [ProductType, BusinessUnit, Purchase, PurchaseItem, Debt]
       can :manage, Person, :id => user.id
+      can :index, Person
     elsif user.is? :accountant
       # Accountants should be able to read everything
       can :read, :all
       can :manage, Person, :id => user.id
+      can :index, Person
     else
       # Ordinary users can only edit themselves
       can :manage, Person, :id => user.id
       cannot :create, Person
       cannot :confirm, Purchase
+      cannot :index, Person
     end
     can [:read, :create, :edit, :update, :show], Purchase, :person_id => user.id
     can :read, Debt, :person_id => user.id

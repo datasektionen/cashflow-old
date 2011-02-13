@@ -9,7 +9,11 @@ describe Ability do
       @ability = Ability.new(@user)
     end
     it "should be able to manage people" do
-      @ability.should be_able_to(:manage, Person.new)
+      @ability.should be_able_to(:manage, Person)
+    end
+
+    it "should be able to index people" do
+      @ability.should be_able_to(:index, Person)
     end
     
     it "should be able to manage purchases" do
@@ -38,6 +42,10 @@ describe Ability do
 
     it "should be able to import people" do
       @ability.should be_able_to(:create, Person)
+    end
+
+    it "should be able to index people" do
+      @ability.should be_able_to(:index, Person.new)
     end
 
     it "should not be able to manage people" do
@@ -108,12 +116,20 @@ describe Ability do
     it "should not be able to edit its own debts" do
       @ability.should_not be_able_to(:edit, @user.debts.new)
     end
+
+    it "should not be able to index people" do
+      @ability.should_not be_able_to(:index, Person)
+    end
   end
 
   describe "accountant" do
     before(:each) do
       @user = Factory(:accountant)
       @ability = Ability.new(@user)
+    end
+
+    it "should be able to index people" do
+      @ability.should be_able_to(:index, Person)
     end
 
     it "should be able to read product types" do
