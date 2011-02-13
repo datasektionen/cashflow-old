@@ -10,9 +10,8 @@ describe BusinessUnitsController do
 
   describe "valid business unit editor" do
     before(:each) do
-      activate_authlogic
       @current_user = Factory :treasurer
-      @current_user_session = PersonSession.create(@current_user)
+      login
     end
 
     describe "GET index" do

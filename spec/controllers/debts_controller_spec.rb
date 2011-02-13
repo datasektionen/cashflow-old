@@ -9,9 +9,8 @@ describe DebtsController do
   end
 
   before(:each) do
-    activate_authlogic
     @current_user = Factory :admin
-    @current_user_session = PersonSession.create(@current_user)
+    login
   end
   
   describe "GET index" do

@@ -36,9 +36,7 @@ end
 
 Person.create_from_ldap(:ugid => local_config[:yourself][:ugid])
 def login
-  session[:cas_user] = local_config[:yourself][:ugid]
-  session.update
-  @current_user = Person.find_by_ugid(session[:cas_user])
+  activate_authlogic
   @current_user_session = PersonSession.create(@current_user)
 end
 
