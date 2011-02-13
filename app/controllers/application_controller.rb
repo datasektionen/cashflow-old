@@ -27,5 +27,9 @@ class ApplicationController < ActionController::Base
   def current_ability
     Ability.new(current_user)
   end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    render :file => "#{Rails.root}/public/403.html", :status => 403
+  end
   
 end
