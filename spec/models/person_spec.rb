@@ -6,6 +6,7 @@ describe Person do
   end
   
   it "should have a default role of \"\"" do
+    @person = Person.new
     @person.role.should == ""
   end
   

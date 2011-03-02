@@ -13,7 +13,7 @@ describe Purchase do
     @purchase.destroy
     @purchase.person.destroy if @purchase.person
   end
-  
+
   it "should be invalid without an owner" do
     @purchase.person = nil
     @purchase.should_not be_valid
@@ -22,11 +22,11 @@ describe Purchase do
   it "should not ever change owner" do
     new_person = Factory :person
     @purchase.should be_valid
-    
+
     @purchase.person = new_person
     @purchase.save.should be_true
     @purchase.reload.person.should_not ==(new_person)
-    
+
     @purchase.update_attributes(:person_id => new_person.id)
     @purchase.save.should be_true
     @purchase.reload.person.should_not ==(new_person)
