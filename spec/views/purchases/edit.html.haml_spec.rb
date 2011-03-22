@@ -7,7 +7,7 @@ describe "purchases/edit.html.haml" do
     ))
   end
 
-  it "renders the edit purchase form" do
+  xit "renders the edit purchase form" do
     render
 
     # Run the generator again with the --webrat-matchers flag if you want to use webrat matchers

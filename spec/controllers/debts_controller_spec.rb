@@ -15,8 +15,9 @@ describe DebtsController do
   
   describe "GET index" do
     it "assigns all debts as @debts" do
-      Debt.stub(:all) { [mock_debt] }
+      Debt.stub!(:all) { [mock_debt] }
       get :index
+      debugger
       assigns(:debts).should eq([mock_debt])
     end
   end

@@ -5,7 +5,7 @@ describe "purchases/show.html.haml" do
     @purchase = assign(:purchase, stub_model(Purchase))
   end
 
-  it "renders attributes in <p>" do
+  xit "renders attributes in <p>" do
     render
   end
 end
