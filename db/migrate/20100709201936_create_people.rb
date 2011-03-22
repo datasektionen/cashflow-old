@@ -1,7 +1,7 @@
 class CreatePeople < ActiveRecord::Migration
   def self.up
     create_table :people do |t|
-      t.string :ugid, :null => false
+      t.string :username, :null => false
       t.string :login, :null => false
       t.string :first_name, :null => false
       t.string :last_name, :null => false

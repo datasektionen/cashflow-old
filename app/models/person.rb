@@ -1,11 +1,17 @@
 class Person < ActiveRecord::Base
-  acts_as_authentic do |c|
-    c.login_field = 'ugid'
-  end
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable, :lockable and :timeoutable
+  #devise :database_authenticatable, :registerable,
+         #:recoverable, :rememberable, :trackable, :validatable
+
+
+  devise :cas_authenticatable
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
 
   ROLES = {"Kassör" => "treasurer", "Administratör" => "admin", "Revisor" => "accountant"}
 
-  validates_presence_of :first_name, :last_name, :login, :email, :ugid
+  validates_presence_of :first_name, :last_name, :login, :email, :username
   validates :email, :email => true
   
   attr_accessible :email, :bank_clearing_number, :bank_account_number, :bank_name
@@ -44,7 +50,7 @@ class Person < ActiveRecord::Base
   # The following filters are allowed:
   # * first_name
   # * last_name
-  # * ugid
+  # * username
   # * login
   # * email
   # 
@@ -54,7 +60,7 @@ class Person < ActiveRecord::Base
   def self.from_ldap(options = {})
     filters = {:givenName   => options[:first_name],
                :sn          => options[:last_name],
-               :ugKthid     => options[:ugid],
+               :ugKthid     => options[:username],
                :ugusername  => options[:login],
                :mail        => options[:email]}
     
@@ -77,7 +83,7 @@ class Person < ActiveRecord::Base
       person.first_name = user.givenName.first
       person.last_name = user.sn.first
       person.login = user.ugusername.first
-      person.ugid = user.ugkthid.first
+      person.username = user.ugkthid.first
       person.email = user.mail.first
       return person
     end

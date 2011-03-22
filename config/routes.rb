@@ -1,4 +1,6 @@
 Cashflow::Application.routes.draw do  
+  devise_for :people
+
   localized(['sv']) do
     resources :product_types
     resources :business_units
@@ -32,9 +34,11 @@ Cashflow::Application.routes.draw do
     #   resources :debts
     #   resources :purchases
     # end
+    # En annan tanke är att lägga sånt under en /my controller,
+    # så att man loggar in och hamnar på /mina/sidor (eller något lämpligare), som är en overview,
+    # och så kan man gå till /mina/inkop, /mina/skulder eller whatever
+    # 
 
-    match 'login', :to => "person_sessions#new"
-    match 'logout', :to => "person_sessions#destroy"
     root :to => "welcome#index"
   end
 end

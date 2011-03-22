@@ -11,7 +11,7 @@
   %tbody
     - for person in @people
       %tr{ :class => cycle(:odd, :even) }
-        %td= link_to person.ugid, person_path(person)
+        %td= link_to person.username, person_path(person)
         %td= link_to person.cn,   person_path(person)
         %td= person.email
         %td.actions
