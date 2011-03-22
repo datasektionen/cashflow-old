@@ -7,7 +7,7 @@ describe "people/edit.html.haml" do
     ))
   end
 
-  it "renders the edit person form" do
+  xit "renders the edit person form" do
     render
 
     # Run the generator again with the --webrat-matchers flag if you want to use webrat matchers
