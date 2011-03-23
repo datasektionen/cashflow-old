@@ -1,5 +1,5 @@
 def login(person)  
-  CASClient::Frameworks::Rails::Filter.fake(person.ugid)
+  CASClient::Frameworks::Rails::Filter.fake(person.username)
   visit root_path
 end
 

@@ -48,9 +48,9 @@ class PurchasesController < ApplicationController
   # POST /purchases
   # POST /purchases.xml
   def create
-    @purchase = @current_user.purchases.new(params[:purchase])
-    @purchase.updated_by = @current_user
-    @purchase.created_by = @current_user
+    @purchase = @current_person.purchases.new(params[:purchase])
+    @purchase.updated_by = @current_person
+    @purchase.created_by = @current_person
 
     respond_to do |format|
       if @purchase.save
@@ -66,7 +66,7 @@ class PurchasesController < ApplicationController
   # PUT /purchases/1
   # PUT /purchases/1.xml
   def update
-    @purchase.updated_by = @current_user
+    @purchase.updated_by = @current_person
     @purchase.workflow_state = "edited"
 
     respond_to do |format|
@@ -93,14 +93,14 @@ class PurchasesController < ApplicationController
 
   def confirm
     @purchase.confirm!
-    Notifier.purchase_approved(@purchase, current_user).deliver
+    Notifier.purchase_approved(@purchase, current_person).deliver
     respond_to do |format|
       format.html { redirect_to(purchase_path(@purchase))}
     end
   end
   def pay
     @purchase.pay!
-    Notifier.purchase_paid(@purchase, current_user).deliver
+    Notifier.purchase_paid(@purchase, current_person).deliver
     respond_to do |format|
       format.html { redirect_to(purchase_path(@purchase))}
     end
@@ -115,7 +115,7 @@ class PurchasesController < ApplicationController
 
   def cancel
     @purchase.cancel!
-    Notifier.purchase_denied(@purchase, current_user).deliver
+    Notifier.purchase_denied(@purchase, current_person).deliver
     respond_to do |format|
       format.html { redirect_to(purchase_path(@purchase))}
     end

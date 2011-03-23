@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
-  skip_before_filter :cas_filter #CASClient::Frameworks::Rails::Filter
-  
+  skip_before_filter :authenticate_person!
+
   def index
     @page_title = "start"
   end

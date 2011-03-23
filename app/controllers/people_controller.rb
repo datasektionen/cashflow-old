@@ -41,7 +41,7 @@ class PeopleController < ApplicationController
   # POST /people
   # POST /people.xml
   def create
-    search_options = params[:person].slice(*%w[login ugid email])
+    search_options = params[:person].slice(*%w[login username email])
     @person = Person.where(search_options).first
     @person ||= Person.from_ldap(search_options)
     
@@ -60,7 +60,7 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-    if params[:person][:role] && current_user.is?(:admin)
+    if params[:person][:role] && current_person.is?(:admin)
       @person.role = params[:person][:role]
       @person.save
     end
@@ -89,7 +89,7 @@ class PeopleController < ApplicationController
   end
   
   def search
-    search_options = params.slice(*%w[login ugid email])
+    search_options = params.slice(*%w[login username email])
     person = Person.where(search_options).first
     already_imported = ! person.blank?
     person ||= Person.from_ldap(search_options)

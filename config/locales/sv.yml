@@ -176,7 +176,7 @@
         first_name: "Förnamn"
         last_name: "Efternamn"
         login: "KTH-användarnamn"
-        ugid: "KTH-ugid"
+        username: "KTH-ugid"
         email: "E-post"
         bank_clearing_number: "Clearingnummer"
         bank_account_number: "Kontonummer"

@@ -24,7 +24,7 @@
       = render :partial => 'menus/apps'
       %header.main
         %h1= link_to "Cashflow", root_url
-        - if logged_in?
+        - if person_signed_in?
           %nav#main_menu.horizontal
             = render_navigation(:level => 1)
       %section.clearfix#content

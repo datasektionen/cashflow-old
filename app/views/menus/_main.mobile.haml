@@ -1,6 +1,6 @@
 %ul
   - if logged_in?
-    %li.active= link_to "Min sida", person_path(current_user)
+    %li.active= link_to "Min sida", person_path(current_person)
     %li= link_to "Inköp", purchases_path
     %li= link_to "Användare", people_path
     %li= link_to "Skulder", debts_path

@@ -1,7 +1,7 @@
 # Configures your navigation
 SimpleNavigation::Configuration.run do |navigation|
   navigation.items do |primary|
-    primary.item :my_page, 'Min sida', person_path(current_user)
+    primary.item :my_page, 'Min sida', person_path(current_person)
     primary.item :purchases, 'Inköp', purchases_path, :highlights_on => /\/purchases/ do |sub|
       sub.item :all_purchases, "Alla inköp", purchases_path
       sub.item :new_purchase, "Lägg till inköp", new_purchase_path
@@ -14,7 +14,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
-    if current_user.is?(:admin)
+    if current_person.is?(:admin)
       primary.item(:people, "Användare", people_path, :highlights_on => /\/people/)
     end
 
