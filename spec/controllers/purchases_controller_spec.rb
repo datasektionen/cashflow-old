@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe PurchasesController do
+  render_views
 
   def mock_purchase(stubs={})
     (@mock_purchase ||= mock_model(Purchase).as_null_object).tap do |purchase|
