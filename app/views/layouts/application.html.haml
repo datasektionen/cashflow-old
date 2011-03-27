@@ -20,7 +20,7 @@
       = stylesheet_link_tag 'jquery-ui.css'
   %body
     #root
-      = session_change_link
+      = render :partial => 'menus/session'
       = render :partial => 'menus/apps'
       %header.main
         %h1= link_to "Cashflow", root_url

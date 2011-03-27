@@ -269,6 +269,8 @@
       title: "Redigera skuld"
     show:
       title: "Skuld"
+    new:
+      title: "Lägg till ny skuld"
       
 
   formtastic:
