@@ -7,7 +7,7 @@
     = form.input :login, :input_html => {:class => "search"}
     = form.input :email, :as => :email, :input_html => {:class => "search"}
     = form.input :username, :input_html => {:class => "search"}
-    - if current_user.is?(:admin)
+    - if current_person.is?(:admin)
       = form.input :role, :as => :select, :collection => Person::ROLES 
   = form.buttons do
     = form.commit_button :commit
