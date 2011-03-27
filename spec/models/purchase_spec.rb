@@ -163,4 +163,16 @@ describe Purchase do
     Purchase.exists?(:id => purchase_id).should be_false
     PurchaseItem.exists?(:id => item_id).should be_false
   end
+
+  it "should generate a slug before being saved" do
+    @purchase.slug = ''
+    @purchase.should be_valid
+    @purchase.slug.should_not be_blank
+  end
+
+  it "should update the generated slug properly after being saved" do
+    @purchase.save
+    @purchase.slug.should_not be_blank
+    @purchase.slug.should =~ /-#{@purchase.id}$/
+  end
 end

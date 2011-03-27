@@ -16,8 +16,8 @@ class Purchase < ActiveRecord::Base
   
   attr_readonly :person, :person_id
   
-  before_save :generate_slug
-  after_create :generate_slug
+  before_validation :generate_slug
+  after_save :generate_slug
 
   accepts_nested_attributes_for :items
   
@@ -102,14 +102,13 @@ class Purchase < ActiveRecord::Base
   end
 
   def generate_slug
-    return true if new_record?
-    slug = "%s%d-%d" % [self.business_unit.short_name, self.created_at.year, self.id]
-    if self.slug.blank?
+    slug = "%s%d-%d" % [self.business_unit.try(:short_name), self.created_at.try(:year), self.id]
+    if new_record?
+      self.slug = slug
+    elsif self.slug !~ /#{slug}/
       Purchase.paper_trail_off
       self.update_attribute(:slug, slug)
       Purchase.paper_trail_on
-    else
-      self.slug = slug
     end
   end
 end

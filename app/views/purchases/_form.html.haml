@@ -1,4 +1,5 @@
 = semantic_form_for @purchase do |form|
+  = form.semantic_errors
   = form.semantic_errors :base
   = form.inputs :name => "Beskrivning" do
     = form.input :purchased_at, :as => :datepicker
