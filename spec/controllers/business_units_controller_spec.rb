@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe BusinessUnitsController do
+  render_views
+  login_admin
 
   def mock_business_unit(stubs={})
     (@mock_business_unit ||= mock_model(BusinessUnit).as_null_object).tap do |business_unit|
@@ -9,10 +11,6 @@ describe BusinessUnitsController do
   end
 
   describe "valid business unit editor" do
-    before(:each) do
-      @current_user = Factory :treasurer
-      login
-    end
 
     describe "GET index" do
       it "assigns all business_units as @business_units" do

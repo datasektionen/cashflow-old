@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe PeopleController do
   render_views
+  login_admin
 
   def mock_person(stubs={})
     (@mock_person ||= mock_model(Person).as_null_object).tap do |person|
