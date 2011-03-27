@@ -62,5 +62,17 @@ class Notifier < ActionMailer::Base
       format.text
     end
   end
+
+  def debt_cancelled(debt, administrator)
+    @debt = debt
+    @administrator = administrator
+    mail(:to => @debt.person.email,
+         :subject => "Skuld struken",
+         :cc => @administrator.email,
+         :reply_to => @administrator.email
+        ) do |format|
+      format.text
+    end
+  end
 end
 

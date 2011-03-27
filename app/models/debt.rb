@@ -20,12 +20,12 @@ class Debt < ActiveRecord::Base
   #       /                                 /
   #  (new) -- :keep --> (bookkept) -- :pay
   #      \
-  #        :cancel --> (cancelled)
+  #        :cancel --> (anulled)
   # 
   workflow do
     # default state
     state :new do
-      event :cancel, :transitions_to => :cancelled
+      event :cancel, :transitions_to => :anulled
       event :pay, :transitions_to => :paid
       event :keep, :transitions_to => :bookkept
     end
@@ -40,7 +40,7 @@ class Debt < ActiveRecord::Base
     # both bookkept and paid
     state :finalized
     # cancelled (duh)
-    state :cancelled
+    state :anulled
   end
   
   def locked_when_finalized

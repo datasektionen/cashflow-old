@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe PurchasesController do
   render_views
+  login_admin
 
   def mock_purchase(stubs={})
     (@mock_purchase ||= mock_model(Purchase).as_null_object).tap do |purchase|
@@ -13,15 +14,16 @@ describe PurchasesController do
     it "assigns all purchases as @purchases" do
       Purchase.stub(:all) { [mock_purchase] }
       get :index
+      debugger
       assigns(:purchases).should eq([mock_purchase])
     end
   end
 
   describe "GET show" do
     it "assigns the requested purchase as @purchase" do
-      Purchase.stub(:find).with("37") { mock_purchase }
-      get :show, :id => "37"
-      assigns(:purchase).should be(mock_purchase)
+      purchase = Factory(:purchase)
+      get :show, :id => purchase.id
+      assigns(:purchase).should be(purchase)
     end
   end
 
