@@ -44,6 +44,7 @@ describe Debt do
       @debt.workflow_state = state
       @debt.save
       @debt.should be_valid
+      @debt.cancellable?.should be_false
       @debt.send("#{state}?").should be_true
       lambda {@debt.cancel!}.should raise_error(Workflow::NoTransitionAllowed)
     end
@@ -61,6 +62,7 @@ describe Debt do
     it "should be payable if #{state}" do
       @debt.workflow_state = state
       @debt.save
+      @debt.payable?.should be_true
       @debt.should be_valid
       lambda {@debt.pay!}.should_not raise_error
     end
@@ -70,6 +72,7 @@ describe Debt do
     it "should be 'bookkeepable' if #{state}" do
       @debt.workflow_state = state
       @debt.save
+      @debt.keepable?.should be_true
       @debt.should be_valid
       lambda {@debt.keep!}.should_not raise_error
     end

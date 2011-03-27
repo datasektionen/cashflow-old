@@ -172,6 +172,7 @@
         amount: "Summa"
         description: "Beskrivning"
         workflow_state: "Status"
+        business_unit: "Affärsenhet"
       person:
         first_name: "Förnamn"
         last_name: "Efternamn"
@@ -260,6 +261,14 @@
   purchases:
     edit:
       title: "Redigera inköp"
+  debts:
+    index:
+      title: "Skulder"
+      new_debt: "Lägg till ny skuld"
+    edit:
+      title: "Redigera skuld"
+    show:
+      title: "Skuld"
       
 
   formtastic:

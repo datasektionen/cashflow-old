@@ -1,14 +1,19 @@
 %h1= t('.title')
-%p= link_to t('.new_debt'), new_debt_path
 
 %table
   %thead
     %tr
+      %th Skuld
+      %th Person
+      %th Summa
       %th{:colspan => 3}= t 'actions'
   
   %tbody
     - for debt in @debts
       %tr{ :class => cycle(:odd, :even) }
-        %td.action= link_to t('show'), debt
-        %td.action= link_to t('edit'), edit_debt_path(debt)
-        %td.action= link_to t('destroy'), debt, :confirm => t('are_you_sure'), :method => :delete
+        %td= link_to debt.id, debt
+        %td= link_to debt.person
+        %td= currency debt.amount
+        - if can?(:modify, debt)
+          %td.action= link_to t('edit'), edit_debt_path(debt)
+          %td.action= link_to t('destroy'), debt, :confirm => t('are_you_sure'), :method => :delete

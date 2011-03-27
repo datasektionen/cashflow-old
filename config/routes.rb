@@ -12,7 +12,7 @@ Cashflow::Application.routes.draw do
         put :cancel
       end
     end
-    resources :debts do
+    resources :debts, :except => [:edit, :update, :destroy] do
       member do
         put :pay
         put :keep

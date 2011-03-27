@@ -1,6 +1,22 @@
 %h1= t '.title'
-%p
-  = link_to t('back'), debts_path
-  = link_to t('edit'), edit_debt_path(@debt)
 
+- if can?(:manage, Debt)
+  = render :partial => "modify_form", :locals => {:debt => @debt}
 %dl
+  %dt Person
+  %dd= @debt.person
+
+  %dt Summa
+  %dd= currency @debt.amount
+
+  %dt Affärsenhet
+  %dd= @debt.business_unit
+
+  %dt Skapad
+  %dd= @debt.created_at
+
+  %dt Senast ändrad
+  %dd= @debt.updated_at
+
+  %dt Status
+  %dd= status @debt

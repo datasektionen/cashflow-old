@@ -1,0 +1,8 @@
+%nav
+  %ul
+    %li= button_to "Avslå", cancel_debt_path(debt), :method => :put, :confirm => "Är du säker?"
+    - if debt.keepable?
+      %li= button_to "Bokför", keep_debt_path(debt), :method => :put, :confirm => "Är du säker?"
+    - if debt.payable?
+      %li= button_to "Markera som betald", pay_debt_path(debt), :method => :put, :confirm => "Är du säker?"
+

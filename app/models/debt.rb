@@ -46,4 +46,18 @@ class Debt < ActiveRecord::Base
   def locked_when_finalized
     errors.add(:base, "Du kan inte redigera en avslutad skuld") if finalized?
   end
+
+  def cancellable?
+    self.new?
+  end
+
+  def payable?
+    self.new? || self.bookkept?
+  end
+
+  def keepable?
+    self.new? || self.paid?
+  end
+    
+
 end

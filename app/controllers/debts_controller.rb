@@ -32,10 +32,6 @@ class DebtsController < ApplicationController
     end
   end
 
-  # GET /debts/1/edit
-  def edit
-  end
-
   # POST /debts
   # POST /debts.xml
   def create
@@ -50,33 +46,6 @@ class DebtsController < ApplicationController
         format.html { render :action => "new" }
         format.xml  { render :xml => @debt.errors, :status => :unprocessable_entity }
       end
-    end
-  end
-
-  # PUT /debts/1
-  # PUT /debts/1.xml
-  def update
-
-    respond_to do |format|
-      if @debt.update_attributes(params[:debt])
-        format.html { redirect_to(@debt, :notice => 'Debt was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @debt.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /debts/1
-  # DELETE /debts/1.xml
-  def destroy
-    @debt = Debt.find(params[:id])
-    #@debt.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(debts_url) }
-      format.xml  { head :ok }
     end
   end
 
