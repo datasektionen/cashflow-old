@@ -7,17 +7,18 @@
         %th Beskrivning
         %th Summa (SEK)
         %th Status
-        %th
+        - if can? :modify, Debt
+          %th
     %tbody
       - person.debts.each do |debt|
         %tr
           %td= debt.id
           %td= debt.description
           %td.money= currency debt.amount
-          %td= t "state.#{debt.workflow_state}"
+          %td= t "workflow_state.#{debt.workflow_state}"
           %td
-            = link_to "Redigera", edit_debt_path(debt)
-            = button_to "Ta bort", debt, :method => :delete, :confirm => t('are_you_sure')
+            - if can?(:modify, debt) && debt.cancellable?
+              = button_to "Stryk", cancel_debt_path(debt), :method => :put, :confirm => "Är du säker?"
     %tfoot
       %tr
         %td.bold{:colspan => 2} Total

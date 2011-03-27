@@ -1,7 +1,7 @@
 %nav
   %ul
     - if debt.cancellable?
-      %li= button_to "Avslå", cancel_debt_path(debt), :method => :put, :confirm => "Är du säker?"
+      %li= button_to "Stryk", cancel_debt_path(debt), :method => :put, :confirm => "Är du säker?"
     - if debt.keepable?
       %li= button_to "Bokför", keep_debt_path(debt), :method => :put, :confirm => "Är du säker?"
     - if debt.payable?
