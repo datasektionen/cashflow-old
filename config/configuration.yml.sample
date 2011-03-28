@@ -6,6 +6,9 @@ production: &production
   ldap_host: ldap.sys.kth.se
   ldap_port: 389
 
-development:
+development: &development
   ldap_host: localhost
   ldap_port: 9999
+
+test:
+  <<: *development

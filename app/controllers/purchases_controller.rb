@@ -51,7 +51,6 @@ class PurchasesController < ApplicationController
     @purchase = @current_person.purchases.new(params[:purchase])
     @purchase.updated_by = @current_person
     @purchase.created_by = @current_person
-    debugger
 
     respond_to do |format|
       if @purchase.save
