@@ -1,10 +1,10 @@
 Feature: Administering debts
   In order to get money back from our members
-  As a Cashier
+  As a treasurer
   I want to keep track on members' debts
   
   Background:
-    Given a person with the "cashier" role
+    Given a person with the "treasurer" role
     And I am logged in as the person
   
   @wip

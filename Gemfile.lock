@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/gunark/rubycas-client.git
+  revision: 27d514872fe6291d8f56eee3c75da7ee10683b6d
+  specs:
+    rubycas-client (2.1.0)
+      activesupport
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -31,15 +38,20 @@ GEM
     activesupport (3.0.0)
     arel (1.0.1)
       activesupport (~> 3.0.0)
-    babosa (0.2.2)
+    babosa (0.3.0)
     bcrypt-ruby (2.1.4)
     builder (2.1.2)
-    cancan (1.6.2)
+    cancan (1.6.3)
     capistrano (2.5.20)
       highline
+      highline
+      net-scp
       net-scp (>= 1.0.0)
+      net-sftp
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
+      net-ssh
+      net-ssh-gateway
       net-ssh-gateway (>= 1.0.0)
     capybara (0.4.1.2)
       celerity (>= 0.7.9)
@@ -69,9 +81,10 @@ GEM
     culerity (0.2.15)
     daemons (1.1.0)
     database_cleaner (0.6.6)
-    devise (1.1.8)
+    devise (1.2.0)
       bcrypt-ruby (~> 2.1.2)
-      warden (~> 1.0.2)
+      orm_adapter (~> 0.0.3)
+      warden (~> 1.0.3)
     devise_cas_authenticatable (1.0.0.alpha4)
       devise (>= 1.0.6)
       rubycas-client (~> 2.1.0)
@@ -89,8 +102,8 @@ GEM
       actionpack (>= 2.3.7)
       activesupport (>= 2.3.7)
       i18n (~> 0.4)
-    friendly_id (3.2.1)
-      babosa (~> 0.2.1)
+    friendly_id (3.2.1.1)
+      babosa (~> 0.3.0)
     gem_plugin (0.2.3)
     gherkin (2.3.5)
       json (>= 1.4.6)
@@ -120,7 +133,7 @@ GEM
       fastthread (>= 1.0.1)
       gem_plugin (>= 0.2.3)
     mysql2 (0.2.6)
-    net-ldap (0.2)
+    net-ldap (0.2.2)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -129,11 +142,12 @@ GEM
     net-ssh-gateway (1.0.1)
       net-ssh (>= 1.99.1)
     nokogiri (1.4.4)
+    orm_adapter (0.0.4)
     paper_trail (2.0.2)
       rails (~> 3)
     polyglot (0.3.1)
     rack (1.2.2)
-    rack-mount (0.6.13)
+    rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
       rack (>= 1.0)
@@ -170,8 +184,6 @@ GEM
       ruby-debug-base (~> 0.10.4.0)
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
-    rubycas-client (2.1.0)
-      activesupport
     rubyzip (0.9.4)
     selenium-webdriver (0.1.4)
       childprocess (>= 0.1.7)
@@ -224,6 +236,7 @@ DEPENDENCIES
   rcov
   rspec-rails
   ruby-debug
+  rubycas-client!
   shoulda
   simple-navigation
   spork

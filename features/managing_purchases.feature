@@ -1,10 +1,10 @@
 Feature: Managing purchases
   In order to make our members happy
-  As a Cashier
+  As a treasurer
   I want to manage purchases made
   
   Background:
-    Given a person with the "cashier" role
+    Given a person with the "treasurer" role
     And I am logged in as the person
     
   @wip
