@@ -55,6 +55,10 @@ class BusinessUnitsController < ApplicationController
   # PUT /business_units/1
   # PUT /business_units/1.xml
   def update
+    unless params[:business_unit]
+      render :action => "edit"
+      return
+    end
     respond_to do |format|
       if @business_unit.update_attributes(params[:business_unit])
         format.html { redirect_to(@business_unit, :notice => 'Business unit was successfully updated.') }

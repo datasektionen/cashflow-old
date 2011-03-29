@@ -1,6 +1,6 @@
 def login(person)
-  require 'casclient/frameworks/rails/filter'
-  CASClient::Frameworks::Rails::Filter.fake(person.username)
+  debugger
+  ""
 end
 
 Given /^I am logged in as the person$/ do
@@ -15,6 +15,6 @@ Given /^I log in as the person$/ do
 end
 
 Given /^I am not authenticated$/ do
-  visit('/people/sign_out')
+  visit('/sign_out')
 end
 
