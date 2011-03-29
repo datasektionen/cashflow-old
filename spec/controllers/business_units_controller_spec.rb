@@ -40,6 +40,14 @@ describe BusinessUnitsController do
         assigns(:business_units).should eq([mock_business_unit])
       end
     end
+
+    describe "GET show" do
+      it "assigns the reåuested business_unit as @business_unit" do
+        BusinessUnit.stub(:find).with("37") { mock_business_unit }
+        get :show, :id => "37"
+        assigns(:business_unit).should be(mock_business_unit)
+      end
+    end
       
   end
 
