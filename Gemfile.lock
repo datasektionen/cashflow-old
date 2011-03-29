@@ -31,15 +31,15 @@ GEM
     activesupport (3.0.0)
     arel (1.0.1)
       activesupport (~> 3.0.0)
-    babosa (0.3.0)
+    babosa (0.3.2)
     bcrypt-ruby (2.1.4)
     builder (2.1.2)
     cancan (1.6.3)
     capistrano (2.5.20)
       highline
       highline
-      net-scp (>= 1.0.0)
       net-scp
+      net-scp (>= 1.0.0)
       net-sftp
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
@@ -72,7 +72,7 @@ GEM
       nokogiri (>= 1.4.4)
       rack-test (>= 0.5.7)
     culerity (0.2.15)
-    daemons (1.1.0)
+    daemons (1.1.2)
     database_cleaner (0.6.6)
     devise (1.2.1)
       bcrypt-ruby (~> 2.1.2)

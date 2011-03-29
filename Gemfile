@@ -5,7 +5,6 @@ gem 'capistrano'
 gem 'haml', '>3.0.0'
 gem 'workflow'
 gem 'devise'
-#gem "omniauth"
 gem "oa-enterprise", "~> 0.2.0"
 gem 'RedCloth'
 gem 'net-ldap'
