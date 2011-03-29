@@ -23,7 +23,7 @@ Factory.sequence :unit_name do |n|
   business_units[rand(business_units.length)]
 end
 
-Factory.sequence :username do |n|
+Factory.sequence :ugid do |n|
   "u1" + Digest::MD5.hexdigest(n.to_s).slice(0,6)
 end
 
@@ -65,7 +65,7 @@ Factory.define :person, :class => Person do |f|
   f.first_name "Martin"
   f.last_name "Frost"
   f.email { Factory.next :email }
-  f.username { Factory.next :username}
+  f.ugid { Factory.next :ugid}
 end
 
 Factory.define :purchase do |f|

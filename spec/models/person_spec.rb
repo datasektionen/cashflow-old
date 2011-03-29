@@ -10,7 +10,7 @@ describe Person do
     @person.role.should == ""
   end
   
-  %w[first_name last_name email username login].each do |attribute|
+  %w[first_name last_name email ugid login].each do |attribute|
     it "should be invalid without a #{attribute}" do
       @person.send("#{attribute}=", nil)
       @person.should be_invalid
@@ -19,7 +19,7 @@ describe Person do
     end
   end
 
-  %w[first_name last_name username login role].each do |attribute|
+  %w[first_name last_name ugid login role].each do |attribute|
     it "should protect attribute #{attribute}" do
       attr_value = @person.send(attribute)
       @person.update_attributes({attribute.to_sym => "blubb"}).should be_true
@@ -95,20 +95,20 @@ describe Person do
         # make this spec search by:
         # * first_name, last_name
         # * login
-        # * username
+        # * ugid
         # * email
         local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
         name_search_params  = {:first_name => local_config[:yourself][:first_name], :last_name => local_config[:yourself][:last_name]}
         email_search_params = {:email => local_config[:yourself][:email]}
-        username  = {:username => local_config[:yourself][:username]}
+        ugid  = {:ugid => local_config[:yourself][:ugid]}
         login_search_params = {:login => local_config[:yourself][:login]}
 
         Person.from_ldap(name_search_params).should_not be_nil 
         Person.from_ldap(email_search_params).should_not be_nil 
-        Person.from_ldap(username).should_not be_nil 
+        Person.from_ldap(ugid).should_not be_nil 
         Person.from_ldap(login_search_params).should_not be_nil 
         
-        # TODO: verify a few more things than just searching... like some things should return nil (username search of "azovwemzavwmdzvway" for instance)
+        # TODO: verify a few more things than just searching... like some things should return nil (ugid search of "azovwemzavwmdzvway" for instance)
       rescue Net::LDAP::LdapError => e
         pending "UNABLE TO CONNECT TO LDAP SERVER"
       end
@@ -118,7 +118,7 @@ describe Person do
     it "should correctly create users from an LDAP search" do
       begin
         local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
-        Person.create_from_ldap(:username => local_config[:yourself][:username])
+        Person.create_from_ldap(:ugid => local_config[:yourself][:ugid])
       rescue Net::LDAP::LdapError => e
         pending "UNABLE TO CONNECT TO LDAP SERVER"
       end

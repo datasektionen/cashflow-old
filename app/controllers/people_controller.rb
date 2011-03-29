@@ -41,7 +41,7 @@ class PeopleController < ApplicationController
   # POST /people
   # POST /people.xml
   def create
-    search_options = params[:person].slice(*%w[login username email])
+    search_options = params[:person].slice(*%w[login ugid email])
     @person = Person.where(search_options).first
     @person ||= Person.from_ldap(search_options)
     
@@ -76,7 +76,7 @@ class PeopleController < ApplicationController
   end
 
   def search
-    search_options = params.slice(*%w[login username email])
+    search_options = params.slice(*%w[login ugid email])
     person = Person.where(search_options).first
     already_imported = ! person.blank?
     person ||= Person.from_ldap(search_options)

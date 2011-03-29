@@ -6,7 +6,7 @@
     = form.input :last_name, :input_html => {:disabled => true}
     = form.input :login, :input_html => {:class => "search"}
     = form.input :email, :as => :email, :input_html => {:class => "search"}
-    = form.input :username, :input_html => {:class => "search"}
+    = form.input :ugid, :input_html => {:class => "search"}
     - if current_person.is?(:admin)
       = form.input :role, :as => :select, :collection => Person::ROLES 
   = form.buttons do
@@ -26,7 +26,7 @@
                 $("input[name$='person[last_name]']").val(person.last_name);
                 $("input[name$='person[login]']").val(person.login);
                 $("input[name$='person[email]']").val(person.email);
-                $("input[name$='person[username]']").val(person.username);
+                $("input[name$='person[ugid]']").val(person.ugid);
               } else {
                 clearInputs();
                 $("form#new_person").prepend("<p class='error'>Användaren <a href='"+data.url+"'>"+data.person.name +"</a> finns redan.</p>");
@@ -41,6 +41,6 @@
     $("input[name$='person[last_name]']").val('');
     $("input[name$='person[login]']").val('');
     $("input[name$='person[email]']").val('');
-    $("input[name$='person[username]']").val('');
+    $("input[name$='person[ugid]']").val('');
   };
 

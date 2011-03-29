@@ -14,7 +14,7 @@ class Person < ActiveRecord::Base
 
   ROLES = {"Kassör" => "treasurer", "Administratör" => "admin", "Revisor" => "accountant"}
 
-  validates_presence_of :first_name, :last_name, :login, :email, :username
+  validates_presence_of :first_name, :last_name, :login, :email, :ugid
   validates :email, :email => true
   
   attr_accessible :email, :bank_clearing_number, :bank_account_number, :bank_name
@@ -26,7 +26,7 @@ class Person < ActiveRecord::Base
   
   # String representation of a user.
   # Basically the same as the cn column in the LDAP server, that is:
-  # "Firstname Lastname (username)"
+  # "Firstname Lastname (ugid)"
   def to_s
     cn
   end
@@ -53,7 +53,7 @@ class Person < ActiveRecord::Base
   # The following filters are allowed:
   # * first_name
   # * last_name
-  # * username
+  # * ugid
   # * login
   # * email
   # 
@@ -63,8 +63,8 @@ class Person < ActiveRecord::Base
   def self.from_ldap(options = {})
     filters = {:givenName   => options[:first_name],
                :sn          => options[:last_name],
-               :ugKthid     => options[:username],
-               :ugusername  => options[:login],
+               :ugKthid     => options[:ugid],
+               :ugUsername  => options[:login],
                :mail        => options[:email]}
     
     filters.reject! {|k,v| v.blank? }
@@ -85,8 +85,8 @@ class Person < ActiveRecord::Base
       person = new()
       person.first_name = user.givenName.first
       person.last_name = user.sn.first
-      person.login = user.ugusername.first
-      person.username = user.ugkthid.first
+      person.login = user.ugUsername.first
+      person.ugid = user.ugkthid.first
       person.email = user.mail.first
       return person
     end
@@ -110,10 +110,10 @@ class Person < ActiveRecord::Base
 
   def self.find_for_cas_oath(access_token, signed_in_resource)
     return nil if access_token.blank?
-    if person = Person.find_by_username(access_token["uid"])
+    if person = Person.find_by_ugid(access_token["uid"])
       person
     else
-      Person.create_from_ldap(:username => access_token["uid"])
+      Person.create_from_ldap(:ugid => access_token["uid"])
     end
   end
 end
