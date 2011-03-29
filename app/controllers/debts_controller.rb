@@ -35,7 +35,7 @@ class DebtsController < ApplicationController
   # POST /debts
   # POST /debts.xml
   def create
-    @debt = Debt.new(params[:debt])
+    @debt = Debt.new(params[:debt].merge(:author => current_person))
 
     respond_to do |format|
       if @debt.save

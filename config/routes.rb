@@ -28,7 +28,7 @@ Cashflow::Application.routes.draw do
       end
     end
 
-    resources :people do
+    resources :people, :except => [:destroy] do
       collection do
         get :search
       end

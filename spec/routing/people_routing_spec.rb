@@ -27,8 +27,8 @@ describe PeopleController do
       { :put => "/people/1" }.should route_to(:controller => "people", :action => "update", :id => "1")
     end
 
-    it "recognizes and generates #destroy" do
-      { :delete => "/people/1" }.should route_to(:controller => "people", :action => "destroy", :id => "1")
+    it "doesn't recognize and generate #destroy" do
+      lambda { { :delete => "/people/1" }.should route_to(:controller => "people", :action => "destroy", :id => "1")}.should raise_error(ActionController::RoutingError)
     end
 
   end

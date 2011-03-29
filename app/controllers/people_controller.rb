@@ -75,19 +75,6 @@ class PeopleController < ApplicationController
     end
   end
 
-  # DELETE /people/1
-  # DELETE /people/1.xml
-  def destroy
-    unless @person.destroy
-      flash[:error] = "Användaren gick inte att ta bort"
-    end
-
-    respond_to do |format|
-      format.html { redirect_to(people_url) }
-      format.xml  { head :ok }
-    end
-  end
-  
   def search
     search_options = params.slice(*%w[login username email])
     person = Person.where(search_options).first

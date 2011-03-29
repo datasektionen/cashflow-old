@@ -4,7 +4,7 @@ Skulden gäller:
 Beskrivning:          #{@debt.description}
 Affärsenhet/nämnd:    #{@debt.business_unit}
 Registreringsdatum:   #{short_time @debt.created_at}
-Summa:                #{currency @debt.total}
+Summa:                #{currency @debt.amount}
 
 :textile
   Detta mail är genererat från "Cashflow":#{root_url}. Du får det för att datasektionen lagt ut pengar åt dig.

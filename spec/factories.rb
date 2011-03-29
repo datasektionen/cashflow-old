@@ -43,6 +43,10 @@ Factory.define :debt do |f|
   f.author { Factory :treasurer }
 end
 
+Factory.define :invalid_debt, :parent => :debt do |f|
+  f.person {nil}
+end
+
 Factory.define :business_unit do |f|
   name = Factory.next :unit_name
   f.name { name }

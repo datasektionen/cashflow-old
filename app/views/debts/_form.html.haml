@@ -1,7 +1,11 @@
 = semantic_form_for(@debt) do |form|
+  = form.semantic_errors :base
+  = form.semantic_errors
   = form.inputs :name => "Uppgifter" do
     = form.input :person
     = form.input :amount
     = form.input :description
     = form.input :business_unit
+  = form.buttons do
+    = form.commit_button
 
