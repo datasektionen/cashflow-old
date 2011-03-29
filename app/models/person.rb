@@ -5,7 +5,10 @@ class Person < ActiveRecord::Base
          #:recoverable, :rememberable, :trackable, :validatable
 
 
-  devise :cas_authenticatable
+  #devise :cas_authenticatable
+  devise :omniauthable
+
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
@@ -95,6 +98,7 @@ class Person < ActiveRecord::Base
   def self.create_from_ldap(options)
     if p = from_ldap(options)
       p.save
+      p
     else
       nil
     end
@@ -102,5 +106,14 @@ class Person < ActiveRecord::Base
 
   def is?(role)
     self.role == role.to_s
+  end
+
+  def self.find_for_cas_oath(access_token, signed_in_resource)
+    return nil if access_token.blank?
+    if person = Person.find_by_username(access_token["uid"])
+      person
+    else
+      Person.create_from_ldap(:username => access_token["uid"])
+    end
   end
 end

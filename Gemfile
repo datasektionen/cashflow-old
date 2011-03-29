@@ -5,8 +5,8 @@ gem 'capistrano'
 gem 'haml', '>3.0.0'
 gem 'workflow'
 gem 'devise'
-gem 'rubycas-client', :git => "https://github.com/gunark/rubycas-client.git"
-gem 'devise_cas_authenticatable'
+#gem "omniauth"
+gem "oa-enterprise", "~> 0.2.0"
 gem 'RedCloth'
 gem 'net-ldap'
 gem 'paper_trail'
