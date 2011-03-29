@@ -9,19 +9,7 @@ describe BusinessUnitsController do
     end
   end
 
-  describe "logged in as ordinary user" do
-    login_user
-
-    (%w[index show new edit].map{|x|"GET #{x}"}|["POST create", "PUT update", "DELETE destroy"]).each do |page|
-      describe page do
-        it "should render 'access denied'" do
-          get :index
-          response.status.should == 403
-          response.body.should include("Åtkomst nekad")
-        end
-      end
-    end
-  end
+  deny_access_for_ordinary_user
 
   describe "logged in as accountant accountant" do
     login_accountant
@@ -42,7 +30,7 @@ describe BusinessUnitsController do
     end
 
     describe "GET show" do
-      it "assigns the reåuested business_unit as @business_unit" do
+      it "assigns the requested business_unit as @business_unit" do
         BusinessUnit.stub(:find).with("37") { mock_business_unit }
         get :show, :id => "37"
         assigns(:business_unit).should be(mock_business_unit)
