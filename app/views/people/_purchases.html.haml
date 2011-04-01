@@ -16,7 +16,8 @@
           %td= short_time purchase.purchased_at
           %td= status purchase
           %td
-            = link_to "Redigera", edit_purchase_path(purchase)
+            - if purchase.editable? && can?(:edit, purchase)
+              = link_to "Redigera", edit_purchase_path(purchase)
     %tfoot
       %tr
         %th Total
