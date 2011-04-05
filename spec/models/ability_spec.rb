@@ -39,38 +39,26 @@ describe Ability do
       @user = Factory(:treasurer)
       @ability = Ability.new(@user)
     end
-
-    it "should be able to import people" do
-      @ability.should be_able_to(:create, Person)
-    end
-
-    it "should be able to index people" do
-      @ability.should be_able_to(:index, Person.new)
+    
+    %w[create index].each do |action|
+      it "should be able to #{action} people" do
+        @ability.should be_able_to(action.to_sym, :people)
+      end
     end
 
     it "should not be able to manage people" do
-      @ability.should_not be_able_to(:manage, Person.new)
+      @ability.should_not be_able_to(:manage, :people)
     end
 
-    it "should be able to manage product types" do
-      @ability.should be_able_to(:manage, ProductType.new)
-    end
-    
-    it "should be able to manage business units" do
-      @ability.should be_able_to(:manage, BusinessUnit.new)
+    %w[product_types business_units purchases debts].each do |model|
+      it "should be able to manage #{model.gsub(/\s/,' ')}" do
+        @ability.should be_able_to(:magane, model.to_sym)
+      end
     end
 
-    it "should be able to manage purchases" do
-      @ability.should be_able_to(:manage, Purchase.new)
-      @ability.should be_able_to(:manage, PurchaseItem.new)
-    end
-
-    it "should be able to manage debts" do
-      @ability.should be_able_to(:manage, Debt.new)
-    end
-
-    it "should be able to manage itself" do
-      @ability.should be_able_to(:manage, @user)
+    it "should be able to edit itself" do
+      @ability.should be_able_to(:edit, @user)
+      @ability.should be_able_to(:update, @user)
     end
   end
 

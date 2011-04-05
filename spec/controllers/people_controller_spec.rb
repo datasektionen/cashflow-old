@@ -1,12 +1,9 @@
 require 'spec_helper'
 
 describe PeopleController do
-  render_views
 
   def mock_person(stubs={})
-    (@mock_person ||= mock_model(Person).as_null_object).tap do |person|
-      person.stub(stubs) unless stubs.empty?
-    end
+    @mock_person ||= mock_model(Person, stubs).as_null_object
   end
 
   describe "unauthenticated user" do
@@ -27,6 +24,7 @@ describe PeopleController do
     end
   
     describe "GET show" do
+      render_views
       it "assigns the requested person as @person" do
         Person.stub(:find).with("37") { mock_person }
         get :show, :id => "37"
@@ -35,7 +33,7 @@ describe PeopleController do
     end
   
     describe "GET new" do
-      xit "assigns a new person as @person" do
+      it "assigns a new person as @person" do
         Person.stub(:new) { mock_person }
         get :new
         assigns(:person).should be(mock_person)
@@ -43,7 +41,7 @@ describe PeopleController do
     end
   
     describe "GET edit" do
-      xit "assigns the requested person as @person" do
+      it "assigns the requested person as @person" do
         Person.stub(:find).with("37") { mock_person }
         get :edit, :id => "37"
         assigns(:person).should be(mock_person)
@@ -52,28 +50,40 @@ describe PeopleController do
   
     describe "POST create" do
   
+      before(:each) do
+        @ability = Object.new
+        @ability.extend(CanCan::Ability)
+        #@ability.can :manage, Person
+        @controller.stub(:current_ability).and_return(@ability)
+      end
+
       describe "with valid params" do
-        xit "assigns a newly created person as @person" do
+        it "assigns a newly created person as @person" do
           Person.stub(:new).with({'these' => 'params'}) { mock_person(:save => true) }
           post :create, :person => {'these' => 'params'}
           assigns(:person).should be(mock_person)
         end
   
-        xit "redirects to the created person" do
+        # TODO: PeopleController#create does some magic with ldap, since we can't have arbitrary users...
+        # the controller tries to go to /people/some-user-name
+        it "redirects to the created person" do
+          @ability.can(:manage, :all)
+          @controller.stub(:current_ability).and_return(@ability)
           Person.stub(:new) { mock_person(:save => true) }
           post :create, :person => {}
+          debugger
           response.should redirect_to(person_url(mock_person))
         end
       end
   
       describe "with invalid params" do
-        xit "assigns a newly created but unsaved person as @person" do
+        it "assigns a newly created but unsaved person as @person" do
           Person.stub(:new).with({'these' => 'params'}) { mock_person(:save => false) }
           post :create, :person => {'these' => 'params'}
           assigns(:person).should be(mock_person)
         end
   
-        xit "re-renders the 'new' template" do
+        it "re-renders the 'new' template" do
           Person.stub(:new) { mock_person(:save => false) }
           post :create, :person => {}
           response.should render_template("new")

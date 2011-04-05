@@ -1,4 +1,5 @@
 class PeopleController < ApplicationController
+  enable_authorization
   load_and_authorize_resource :except => :search
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
   
@@ -42,7 +43,7 @@ class PeopleController < ApplicationController
   # POST /people.xml
   def create
     search_options = params[:person].slice(*%w[login ugid email])
-    @person = Person.where(search_options).first
+    @person = Person.where(search_options).first unless search_options.blank?
     @person ||= Person.from_ldap(search_options)
     
 
