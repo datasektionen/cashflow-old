@@ -1,14 +1,13 @@
 class PeopleController < ApplicationController
-  enable_authorization
-  load_and_authorize_resource :except => :search
+  load_and_authorize_resource :person, :except => :search
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
   
   
   # GET /people
   # GET /people.xml
   def index
-    @people = Person.all
-
+    @people = Person.accessible_by(current_ability)
+    authorize! :access, @people
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @people }
@@ -61,7 +60,7 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-    if params[:person][:role] && current_person.is?(:admin)
+    if params[:person].try(:[], :role) && current_person.is?(:admin)
       @person.role = params[:person][:role]
       @person.save
     end

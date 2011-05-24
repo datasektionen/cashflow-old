@@ -1,5 +1,4 @@
 class ProductTypesController < ApplicationController
-  enable_authorization
   load_and_authorize_resource
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
 
