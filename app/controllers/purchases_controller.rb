@@ -5,8 +5,8 @@ class PurchasesController < ApplicationController
   # GET /purchases
   # GET /purchases.xml
   def index
-    @purchases = Purchase.accessible_by(current_ability).order("created_at desc")
-
+    #@purchases = Purchase.accessible_by(current_ability).order("created_at desc")
+    @purchase = Purchase.all
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @purchases }
