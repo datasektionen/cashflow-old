@@ -9,7 +9,7 @@ gem "oa-enterprise", "~> 0.2.0"
 gem 'RedCloth'
 gem 'net-ldap'
 gem 'paper_trail'
-gem 'cancan', :git => "git://github.com/ryanb/cancan.git", :branch => "2.0"
+gem 'cancan'#, :git => "git://github.com/ryanb/cancan.git", :branch => "2.0"
 gem 'formtastic', '~> 1.2.3'
 gem 'simple-navigation'
 gem 'jquery-rails'
@@ -38,6 +38,8 @@ group :test do
   gem 'cucumber'
   gem 'spork'
   gem 'autotest'
+  gem 'autotest-growl'
+  gem 'autotest-fsevent'
   gem 'launchy'    # So you can do Then show me the page
   gem 'factory_girl_rails'
 end
