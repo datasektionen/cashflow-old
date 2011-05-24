@@ -42,7 +42,7 @@ describe Ability do
     
     %w[create index].each do |action|
       it "should be able to #{action} people" do
-        @ability.should be_able_to(action.to_sym, :people)
+        @ability.should be_able_to(action.to_sym, Person)
       end
     end
 
@@ -101,6 +101,15 @@ describe Ability do
       @ability.should be_able_to(:read, @user.debts.new)
     end
 
+    it "sholud be able to view itself" do
+      @ability.should be_able_to(:show, @user)
+    end
+
+    it "sholud be able to edit itself" do
+      @ability.should be_able_to(:edit, @user)
+      @ability.should be_able_to(:update, @user)
+    end
+    
     it "should not be able to edit its own debts" do
       @ability.should_not be_able_to(:edit, @user.debts.new)
     end
