@@ -1,19 +1,17 @@
 require 'spec_helper'
 
 describe PurchasesController do
-  render_views
   login_admin
 
   def mock_purchase(stubs={})
-    (@mock_purchase ||= mock_model(Purchase).as_null_object).tap do |purchase|
-      purchase.stub(stubs) unless stubs.empty?
-    end
+    @mock_person ||= mock_model(Purchase, stubs).as_null_object
   end
 
   describe "GET index" do
-    xit "assigns all purchases as @purchases" do
+    it "assigns all purchases as @purchases" do
       Purchase.stub(:all).and_return { [mock_purchase] }
       get :index
+      debugger
       assigns(:purchases).should eq([mock_purchase])
     end
   end

@@ -15,6 +15,15 @@ describe PeopleController do
   
   describe "authenticated user" do
     login_admin
+
+    before(:each) do
+      @ability = Object.new
+      @ability.extend(CanCan::Ability)
+      @ability.can :access, :all
+      @ability.can :manage, :all
+      #@controller.stub(:current_ability).and_return(@ability)
+    end
+
     describe "GET index" do
       it "assigns all people as @people" do
         Person.stub(:all) { [mock_person] }
@@ -53,7 +62,7 @@ describe PeopleController do
       before(:each) do
         @ability = Object.new
         @ability.extend(CanCan::Ability)
-        #@ability.can :manage, Person
+        @ability.can :manage, Person
         @controller.stub(:current_ability).and_return(@ability)
       end
 
@@ -71,7 +80,6 @@ describe PeopleController do
           @controller.stub(:current_ability).and_return(@ability)
           Person.stub(:new) { mock_person(:save => true) }
           post :create, :person => {}
-          debugger
           response.should redirect_to(person_url(mock_person))
         end
       end
@@ -86,6 +94,7 @@ describe PeopleController do
         it "re-renders the 'new' template" do
           Person.stub(:new) { mock_person(:save => false) }
           post :create, :person => {}
+          debugger
           response.should render_template("new")
         end
       end
@@ -95,19 +104,19 @@ describe PeopleController do
     describe "PUT update" do
   
       describe "with valid params" do
-        xit "updates the requested person" do
+        it "updates the requested person" do
           Person.should_receive(:find).with("37") { mock_person }
           mock_person.should_receive(:update_attributes).with({'these' => 'params'})
           put :update, :id => "37", :person => {'these' => 'params'}
         end
   
-        xit "assigns the requested person as @person" do
+        it "assigns the requested person as @person" do
           Person.stub(:find) { mock_person(:update_attributes => true) }
           put :update, :id => "1"
           assigns(:person).should be(mock_person)
         end
   
-        xit "redirects to the person" do
+        it "redirects to the person" do
           Person.stub(:find) { mock_person(:update_attributes => true) }
           put :update, :id => "1"
           response.should redirect_to(person_url(mock_person))
@@ -115,13 +124,13 @@ describe PeopleController do
       end
   
       describe "with invalid params" do
-        xit "assigns the person as @person" do
+        it "assigns the person as @person" do
           Person.stub(:find) { mock_person(:update_attributes => false) }
           put :update, :id => "1"
           assigns(:person).should be(mock_person)
         end
   
-        xit "re-renders the 'edit' template" do
+        it "re-renders the 'edit' template" do
           Person.stub(:find) { mock_person(:update_attributes => false) }
           put :update, :id => "1"
           response.should render_template("edit")

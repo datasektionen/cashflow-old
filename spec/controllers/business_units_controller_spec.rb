@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe BusinessUnitsController do
-  render_views
 
   def mock_business_unit(stubs={})
     (@mock_business_unit ||= mock_model(BusinessUnit).as_null_object).tap do |business_unit|
@@ -59,7 +58,7 @@ describe BusinessUnitsController do
     end
 
     describe "GET new" do
-      xit "assigns a new business_unit as @business_unit" do
+      it "assigns a new business_unit as @business_unit" do
         BusinessUnit.stub(:new) { mock_business_unit }
         get :new
         assigns(:business_unit).should be(mock_business_unit)
@@ -67,7 +66,7 @@ describe BusinessUnitsController do
     end
 
     describe "GET edit" do
-      xit "assigns the requested business_unit as @business_unit" do
+      it "assigns the requested business_unit as @business_unit" do
         BusinessUnit.stub(:find).with("37") { mock_business_unit }
         get :edit, :id => "37"
         assigns(:business_unit).should be(mock_business_unit)
@@ -91,13 +90,13 @@ describe BusinessUnitsController do
       end
 
       describe "with invalid params" do
-        xit "assigns a newly created but unsaved business_unit as @business_unit" do
+        it "assigns a newly created but unsaved business_unit as @business_unit" do
           BusinessUnit.stub(:new).with({'these' => 'params'}) { mock_business_unit(:save => false) }
           post :create, :business_unit => {'these' => 'params'}
           assigns(:business_unit).should be(mock_business_unit)
         end
 
-        xit "re-renders the 'new' template" do
+        it "re-renders the 'new' template" do
           BusinessUnit.stub(:new) { mock_business_unit(:save => false) }
           post :create, :business_unit => {}
           response.should render_template("new")
@@ -109,33 +108,34 @@ describe BusinessUnitsController do
     describe "PUT update" do
 
       describe "with valid params" do
-        xit "updates the requested business_unit" do
+        it "updates the requested business_unit" do
           BusinessUnit.should_receive(:find).with("37") { mock_business_unit }
           mock_business_unit.should_receive(:update_attributes).with({'these' => 'params'})
           put :update, :id => "37", :business_unit => {'these' => 'params'}
         end
 
-        xit "assigns the requested business_unit as @business_unit" do
+        it "assigns the requested business_unit as @business_unit" do
           BusinessUnit.stub(:find) { mock_business_unit(:update_attributes => true) }
           put :update, :id => "1"
           assigns(:business_unit).should be(mock_business_unit)
         end
 
-        xit "redirects to the business_unit" do
+        it "redirects to the business_unit" do
           BusinessUnit.stub(:find) { mock_business_unit(:update_attributes => true) }
           put :update, :id => "1"
+          debugger
           response.should redirect_to(business_unit_url(mock_business_unit))
         end
       end
 
       describe "with invalid params" do
-        xit "assigns the business_unit as @business_unit" do
+        it "assigns the business_unit as @business_unit" do
           BusinessUnit.stub(:find) { mock_business_unit(:update_attributes => false) }
           put :update, :id => "1"
           assigns(:business_unit).should be(mock_business_unit)
         end
 
-        xit "re-renders the 'edit' template" do
+        it "re-renders the 'edit' template" do
           BusinessUnit.stub(:find) { mock_business_unit(:update_attributes => false) }
           put :update, :id => "1"
           response.should render_template("edit")
