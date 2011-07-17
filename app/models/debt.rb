@@ -58,6 +58,5 @@ class Debt < ActiveRecord::Base
   def keepable?
     self.new? || self.paid?
   end
-    
 
 end
