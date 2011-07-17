@@ -5,7 +5,6 @@ tmp/**/*
 doc
 tmp
 log
-db/schema.rb
 config/database.yml
 public/stylesheets/*.css
 .sass-cache/
