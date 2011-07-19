@@ -42,6 +42,14 @@ class Debt < ActiveRecord::Base
     # cancelled (duh)
     state :anulled
   end
+
+  def cancel
+    notify_observers(:after_cancel)
+  end
+
+  def pay
+    notify_observers(:after_pay)
+  end
   
   def locked_when_finalized
     errors.add(:base, "Du kan inte redigera en avslutad skuld") if finalized?

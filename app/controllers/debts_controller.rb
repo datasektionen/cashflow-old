@@ -39,7 +39,6 @@ class DebtsController < ApplicationController
 
     respond_to do |format|
       if @debt.save
-        Notifier.debt_created(@debt, current_person).deliver
         format.html { redirect_to(@debt, :notice => 'Debt was successfully created.') }
         format.xml  { render :xml => @debt, :status => :created, :location => @debt }
       else
@@ -51,7 +50,6 @@ class DebtsController < ApplicationController
 
   def cancel
     @debt.cancel!
-    Notifier.debt_cancelled(@debt, current_person).deliver
     respond_to do |format|
       format.html { redirect_to(debt_path(@debt)) }
     end
@@ -59,7 +57,6 @@ class DebtsController < ApplicationController
 
   def pay
     @debt.pay!
-    Notifier.debt_paid(@debt, current_person).deliver
     respond_to do |format|
       format.html { redirect_to(debt_path(@debt)) }
     end
