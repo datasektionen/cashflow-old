@@ -3,6 +3,18 @@ class Notifier < ActionMailer::Base
   default :from => "noreply@d.ths.kth.se"
   default_url_options[:host] = Cashflow::Application.settings["default_host"]
 
+  def purchase_created(purchase, administrator)
+    @purchase = purchase
+    @administrator = administrator
+    mail(:to => @purchase.person.email, 
+         :subject => "Inköp registrerat", 
+         :cc => @administrator.email,
+         :reply_to => @administrator.email
+        ) do |format|
+      format.text
+    end
+  end
+
   def purchase_approved(purchase, administrator)
     @purchase = purchase
     @administrator = administrator

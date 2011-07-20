@@ -1,4 +1,10 @@
 class PurchaseObserver < ActiveRecord::Observer
+  def after_create(purchase)
+    person = purchase.updated_by
+    purchase.logger.info("New purchase created by #{person}!")
+    Notifier.purchase_created(purchase, person).deliver
+  end
+
   def after_confirm(purchase)
     person = purchase.updated_by
     purchase.logger.info("Purchase confirmed by #{person}!")
