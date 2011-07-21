@@ -3,9 +3,9 @@ class Notifier < ActionMailer::Base
   default :from => "noreply@d.ths.kth.se"
   default_url_options[:host] = Cashflow::Application.settings["default_host"]
 
-  def purchase_created(purchase, administrator)
+  def purchase_created(purchase)
     @purchase = purchase
-    @administrator = administrator
+    @administrator = purchase.updated_by
     mail(:to => @purchase.person.email, 
          :subject => "Inköp registrerat", 
          :cc => @administrator.email,
@@ -15,9 +15,9 @@ class Notifier < ActionMailer::Base
     end
   end
 
-  def purchase_approved(purchase, administrator)
+  def purchase_approved(purchase)
     @purchase = purchase
-    @administrator = administrator
+    @administrator = purchase.updated_by
     mail(:to => @purchase.person.email, 
          :subject => "Inköp godkänt", 
          :cc => @administrator.email,
@@ -27,9 +27,9 @@ class Notifier < ActionMailer::Base
     end
   end
 
-  def purchase_denied(purchase, administrator)
+  def purchase_denied(purchase)
     @purchase = purchase
-    @administrator = administrator
+    @administrator = purchase.updated_by
     mail(:to => @purchase.person.email, 
          :subject => "Inköp avslaget", 
          :cc => @administrator.email,
@@ -39,9 +39,9 @@ class Notifier < ActionMailer::Base
     end
   end
 
-  def purchase_paid(purchase, administrator)
+  def purchase_paid(purchase)
     @purchase = purchase
-    @administrator = administrator
+    @administrator = purchase.updated_by
     mail(:to => @purchase.person.email, 
          :subject => "Inköp utbetalat", 
          :cc => @administrator.email,
@@ -51,9 +51,9 @@ class Notifier < ActionMailer::Base
     end
   end
 
-  def debt_created(debt, administrator)
+  def debt_created(debt)
     @debt = debt
-    @administrator = administrator
+    @administrator = debt.author
     mail(:to => @debt.person.email, 
          :subject => "Skuld inlagd", 
          :cc => @administrator.email,
@@ -63,9 +63,9 @@ class Notifier < ActionMailer::Base
     end
   end
 
-  def debt_paid(debt, administrator)
+  def debt_paid(debt)
     @debt = debt
-    @administrator = administrator
+    @administrator = Person.find(debt.versions.last.whodunnit)
     mail(:to => @debt.person.email, 
          :subject => "Skuld betalad", 
          :cc => @administrator.email,
@@ -75,9 +75,9 @@ class Notifier < ActionMailer::Base
     end
   end
 
-  def debt_cancelled(debt, administrator)
+  def debt_cancelled(debt)
     @debt = debt
-    @administrator = administrator
+    @administrator = Person.find(debt.versions.last.whodunnit)
     mail(:to => @debt.person.email,
          :subject => "Skuld struken",
          :cc => @administrator.email,
