@@ -8,10 +8,10 @@
 #
 
 BusinessUnit.create!({:name => "D-rektoratet", :short_name => "drek", :description => "Datasektionens styrelse"})
-BusinessUnit.create!({:name => "Festverksamhet", :short_name => "dkm", :description => "DKMs festverksamhet"})
+BusinessUnit.create!({:name => "Festverksamhet", :short_name => "dkm", :description => "DKMs festverksamhet", :email => "ekom@d.kth.se"})
 BusinessUnit.create!({:name => "Idrottsverksamhet", :short_name => "idro", :description => "Idrottsverksamhet"})
 BusinessUnit.create!({:name => "Informationsorganet", :short_name => "ior", :description => "Informationsorganet"})
-BusinessUnit.create!({:name => "Mottagningen", :short_name => "mot", :description => "Mottagningen"})
+BusinessUnit.create!({:name => "Mottagningen", :short_name => "mot", :description => "Mottagningen", :email => "ekonomeriet@d.kth.se"})
 BusinessUnit.create!({:name => "Näringslivsgruppen", :short_name => "ng", :description => "Näringslivsgruppen"})
 BusinessUnit.create!({:name => "Qulturnämnden", :short_name => "qn", :description => "Qulturnämnden"})
 BusinessUnit.create!({:name => "Sektionen Centralt", :short_name => "cen", :description => "Centralt"})
