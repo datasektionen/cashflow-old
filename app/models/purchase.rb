@@ -71,6 +71,10 @@ class Purchase < ActiveRecord::Base
     notify_observers(:after_confirm)
   end
 
+  def keep
+    notify_observers(:after_keep)
+  end
+
   def pay
     notify_observers(:after_pay)
   end

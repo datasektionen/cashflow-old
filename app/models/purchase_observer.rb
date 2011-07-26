@@ -7,6 +7,10 @@ class PurchaseObserver < ActiveRecord::Observer
     Notifier.purchase_approved(purchase).deliver
   end
 
+  def after_keep(purchase)
+    #TODO: skapa verifikat i mage
+  end
+
   def after_pay(purchase)
     Notifier.purchase_paid(purchase).deliver
   end
