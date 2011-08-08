@@ -44,7 +44,7 @@ class ProductTypesController < ApplicationController
 
     respond_to do |format|
       if @product_type.save
-        format.html { redirect_to(@product_type, :notice => 'Product type was successfully created.') }
+        format.html { redirect_to(@product_type, :notice => I18n.t('notice.product_type.success.created')) }
         format.xml  { render :xml => @product_type, :status => :created, :location => @product_type }
       else
         format.html { render :action => "new" }
@@ -58,7 +58,7 @@ class ProductTypesController < ApplicationController
   def update
     respond_to do |format|
       if @product_type.update_attributes(params[:product_type])
-        format.html { redirect_to(@product_type, :notice => 'Product type was successfully updated.') }
+        format.html { redirect_to(@product_type, :notice => I18n.t('notice.product_type.success.updated')) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -71,7 +71,7 @@ class ProductTypesController < ApplicationController
   # DELETE /product_types/1.xml
   def destroy
     unless @product_type.destroy
-      flash[:error] = "Produkttypen kunde inte tas bort"
+      flash[:error] = I18n.t('activerecord.errors.models.product_type.cannot_be_removed')
     end
 
     respond_to do |format|
@@ -86,7 +86,7 @@ class ProductTypesController < ApplicationController
                :name  => @product_type.name, 
                :url   => product_type_path(@product_type)},
               { :key => :edit_product_type,
-                :name => "Redigera",
+                :name => I18n.t('edit'),
                 :url => edit_product_type_path(@product_type)},
              ]
   end

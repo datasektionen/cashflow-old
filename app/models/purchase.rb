@@ -108,20 +108,20 @@ class Purchase < ActiveRecord::Base
   
   def cannot_purchase_stuff_in_the_future
     if !self.purchased_at.blank? && self.purchased_at > Date.today
-      errors.add(:base, "Du kan inte ha köpt in något i framtiden. Har du uppfunnit en tidsmaskin får du gärna kontakta mig på frost@ceri.se.")
-      errors.add(:purchased_at, "får inte vara senare än dagens datum")
+      errors.add(:base, I18n.t('activerecord.errors.models.purchase.purchased_in_future'))
+      errors.add(:purchased_at, I18n.t('purchased_in_future'))
     end
   end
   
   def locked_when_finalized
-    errors.add(:base, "Du kan inte ändra ett avslutat inköp") if finalized?
+    errors.add(:base, I18n.t('activerecord.errors.models.purchase.finalized')) if finalized?
   end
 
   def generate_slug
-    slug = "%s%d-%d" % [self.business_unit.try(:short_name), self.created_at.try(:year), self.id]
     if new_record?
-      self.slug = slug
+      self.slug = "temp-slug-#{Time.now}"
     elsif self.slug !~ /#{slug}/
+      slug = "%s%d-%d" % [self.business_unit.try(:short_name), self.created_at.try(:year), self.id]
       Purchase.paper_trail_off
       self.update_attribute(:slug, slug)
       Purchase.paper_trail_on

@@ -146,6 +146,21 @@
       # Will define custom blank validation message for User model and
       # custom blank validation message for login attribute of User model.
       # models:
+      models:
+        person:
+          exists: "finns redan"
+        product_type:
+          cannot_be_removed: "kunde inte tas bort"
+        business_unit:
+          cannot_be_removed: "kunde inte tas bort"
+        debt:
+          finalized_cannot_be_edited: "Du kan inte redigera en avslutad skuld"
+        purchase:
+          purchased_in_future: "Du kan inte ha köpt in något i framtiden. Har du uppfunnit en tidsmaskin får du gärna kontakta mig på frost@ceri.se."
+          finalized: "Du kan inte ändra ett avslutat inköp"
+          attributes:
+            purchased_at:
+              purchased_in_future: "får inte vara senare än dagens datum"
 
     # Translate model names. Used in Model.human_name().
     #models:
@@ -159,7 +174,7 @@
       product_type: "Produkttyp"
       purchase: "Inköp"
       purchase_item: "Inköpsdel"
-
+    
     # Translate model attribute names. Used in Model.human_attribute_name(attribute).
     #attributes:
       # For example,
@@ -203,14 +218,57 @@
       short: "%e %b"
       long: "%e %B %Y"
 
-    day_names: [söndag, måndag, tisdag, onsdag, torsdag, fredag, lördag]
-    abbr_day_names: [sön, mån, tis, ons, tor, fre, lör]
+    day_names: 
+      - söndag
+      - måndag
+      - tisdag
+      - onsdag
+      - torsdag
+      - fredag
+      - lördag
+    abbr_day_names: 
+      - sön
+      - mån
+      - tis
+      - ons
+      - tor
+      - fre
+      - lör
 
     # Don't forget the nil at the beginning; there's no such thing as a 0th month
-    month_names: [~, januari, februari, mars, april, maj, juni, juli, augusti, september, oktober, november, december]
-    abbr_month_names: [~, jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec]
+    month_names:
+      - ~
+      - januari
+      - februari
+      - mars
+      - april
+      - maj
+      - juni
+      - juli
+      - augusti
+      - september
+      - oktober
+      - november
+      - december
+    abbr_month_names:
+      - ~
+      - jan
+      - feb
+      - mar
+      - apr
+      - maj
+      - jun
+      - jul
+      - aug
+      - sep
+      - okt
+      - nov
+      - dec
     # Used in date_select and datime_select.
-    order: [ :day, :month, :year ]
+    order: 
+      - :day
+      - :month
+      - :year
 
   time:
     formats:
@@ -261,6 +319,11 @@
   purchases:
     edit:
       title: "Redigera inköp"
+    modify_form:
+      confirm: "Bekräfta"
+      cancel: "Avslå"
+      bookkeep: "Bokför"
+      pay: "Markera som betald"
   debts:
     index:
       title: "Skulder"
@@ -271,16 +334,26 @@
       title: "Skuld"
     new:
       title: "Lägg till ny skuld"
-      
+    modify_form:
+      cancel: "Stryk"
+      bookkeep: "Bokför"
+      pay: "Markera som betald"
+  roles:
+    treasurer: "Kassör"
+    admin: "Administratör"
+    accountant: "Revisor"
 
   formtastic:
     actions:
       commit: "Spara %{model}"
   
   edit: "Redigera"
+  back: "Tillbaka"
   show: "Visa"
   destroy: "Ta bort"
   are_you_sure: "Är du säker?"
+  cancel: "Avslå"
+  access_denied: "Åtkomst nekad"
   workflow_state:
     new:        "Ny"
     confirmed:  "Bekräftad"
@@ -307,3 +380,54 @@
     people:
       path_names:
         search: "sok"
+
+  notices:
+    person:
+      success: 
+        created: "Användaren skapad"
+        updated: "Användaruppgifter uppdaterade"
+    purchase:
+      success:
+        created: "Inköp skapat"
+        updated: "Inköp uppdaterat"
+    debt:
+      success:
+        created: "Skuld skapad"
+        updated: "Skuld uppdaterad"
+    business_unit:
+      success:
+        created: "Affärsenhet skapad"
+        updated: "Affärsenhet uppdaterad"
+    product_type:
+      success:
+        created: "Produkttyp skapad"
+        updated: "Produkttyp uppdaterad"
+  navigation:
+    my_page: "Min sida"
+    purchases: "Inköp"
+    all_purchases: "Alla inköp"
+    new_purchase: "Lägg till inköp"
+    debts: "Skulder"
+    all_debts: "Alla skulder"
+    new_debt: "Ny skuld"
+    people: "Användare"
+    business_units: "Affärsenheter"
+    all_business_units: "Alla affärsenheter"
+    new_business_unit: "Ny affärsenhet"
+    product_types: "Produkttyper"
+    all_product_types: "Alla produkttyper"
+    new_product_type: "Ny produkttyp"
+  
+  mailer:
+    notifier:
+      purchase_approved: "Inköp godkänt"
+      purchase_denied: "Inköp avslaget"
+      purchase_paid: "Inköp betalat"
+      debt_created: "Skuld inlagd"
+      debt_cancelled: "Skuld struken"
+      debt_paid: "Skuld betald"
+
+  layouts:
+    application:
+      footer: 'Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Martin Frost":http://www.d.kth.se/people/blame 2010. För att rapportera eventuella buggar, klicka "här":https://www.d.kth.se/redmine/projects/cashflow/issues/new.'
+      logout: 'Klicka "här":https://login.kth.se/logout för att även logga ut från KTH.'

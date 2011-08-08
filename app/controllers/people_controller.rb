@@ -48,7 +48,7 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        format.html { redirect_to(@person, :notice => 'Person was successfully created.') }
+        format.html { redirect_to(@person, :notice => I18n.t('notices.person.success.created')) }
         format.xml  { render :xml => @person, :status => :created, :location => @person }
       else
         format.html { render :action => "new" }
@@ -66,7 +66,7 @@ class PeopleController < ApplicationController
     end
     respond_to do |format|
       if @person.update_attributes(params[:person])
-        format.html { redirect_to(@person, :notice => 'Person was successfully updated.') }
+        format.html { redirect_to(@person, :notice => I18n.t('notices.person.success.created')) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -83,7 +83,7 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.json do
         if already_imported
-          render :json => {:person => {:name => person.name}, :error => "Användaren finns redan", :url => person_url(person)}
+          render :json => {:person => {:name => person.name}, :error => I18n.t('activerecord.errors.models.person.exists'), :url => person_url(person)}
         else
           render :json => person
         end
@@ -97,12 +97,12 @@ class PeopleController < ApplicationController
                :name  => @person.name, 
                :url   => person_path(@person)},
               { :key => :edit_person,
-                :name => "Redigera",
+                :name => I18n.t('edit'),
                 :url => edit_person_path(@person)},
              ]
     if is_mobile_device?
       @items.unshift({ :key => :people_list,
-                  :name => "Tillbaka",
+                  :name => I18n.t('back'),
                   :url => people_path})
     end
   end

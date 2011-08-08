@@ -1,9 +1,9 @@
 %nav
   %ul
     - if purchase.editable? && ! purchase.confirmed?
-      %li= button_to "Bekräfta", confirm_purchase_path(purchase), :method => :put, :confirm => "Är du säker?"
-      %li= button_to "Avslå", cancel_purchase_path(purchase), :method => :put, :confirm => "Är du säker?"
+      %li= button_to t('.confirm'), confirm_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
+      %li= button_to t('.cancel'), cancel_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
     - if purchase.keepable?
-      %li= button_to "Bokför", keep_purchase_path(purchase), :method => :put, :confirm => "Är du säker?"
+      %li= button_to t('.bookkeep'), keep_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
     - if purchase.payable?
-      %li= button_to "Markera som betald", pay_purchase_path(purchase), :method => :put, :confirm => "Är du säker?"
+      %li= button_to t('.pay'), pay_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')

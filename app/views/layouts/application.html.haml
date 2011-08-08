@@ -31,5 +31,4 @@
       %section.clearfix#content
         = yield(:content) or yield
     %footer.main
-      :textile
-        Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Martin Frost":http://www.datasektionen.se/personer/blame 2010. För att rapportera eventuella buggar, klicka "här":https://github.com/datasektionen/cashflow/issues/new.
+      = textilize(t('layouts.application.footer')).html_safe

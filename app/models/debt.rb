@@ -52,7 +52,7 @@ class Debt < ActiveRecord::Base
   end
   
   def locked_when_finalized
-    errors.add(:base, "Du kan inte redigera en avslutad skuld") if finalized?
+    errors.add(:base, I18n.t('activerecord.errors.models.debt.finalized_cannot_be_edited')) if finalized?
   end
 
   def cancellable?

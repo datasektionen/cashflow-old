@@ -54,7 +54,7 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @purchase.save
-        format.html { redirect_to(@purchase, :notice => 'Purchase was successfully created.') }
+        format.html { redirect_to(@purchase, :notice => I18n.t('notice.purchase.success.created')) }
         format.xml  { render :xml => @purchase, :status => :created, :location => @purchase }
       else
         format.html { render :action => "new" }
@@ -71,7 +71,7 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
-        format.html { redirect_to(@purchase, :notice => 'Purchase was successfully updated.') }
+        format.html { redirect_to(@purchase, :notice => I18n.t('notice.purchase.success.updated')) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -127,7 +127,7 @@ class PurchasesController < ApplicationController
     if @purchase.editable?
       @items << { 
         :key   => :edit_purchase_path,
-        :name  => "Redigera",
+        :name  => I18n.t('back'),
         :url   => edit_purchase_path(@purchase)
       }
     end

@@ -6,42 +6,36 @@ class Notifier < ActionMailer::Base
 
   def purchase_created(purchase)
     @purchase = purchase
-    @administrator = purchase.updated_by
-    options = {
-      :to => @purchase.person.email,
-      :subject => "Inköp registrerat",
-      :reply_to => @administrator.email
-    }
-    options.merge!(:cc => purchase.business_unit.email) if purchase.business_unit.try(:email)
-    mail(options) do |format|
+    @administrator = administrator
+    mail(:to => @purchase.person.email, 
+         :subject => I18n.t('mailers.notifier.purchase_approved'), 
+         :cc => @administrator.email,
+         :reply_to => @administrator.email
+        ) do |format|
       format.text
     end
   end
 
   def purchase_approved(purchase)
     @purchase = purchase
-    @administrator = purchase.updated_by
-    options = {
-      :to => @purchase.person.email,
-      :subject => "Inköp godkänt",
-      :reply_to => @administrator.email
-    }
-    options.merge!(:cc => purchase.business_unit.email) if purchase.business_unit.try(:email)
-    mail(options) do |format|
+    @administrator = administrator
+    mail(:to => @purchase.person.email, 
+         :subject => I18n.t('mailers.notifier.purchase_denied'), 
+         :cc => @administrator.email,
+         :reply_to => @administrator.email
+        ) do |format|
       format.text
     end
   end
 
   def purchase_denied(purchase)
     @purchase = purchase
-    @administrator = purchase.updated_by
-    options = {
-      :to => @purchase.person.email,
-      :subject => "Inköp avslaget",
-      :reply_to => @administrator.email
-    }
-    options.merge!(:cc => purchase.business_unit.email) if purchase.business_unit.try(:email)
-    mail(options) do |format|
+    @administrator = administrator
+    mail(:to => @purchase.person.email, 
+         :subject => I18n.t('mailers.notifier.purchase_paid'), 
+         :cc => @administrator.email,
+         :reply_to => @administrator.email
+        ) do |format|
       format.text
     end
   end
@@ -62,42 +56,36 @@ class Notifier < ActionMailer::Base
 
   def debt_created(debt)
     @debt = debt
-    @administrator = debt.author
-    options = {
-      :to => @purchase.person.email,
-      :subject => "Skuld inlagd",
-      :reply_to => @administrator.email
-    }
-    options.merge!(:cc => purchase.business_unit.email) if purchase.business_unit.try(:email)
-    mail(options) do |format|
+    @administrator = administrator
+    mail(:to => @debt.person.email, 
+         :subject => I18n.t('mailers.notifier.debt_created'), 
+         :cc => @administrator.email,
+         :reply_to => @administrator.email
+        ) do |format|
       format.text
     end
   end
 
   def debt_paid(debt)
     @debt = debt
-    @administrator = Person.find(debt.versions.last.whodunnit)
-    options = {
-      :to => @purchase.person.email,
-      :subject => "Skuld betald",
-      :reply_to => @administrator.email
-    }
-    options.merge!(:cc => purchase.business_unit.email) if purchase.business_unit.try(:email)
-    mail(options) do |format|
+    @administrator = administrator
+    mail(:to => @debt.person.email, 
+         :subject => I18n.t('mailers.notifier.debt_paid'), 
+         :cc => @administrator.email,
+         :reply_to => @administrator.email
+        ) do |format|
       format.text
     end
   end
 
   def debt_cancelled(debt)
     @debt = debt
-    @administrator = Person.find(debt.versions.last.whodunnit)
-    options = {
-      :to => @purchase.person.email,
-      :subject => "Skuld struken",
-      :reply_to => @administrator.email
-    }
-    options.merge!(:cc => purchase.business_unit.email) if purchase.business_unit.try(:email)
-    mail(options) do |format|
+    @administrator = administrator
+    mail(:to => @debt.person.email,
+         :subject => I18n.t('mailers.notifier.debt_paid'),
+         :cc => @administrator.email,
+         :reply_to => @administrator.email
+        ) do |format|
       format.text
     end
   end

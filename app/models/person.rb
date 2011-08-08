@@ -12,7 +12,7 @@ class Person < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
-  ROLES = {"Kassör" => "treasurer", "Administratör" => "admin", "Revisor" => "accountant"}
+  ROLES = ["treasurer", "admin", "accountant"]
 
   validates_presence_of :first_name, :last_name, :login, :email, :ugid
   validates :email, :email => true

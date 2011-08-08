@@ -43,7 +43,7 @@ class BusinessUnitsController < ApplicationController
 
     respond_to do |format|
       if @business_unit.save
-        format.html { redirect_to(@business_unit, :notice => 'Business unit was successfully created.') }
+        format.html { redirect_to(@business_unit, :notice => I18n.t('notice.business_unit.success.created')) }
         format.xml  { render :xml => @business_unit, :status => :created, :location => @business_unit }
       else
         format.html { render :action => "new" }
@@ -57,7 +57,7 @@ class BusinessUnitsController < ApplicationController
   def update
     respond_to do |format|
       if @business_unit.update_attributes(params[:business_unit])
-        format.html { redirect_to(@business_unit, :notice => 'Business unit was successfully updated.') }
+        format.html { redirect_to(@business_unit, :notice => I18n.t('notice.business_unit.success.updated')) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -70,7 +70,7 @@ class BusinessUnitsController < ApplicationController
   # DELETE /business_units/1.xml
   def destroy
     unless @business_unit.destroy
-      flash[:error] = "Affärsenheten kunde inte tas bort"
+      flash[:error] = I18n.t('activerecord.errors.models.business_unit.cannot_be_removed')
     end
 
     respond_to do |format|
@@ -85,7 +85,7 @@ class BusinessUnitsController < ApplicationController
                :name  => @business_unit.name, 
                :url   => business_unit_path(@business_unit)},
               {:key   => :edit_business_unit,
-               :name  => "Redigera",
+               :name  => I18n.t('edit'),
                :url   => edit_business_unit_path(@business_unit)},
              ]
   end
