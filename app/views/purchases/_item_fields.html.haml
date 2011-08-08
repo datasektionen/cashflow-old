@@ -2,5 +2,5 @@
   = f.inputs do
     = f.input :amount
     = f.input :comment
-    = f.input :product_type, :collection => ProductType.all
+    = f.input :product_type, :collection => ProductType.all, :include_blank => false
     = link_to_remove_association "Ta bort inköpsdel", f
