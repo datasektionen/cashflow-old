@@ -39,7 +39,6 @@ class DebtsController < ApplicationController
 
     respond_to do |format|
       if @debt.save
-        Notifier.debt_created(@debt, current_person).deliver
         format.html { redirect_to(@debt, :notice => I18n.t('notices.debt.success.created')) }
         format.xml  { render :xml => @debt, :status => :created, :location => @debt }
       else

@@ -120,8 +120,12 @@ class Purchase < ActiveRecord::Base
   def generate_slug
     if new_record?
       self.slug = "temp-slug-#{Time.now}"
-    elsif self.slug !~ /#{slug}/
-      slug = "%s%d-%d" % [self.business_unit.try(:short_name), self.created_at.try(:year), self.id]
+      return true
+    end
+    
+    slug = "%s%d-%d" % [self.business_unit.try(:short_name), self.created_at.try(:year), self.id]
+
+    if self.slug !~ /#{slug}/
       Purchase.paper_trail_off
       self.update_attribute(:slug, slug)
       Purchase.paper_trail_on

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Debt do
+  before(:all) do
+    @admin = Factory :admin
+  end
   before(:each) do
     @debt = Factory :debt
   end
@@ -27,6 +30,7 @@ describe Debt do
   end
   
   it "should be cancelable when new" do
+    @debt.versions.last.update_attribute(:whodunnit,@admin.id)
     @debt.cancel!
     @debt.save
     @debt.should be_valid
@@ -64,6 +68,7 @@ describe Debt do
       @debt.save
       @debt.payable?.should be_true
       @debt.should be_valid
+      @debt.versions.last.update_attribute(:whodunnit,@admin.id)
       lambda {@debt.pay!}.should_not raise_error
     end
   end
@@ -88,6 +93,7 @@ describe Debt do
     @debt.workflow_state = "bookkept"
     @debt.save
     @debt.should be_valid
+    @debt.versions.last.update_attribute(:whodunnit,@admin.id)
     lambda {@debt.pay!}.should_not raise_error
     @debt.should be_finalized
   end

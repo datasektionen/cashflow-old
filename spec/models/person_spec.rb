@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Person do
+  before(:all) do
+    @admin = Factory(:admin)
+  end
   before(:each) do
     @person = Factory(:person)
   end
@@ -37,6 +40,8 @@ describe Person do
     @person.reload.total_debt_amount.should == (d1.amount + d2.amount)
     
     # ..and not count paid debts
+    d2.versions.last.update_attribute(:whodunnit,@admin.id)
+
     d2.pay!
     @person.reload.total_debt_amount.should == d1.amount
     
@@ -46,10 +51,12 @@ describe Person do
     @person.reload.total_debt_amount.should == (d1.amount + d3.amount)
     
     # if we cancel one debt, it should not be counted
+    d3.versions.last.update_attribute(:whodunnit,@admin.id)
     d3.cancel!
     @person.reload.total_debt_amount.should == d1.amount
     
     # and when no unpaid, uncancelled debts remain, the total debt sum should be zero
+    d1.versions.last.update_attribute(:whodunnit,@admin.id)
     d1.pay!
     @person.reload.total_debt_amount.should == 0
   end

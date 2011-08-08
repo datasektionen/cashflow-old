@@ -123,7 +123,6 @@ describe BusinessUnitsController do
         it "redirects to the business_unit" do
           BusinessUnit.stub(:find) { mock_business_unit(:update_attributes => true) }
           put :update, :id => "1"
-          debugger
           response.should redirect_to(business_unit_url(mock_business_unit))
         end
       end

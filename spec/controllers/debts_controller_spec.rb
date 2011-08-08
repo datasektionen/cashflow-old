@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DebtsController do
-  render_views
+  # render_views
   login_admin
 
   def mock_debt(stubs={})

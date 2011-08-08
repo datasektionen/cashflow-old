@@ -26,14 +26,13 @@ describe PeopleController do
 
     describe "GET index" do
       it "assigns all people as @people" do
-        Person.stub(:all) { [mock_person] }
         get :index
-        assigns(:people).should eq([mock_person])
+        assigns(:people).should eq(Person.all)
       end
     end
   
     describe "GET show" do
-      render_views
+      # render_views
       it "assigns the requested person as @person" do
         Person.stub(:find).with("37") { mock_person }
         get :show, :id => "37"
@@ -94,7 +93,6 @@ describe PeopleController do
         it "re-renders the 'new' template" do
           Person.stub(:new) { mock_person(:save => false) }
           post :create, :person => {}
-          debugger
           response.should render_template("new")
         end
       end

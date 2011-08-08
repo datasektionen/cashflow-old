@@ -13,7 +13,6 @@ module ApplicationHelper
   
   def currency(amount)
     number_to_currency(amount)
-    # ("%0.2f" % amount.to_f).gsub('.',',')
   end
   
   def status(model)

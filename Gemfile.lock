@@ -93,7 +93,7 @@ GEM
       babosa (~> 0.3.0)
     gherkin (2.4.6)
       json (>= 1.4.6)
-    haml (3.1.2)
+    haml (3.0.25)
     highline (1.6.2)
     i18n (0.4.2)
     i18n_routing (0.4.8)
@@ -113,7 +113,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    mysql2 (0.3.6)
+    mysql2 (0.2.7)
     net-ldap (0.2.2)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -233,16 +233,16 @@ DEPENDENCIES
   factory_girl_rails
   formtastic (~> 1.2.3)
   friendly_id
-  haml (> 3.0.0)
+  haml (~> 3.0.0)
   i18n_routing
   jquery-rails
   launchy
   linecache19
-  mysql2
+  mysql2 (~> 0.2.0)
   net-ldap
   oa-enterprise (~> 0.2.0)
   paper_trail
-  rails (= 3.0.0)
+  rails (~> 3.0.0)
   rcov
   rspec-mocks
   rspec-rails

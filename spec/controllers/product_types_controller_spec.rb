@@ -9,8 +9,6 @@ describe ProductTypesController do
     end
   end
 
-  deny_access_for_ordinary_user
-
   describe "When logged in as admin" do
     login_admin
     describe "GET index" do

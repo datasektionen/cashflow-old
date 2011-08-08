@@ -420,6 +420,7 @@
   
   mailer:
     notifier:
+      purchase_created: "Inköp skapat"
       purchase_approved: "Inköp godkänt"
       purchase_denied: "Inköp avslaget"
       purchase_paid: "Inköp betalat"
