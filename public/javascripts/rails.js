@@ -179,22 +179,6 @@ $(document).ready(function(){
     	}
     }
   });
-  
-  $("#add_purchase_item").click(function(){
-    var list_items = $("#add_purchase_item").parents('ol').children('li');
-    var item_fields = $(list_items).slice(list_items.length - 4, list_items.length - 1).clone();
-    var new_index = parseInt($(item_fields[0]).attr('id').match(/_(\d+)_/)[1]) + 1;
-    var field;
-    for(var i = 0; i < 3; i++){
-      $(item_fields[i]).attr('id', $(item_fields[0]).attr("id").replace(/_\d+_/, '_' + new_index + '_'));
-      field = $(item_fields[i]).children("label")[0];
-      $(field).attr('for', $(field).attr('for').replace(/_\d+_/, '_'+new_index+'_'));
-      field = $(item_fields[i]).children()[1];
-      $(field).attr('id', $(field).attr('id').replace(/_\d+_/, '_'+new_index+'_'));
-      $(field).attr('name', $(field).attr('name').replace(/\[\d+\]/, '['+new_index+']'));
-    }
-    $("#add_purchase_item").parent('li').before($(item_fields));
-  });
 
   $('input.ui-datepicker').datepicker({dateFormat: 'yy-mm-dd'});
 });

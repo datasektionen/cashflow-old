@@ -1,0 +1,6 @@
+.nested-fields
+  = f.inputs do
+    = f.input :amount
+    = f.input :comment
+    = f.input :product_type, :collection => ProductType.all
+    = link_to_remove_association "Ta bort inköpsdel", f

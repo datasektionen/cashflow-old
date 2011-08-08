@@ -15,6 +15,7 @@ gem 'simple-navigation'
 gem 'jquery-rails'
 gem 'i18n_routing'
 gem 'friendly_id'
+gem 'cocoon'
 
 group :production do
   gem 'mysql2'

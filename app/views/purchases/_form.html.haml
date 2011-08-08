@@ -6,11 +6,10 @@
     = form.input :business_unit, :collection => BusinessUnit.all
     = form.input :description, :as => :text
   
-  = form.inputs :name => "Inköpsdelar", :for => :items, :class => "inputs purchase_items" do |item|
-    = item.input :amount
-    = item.input :comment
-    = item.input :product_type, :collection => ProductType.all
-    %li= link_to "Lägg till inköpsdel", "#", :id => "add_purchase_item"
-  
+  = form.inputs :name => "Inköpsdelar" do
+    = form.semantic_fields_for :items do |item|
+      = render 'item_fields', :f => item
+    = link_to_add_association 'Lägg till inköpsdel', form, :items
+
   = form.buttons do
     = form.commit_button :commit
