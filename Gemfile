@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.0'
-gem 'capistrano'
 gem 'haml', '>3.0.0'
 gem 'workflow'
 gem 'devise'
@@ -43,4 +42,9 @@ group :test do
   gem 'autotest-fsevent' if RUBY_PLATFORM =~ /darwin/
   gem 'launchy'    # So you can do Then show me the page
   gem 'factory_girl_rails'
+end
+
+group :deploy do
+  gem 'capistrano'
+  gem 'capistrano-ext'
 end
