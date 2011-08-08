@@ -19,12 +19,12 @@ gem 'cocoon'
 
 group :production do
   gem 'mysql2'
+  gem 'unicorn'
 end
 
 group :development do
-  gem 'sqlite3-ruby', :require => 'sqlite3'
-  gem 'ruby-debug'
-  gem 'mongrel'
+  gem 'linecache19'
+  gem 'ruby-debug19', :require => "ruby-debug"
 end
 
 # Gems for test environment
