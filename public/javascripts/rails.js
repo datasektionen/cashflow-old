@@ -88,8 +88,6 @@ jQuery(function ($) {
           }
       });
     }
-    
-
 
     /**
      * remote handlers
@@ -154,6 +152,7 @@ jQuery(function ($) {
 
 $(document).ready(function(){
   $('.datatable').dataTable({
+    "aoColumnDefs": [{"sType": "html", "aTargets": [ 0 ] }],
     "bPaginate": false,
     "bLengthChange": false,
     "bFilter": true,
@@ -162,24 +161,23 @@ $(document).ready(function(){
     "bAutoWidth": false,
     "bJQueryUI": true,
     "oLanguage": {
-    	"sProcessing":   "Laddar...",
-    	"sLengthMenu":   "Visa _MENU_ rader",
-    	"sZeroRecords":  "Inga matchande resultat funna",
-    	"sInfo":         "Visar _START_ till _END_ av totalt _TOTAL_ rader",
-    	"sInfoEmpty":    "Visar 0 till 0 av totalt 0 rader",
-    	"sInfoFiltered": "(filtrerade från totalt _MAX_ rader)",
-    	"sInfoPostFix":  "",
-    	"sSearch":       "Sök:",
-    	"sUrl":          "",
-    	"oPaginate": {
-    		"sFirst":    "Första",
-    		"sPrevious": "Föregående",
-    		"sNext":     "Nästa",
-    		"sLast":     "Sista"
-    	}
+      "sProcessing":   "Laddar...",
+      "sLengthMenu":   "Visa _MENU_ rader",
+      "sZeroRecords":  "Inga matchande resultat funna",
+      "sInfo":         "Visar _START_ till _END_ av totalt _TOTAL_ rader",
+      "sInfoEmpty":    "Visar 0 till 0 av totalt 0 rader",
+      "sInfoFiltered": "(filtrerade från totalt _MAX_ rader)",
+      "sInfoPostFix":  "",
+      "sSearch":       "Sök:",
+      "sUrl":          "",
+      "oPaginate": {
+        "sFirst":    "Första",
+        "sPrevious": "Föregående",
+        "sNext":     "Nästa",
+        "sLast":     "Sista"
+      }
     }
   });
 
   $('input.ui-datepicker').datepicker({dateFormat: 'yy-mm-dd'});
 });
-

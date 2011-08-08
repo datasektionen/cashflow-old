@@ -7,6 +7,7 @@ class Ability
       can [:edit, :update, :show], Person, :id => user.id
       can [:read, :create, :edit, :update, :show], Purchase, :person_id => user.id
       can :read, Debt, :person_id => user.id
+      can :read, ProductType
       if user.is? :admin
         # Admin can do everything
         can :manage, :all

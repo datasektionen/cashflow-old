@@ -5,13 +5,15 @@
     %tr
       %th= t 'activerecord.attributes.product_type.name'
       %th= t 'activerecord.attributes.product_type.description'
-      %th.actions
+      - if can?(:manage, ProductType)
+        %th.actions
   
   %tbody
     - for product_type in @product_types
       %tr{ :class => cycle(:odd, :even) }
         %td= link_to product_type, product_type
         %td= product_type.description
-        %td
-          = link_to t('edit'), edit_product_type_path(product_type)
-          = button_to t('destroy'), product_type, :confirm => t('are_you_sure'), :method => :delete
+        = if can?(:manage, ProductType)
+          %td
+            = link_to t('edit'), edit_product_type_path(product_type)
+            = button_to t('destroy'), product_type, :confirm => t('are_you_sure'), :method => :delete
