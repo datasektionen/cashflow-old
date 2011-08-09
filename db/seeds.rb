@@ -8,51 +8,100 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 #
 
-BusinessUnit.create!({:name => "D-rektoratet", :short_name => "drek", :description => "Datasektionens styrelse"})
-BusinessUnit.create!({:name => "Festverksamhet", :short_name => "dkm", :description => "DKMs festverksamhet", :email => "ekom@d.kth.se"})
-BusinessUnit.create!({:name => "Idrottsverksamhet", :short_name => "idro", :description => "Idrottsverksamhet"})
-BusinessUnit.create!({:name => "Informationsorganet", :short_name => "ior", :description => "Informationsorganet"})
-BusinessUnit.create!({:name => "Mottagningen", :short_name => "mot", :description => "Mottagningen", :email => "ekonomeriet@d.kth.se"})
-BusinessUnit.create!({:name => "Näringslivsgruppen", :short_name => "ng", :description => "Näringslivsgruppen"})
-BusinessUnit.create!({:name => "Qulturnämnden", :short_name => "qn", :description => "Qulturnämnden"})
-BusinessUnit.create!({:name => "Sektionen Centralt", :short_name => "cen", :description => "Centralt"})
-BusinessUnit.create!({:name => "Sektionslokalsgruppen", :short_name => "slg", :description => "Sektionslokalsgruppen"})
-BusinessUnit.create!({:name => "Studieresan", :short_name => "stud", :description => "Projektet STUDS"})
+business_unit_attrs = [
+  {:name => "D-rektoratet", :short_name => "drek", :description => "Datasektionens styrelse"},
+  {:name => "Festverksamhet", :short_name => "dkm", :description => "DKMs festverksamhet", :email => "ekom@d.kth.se"},
+  {:name => "Idrottsverksamhet", :short_name => "idro", :description => "Idrottsverksamhet"},
+  {:name => "Informationsorganet", :short_name => "ior", :description => "Informationsorganet"},
+  {:name => "Mottagningen", :short_name => "mot", :description => "Mottagningen", :email => "ekonomeriet@d.kth.se"},
+  {:name => "Näringslivsgruppen", :short_name => "ng", :description => "Näringslivsgruppen"},
+  {:name => "Qulturnämnden", :short_name => "qn", :description => "Qulturnämnden"},
+  {:name => "Sektionen Centralt", :short_name => "cen", :description => "Centralt"},
+  {:name => "Sektionslokalsgruppen", :short_name => "slg", :description => "Sektionslokalsgruppen"},
+  {:name => "Studieresan", :short_name => "stud", :description => "Projektet STUDS"}
+]
+BusinessUnit.create!(business_unit_attrs)
 
-ProductType.create!({:name => "Annonsering", :description => "Annonsering"})
-ProductType.create!({:name => "Barkitt", :description => "Barkitt"})
-ProductType.create!({:name => "Cider", :description => "Cider"})
-ProductType.create!({:name => "Daddetillbehör", :description => "Daddetillbehör"})
-ProductType.create!({:name => "Dekoration", :description => "Dekoration"})
-ProductType.create!({:name => "Doqumenteritillbehör", :description => "Doqumenteritillbehör"})
-ProductType.create!({:name => "Drifvartillbehör", :description => "Drifvartillbehör"})
-ProductType.create!({:name => "Förbrukningsinventarier", :description => "Förbrukningsinventarier"})
-ProductType.create!({:name => "Förbrukningsmateriell", :description => "Förbrukningsmateriell"})
-ProductType.create!({:name => "Hyra inv. & verktyg", :description => "Hyra inventarier och verktyg"})
-ProductType.create!({:name => "Hyra maskin & andra tekn. anl.", :description => "Hyra maskin och andra tekniska anläggningar"})
-ProductType.create!({:name => "Hyrbilskostnader", :description => "Hyrbilskostnader"})
-ProductType.create!({:name => "Inköp kiosk", :description => "Inköp kiosk"})
-ProductType.create!({:name => "Kontorsmateriell", :description => "Kontorsmateriell"})
-ProductType.create!({:name => "Läsk", :description => "Läsk"})
-ProductType.create!({:name => "Lokalhyra", :description => "Lokalhyra"})
-ProductType.create!({:name => "Mat", :description => "Mat"})
-ProductType.create!({:name => "Milersättning", :description => "Milersättning"})
-ProductType.create!({:name => "Mobiltelefoni", :description => "Mobiltelefoni"})
-ProductType.create!({:name => "Mörkläggningsmaterial", :description => "Mörkläggningsmaterial"})
-ProductType.create!({:name => "Möten", :description => "Möten"})
-ProductType.create!({:name => "Personbilar, Parkeringsvagift", :description => "Personbilar, Parkeringsvagift"})
-ProductType.create!({:name => "Porto", :description => "Porto"})
-ProductType.create!({:name => "Reklamtrycksaker", :description => "Reklamtrycksaker"})
-ProductType.create!({:name => "Representation", :description => "Representation"})
-ProductType.create!({:name => "Sceneri", :description => "Sceneri"})
-ProductType.create!({:name => "Sprit", :description => "Sprit"})
-ProductType.create!({:name => "Teknik", :description => "Teknik"})
-ProductType.create!({:name => "Trängselskatt", :description => "Trängselskatt"})
-ProductType.create!({:name => "Trycksaker", :description => "Trycksaker"})
-ProductType.create!({:name => "Verktyg", :description => "Verktyg"})
-ProductType.create!({:name => "Vin", :description => "Vin"})
-ProductType.create!({:name => "Öl", :description => "Öl"})
-ProductType.create!({:name => "Övr. kostn. hyrd lokal", :description => "Övriga kostnader hyrd lokal"})
-ProductType.create!({:name => "Övr. reklamkostnader", :description => "Övriga reklamkostnader"})
-ProductType.create!({:name => "Övr. resekostnader", :description => "Övriga resekostnader"})
-ProductType.create!({:name => "Övrigt", :description => "Övrigt"})
+product_type_attrs = [
+  {:name => "Annonsering", :description => "Annonsering"},
+  {:name => "Barkitt", :description => "Barkitt"},
+  {:name => "Cider", :description => "Cider"},
+  {:name => "Daddetillbehör", :description => "Daddetillbehör"},
+  {:name => "Dekoration", :description => "Dekoration"},
+  {:name => "Doqumenteritillbehör", :description => "Doqumenteritillbehör"},
+  {:name => "Drifvartillbehör", :description => "Drifvartillbehör"},
+  {:name => "Förbrukningsinventarier", :description => "Förbrukningsinventarier"},
+  {:name => "Förbrukningsmateriell", :description => "Förbrukningsmateriell"},
+  {:name => "Hyra inv. & verktyg", :description => "Hyra inventarier och verktyg"},
+  {:name => "Hyra maskin & andra tekn. anl.", :description => "Hyra maskin och andra tekniska anläggningar"},
+  {:name => "Hyrbilskostnader", :description => "Hyrbilskostnader"},
+  {:name => "Inköp kiosk", :description => "Inköp kiosk"},
+  {:name => "Kontorsmateriell", :description => "Kontorsmateriell"},
+  {:name => "Läsk", :description => "Läsk"},
+  {:name => "Lokalhyra", :description => "Lokalhyra"},
+  {:name => "Mat", :description => "Mat"},
+  {:name => "Milersättning", :description => "Milersättning"},
+  {:name => "Mobiltelefoni", :description => "Mobiltelefoni"},
+  {:name => "Mörkläggningsmaterial", :description => "Mörkläggningsmaterial"},
+  {:name => "Möten", :description => "Möten"},
+  {:name => "Personbilar, Parkeringsvagift", :description => "Personbilar, Parkeringsvagift"},
+  {:name => "Porto", :description => "Porto"},
+  {:name => "Reklamtrycksaker", :description => "Reklamtrycksaker"},
+  {:name => "Representation", :description => "Representation"},
+  {:name => "Sceneri", :description => "Sceneri"},
+  {:name => "Sprit", :description => "Sprit"},
+  {:name => "Teknik", :description => "Teknik"},
+  {:name => "Trängselskatt", :description => "Trängselskatt"},
+  {:name => "Trycksaker", :description => "Trycksaker"},
+  {:name => "Verktyg", :description => "Verktyg"},
+  {:name => "Vin", :description => "Vin"},
+  {:name => "Öl", :description => "Öl"},
+  {:name => "Övr. kostn. hyrd lokal", :description => "Övriga kostnader hyrd lokal"},
+  {:name => "Övr. reklamkostnader", :description => "Övriga reklamkostnader"},
+  {:name => "Övr. resekostnader", :description => "Övriga resekostnader"},
+  {:name => "Övrigt", :description => "Övrigt"}
+]
+ProductType.create!(product_type_attrs)
+
+mottagningen = BusinessUnit.find_by_name("Mottagningen")
+budget_post_attrs = [
+  {:name => "Överlämning", :business_unit => mottagningen},
+  {:name => "Inaug", :business_unit => mottagningen},
+  {:name => "INDA", :business_unit => mottagningen},
+  {:name => "plOsqvik", :business_unit => mottagningen},
+  {:name => "n0lleOsqvik", :business_unit => mottagningen},
+  {:name => "Frukost", :business_unit => mottagningen},
+  {:name => "Bärbar", :business_unit => mottagningen},
+  {:name => "Favvodaddemiddag", :business_unit => mottagningen},
+  {:name => "Bilen", :business_unit => mottagningen},
+  {:name => "Tjejfika", :business_unit => mottagningen},
+  {:name => "God morgon n0llan", :business_unit => mottagningen},
+  {:name => "DOS", :business_unit => mottagningen},
+  {:name => "Sångarafton", :business_unit => mottagningen},
+  {:name => "TTG-föreläsning", :business_unit => mottagningen},
+  {:name => "Champangefrukost", :business_unit => mottagningen},
+  {:name => "TTG-lab", :business_unit => mottagningen},
+  {:name => "Kultmiddag", :business_unit => mottagningen},
+  {:name => "Sektionsgasque", :business_unit => mottagningen},
+  {:name => "n0llebanquette", :business_unit => mottagningen},
+  {:name => "Herrpub", :business_unit => mottagningen},
+  {:name => "Dammiddag", :business_unit => mottagningen},
+  {:name => "Nattorientering", :business_unit => mottagningen},
+  {:name => "Kultflimmer", :business_unit => mottagningen},
+  {:name => "Laserkrig", :business_unit => mottagningen},
+  {:name => "Lunch", :business_unit => mottagningen},
+  {:name => "Hurry Scurry", :business_unit => mottagningen},
+  {:name => "LQ-sittning", :business_unit => mottagningen},
+  {:name => "LQ-quarneval", :business_unit => mottagningen},
+  {:name => "Mediagasque", :business_unit => mottagningen},
+  {:name => "n0llepubrunda", :business_unit => mottagningen},
+  {:name => "n0llegasque", :business_unit => mottagningen},
+  {:name => "KDE-förkör", :business_unit => mottagningen},
+  {:name => "Internfest", :business_unit => mottagningen},
+  {:name => "Daddetack", :business_unit => mottagningen},
+  {:name => "Tackfest", :business_unit => mottagningen},
+  {:name => "Old Boys and Girls", :business_unit => mottagningen},
+  {:name => "Efterkör", :business_unit => mottagningen},
+  {:name => "Lunchföreläsning", :business_unit => mottagningen}
+]
+BudgetPost.create!(budget_post_attrs)
