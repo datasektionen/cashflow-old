@@ -39,8 +39,6 @@ group :test do
   gem 'cucumber'
   gem 'spork'
   gem 'autotest'
-  gem 'autotest-growl'
-  gem 'autotest-fsevent' if RUBY_PLATFORM =~ /darwin/
   gem 'launchy'    # So you can do Then show me the page
   gem 'factory_girl_rails'
 end
