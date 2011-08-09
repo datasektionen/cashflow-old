@@ -3,8 +3,8 @@
 
 %hr
 
-- if logged_in?
-  = session_change_link
-- else
+- if person_signed_in?
   %h3= t 'common_actions'
   = link_to t('navigation.new_purchase'), new_purchase_path 
+- else
+  = link_to "Logga in", new_person_session_path
