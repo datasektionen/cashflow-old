@@ -1,0 +1,19 @@
+%h1= t('.title')
+
+%table.datatable
+  %thead
+    %tr
+      %th= t 'activerecord.attributes.budget_post.name'
+      %th= t 'activerecord.models.business_unit'
+      - if can?(:manage, BudgetPost)
+        %th.actions
+  
+  %tbody
+    - for budget_post in @budget_posts
+      %tr{ :class => cycle(:odd, :even) }
+        %td= budget_post.name
+        %td= budget_post.business_unit
+        - if can?(:manage, BudgetPost)
+          %td
+            = link_to t('edit'), edit_budget_post_path(budget_post)
+            = button_to t('destroy'), budget_post, :confirm => t('are_you_sure'), :method => :delete

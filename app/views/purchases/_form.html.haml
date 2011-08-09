@@ -4,6 +4,7 @@
   = form.inputs :name => "Beskrivning" do
     = form.input :purchased_at, :as => :datepicker
     = form.input :business_unit, :collection => BusinessUnit.all
+    -#= form.input :budget_post, :collection => []
     = form.input :description, :as => :text
   
   = form.inputs :name => "Inköpsdelar" do
@@ -13,3 +14,9 @@
 
   = form.buttons do
     = form.commit_button :commit
+
+:javascript
+  budget_posts = #{BudgetPost.group(:business_unit_id).to_json }
+  $("#purchase_buisness_unit").change(function(){
+    
+  })

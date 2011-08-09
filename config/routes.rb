@@ -1,4 +1,6 @@
 Cashflow::Application.routes.draw do  
+  resources :budget_posts
+
   devise_for :people, :controllers => {:omniauth_callbacks => "people/omniauth_callbacks"} do
     get "sign_in", :to => "people/omniauth_callbacks#new", :as => :new_person_session
     get "sign_out", :to => "people/omniauth_callbacks#destroy", :as => :destroy_person_session
@@ -6,6 +8,7 @@ Cashflow::Application.routes.draw do
 
   localized(['sv']) do
     resources :product_types
+    resources :budget_posts
     resources :business_units
     resources :purchases do
       member do

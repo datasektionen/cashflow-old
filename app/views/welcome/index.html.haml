@@ -1,3 +1,10 @@
 %h2 Välkommen!
 %p ...till Datasektionens vid KTH inköps- och skuldtracker.
 
+%hr
+
+- if logged_in?
+  = session_change_link
+- else
+  %h3= t 'common_actions'
+  = link_to t('navigation.new_purchase'), new_purchase_path 

@@ -200,10 +200,12 @@
         role: "Användarroll"
       product_type:
         name: "Namn"
-        description: "Beskrivning"
+      budget_post:
+        name: "Namn"
       purchase:
         business_unit: "Affärsenhet"
         description: "Beskrivning"
+        purchased_at: "Inköpsdatum"
       purchase_item:
         amount: "Summa"
         comment: "Kommentar"
@@ -299,6 +301,14 @@
       create: "Skapa"
     edit:
       title: "Redigera produkttyp"
+  budget_posts:
+    index:
+      title: "Budgetposter"
+    new:
+      title: "Ny budgetpost"
+      create: "Skapa"
+    edit:
+      title: "Redigera budgetpost"
   business_units:
     index:
       title: "Affärsenheter"
@@ -354,6 +364,7 @@
   are_you_sure: "Är du säker?"
   cancel: "Avslå"
   access_denied: "Åtkomst nekad"
+  common_actions: "Vanliga aktiviteter"
   workflow_state:
     new:        "Ny"
     confirmed:  "Bekräftad"
@@ -417,6 +428,9 @@
     product_types: "Produkttyper"
     all_product_types: "Alla produkttyper"
     new_product_type: "Ny produkttyp"
+    budget_posts: "Budgetposter"
+    all_budget_posts: "Alla budgetposter"
+    new_budget_post: "Ny budgetpost"
   
   mailer:
     notifier:

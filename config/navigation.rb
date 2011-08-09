@@ -31,5 +31,12 @@ SimpleNavigation::Configuration.run do |navigation|
         sub.item :new_product_type, I18n.t('navigation.new_product_type'), new_product_type_path
       end
     end
+
+    if can?(:manage, BudgetPost)
+      primary.item :budget_posts, I18n.t('navigation.budget_posts'), budget_posts_path, :highlights_on => /\/budget_posts/ do |sub|
+        sub.item :all_budget_posts, I18n.t('navigation.all_budget_posts'), budget_posts_path
+        sub.item :new_budget_post, I18n.t('navigation.new_budget_post'), new_budget_post_path
+      end
+    end
   end
 end
