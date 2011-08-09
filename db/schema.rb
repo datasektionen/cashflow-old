@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20110809162342) do
     t.boolean  "active",      :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email",       :default => "",   :null => false
+    t.string   "email"
   end
 
   create_table "debts", :force => true do |t|
