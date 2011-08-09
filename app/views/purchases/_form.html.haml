@@ -4,7 +4,7 @@
   = form.inputs :name => "Beskrivning" do
     = form.input :purchased_at, :as => :datepicker
     = form.input :business_unit, :collection => BusinessUnit.all
-    -#= form.input :budget_post, :collection => []
+    = form.input :budget_post, :collection => BudgetPost.business_unit(@purchase.try(:business_unit)), :include_blank=>false
     = form.input :description, :as => :text
   
   = form.inputs :name => "Inköpsdelar" do
@@ -15,8 +15,14 @@
   = form.buttons do
     = form.commit_button :commit
 
+- ActiveRecord::Base.include_root_in_json = false
+
 :javascript
-  budget_posts = #{BudgetPost.group(:business_unit_id).to_json }
-  $("#purchase_buisness_unit").change(function(){
-    
+  budget_posts = #{ bp = Hash.new; BusinessUnit.all.each { |bu| bp[bu.id] = BudgetPost.business_unit(bu) } ; bp.to_json  }
+  $("#purchase_business_unit_id").change(function(){
+    var new_html = ""
+    $.each(budget_posts[$("#purchase_business_unit_id").val()],function(index, bp) {
+      new_html += "<option value='"+bp.id+"'>"+bp.name+"</option>"
+    })
+    $("#purchase_budget_post_id").html(new_html)
   })

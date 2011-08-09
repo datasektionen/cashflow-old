@@ -7,6 +7,9 @@ class Purchase < ActiveRecord::Base
   belongs_to :created_by, :class_name => "Person", :foreign_key => "created_by_id"
   belongs_to :updated_by, :class_name => "Person", :foreign_key => "updated_by_id"
   belongs_to :business_unit
+  belongs_to :budget_post
+
+  before_validation :set_year
   #belongs_to :budget_row, :through=>:budget_post, :conditions=>["purchases.year = budget_rows.year"]
 
   has_many :items, :class_name => "PurchaseItem", :dependent => :destroy
@@ -100,6 +103,7 @@ class Purchase < ActiveRecord::Base
     ["confirmed", "payed"].include?(self.workflow_state)
   end
 
+
   # Check whether a purchase is payable
   def payable?
     ["confirmed", "bookkept"].include?(self.workflow_state)
@@ -131,5 +135,9 @@ class Purchase < ActiveRecord::Base
       self.update_attribute(:slug, slug)
       Purchase.paper_trail_on
     end
+  end
+
+  def set_year
+    self.year = purchased_at.try(:year)
   end
 end
