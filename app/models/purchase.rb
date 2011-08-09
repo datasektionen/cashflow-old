@@ -9,7 +9,7 @@ class Purchase < ActiveRecord::Base
   belongs_to :business_unit
   belongs_to :budget_post
 
-  before_validation :set_year
+  # before_validation :set_year
 
   has_many :items, :class_name => "PurchaseItem", :dependent => :destroy
   
