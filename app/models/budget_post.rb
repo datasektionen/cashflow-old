@@ -13,7 +13,7 @@ class BudgetPost < ActiveRecord::Base
   end 
   protected
   def create_rows
-    all_years.each do |y|
+    BudgetPost.all_years.each do |y|
       BudgetRow.create(:budget_post=>self, :year => y)
     end
   end
