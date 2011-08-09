@@ -116,4 +116,14 @@ class Person < ActiveRecord::Base
       Person.create_from_ldap(:ugid => access_token["uid"])
     end
   end
+
+  def to_json
+    {
+      :first_name => first_name,
+      :last_name => last_name,
+      :email => email,
+      :ugid => ugid,
+      :login => login
+    }.to_json
+  end
 end
