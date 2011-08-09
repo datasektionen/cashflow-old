@@ -1,6 +1,10 @@
 class BudgetRow < ActiveRecord::Base
   belongs_to :budget_post
 
+  def purchases
+    Purchase.where(:budget_post_id=>budget_post, :year=>year)
+  end
+
   def total
     return @amount if @amount
     @amount = 0

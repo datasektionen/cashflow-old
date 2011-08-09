@@ -10,10 +10,10 @@
   %dt Status
   %dd= status purchase
   %dt Budgetpost
-  %dt= purchase.budget_post
+  %dd= purchase.budget_post.name
   -if can? :manage, BudgetPost
     %dt Budgetstatus
-    %dt #{purchase.budget_row.total}/#{purchase.budget_row.sum}
+    %dd #{currency purchase.budget_row.total} av #{currency purchase.budget_row.sum}
   %dt Senast uppdaterad
   %dd= short_time purchase.updated_at 
   %dt Uppdaterad av
