@@ -1,7 +1,7 @@
 class AddYearToPurchase < ActiveRecord::Migration
   def self.up
     add_column :purchases, :year, :integer, :null=>false
-    Purchase.each do |p|
+    Purchase.all.each do |p|
       p.year = p.purchased_at.year
     end
   end
