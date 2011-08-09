@@ -1,2 +1,12 @@
 %h1= t '.title'
-= render 'form'
+= semantic_form_for(@budget_post) do |form|
+  =form.inputs :name => "Attribut" do
+    = form.input :name
+    = form.input :business_unit
+    = form.inputs :name => "Budget/år" do 
+      = form.fields_for :budget_rows do |f|
+        = f.input :year
+        = f.input :sum
+        %hr
+  = form.buttons do
+    = form.commit_button :commit
