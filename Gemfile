@@ -28,6 +28,7 @@ end
 
 # Gems for test environment
 group :test do
+  gem 'no_peeping_toms', :git => "https://github.com/dbalatero/no-peeping-toms.git"
   gem "rspec-rails"
   gem "rspec-mocks"
   gem 'rcov'
