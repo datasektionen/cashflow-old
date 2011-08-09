@@ -61,11 +61,11 @@ class Person < ActiveRecord::Base
   # 
   # Make sure to supply it with specific filters, since it will only return the first user it finds.
   def self.from_ldap(options = {})
-    filters = {:givenName   => options[:first_name],
-               :sn          => options[:last_name],
-               :ugKthid     => options[:ugid],
-               :ugUsername  => options[:login],
-               :mail        => options[:email]}
+    filters = {:givenName   => options[:first_name]||options['first_name'],
+               :sn          => options[:last_name]||options['last_name'],
+               :ugKthid     => options[:ugid]||options['ugid'],
+               :ugUsername  => options[:login]||options['login'],
+               :mail        => options[:email]||options['email']}
     
     filters.reject! {|k,v| v.blank? }
     

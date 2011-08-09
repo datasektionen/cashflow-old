@@ -77,13 +77,15 @@ class PeopleController < ApplicationController
 
   def search
     search_options = params.slice(*%w[login ugid email])
-    person = Person.where(search_options).first
-    person ||= Person.from_ldap(search_options)
+    Rails.logger.info(search_options)
+
     respond_to do |format|
       format.json do
-        if person.persisted?
-          render :json => {:person => {:name => person.name}, :error => I18n.t('activerecord.errors.models.person.exists'), :url => person_url(person)}
+        if Person.where(search_options).any? && person = Person.where(search_options).first
+           render :json => {:person => {:name => person.name}, :error => I18n.t('activerecord.errors.models.person.exists'), :url => person_url(person)}
         else
+          person = Person.from_ldap(search_options)
+          Rails.logger.info(person)
           render :json => person
         end
       end
