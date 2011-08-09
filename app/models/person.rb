@@ -119,11 +119,13 @@ class Person < ActiveRecord::Base
 
   def to_json
     {
-      :first_name => first_name,
-      :last_name => last_name,
-      :email => email,
-      :ugid => ugid,
-      :login => login
+      :person => {
+        :first_name => first_name,
+        :last_name => last_name,
+        :email => email,
+        :ugid => ugid,
+        :login => login
+      }
     }.to_json
   end
 end
