@@ -41,7 +41,6 @@ Factory.define :debt do |f|
   f.amount { rand(1000) }
   f.person { Factory :person }
   f.business_unit { Factory :business_unit }
-  f.author { Factory :treasurer }
 end
 
 Factory.define :invalid_debt, :parent => :debt do |f|
@@ -73,8 +72,6 @@ Factory.define :purchase do |f|
   f.person        { Factory :person }
   f.description   { "test purchase" }
   f.slug          { "test" }
-  f.created_by    { Factory :person }
-  f.updated_by    { Factory :person }
   f.business_unit { Factory :business_unit }
   f.purchased_at  { Date.today }
 end

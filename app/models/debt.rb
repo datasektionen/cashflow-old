@@ -2,12 +2,11 @@ class Debt < ActiveRecord::Base
   include Workflow
   has_paper_trail
   
-  validates_presence_of [:description, :amount, :person, :author, :business_unit]
+  validates_presence_of [:description, :amount, :person, :business_unit]
   attr_protected :workflow_state
   attr_readonly :person_id, :person
   
   belongs_to :person
-  belongs_to :author, :class_name => "Person", :foreign_key => "created_by_id"
   belongs_to :business_unit
 
   validate :locked_when_finalized
@@ -67,4 +66,11 @@ class Debt < ActiveRecord::Base
     self.new? || self.paid?
   end
 
+  def author
+    Person.find(versions.first.whodunnit.to_i)
+  end
+
+  def last_updated_by
+    Person.find(self.originator.to_i)
+  end
 end

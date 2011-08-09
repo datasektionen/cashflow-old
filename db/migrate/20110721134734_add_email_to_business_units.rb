@@ -1,6 +1,6 @@
 class AddEmailToBusinessUnits < ActiveRecord::Migration
   def self.up
-    add_column :business_units, :email, :string
+    add_column :business_units, :email, :string, :null => false, :default => ""
   end
 
   def self.down

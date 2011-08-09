@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/dbalatero/no-peeping-toms.git
+  revision: 4c97f5da5b606da9bb7309f55658594e415d9a75
+  specs:
+    no_peeping_toms (2.1.1)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -240,6 +248,7 @@ DEPENDENCIES
   linecache19
   mysql2 (~> 0.2.0)
   net-ldap
+  no_peeping_toms!
   oa-enterprise (~> 0.2.0)
   paper_trail
   rails (~> 3.0.0)

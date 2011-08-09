@@ -6,7 +6,7 @@ class Notifier < ActionMailer::Base
 
   def purchase_created(purchase)
     @purchase = purchase
-    @administrator = purchase.updated_by
+    @administrator = purchase.last_updated_by
     mail(:to => @purchase.person.email, 
          :subject => I18n.t('mailers.notifier.purchase_created'), 
          :cc => @administrator.email,
@@ -18,7 +18,7 @@ class Notifier < ActionMailer::Base
 
   def purchase_approved(purchase)
     @purchase = purchase
-    @administrator = purchase.updated_by
+    @administrator = purchase.last_updated_by
     mail(:to => @purchase.person.email, 
          :subject => I18n.t('mailers.notifier.purchase_approved'), 
          :cc => @administrator.email,
@@ -30,7 +30,7 @@ class Notifier < ActionMailer::Base
 
   def purchase_denied(purchase)
     @purchase = purchase
-    @administrator = purchase.updated_by
+    @administrator = purchase.last_updated_by
     mail(:to => @purchase.person.email, 
          :subject => I18n.t('mailers.notifier.purchase_denied'), 
          :cc => @administrator.email,
@@ -42,7 +42,7 @@ class Notifier < ActionMailer::Base
 
   def purchase_paid(purchase)
     @purchase = purchase
-    @administrator = purchase.updated_by
+    @administrator = purchase.last_updated_by
     options = {
       :to => @purchase.person.email,
       :subject => I18n.t('mailers.notifier.purchase_paid'),
@@ -68,7 +68,7 @@ class Notifier < ActionMailer::Base
 
   def debt_paid(debt)
     @debt = debt
-    @administrator = Person.find(debt.versions.last.whodunnit)
+    @administrator = debt.last_updated_by
     mail(:to => @debt.person.email, 
          :subject => I18n.t('mailers.notifier.debt_paid'), 
          :cc => @administrator.email,
@@ -80,7 +80,7 @@ class Notifier < ActionMailer::Base
 
   def debt_cancelled(debt)
     @debt = debt
-    @administrator = Person.find(debt.versions.last.whodunnit)
+    @administrator = debt.last_updated_by
     mail(:to => @debt.person.email,
          :subject => I18n.t('mailers.notifier.debt_paid'),
          :cc => @administrator.email,

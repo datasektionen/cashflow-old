@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110809140238) do
+ActiveRecord::Schema.define(:version => 20110809162342) do
 
   create_table "budget_posts", :force => true do |t|
     t.integer "business_unit_id", :null => false
@@ -29,12 +29,11 @@ ActiveRecord::Schema.define(:version => 20110809140238) do
     t.boolean  "active",      :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email"
+    t.string   "email",       :default => "",   :null => false
   end
 
   create_table "debts", :force => true do |t|
     t.string   "description",                         :null => false
-    t.integer  "created_by_id",                       :null => false
     t.integer  "amount",                              :null => false
     t.integer  "person_id",                           :null => false
     t.integer  "business_unit_id",                    :null => false
@@ -78,8 +77,6 @@ ActiveRecord::Schema.define(:version => 20110809140238) do
     t.string   "description",                         :null => false
     t.string   "workflow_state",   :default => "new", :null => false
     t.integer  "person_id",                           :null => false
-    t.integer  "created_by_id",                       :null => false
-    t.integer  "updated_by_id",                       :null => false
     t.integer  "business_unit_id",                    :null => false
     t.date     "purchased_at",                        :null => false
     t.string   "slug",             :default => "",    :null => false

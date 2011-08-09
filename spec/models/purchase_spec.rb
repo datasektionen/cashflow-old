@@ -40,17 +40,7 @@ describe Purchase do
   end
 
   it "should be created by someone" do
-    @purchase.created_by.should_not be_blank
-    @purchase.created_by = nil
-    @purchase.should_not be_valid
-    @purchase.errors[:created_by].should_not be_empty
-  end
-
-  it "should be updated by someone" do
-    @purchase.updated_by.should_not be_blank
-    @purchase.updated_by = nil
-    @purchase.should_not be_valid
-    @purchase.errors[:updated_by].should_not be_empty
+    @purchase.originator.should_not be_blank
   end
 
   it "should belong to a business unit" do
