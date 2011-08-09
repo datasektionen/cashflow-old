@@ -5,7 +5,6 @@ class PurchasesController < ApplicationController
   # GET /purchases
   # GET /purchases.xml
   def index
-    #@purchases = Purchase.accessible_by(current_ability).order("created_at desc")
     @purchase = Purchase.all
     respond_to do |format|
       format.html # index.html.erb
@@ -16,13 +15,6 @@ class PurchasesController < ApplicationController
   # GET /purchases/1
   # GET /purchases/1.xml
   def show
-    @state_versions = []
-    pv = @purchase
-    until pv.nil?
-      @state_versions << OpenStruct.new(:version_date => pv.updated_at || pv.created_at, :workflow_state => pv.workflow_state, :updated_by => pv.updated_by)
-      pv = pv.previous_version
-    end
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @purchase }
@@ -49,8 +41,6 @@ class PurchasesController < ApplicationController
   # POST /purchases.xml
   def create
     @purchase = @current_person.purchases.new(params[:purchase])
-    @purchase.updated_by = @current_person
-    @purchase.created_by = @current_person
 
     respond_to do |format|
       if @purchase.save
@@ -66,7 +56,6 @@ class PurchasesController < ApplicationController
   # PUT /purchases/1
   # PUT /purchases/1.xml
   def update
-    @purchase.updated_by = @current_person
     @purchase.workflow_state = "edited"
 
     respond_to do |format|

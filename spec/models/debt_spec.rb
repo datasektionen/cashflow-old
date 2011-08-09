@@ -16,7 +16,7 @@ describe Debt do
     end
   end
 
-  %w[author person business_unit].each do |relation|
+  %w[person business_unit].each do |relation|
     it "should be invalid without a relation #{relation}" do
       @debt.send(relation).should_not be_nil
       @debt.send("#{relation}=",nil)

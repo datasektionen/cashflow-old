@@ -14,7 +14,7 @@ class Purchase < ActiveRecord::Base
 
   has_many :items, :class_name => "PurchaseItem", :dependent => :destroy
   
-  validates_presence_of :person, :created_by, :updated_by, :business_unit, :description, :purchased_at
+  validates_presence_of :person, :business_unit, :description, :purchased_at
   
   validate :cannot_purchase_stuff_in_the_future, :locked_when_finalized
   
@@ -107,6 +107,20 @@ class Purchase < ActiveRecord::Base
   # Check whether a purchase is payable
   def payable?
     ["confirmed", "bookkept"].include?(self.workflow_state)
+  end
+
+  def state_history
+    states = []
+    version = self
+    until version.nil?
+      states << OpenStruct.new(:version_date => version.updated_at, :workflow_state => version.workflow_state, :originator => version.last_updated_by)
+      version = version.previous_version
+    end
+    states
+  end
+
+  def last_updated_by
+    Person.find(self.originator.to_i)
   end
 
   protected
