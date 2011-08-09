@@ -86,7 +86,7 @@ class PeopleController < ApplicationController
         else
           person = Person.from_ldap(search_options)
           Rails.logger.info(person)
-          render :json => person
+          render :json => person.to_json
         end
       end
     end
