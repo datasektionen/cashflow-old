@@ -9,8 +9,7 @@ class Purchase < ActiveRecord::Base
   belongs_to :business_unit
   belongs_to :budget_post
 
-  before_validation :set_year
-  #belongs_to :budget_row, :through=>:budget_post, :conditions=>["purchases.year = budget_rows.year"]
+  # before_validation :set_year
 
   has_many :items, :class_name => "PurchaseItem", :dependent => :destroy
   
@@ -101,6 +100,10 @@ class Purchase < ActiveRecord::Base
   # Check whether a purchase is bookkeepable
   def keepable?
     ["confirmed", "payed"].include?(self.workflow_state)
+  end
+
+  def budget_row
+    BudgetRow.find_by_budget_post_id_and_year(budget_post_id, year)
   end
 
 

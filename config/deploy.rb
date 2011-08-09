@@ -70,6 +70,11 @@ namespace :deploy do
     run "test -e #{pid} && kill `cat #{pid}` || /bin/true"
   end
 
+  desc "Run migrations"
+  task :migrate, :except => {:no_release => true} do
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} /usr/local/bin/1.9.2_bundle exec rake db:migrate"
+  end
+
   namespace :rollback do
     desc "Moves the repo back to the previous version of HEAD"
     task :repo, :except => { :no_release => true } do
@@ -108,7 +113,7 @@ end
 after 'deploy:update_code', 'bundler:bundle_new_release'
 
 def run_rake(cmd)
-  run "cd #{current_path}; #{rake} #{cmd}"
+  run "cd #{current_path}; /usr/local/bin/1.9.2_bundle exec #{rake} #{cmd}"
 end
 
 
