@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110809140238) do
+ActiveRecord::Schema.define(:version => 20110809162342) do
 
   create_table "budget_posts", :force => true do |t|
     t.integer "business_unit_id", :null => false
