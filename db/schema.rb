@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110809102725) do
+ActiveRecord::Schema.define(:version => 20110809140238) do
 
   create_table "budget_posts", :force => true do |t|
     t.integer "business_unit_id", :null => false
@@ -19,8 +19,6 @@ ActiveRecord::Schema.define(:version => 20110809102725) do
 
   create_table "budget_rows", :force => true do |t|
     t.integer "budget_post_id", :null => false
-    t.integer "activity_year",  :null => false
-    t.integer "year",           :null => false
     t.integer "sum"
   end
 
@@ -87,7 +85,6 @@ ActiveRecord::Schema.define(:version => 20110809102725) do
     t.string   "slug",             :default => "",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "year",                                :null => false
     t.integer  "budget_post_id",                      :null => false
   end
 
