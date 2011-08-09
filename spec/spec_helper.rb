@@ -11,7 +11,7 @@ require 'formtastic'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
-
+ActiveRecord::Observer.disable_observers
 RSpec.configure do |config|
   # == Mock Framework
   #
