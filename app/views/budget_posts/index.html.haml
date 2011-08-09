@@ -1,5 +1,10 @@
 %h1= t('.title')
 
+%div
+  #{t('show_budget_rows_for')}:
+  = form_tag :year do
+    = select_tag(:year, options_from_collection_for_select(:year,:year,BudgetPost.all_years, :year, :year, @year)
+
 %table.datatable
   %thead
     %tr

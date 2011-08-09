@@ -5,6 +5,9 @@ class BudgetPostsController < ApplicationController
   # GET /budget_posts.xml
   def index
     @budget_posts = BudgetPost.all
+    @year = params[:year][:year] if params[:year]
+    @year = Time.now.year if @year.nil?
+    BudgetRow.create_rows_if_not_exists(@year) unless @year.nil?
 
     respond_to do |format|
       format.html 
