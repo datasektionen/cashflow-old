@@ -116,7 +116,8 @@ class Purchase < ActiveRecord::Base
     states = []
     version = self
     until version.nil?
-      states << OpenStruct.new(:version_date => version.updated_at, :workflow_state => version.workflow_state, :originator => version.last_updated_by)
+      whodunnit = version.version && version.version.previous ? Person.find(version.version.previous.whodunnit.to_i) : version.last_updated_by
+      states << OpenStruct.new(:version_date => version.updated_at, :workflow_state => version.workflow_state, :originator => whodunnit)
       version = version.previous_version
     end
     states
