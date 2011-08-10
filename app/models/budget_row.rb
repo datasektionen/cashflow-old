@@ -5,10 +5,14 @@ class BudgetRow < ActiveRecord::Base
     Purchase.where(:budget_post_id=>budget_post, :year=>year)
   end
 
+  def sum
+    read_attribute(:sum) or 0
+  end
+
   def total
     return @amount if @amount
     @amount = 0
-    purchases.each do |p|
+    purchases.confirmed.each do |p|
       @amount += p.total
     end
     @amount
