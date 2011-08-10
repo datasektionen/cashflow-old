@@ -8,6 +8,10 @@ class BudgetPost < ActiveRecord::Base
 
   after_create :create_rows
 
+  def to_s
+    name
+  end
+
   def self.all_years
     Purchase.group(:year).select(:year).map do |y|
       y.year

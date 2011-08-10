@@ -10,7 +10,7 @@
   %dt Status
   %dd= status purchase
   %dt Budgetpost
-  %dd= purchase.budget_post.name
+  %dd= link_to purchase.budget_post, purchase.budget_post
   -if can? :manage, BudgetPost
     %dt Budgetstatus
     %dd #{currency purchase.budget_row.total} av #{currency purchase.budget_row.sum}
