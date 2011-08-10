@@ -4,7 +4,7 @@
   = form.inputs :name => "Beskrivning" do
     = form.input :purchased_at, :as => :datepicker
     = form.input :business_unit, :collection => BusinessUnit.all
-    = form.input :budget_post, :collection => BudgetPost.business_unit(@purchase.try(:business_unit)), :include_blank=>false
+    = form.input :budget_post, :collection => BudgetPost.find_by_business_unit(@purchase.try(:business_unit)), :include_blank=>false
     = form.input :description, :as => :text
   
   = form.inputs :name => "Inköpsdelar" do
