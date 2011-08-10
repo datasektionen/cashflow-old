@@ -101,7 +101,7 @@ class Purchase < ActiveRecord::Base
 
   # Check whether a purchase is bookkeepable
   def keepable?
-    ["confirmed", "payed"].include?(self.workflow_state)
+    ["confirmed", "paid"].include?(self.workflow_state)
   end
 
   def budget_row
