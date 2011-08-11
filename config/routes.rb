@@ -8,7 +8,11 @@ Cashflow::Application.routes.draw do
 
   localized(['sv']) do
     resources :product_types
-    resources :budget_posts
+    resources :budget_posts do
+      collection do 
+        post :set_budget
+      end
+    end
     resources :business_units
     resources :purchases do
       member do

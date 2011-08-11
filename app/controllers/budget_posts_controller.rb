@@ -5,9 +5,11 @@ class BudgetPostsController < ApplicationController
   # GET /budget_posts.xml
   def index
     @budget_posts = BudgetPost.all
-    @year = params[:year][:year] if params[:year]
+    @year = params[:year]
     @year = Time.now.year if @year.nil?
     BudgetRow.create_rows_if_not_exists(@year)
+
+    @edit = params[:edit]
 
     respond_to do |format|
       format.html 
@@ -79,5 +81,14 @@ class BudgetPostsController < ApplicationController
       format.html { redirect_to(budget_posts_url) }
       format.xml  { head :ok }
     end
+  end
+
+  def set_budget
+    params[:sum].each do |id,sum|
+      br =  BudgetRow.find(id)
+      br.sum = sum
+      br.save
+    end
+    redirect_to budget_posts_path
   end
 end
