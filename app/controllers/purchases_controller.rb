@@ -82,7 +82,7 @@ class PurchasesController < ApplicationController
 
   def confirmed
     authorize! :manage, Purchase
-    @purchases = Purchase.confirmed.unpaid
+    @purchases = Purchase.where(:workflow_state => :confirmed)
     @purchases = @purchases.group_by{|p| p.person }.map{|k, v| {k => v.sum(&:total)} }
     @purchases = @purchases.inject({}){|s, h| s.merge(h)}
     respond_to do |format|
@@ -94,7 +94,7 @@ class PurchasesController < ApplicationController
   def pay_multiple
     authorize! :manage, Purchase
     people_ids = params[:pay].keep_if{|k,v| v.to_i == 1 }.keys
-    @purchases = Purchase.confirmed.unpaid.where(:person_id => people_ids)
+    @purchases = Purchase.where(:workflow_state => :confirmed).where(:person_id => people_ids)
     @purchases.each{|p| p.pay! }
     respond_to do |format|
       format.html { redirect_to(confirmed_purchases_path, :notice => "Betalda (#{@purchases.map(&:id)})!") }
