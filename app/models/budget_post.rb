@@ -15,6 +15,11 @@ class BudgetPost < ActiveRecord::Base
       y.year
     end
   end 
+
+  def row(year)
+    budget_rows.find_by_year(year)
+  end
+
   protected
   def create_rows
     BudgetPost.all_years.each do |y|
