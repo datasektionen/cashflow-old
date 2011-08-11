@@ -15,6 +15,10 @@ Cashflow::Application.routes.draw do
     end
     resources :business_units
     resources :purchases do
+      collection do
+        get :confirmed
+        put :pay_multiple
+      end
       member do
         put :confirm
         put :pay
