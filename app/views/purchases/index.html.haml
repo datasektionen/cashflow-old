@@ -18,12 +18,12 @@
     - for purchase in @purchases
       %tr{ :class => cycle(:odd, :even) }
         %td= link_to ("%03d" % purchase.id), purchase
-        %td= purchase.description
-        %td= purchase.total
-        %td= short_time purchase.purchased_at
-        %td= purchase.person
-        %td= purchase.business_unit
-        %td= short_time purchase.created_at
+        %td= truncate purchase.description
+        %td= currency purchase.total
+        %td= purchase.purchased_at.to_s(:iso)
+        %td= link_to purchase.person, purchase.person
+        %td= link_to purchase.business_unit, purchase.business_unit
+        %td= purchase.created_at.to_date.to_s(:iso)
         %td= status purchase
         %td
           = link_to t('edit'), edit_purchase_path(purchase)
