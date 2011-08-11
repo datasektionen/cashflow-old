@@ -17,7 +17,7 @@
   %tbody
     - for purchase in @purchases
       %tr{ :class => cycle(:odd, :even) }
-        %td= link_to purchase.id, purchase
+        %td= link_to ("%03d" % purchase.id), purchase
         %td= purchase.description
         %td= purchase.total
         %td= short_time purchase.purchased_at
