@@ -81,7 +81,7 @@ class PurchasesController < ApplicationController
   end
 
   def confirmed
-    unauthorized! if cannot? :manage, Purchase
+    authorize! :manage, Purchase
     @purchases = Purchase.confirmed.unpaid
     @purchases = @purchases.group_by{|p| p.person }.map{|k, v| {k => v.sum(&:total)} }
     @purchases = @purchases.inject({}){|s, h| s.merge(h)}
@@ -92,7 +92,7 @@ class PurchasesController < ApplicationController
   end
 
   def pay_multiple
-    unauthorized! if cannot? :manage, Purchase
+    authorize! :manage, Purchase
     people_ids = params[:pay].keep_if{|k,v| v.to_i == 1 }.keys
     @purchases = Purchase.confirmed.unpaid.where(:person_id => people_ids)
     @purchases.each{|p| p.pay! }
