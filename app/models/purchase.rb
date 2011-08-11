@@ -9,6 +9,7 @@ class Purchase < ActiveRecord::Base
   belongs_to :business_unit
   belongs_to :budget_post
 
+  before_create :check_budget_rows_exists
   before_validation :set_year
 
   has_many :items, :class_name => "PurchaseItem", :dependent => :destroy
@@ -25,6 +26,7 @@ class Purchase < ActiveRecord::Base
   accepts_nested_attributes_for :items
   
   scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
+  scope :confirmed , where(:workflow_state => %w[confirmed bookkept paid finalized])
   
   # workflow for Purchase model
   #                                   :keep --> (bookkept) -- :pay --
@@ -99,7 +101,7 @@ class Purchase < ActiveRecord::Base
 
   # Check whether a purchase is bookkeepable
   def keepable?
-    ["confirmed", "payed"].include?(self.workflow_state)
+    ["confirmed", "paid"].include?(self.workflow_state)
   end
 
   def budget_row
@@ -157,5 +159,11 @@ class Purchase < ActiveRecord::Base
 
   def set_year
     self.year = purchased_at.try(:year)
+  end
+
+  def check_budget_rows_exists
+    unless BudgetRow.find_by_year(self.year)
+      BudgetRow.create_rows_if_not_exists(self.year)
+    end
   end
 end

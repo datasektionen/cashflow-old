@@ -20,6 +20,14 @@ business_units = [
   "Drek"
 ]
 
+budget_posts = [
+  "BP1",
+  "BP2",
+  "BP3",
+  "BP4",
+  "BP5"
+]
+
 Factory.sequence :unit_name do |n|
   business_units[rand(business_units.length)]
 end
@@ -34,6 +42,10 @@ end
 
 Factory.sequence :type_name do |n|
   product_types[rand(product_types.length)]
+end
+
+Factory.sequence :post_name do |n|
+  budget_posts[rand(budget_posts.length)]
 end
 
 Factory.define :debt do |f|
@@ -93,5 +105,11 @@ end
 
 Factory.define :accountant, :parent => :person do |f|
   f.role "accountant"
+end
+
+Factory.define :budget_post do |f|
+  name = Factory.next :post_name
+  f.name { name }
+  f.business_unit { Factory :business_unit }
 end
 

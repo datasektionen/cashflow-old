@@ -4,9 +4,11 @@ class BudgetPost < ActiveRecord::Base
 
   accepts_nested_attributes_for :budget_rows
 
-  scope :business_unit, lambda { |bu| where(:business_unit_id => bu) }
-
   after_create :create_rows
+
+  def to_s
+    name
+  end
 
   def self.all_years
     Purchase.group(:year).select(:year).map do |y|
