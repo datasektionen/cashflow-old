@@ -4,6 +4,9 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :my_page, I18n.t('navigation.my_page'), person_path(current_person)
     primary.item :purchases, I18n.t('navigation.purchases'), purchases_path, :highlights_on => /\/purchases/ do |sub|
       sub.item :all_purchases, I18n.t('navigation.all_purchases'), purchases_path
+      if can?(:manage, Purchase)
+        sub.item :confirmed_purchases, I18n.t('navigation.confirmed_purchases'), confirmed_purchases_path
+      end
       sub.item :new_purchase, I18n.t('navigation.new_purchase'), new_purchase_path
     end
 

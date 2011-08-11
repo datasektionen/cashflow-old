@@ -1,5 +1,5 @@
 class PurchasesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:confirmed, :pay_multiple]
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
 
   # GET /purchases
@@ -80,6 +80,27 @@ class PurchasesController < ApplicationController
     end
   end
 
+  def confirmed
+    unauthorized! if cannot? :manage, Purchase
+    @purchases = Purchase.confirmed.unpaid
+    @purchases = @purchases.group_by{|p| p.person }.map{|k, v| {k => v.sum(&:total)} }
+    @purchases = @purchases.inject({}){|s, h| s.merge(h)}
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @purchases }
+    end
+  end
+
+  def pay_multiple
+    unauthorized! if cannot? :manage, Purchase
+    people_ids = params[:pay].keep_if{|k,v| v.to_i == 1 }.keys
+    @purchases = Purchase.confirmed.unpaid.where(:person_id => people_ids)
+    @purchases.each{|p| p.pay! }
+    respond_to do |format|
+      format.html { redirect_to(confirmed_purchases_path, :notice => "Betalda (#{@purchases.map(&:id)})!") }
+    end
+  end
+
   def confirm
     @purchase.confirm!
     respond_to do |format|
@@ -107,7 +128,8 @@ class PurchasesController < ApplicationController
     end
   end
 
-  protected
+protected
+
   def get_items
     @items = [{:key   => :show_purchase_path,
                :name  => @purchase.slug,

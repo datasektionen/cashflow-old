@@ -385,6 +385,7 @@
     business_units: "affarsenheter"
     purchases: "inkop"
     debts: "skulder"
+    budget_posts: "budgetposter"
   path_names:
     new: "ny"
     edit: "redigera"
@@ -392,6 +393,8 @@
     purchases:
       path_names:
         new: "nytt"
+        confirmed: "bekraftade"
+        pay_multiple: "betala"
     people:
       path_names:
         search: "sok"
@@ -421,6 +424,7 @@
     my_page: "Min sida"
     purchases: "Inköp"
     all_purchases: "Alla inköp"
+    confirmed_purchases: "Bekräftade inköp"
     new_purchase: "Lägg till inköp"
     debts: "Skulder"
     all_debts: "Alla skulder"

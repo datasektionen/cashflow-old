@@ -1,0 +1,19 @@
+%h1 Bekräftade inköp
+
+= form_tag pay_multiple_purchases_path, :method => :put do
+  %table
+    %thead
+      %tr
+        %th Person
+        %th Summa
+        %th Betala
+
+    %tbody
+      - @purchases.each do |person, sum|
+        %tr{ :class => cycle(:odd, :even) }
+          %td= link_to person, person
+          %td= currency sum
+          %td
+            = check_box_tag "pay[#{person.id}]"
+            = label_tag "pay[#{person.id}]", "Betala"
+  = submit_tag
