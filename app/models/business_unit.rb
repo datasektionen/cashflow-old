@@ -5,6 +5,8 @@ class BusinessUnit < ActiveRecord::Base
   has_many :budget_posts
 
   has_friendly_id :short_name
+
+  default_scope order("name ASC")
   
   def to_s
     "%s (%s)" % [name, short_name]
