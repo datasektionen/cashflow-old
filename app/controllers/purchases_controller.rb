@@ -133,12 +133,12 @@ protected
   def get_items
     @items = [{:key   => :show_purchase_path,
                :name  => @purchase.slug,
-               :url   => purchase_path(@purchase)},
+               :url   => purchase_path(@purchase)}
     ]
     if @purchase.editable?
       @items << { 
         :key   => :edit_purchase_path,
-        :name  => I18n.t('back'),
+        :name  => I18n.t('edit'),
         :url   => edit_purchase_path(@purchase)
       }
     end

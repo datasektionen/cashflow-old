@@ -6,6 +6,8 @@ class BudgetPost < ActiveRecord::Base
 
   after_create :create_rows
 
+  default_scope order("name ASC")
+
   def to_s
     name
   end
@@ -20,7 +22,8 @@ class BudgetPost < ActiveRecord::Base
     budget_rows.find_by_year(year)
   end
 
-  protected
+protected
+
   def create_rows
     BudgetPost.all_years.each do |y|
       BudgetRow.create(:budget_post=>self, :year => y)
