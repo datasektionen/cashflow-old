@@ -21,7 +21,7 @@
       = stylesheet_link_tag 'jquery-ui.css'
     :javascript
       var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', #{Cashflow::Application.settings[:google_analytics]}]);
+      _gaq.push(['_setAccount', "#{Cashflow::Application.settings[:google_analytics]}"]);
       _gaq.push(['_trackPageview']);
 
       (function() {
