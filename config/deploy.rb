@@ -1,4 +1,5 @@
 require 'capistrano/ext/multistage'
+require 'capistrano_colors'
 set :stages, %w(staging production)
 set :default_stage, "staging"
 
@@ -106,7 +107,7 @@ namespace :bundler do
 
   task :bundle_new_release, :roles => :app do
     bundler.create_symlink
-    run "cd #{release_path} ; /usr/local/bin/1.9.2_bundle install --path #{shared_bundle_path} --without development test"
+    run "cd #{release_path} ; /usr/local/bin/1.9.2_bundle install --path #{shared_bundle_path} --without development test deploy"
   end
 end
 
@@ -115,62 +116,4 @@ after 'deploy:update_code', 'bundler:bundle_new_release'
 def run_rake(cmd)
   run "cd #{current_path}; /usr/local/bin/1.9.2_bundle exec #{rake} #{cmd}"
 end
-
-
-
-
-
-
-
-
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-
-#   desc "Copy the config files"
-#   task :update_config do
-#     run "cp -Rf #{shared_path}/config/* #{release_path}/config/"
-#     run "ln -sf #{release_path}/config/environments/development.rb #{release_path}/config/environments/migration.rb"
-#     run "ln -sf #{release_path}/config/environments/production.rb #{release_path}/config/environments/staging.rb"
-#   end
-
-#   desc "Symlink tmp"
-#   task :symlink_tmp do
-#     run "rm -rf #{release_path}/tmp"
-#     run "ln -sf #{tmp_path}/#{application}/#{stage} #{release_path}/tmp"
-#   end
-
-#   desc "Set permissions for public/{stylesheets,javascripts}"
-#   task :set_permissions do
-#     #run "setfacl -m user:www-data:rwx #{release_path}/public/{stylesheets,javascripts}"
-#     #run "setfacl -d -m user:www-data:rwx #{release_path}/public/{stylesheets,javascripts}"
-#   end
-
-#   after  "deploy:update_code", "deploy:update_config"
-#   after  "deploy:update_code", "deploy:symlink_tmp"
-#   after  "deploy:update_code", "deploy:set_permissions"
-#   after  "deploy:update", "deploy:cleanup"
-# end
-
-# namespace :bundler do
-#   namespace :bundler do  
-#     task :create_symlink, :roles => :app do
-#       set :bundle_dir, 'vendor/bundle'
-#       set :shared_bundle_path, File.join(shared_path, 'bundle')
-      
-#       run " cd #{release_path} && rm -rf #{bundle_dir}" # in the event it already exists..?
-#       run "mkdir -p #{shared_bundle_path} && cd #{release_path} && ln -s #{shared_bundle_path} #{bundle_dir}"
-#     end
-#   end
-
-#   task :bundle_new_release, :roles => :app do
-#     bundler.create_symlink
-#     run "cd #{release_path} ; bundle install --path #{shared_bundle_path} --without development test"
-#   end
-# end
- 
-# after 'deploy:update_code', 'bundler:bundle_new_release'
 
