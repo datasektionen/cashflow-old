@@ -1,5 +1,25 @@
 require 'capistrano/ext/multistage'
 require 'capistrano_colors'
+
+capistrano_color_matchers = [
+  { :match => /^\s+$/,       :color => :hide,      :prio => 10 },
+  { :match => /^commit/,     :color => :cyan,    :prio => 10 },
+]
+
+colorize( capistrano_color_matchers )
+
+
+class Capistrano::ServerDefinition
+  def to_s
+    @to_s ||= begin
+      s = @options[:alias] || host
+      s = "#{user}@#{s}" if user
+      s = "#{s}:#{port}" if port && port != 22
+      s
+    end
+  end
+end
+
 set :stages, %w(staging production)
 set :default_stage, "staging"
 
@@ -25,9 +45,9 @@ set(:previous_revision) { capture("cd #{current_path}; git rev-parse --short HEA
 default_environment["RAILS_ENV"] = 'production'
 default_run_options[:shell] = 'bash'
 
-role :app, "clusterfluff.ben-and-jerrys.stacken.kth.se"
-role :web, "clusterfluff.ben-and-jerrys.stacken.kth.se"
-role :db,  "clusterfluff.ben-and-jerrys.stacken.kth.se", :primary => true
+role :app, "clusterfluff.ben-and-jerrys.stacken.kth.se", :alias => "clusterfluff"
+role :web, "clusterfluff.ben-and-jerrys.stacken.kth.se", :alias => "clusterfluff"
+role :db,  "clusterfluff.ben-and-jerrys.stacken.kth.se", :primary => true, :alias => "clusterfluff"
 
 namespace :deploy do
   desc "Deploy"
@@ -111,7 +131,16 @@ namespace :bundler do
   end
 end
 
+namespace :stats do
+  desc "print current git revision"
+  task :git_revision, :except => {:no_release => true } do
+    run "cd #{current_path} && git show --summary"
+  end
+end
+
+
 after 'deploy:update_code', 'bundler:bundle_new_release'
+after "deploy:restart", "stats:git_revision"
 
 def run_rake(cmd)
   run "cd #{current_path}; /usr/local/bin/1.9.2_bundle exec #{rake} #{cmd}"
