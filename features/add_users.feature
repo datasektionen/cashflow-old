@@ -3,7 +3,7 @@ Feature: Add users
   We need to register their info
   
   Scenario: First login
-    Given a new person exists with the following attributes:
+    Given a person exists with the following attributes:
       | ugid | u1dhz6b0 |
     When I log in as the person
     Then my credentials should have been retrieved
