@@ -11,7 +11,7 @@ describe PurchaseItem do
     end
   end
   
-  %w[amount comment].each do |attr|
+  %w[amount].each do |attr|
     it "should be invalid without a value for #{attr}" do
       @item.send("#{attr}=",nil)
       @item.should be_invalid
