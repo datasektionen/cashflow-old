@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '~> 3.0.0'
-gem 'haml', '~>3.0.0'
+gem 'haml-rails'
 gem 'sass'
 gem 'workflow'
 gem 'devise'
@@ -37,7 +37,6 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'cucumber-rails'
-  gem 'cucumber'
   gem 'spork'
   gem 'autotest'
   gem 'launchy'    # So you can do Then show me the page
