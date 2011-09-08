@@ -38,7 +38,9 @@ group :test do
   gem 'database_cleaner'
   gem 'cucumber-rails'
   gem 'spork'
-  gem 'autotest'
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-cucumber'
   gem 'launchy'    # So you can do Then show me the page
   gem 'factory_girl_rails'
 end
