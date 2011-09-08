@@ -24,7 +24,7 @@ class Ability
       else
         # Ordinary users can only edit themselves
         cannot :manage, :people
-        can :magane, :people, :id => user.id
+        can :manage, :people, :id => user.id
         cannot :confirm, :purchase
         cannot :cancel, :purchases
         cannot :cancel, :debts
