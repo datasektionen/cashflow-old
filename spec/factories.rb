@@ -86,6 +86,7 @@ Factory.define :purchase do |f|
   f.slug          { "test" }
   f.business_unit { Factory :business_unit }
   f.purchased_at  { Date.today }
+  f.budget_post   { Factory :budget_post }
 end
 
 Factory.define :purchase_item do |f|
