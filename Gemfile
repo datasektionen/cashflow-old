@@ -5,7 +5,7 @@ gem 'haml-rails'
 gem 'sass'
 gem 'workflow'
 gem 'devise'
-gem "oa-enterprise", "~> 0.2.0"
+gem "oa-enterprise", "0.3.0.rc3"
 gem 'RedCloth'
 gem 'net-ldap'
 gem 'paper_trail'
