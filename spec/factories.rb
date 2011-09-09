@@ -113,3 +113,9 @@ Factory.define :budget_post do |f|
   f.business_unit { Factory :business_unit }
 end
 
+Factory.define :budget_row do |f|
+  f.budget_post { Factory :budget_post }
+  f.year        { Time.now.year }
+  f.sum         { 0 }
+end
+
