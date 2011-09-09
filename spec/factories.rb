@@ -84,7 +84,6 @@ Factory.define :purchase do |f|
   f.person        { Factory :person }
   f.description   { "test purchase" }
   f.slug          { "test" }
-  f.business_unit { Factory :business_unit }
   f.purchased_at  { Date.today }
   f.budget_post   { Factory :budget_post }
 end
