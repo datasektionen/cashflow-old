@@ -62,7 +62,7 @@ class BudgetPostsController < ApplicationController
   def update
     respond_to do |format|
       if @budget_post.update_attributes(params[:budget_post])
-        format.html { redirect_to(budget_posts_path, :notice => I18n.t('notice.budget_post.success.updated')) }
+        format.html { redirect_to(budget_post_path(@budget_post), :notice => I18n.t('notice.budget_post.success.updated')) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
