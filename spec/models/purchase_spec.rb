@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Purchase do
   before(:all) do
     @person = Factory :person
+    PaperTrail.whodunnit = @person.id.to_s
   end
   
   before(:each) do

@@ -6,7 +6,7 @@ describe "debts/show.html.haml" do
   end
 
   # TODO: lookup whether we need to set current_ability
-  xit "renders attributes in <p>" do
+  it "renders attributes in <p>" do
     render
   end
 end
