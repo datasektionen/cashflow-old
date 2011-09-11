@@ -9,7 +9,7 @@ describe PeopleController do
   describe "unauthenticated user" do
     it "should be redirected to the login page" do
       get :index
-      response.should redirect_to(new_person_session_url)
+      response.should redirect_to(new_user_session_url)
     end
   end
   

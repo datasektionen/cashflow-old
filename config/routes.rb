@@ -1,9 +1,9 @@
 Cashflow::Application.routes.draw do  
   resources :budget_posts
 
-  devise_for :people, :controllers => {:omniauth_callbacks => "people/omniauth_callbacks"} do
-    get "sign_in", :to => "people/omniauth_callbacks#new", :as => :new_person_session
-    get "sign_out", :to => "people/omniauth_callbacks#destroy", :as => :destroy_person_session
+  devise_for :users, :class_name => "Person", :controllers => {:omniauth_callbacks => "people/omniauth_callbacks"} do
+    get "sign_in", :to => "people/omniauth_callbacks#new", :as => :new_user_session
+    get "sign_out", :to => "people/omniauth_callbacks#destroy", :as => :destroy_user_session
   end
 
   localized(['sv']) do

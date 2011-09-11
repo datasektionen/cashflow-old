@@ -60,7 +60,7 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-    if params[:person].try(:[], :role) && current_person.is?(:admin)
+    if params[:person].try(:[], :role) && current_user.is?(:admin)
       @person.role = params[:person][:role]
       @person.save
     end

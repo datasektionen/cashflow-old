@@ -4,12 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   has_mobile_fu
   
-  before_filter :authenticate_person!
-  private
-  def current_user
-    current_person
-  end
+  before_filter :authenticate_user!
 
+  protected
   ##
   # Display a 403 error and an access denied page if the current user doesn't have proper access rights
   rescue_from CanCan::AccessDenied do |exception|

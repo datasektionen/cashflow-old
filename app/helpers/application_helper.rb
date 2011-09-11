@@ -4,10 +4,10 @@ module ApplicationHelper
   end
   
   def session_change_link
-    if person_signed_in?
-      link_to "Logga ut", destroy_person_session_path,:class => "session-change"
+    if user_signed_in?
+      link_to "Logga ut", destroy_user_session_path,:class => "session-change"
     else
-      link_to "Logga in", new_person_session_path, :class => "session-change"
+      link_to "Logga in", new_user_session_path, :class => "session-change"
     end
   end
   
