@@ -1,6 +1,7 @@
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
+require "cover_me"
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'controller_macros'
@@ -22,4 +23,3 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :view
   config.extend ControllerMacros, :type => :view
 end
-
