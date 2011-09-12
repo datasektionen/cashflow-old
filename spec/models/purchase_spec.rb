@@ -41,7 +41,6 @@ describe Purchase do
   end
 
   it "should be created by someone" do
-    pending "move to cucumber scenario"
     @purchase.originator.should_not be_blank
   end
 
