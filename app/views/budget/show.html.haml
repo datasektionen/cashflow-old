@@ -1,0 +1,31 @@
+%h1= t('.title')
+
+%div
+  = form_tag '',:id=>:year_select_form,:method=>:get do
+    = label_tag :year, t('show_budget_rows_for')
+    = select_tag(:year, options_from_collection_for_select(BudgetPost.all_years, :to_i, :to_s, @year))
+
+- if can?(:manage, BudgetPost)
+  %div{:style=>"float: right;"}
+    = form_tag '', :method=>:get do
+      = hidden_field_tag :edit, "1"
+      = hidden_field_tag :year, @year
+      = submit_tag t 'edit_budget'
+
+%table#list.datatable
+  %thead
+    %tr
+      %th= t 'activerecord.attributes.budget_post.name'
+      %th= t 'activerecord.models.business_unit'
+      %td= t 'activerecord.attributes.budget_post.status'
+      - if can?(:manage, BudgetPost)
+        %th.actions
+  %tbody
+    - for row in @budget_rows
+      %tr{ :class => cycle(:odd, :even) }
+        %td= row.budget_post.name
+        %td= row.business_unit
+        %td #{currency row.total} av #{currency row.sum} 
+        -# - if can?(:manage, BudgetPost)
+          -# %td
+            -# = link_to t('edit'), edit_budget_row_path(row)

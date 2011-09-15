@@ -1,5 +1,8 @@
 class BudgetRow < ActiveRecord::Base
   belongs_to :budget_post
+  delegate :business_unit, :to => :budget_post
+
+  scope :year, lambda {|year| where(:year => year) }
 
   def purchases
     Purchase.where(:budget_post_id=>budget_post, :year=>year)
