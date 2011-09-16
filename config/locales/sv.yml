@@ -303,6 +303,9 @@
       create: "Skapa"
     edit:
       title: "Redigera produkttyp"
+  budget:
+    show:
+      title: "Budget"
   budget_posts:
     index:
       title: "Budgetposter"

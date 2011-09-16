@@ -27,4 +27,5 @@ describe "budget/show.html.haml" do
   end
 
   it {should =~ /#{I18n.t('edit_budget')}/ }
+  it { should_not =~ /translation_missing/ }
 end
