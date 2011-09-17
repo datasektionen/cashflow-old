@@ -10,6 +10,7 @@ describe "budget/show.html.haml" do
                        :total => 0
                     ))
     assign(:budget_rows, [row])
+    assign(:year, Time.now.year)
     @controller.stub(:can?).and_return { true }
     render
   end
@@ -26,6 +27,7 @@ describe "budget/show.html.haml" do
     rendered.should =~ /year_select_form/
   end
 
-  it {should =~ /#{I18n.t('edit_budget')}/ }
+  it { should =~ /#{I18n.t('edit_budget')}/ }
   it { should_not =~ /translation_missing/ }
+  it { should =~ /<form [^>]+action="\/budget\/\d+\/edit"/ }
 end

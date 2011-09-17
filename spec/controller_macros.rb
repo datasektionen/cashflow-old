@@ -31,6 +31,7 @@ module ControllerMacros
     end
   end
 
+  # TODO: extract the access_denied string test to a view spec.
   def deny_access_for_ordinary_user
     describe "logged in as ordinary user" do
       login_user
