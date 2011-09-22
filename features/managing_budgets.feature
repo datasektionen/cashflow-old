@@ -23,3 +23,12 @@ Feature: Manage budgets
     Then I should not see "Alpha"
     And I should not see "Beta"
     And I should see "Gamma"
+
+  Scenario: Edit budget for the current year
+    When I go to the budget page
+    And I press "Ändra budget"
+    And I fill in "Alpha" with "400"
+    And I press "Spara"
+    Then I should be on the budget page
+    And I should see "400"
+
