@@ -439,6 +439,7 @@
     product_types: "Produkttyper"
     all_product_types: "Alla produkttyper"
     new_product_type: "Ny produkttyp"
+    budgets: "Budgetar"
     budget_posts: "Budgetposter"
     all_budget_posts: "Alla budgetposter"
     new_budget_post: "Ny budgetpost"

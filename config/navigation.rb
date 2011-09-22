@@ -35,6 +35,10 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
+    if can?(:manage, BudgetRow)
+      primary.item :budgets, I18n.t('navigation.budgets'), budget_path(:id => Time.now.year), :highlights_on => /\/budget\/\d{4}/
+    end
+
     if can?(:manage, BudgetPost)
       primary.item :budget_posts, I18n.t('navigation.budget_posts'), budget_posts_path, :highlights_on => /\/budget_posts/ do |sub|
         sub.item :all_budget_posts, I18n.t('navigation.all_budget_posts'), budget_posts_path
