@@ -6,11 +6,7 @@
     = select_tag(:year, options_from_collection_for_select(BudgetPost.all_years, :to_i, :to_s, @year))
 
 - if can?(:manage, BudgetPost)
-  %div{:style=>"float: right;"}
-    = form_tag '', :method=>:get do
-      = hidden_field_tag :edit, "1"
-      = hidden_field_tag :year, @year
-      = submit_tag t 'edit_budget'
+  = button_to t('edit_budget'), edit_budget_path(:id => @year), :method => :get
 
 %table#list.datatable
   %thead
@@ -25,7 +21,7 @@
       %tr{ :class => cycle(:odd, :even) }
         %td= row.budget_post.name
         %td= row.business_unit
-        %td #{currency row.total} av #{currency row.sum} 
-        -# - if can?(:manage, BudgetPost)
-          -# %td
+        %td #{currency row.total} av #{currency row.sum}
+        - if can?(:manage, BudgetPost)
+          %td
             -# = link_to t('edit'), edit_budget_row_path(row)
