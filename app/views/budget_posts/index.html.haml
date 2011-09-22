@@ -5,45 +5,25 @@
     = label_tag :year, t('show_budget_rows_for')
     = select_tag(:year, options_from_collection_for_select(BudgetPost.all_years, :to_i, :to_s, @year))
 
-- if can?(:manage, BudgetPost)
-  - unless @edit 
-    %div{:style=>"float: right;"}
-      = form_tag '', :method=>:get do
-        = hidden_field_tag :edit, "1"
-        = hidden_field_tag :year, @year
-        = submit_tag t 'edit_budget'
+%table#list.datatable
+  %thead
+    %tr
+      %th= t 'activerecord.attributes.budget_post.name'
+      %th= t 'activerecord.models.business_unit'
+      %td= t 'activerecord.attributes.budget_post.status'
+      - if can?(:manage, BudgetPost)
+        %th.actions
 
-- block = Proc.new do 
-  %table#list.datatable
-    %thead
-      %tr
-        %th= t 'activerecord.attributes.budget_post.name'
-        %th= t 'activerecord.models.business_unit'
-        %td= t 'activerecord.attributes.budget_post.status'
+  %tbody
+    - for budget_post in @budget_posts
+      %tr{ :class => cycle(:odd, :even) }
+        %td= budget_post.name
+        %td= budget_post.business_unit
+        %td #{currency budget_post.row(@year).total} av #{currency budget_post.row(@year).sum} 
         - if can?(:manage, BudgetPost)
-          %th.actions
-    
-    %tbody
-      - for budget_post in @budget_posts
-        %tr{ :class => cycle(:odd, :even) }
-          %td= budget_post.name
-          %td= budget_post.business_unit
-          %td #{currency budget_post.row(@year).total} av #{currency budget_post.row(@year).sum} 
-          - if can?(:manage, BudgetPost)
-            %td
-              - unless @edit
-                = link_to t('edit'), edit_budget_post_path(budget_post)
-                = button_to t('destroy'), budget_post, :confirm => t('are_you_sure'), :method => :delete
-              - else
-                = text_field_tag "sum[#{budget_post.row(@year).id}]", budget_post.row(@year).sum
-
-- if @edit
-  = form_tag set_budget_budget_posts_path, :method=>:post, :id=>:set_budget do
-    = submit_tag t('save_budget_changes')
-    - block.call
-    = submit_tag t('save_budget_changes')
-- else
-  - block.call
+          %td
+            = link_to t('edit'), edit_budget_post_path(budget_post)
+            = button_to t('destroy'), budget_post, :confirm => t('are_you_sure'), :method => :delete
 
 :javascript
   $("#year").change(function() {
@@ -53,9 +33,3 @@
     $("#set_budget").submit()
     return false
   })
-
--if @edit
-  :javascript
-    $(function() {
-      $("#list_filter").html("")
-    })

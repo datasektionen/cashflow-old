@@ -2,8 +2,6 @@ class BudgetPost < ActiveRecord::Base
   has_many :budget_rows
   belongs_to :business_unit
 
-  accepts_nested_attributes_for :budget_rows
-
   after_create :create_rows
 
   default_scope order("name ASC")
