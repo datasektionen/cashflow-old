@@ -13,6 +13,13 @@ class BudgetController < ApplicationController
     @budget_rows = BudgetRow.year(@year)
   end
 
+  def update
+    params[:budget_rows].each do |k, h|
+      BudgetRow.find(k).update_attributes(h)
+    end
+    redirect_to :action => :index
+  end
+
   protected
   def get_or_set_year
     @year = params[:id] || Time.now.year
