@@ -4,11 +4,13 @@ Feature: Manage budgets
   I want to be able to manage budgets
 
   Background:
-    Given budget rows exist with the following attributes:
-      | budget_post_name | sum | year            |
-      | Alpha            | 100 | Time.now.year   |
-      | Beta             | 200 | Time.now.year   |
-      | Gamma            | 300 | Time.now.year-1 |
+    Given a person with the "treasurer" role
+    And I am logged in as the person
+    And budget rows exist with the following attributes:
+      | budget_post_name | sum | year_offset |
+      | Alpha            | 100 | 0           |
+      | Beta             | 200 | 0           |
+      | Gamma            | 300 | -1          |
   
   Scenario: View budget for the current year
     When I go to the budget page

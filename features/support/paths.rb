@@ -8,9 +8,11 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
-    when /the home\s?page/
+    when /^the home\s?page$/
       '/'
-    when /the budget page/
+    when /^the budget page for last year$/
+      budget_path(:id => Time.now.year-1)
+    when /^the budget page$/
       budget_index_path
 
     # Add more mappings here.
