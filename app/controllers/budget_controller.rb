@@ -9,6 +9,10 @@ class BudgetController < ApplicationController
     @budget_rows = BudgetRow.year(@year)
   end
 
+  def edit
+    @budget_rows = BudgetRow.year(@year)
+  end
+
   protected
   def get_or_set_year
     @year = params[:id] || Time.now.year
