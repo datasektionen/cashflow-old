@@ -39,6 +39,7 @@ group :test do
   gem 'cucumber-rails'
   gem 'spork'
   gem 'guard'
+  gem 'guard-bundler'
   gem 'guard-rspec'
   gem 'guard-cucumber'
   gem 'launchy'    # So you can do Then show me the page
