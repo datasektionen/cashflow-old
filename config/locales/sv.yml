@@ -204,6 +204,7 @@
       budget_post:
         name: "Namn"
         status: "Status"
+        business_unit: "Affärsenhet"
       purchase:
         business_unit: "Affärsenhet"
         description: "Beskrivning"
