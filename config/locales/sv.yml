@@ -208,6 +208,7 @@
         business_unit: "Affärsenhet"
       budget_row:
         sum: "Summa"
+        year: "År"
       business_unit:
         name: "Namn"
         short_name: "Kort namn"
