@@ -6,7 +6,7 @@ gem 'sass'
 gem 'workflow'
 gem 'devise'
 gem "oa-enterprise", "~> 0.2.0"
-gem 'RedCloth'
+gem 'RedCloth', "~> 4.2.8"
 gem 'net-ldap'
 gem 'paper_trail'
 gem 'cancan'#, :git => "git://github.com/ryanb/cancan.git", :branch => "2.0"

@@ -9,7 +9,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    RedCloth (4.2.7)
+    RedCloth (4.2.8)
     abstract (1.0.0)
     actionmailer (3.0.5)
       actionpack (= 3.0.5)
@@ -240,7 +240,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  RedCloth
+  RedCloth (~> 4.2.8)
   cancan
   capistrano
   capistrano-ext
