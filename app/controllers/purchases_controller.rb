@@ -5,7 +5,7 @@ class PurchasesController < ApplicationController
   # GET /purchases
   # GET /purchases.xml
   def index
-    @purchase = Purchase.all
+    @purchases = Purchase.joins(:person, :items, :budget_post => :business_unit).includes(:person, :items, :budget_post => :business_unit)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @purchases }
