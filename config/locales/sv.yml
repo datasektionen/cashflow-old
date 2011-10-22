@@ -204,6 +204,12 @@
       budget_post:
         name: "Namn"
         status: "Status"
+        business_unit: "Affärsenhet"
+      business_unit:
+        name: "Namn"
+        short_name: "Kort namn"
+        description: "Beskrivning"
+        active: "Aktiv"
       purchase:
         business_unit: "Affärsenhet"
         description: "Beskrivning"
@@ -363,6 +369,9 @@
   formtastic:
     actions:
       commit: "Spara %{model}"
+    hints:
+      business_unit:
+        short_name: "exempelvis DKM, QN, eller DRek"
   
   edit: "Redigera"
   back: "Tillbaka"
