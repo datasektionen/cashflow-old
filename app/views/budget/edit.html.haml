@@ -8,15 +8,15 @@
           %th= t 'activerecord.attributes.budget_post.name'
           %th= t 'activerecord.models.business_unit'
           %td= t 'activerecord.attributes.budget_post.status'
-          - if can?(:manage, BudgetPost)
+          - if can?(:manage, :budget_posts)
             %th.actions
 
       %tbody
         - @budget_rows.each do |row|
           %tr{ :class => cycle(:odd, :even) }
-            %td= row.budget_post.name
+            %td= label_tag "budget_rows[#{row.id}][sum]", row.budget_post.name
             %td= row.budget_post.business_unit
-            - if can?(:manage, BudgetPost)
+            - if can?(:manage, :budget_posts)
               %td
                 = text_field_tag "budget_rows[#{row.id}][sum]", row.sum
       = submit_tag t('save_budget_changes')

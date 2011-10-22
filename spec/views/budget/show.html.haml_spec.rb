@@ -23,8 +23,15 @@ describe "budget/show.html.haml" do
     rendered.should =~ /table class='datatable' id='list'/
   end
 
-  it "renders a year selector" do
-    rendered.should =~ /year_select_form/
+  context "Year select form" do
+    it "exists" do
+      rendered.should =~ /year_select_form/
+    end
+    
+    it "contains options" do
+      html = Nokogiri::HTML(rendered)
+      html.xpath('//select').children.should_not be_empty
+    end
   end
 
   it { should =~ /#{I18n.t('edit_budget')}/ }
