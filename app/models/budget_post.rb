@@ -1,5 +1,6 @@
 class BudgetPost < ActiveRecord::Base
   has_many :budget_rows
+  has_many :purchases
   belongs_to :business_unit
 
   after_create :create_rows
