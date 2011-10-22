@@ -5,7 +5,7 @@ class BudgetRow < ActiveRecord::Base
   scope :year, lambda {|year| where(:year => year) }
 
   def purchases
-    Purchase.where(:budget_post_id=>budget_post, :year=>year)
+    budget_post.purchases.where(year: year)
   end
 
   def sum
