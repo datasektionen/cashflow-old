@@ -2,9 +2,9 @@
   = form.semantic_errors
   = form.semantic_errors :base
   = form.inputs :name => "Beskrivning" do
-    = form.input :purchased_at, :as => :datepicker
+    = form.input :purchased_at, :as => :date_picker
     %li
-      = label :business_unit, t('business_unit')
+      = label :business_unit, t('activerecord.models.business_unit')
       = select_tag :business_unit, options_from_collection_for_select(BusinessUnit.all, 'id', 'name')
     = form.input :budget_post, :collection => budget_posts_for_purchase(@purchase), :include_blank=>false
     = form.input :description, :as => :text

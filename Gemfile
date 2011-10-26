@@ -10,7 +10,7 @@ gem 'RedCloth', "~> 4.2.8"
 gem 'net-ldap'
 gem 'paper_trail'
 gem 'cancan'#, :git => "git://github.com/ryanb/cancan.git", :branch => "2.0"
-gem 'formtastic', '~> 1.2.3'
+gem 'formtastic'
 gem 'simple-navigation'
 gem 'jquery-rails'
 gem 'i18n_routing'
