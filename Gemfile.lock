@@ -130,6 +130,8 @@ GEM
     json_pure (1.6.1)
     kgio (2.6.0)
     launchy (2.0.3)
+    libnotify (0.5.7)
+      ffi (= 1.0.9)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
     mail (2.2.19)
@@ -262,6 +264,7 @@ DEPENDENCIES
   i18n_routing
   jquery-rails
   launchy
+  libnotify
   linecache19
   mysql2 (~> 0.2.0)
   net-ldap
