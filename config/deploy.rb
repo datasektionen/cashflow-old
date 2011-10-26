@@ -87,7 +87,7 @@ namespace :deploy do
 
   desc "compile stylesheets"
   task :compile_stylesheets do
-    run "cd #{current_path} && rake deploy:compile_stylesheets"
+    run "cd #{current_path} && bundle exec rake deploy:compile_stylesheets"
   end
   
   desc "Restart passenger with restart.txt"
