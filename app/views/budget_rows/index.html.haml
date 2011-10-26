@@ -1,0 +1,16 @@
+%h1 Listing budget_rows
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @budget_rows.each do |budget_row|
+    %tr
+      %td= link_to 'Show', budget_row_path(budget_id: @year, id: budget_row)
+      %td= link_to 'Edit', edit_budget_row_path(budget_id: @year,id: budget_row)
+      %td= link_to 'Destroy', budget_row_path(budget_id: @year, id: budget_row), :confirm => 'Are you sure?', :method => :delete
+
+%br
+

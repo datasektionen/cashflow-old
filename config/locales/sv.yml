@@ -175,6 +175,7 @@
       purchase: "Inköp"
       purchase_item: "Inköpsdel"
       budget_post: "Budgetpost"
+      budget_row: "Budgetrad"
     
     # Translate model attribute names. Used in Model.human_attribute_name(attribute).
     #attributes:
@@ -205,6 +206,8 @@
         name: "Namn"
         status: "Status"
         business_unit: "Affärsenhet"
+      budget_row:
+        sum: "Summa"
       business_unit:
         name: "Namn"
         short_name: "Kort namn"
@@ -322,6 +325,11 @@
       create: "Skapa"
     edit:
       title: "Redigera budgetpost"
+  budget_rows:
+    index:
+      title: "Budgetrader %{year}"
+    edit:
+      title: "Redigera budget för %{post} %{year}"
   business_units:
     index:
       title: "Affärsenheter"
@@ -369,6 +377,8 @@
   formtastic:
     actions:
       commit: "Spara %{model}"
+      create: "Spara %{model}"
+      update: "Uppdatera %{model}"
     hints:
       business_unit:
         short_name: "exempelvis DKM, QN, eller DRek"
@@ -470,3 +480,4 @@
       footer: 'Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Martin Frost":http://www.d.kth.se/people/blame 2010. För att rapportera eventuella buggar, klicka "här":https://www.d.kth.se/redmine/projects/cashflow/issues/new.'
       logout: 'Klicka "här":https://login.kth.se/logout för att även logga ut från KTH.'
   show_budget_rows_for: "Visa budget för år:"
+  budget_for_year: 'Budget %{year}'
