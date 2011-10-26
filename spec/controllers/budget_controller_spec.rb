@@ -36,15 +36,39 @@ describe BudgetController do
   end
 
   describe "PUT update" do
+
+    before(:all) do
+      @year = Time.now.year
+    end
+
     describe "with valid params" do
-      it "updates the selected year's budget_rows"
-      it "assigns the selected year's budget_rows as @budget_rows"
-      it "redirects to the selected year's budget"
+      it "updates the selected year's budget_rows" do
+        rows = [Factory(:budget_row), Factory(:budget_row)]
+        params = {}
+        rows.map do |row|
+          params[row.id] = {sum: row.sum + 1000 }  
+        end
+        put :update, id: @year, budget_rows: params
+        rows.map do |row|
+          BudgetRow.find(row.id).sum.should == row.sum + 1000
+        end
+      end
+
+      it "redirects to the selected year's budget" do
+        rows = [Factory(:budget_row), Factory(:budget_row)]
+        params = {}
+        rows.map {|row| params[row.id] = {sum: row.sum += 1000 }}
+        put :update, id: @year, budget_rows: params
+        response.should redirect_to budget_path(id: @year)
+      end
     end
 
     describe "with invalid params" do
-      it "assigns the selected year's budget_rows as @budget_rows"
-      it "re-renders the 'edit' template"
+      it "re-renders the 'edit' template" do
+        params = {foo: {bar: 'baz'}}
+        put :update, id: @year, foo: params
+        response.should render_template('edit')
+      end
     end
   end
 end

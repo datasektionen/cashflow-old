@@ -2,7 +2,7 @@ class BudgetController < ApplicationController
   before_filter :get_or_set_year
 
   def index
-    redirect_to budget_path(:id => @year)
+    redirect_to budget_path(id: @year)
   end
 
   def show
@@ -14,10 +14,18 @@ class BudgetController < ApplicationController
   end
 
   def update
-    params[:budget_rows].each do |k, h|
-      BudgetRow.find(k).update_attributes(h)
+    begin
+      BudgetRow.connection.transaction do
+        params[:budget_rows].each do |k, h|
+          unless BudgetRow.find(k).update_attributes(h)
+            raise ActiveRecord::Rollback
+          end
+        end
+      end
+      redirect_to budget_path(id: @year)
+    rescue
+      render 'edit'
     end
-    redirect_to :action => :index
   end
 
   protected
