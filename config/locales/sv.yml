@@ -175,6 +175,7 @@
       purchase: "Inköp"
       purchase_item: "Inköpsdel"
       budget_post: "Budgetpost"
+      budget_row: "Budgetrad"
     
     # Translate model attribute names. Used in Model.human_attribute_name(attribute).
     #attributes:
@@ -204,6 +205,15 @@
       budget_post:
         name: "Namn"
         status: "Status"
+        business_unit: "Affärsenhet"
+      budget_row:
+        sum: "Summa"
+        year: "År"
+      business_unit:
+        name: "Namn"
+        short_name: "Kort namn"
+        description: "Beskrivning"
+        active: "Aktiv"
       purchase:
         business_unit: "Affärsenhet"
         description: "Beskrivning"
@@ -303,6 +313,11 @@
       create: "Skapa"
     edit:
       title: "Redigera produkttyp"
+  budget:
+    show:
+      title: "Budget"
+    edit:
+      title: "Ändra Budget"
   budget_posts:
     index:
       title: "Budgetposter"
@@ -311,6 +326,11 @@
       create: "Skapa"
     edit:
       title: "Redigera budgetpost"
+  budget_rows:
+    index:
+      title: "Budgetrader %{year}"
+    edit:
+      title: "Redigera budget för %{post} %{year}"
   business_units:
     index:
       title: "Affärsenheter"
@@ -358,6 +378,13 @@
   formtastic:
     actions:
       commit: "Spara %{model}"
+      create: "Spara %{model}"
+      update: "Uppdatera %{model}"
+    hints:
+      business_unit:
+        name: "exempelvis Informationsorganet"
+        short_name: "exempelvis Ior, DKM eller QN"
+        email: "tomt fält implicerar kassor@d.kth.se"
   
   edit: "Redigera"
   back: "Tillbaka"
@@ -436,6 +463,7 @@
     product_types: "Produkttyper"
     all_product_types: "Alla produkttyper"
     new_product_type: "Ny produkttyp"
+    budgets: "Budgetar"
     budget_posts: "Budgetposter"
     all_budget_posts: "Alla budgetposter"
     new_budget_post: "Ny budgetpost"
@@ -455,3 +483,4 @@
       footer: 'Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Martin Frost":http://www.d.kth.se/people/blame 2010. För att rapportera eventuella buggar, klicka "här":https://www.d.kth.se/redmine/projects/cashflow/issues/new.'
       logout: 'Klicka "här":https://login.kth.se/logout för att även logga ut från KTH.'
   show_budget_rows_for: "Visa budget för år:"
+  budget_for_year: 'Budget %{year}'

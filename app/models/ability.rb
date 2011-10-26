@@ -13,7 +13,7 @@ class Ability
         can :manage, :all
         #can :access, :all
       elsif user.is? :treasurer
-        can :manage, [:product_types, :business_units, :purchases, :debts]
+        can :manage, [:product_types, :business_units, :purchases, :debts, :budget_posts]
         can [:index, :new, :create], Person
         can [:edit, :update], Person, :id => user.id
       elsif user.is? :accountant
@@ -24,7 +24,7 @@ class Ability
       else
         # Ordinary users can only edit themselves
         cannot :manage, :people
-        can :magane, :people, :id => user.id
+        can :manage, :people, :id => user.id
         cannot :confirm, :purchase
         cannot :cancel, :purchases
         cannot :cancel, :debts

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110809194142) do
+ActiveRecord::Schema.define(:version => 20110909142954) do
 
   create_table "budget_posts", :force => true do |t|
     t.integer "business_unit_id", :null => false
@@ -30,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20110809194142) do
     t.boolean  "active",      :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email"
+    t.string   "email",       :default => "",   :null => false
   end
 
   create_table "debts", :force => true do |t|
@@ -75,16 +76,15 @@ ActiveRecord::Schema.define(:version => 20110809194142) do
   end
 
   create_table "purchases", :force => true do |t|
-    t.string   "description",                         :null => false
-    t.string   "workflow_state",   :default => "new", :null => false
-    t.integer  "person_id",                           :null => false
-    t.integer  "business_unit_id",                    :null => false
-    t.date     "purchased_at",                        :null => false
-    t.string   "slug",             :default => "",    :null => false
+    t.string   "description",                       :null => false
+    t.string   "workflow_state", :default => "new", :null => false
+    t.integer  "person_id",                         :null => false
+    t.date     "purchased_at",                      :null => false
+    t.string   "slug",           :default => "",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "budget_post_id",                      :null => false
-    t.integer  "year",                                :null => false
+    t.integer  "budget_post_id",                    :null => false
+    t.integer  "year",                              :null => false
   end
 
   create_table "versions", :force => true do |t|

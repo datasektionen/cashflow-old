@@ -4,9 +4,6 @@ class Purchase < ActiveRecord::Base
   has_friendly_id :slug
   
   belongs_to :person
-  belongs_to :created_by, :class_name => "Person", :foreign_key => "created_by_id"
-  belongs_to :updated_by, :class_name => "Person", :foreign_key => "updated_by_id"
-  belongs_to :business_unit
   belongs_to :budget_post
 
   before_create :check_budget_rows_exists
@@ -14,11 +11,13 @@ class Purchase < ActiveRecord::Base
 
   has_many :items, :class_name => "PurchaseItem", :dependent => :destroy
   
-  validates_presence_of :person, :business_unit, :description, :purchased_at
+  validates_presence_of :person, :description, :purchased_at
   
   validate :cannot_purchase_stuff_in_the_future, :locked_when_finalized
   
   attr_readonly :person, :person_id
+
+  delegate :business_unit, :to => :budget_post
   
   before_validation :generate_slug
   after_save :generate_slug
@@ -148,7 +147,7 @@ class Purchase < ActiveRecord::Base
       return true
     end
     
-    slug = "%s%d-%d" % [self.business_unit.try(:short_name), self.year, self.id]
+    slug = "%s%d-%d" % [self.business_unit.try(:short_name), self.year.to_i, self.id]
 
     if self.slug !~ /#{slug}/
       Purchase.paper_trail_off
@@ -158,7 +157,7 @@ class Purchase < ActiveRecord::Base
   end
 
   def set_year
-    self.year = purchased_at.try(:year)
+    self.year = purchased_at.try(:year) || Time.now.year
   end
 
   def check_budget_rows_exists

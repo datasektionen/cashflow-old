@@ -1,8 +1,7 @@
 class BudgetPost < ActiveRecord::Base
   has_many :budget_rows
+  has_many :purchases
   belongs_to :business_unit
-
-  accepts_nested_attributes_for :budget_rows
 
   after_create :create_rows
 
@@ -12,10 +11,9 @@ class BudgetPost < ActiveRecord::Base
     name
   end
 
+  # return an array of all years for which there are any budget rows
   def self.all_years
-    Purchase.group(:year).select(:year).map do |y|
-      y.year
-    end
+    [Time.now.year] | BudgetRow.group(:year).select(:year).order('year desc').map(&:year)
   end 
 
   def row(year)

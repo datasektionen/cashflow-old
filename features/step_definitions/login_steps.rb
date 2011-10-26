@@ -1,17 +1,8 @@
-def login(person)
-  debugger
-  ""
-end
+Given /^I (?:log|am logged) in as the person$/ do
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.add_mock(:cas, {:uid => @person.ugid })
 
-Given /^I am logged in as the person$/ do
-  login(@person)
-  visit('/login')
-end
-
-Given /^I log in as the person$/ do
-  login(@person)
-  debugger
-  visit('/login')
+  visit(new_user_session_path)
 end
 
 Given /^I am not authenticated$/ do

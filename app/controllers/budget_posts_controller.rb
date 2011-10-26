@@ -62,7 +62,7 @@ class BudgetPostsController < ApplicationController
   def update
     respond_to do |format|
       if @budget_post.update_attributes(params[:budget_post])
-        format.html { redirect_to(budget_posts_path, :notice => I18n.t('notice.budget_post.success.updated')) }
+        format.html { redirect_to(budget_post_path(@budget_post), :notice => I18n.t('notice.budget_post.success.updated')) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -81,14 +81,5 @@ class BudgetPostsController < ApplicationController
       format.html { redirect_to(budget_posts_url) }
       format.xml  { head :ok }
     end
-  end
-
-  def set_budget
-    params[:sum].each do |id,sum|
-      br =  BudgetRow.find(id)
-      br.sum = sum
-      br.save
-    end
-    redirect_to budget_posts_path
   end
 end

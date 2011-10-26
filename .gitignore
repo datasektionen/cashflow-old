@@ -14,3 +14,4 @@ config/local.yml
 public/stylesheets/compiled
 tags
 *.swp
+coverage.data

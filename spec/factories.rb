@@ -84,8 +84,9 @@ Factory.define :purchase do |f|
   f.person        { Factory :person }
   f.description   { "test purchase" }
   f.slug          { "test" }
-  f.business_unit { Factory :business_unit }
   f.purchased_at  { Date.today }
+  f.budget_post   { Factory :budget_post }
+  f.year { Time.now.year }
 end
 
 Factory.define :purchase_item do |f|
@@ -111,5 +112,11 @@ Factory.define :budget_post do |f|
   name = Factory.next :post_name
   f.name { name }
   f.business_unit { Factory :business_unit }
+end
+
+Factory.define :budget_row do |f|
+  f.budget_post { Factory :budget_post }
+  f.year        { Time.now.year }
+  f.sum         { 0 }
 end
 

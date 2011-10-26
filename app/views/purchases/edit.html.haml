@@ -1,5 +1,5 @@
 %h1= t '.title'
 %p
   = link_to t('back'), purchases_path
-  = link_to t('show'), @purchase
+  = link_to t('show'), purchase_path(@purchase)
 = render 'form'

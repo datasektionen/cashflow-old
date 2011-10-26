@@ -1,15 +1,16 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.0.0'
-gem 'haml', '~>3.0.0'
+gem 'rails', '~> 3.0.9'
+gem 'haml-rails'
+gem 'sass'
 gem 'workflow'
 gem 'devise'
-gem "oa-enterprise", "~> 0.2.0"
-gem 'RedCloth'
+gem "oa-enterprise", "0.3.0.rc3"
+gem 'RedCloth', "~> 4.2.8"
 gem 'net-ldap'
 gem 'paper_trail'
 gem 'cancan'#, :git => "git://github.com/ryanb/cancan.git", :branch => "2.0"
-gem 'formtastic', '~> 1.2.3'
+gem 'formtastic'
 gem 'simple-navigation'
 gem 'jquery-rails'
 gem 'i18n_routing'
@@ -31,19 +32,23 @@ group :test do
   gem 'no_peeping_toms', :git => "https://github.com/dbalatero/no-peeping-toms.git"
   gem "rspec-rails"
   gem "rspec-mocks"
-  gem 'rcov'
+  gem 'cover_me'
   gem 'shoulda'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'cucumber-rails'
-  gem 'cucumber'
   gem 'spork'
-  gem 'autotest'
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-rspec'
+  gem 'guard-cucumber'
   gem 'launchy'    # So you can do Then show me the page
   gem 'factory_girl_rails'
+  gem 'libnotify'
 end
 
 group :deploy do
   gem 'capistrano'
   gem 'capistrano-ext'
+  gem 'capistrano_colors'
 end

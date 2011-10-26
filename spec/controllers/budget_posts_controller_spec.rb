@@ -19,42 +19,47 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe BudgetPostsController do
+  login_admin
 
   # This should return the minimal set of attributes required to create a valid
   # BudgetPost. As you add validations to BudgetPost, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {:business_unit_id => 1, :name => 'budgetpost'}
   end
 
-  describe "GET index" do
-    it "assigns all budget_posts as @budget_posts" do
-      budget_post = BudgetPost.create! valid_attributes
-      get :index
-      assigns(:budget_posts).should eq([budget_post])
+
+  context "GET actions" do
+    before(:each) do
+      @budget_post = Factory :budget_post, valid_attributes
     end
-  end
 
-  describe "GET show" do
-    it "assigns the requested budget_post as @budget_post" do
-      budget_post = BudgetPost.create! valid_attributes
-      get :show, :id => budget_post.id.to_s
-      assigns(:budget_post).should eq(budget_post)
+    describe "GET index" do
+      it "assigns all budget_posts as @budget_posts" do
+        get :index
+        assigns(:budget_posts).should eq([@budget_post])
+      end
     end
-  end
 
-  describe "GET new" do
-    it "assigns a new budget_post as @budget_post" do
-      get :new
-      assigns(:budget_post).should be_a_new(BudgetPost)
+    describe "GET show" do
+      it "assigns the requested budget_post as @budget_post" do
+        get :show, :id => @budget_post.id.to_s
+        assigns(:budget_post).should eq(@budget_post)
+      end
     end
-  end
 
-  describe "GET edit" do
-    it "assigns the requested budget_post as @budget_post" do
-      budget_post = BudgetPost.create! valid_attributes
-      get :edit, :id => budget_post.id.to_s
-      assigns(:budget_post).should eq(budget_post)
+    describe "GET new" do
+      it "assigns a new budget_post as @budget_post" do
+        get :new
+        assigns(:budget_post).should be_a_new(BudgetPost)
+      end
+    end
+
+    describe "GET edit" do
+      it "assigns the requested budget_post as @budget_post" do
+        get :edit, :id => @budget_post.id.to_s
+        assigns(:budget_post).should == @budget_post
+      end
     end
   end
 
@@ -96,60 +101,60 @@ describe BudgetPostsController do
   end
 
   describe "PUT update" do
+    before(:each) do
+      @budget_post = Factory :budget_post, valid_attributes
+    end
     describe "with valid params" do
       it "updates the requested budget_post" do
-        budget_post = BudgetPost.create! valid_attributes
         # Assuming there are no other budget_posts in the database, this
         # specifies that the BudgetPost created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         BudgetPost.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => budget_post.id, :budget_post => {'these' => 'params'}
+        put :update, :id => @budget_post.id, :budget_post => {'these' => 'params'}
       end
 
       it "assigns the requested budget_post as @budget_post" do
-        budget_post = BudgetPost.create! valid_attributes
-        put :update, :id => budget_post.id, :budget_post => valid_attributes
-        assigns(:budget_post).should eq(budget_post)
+        put :update, :id => @budget_post.id, :budget_post => valid_attributes
+        assigns(:budget_post).should eq(@budget_post)
       end
 
       it "redirects to the budget_post" do
-        budget_post = BudgetPost.create! valid_attributes
-        put :update, :id => budget_post.id, :budget_post => valid_attributes
-        response.should redirect_to(budget_post)
+        put :update, :id => @budget_post.id, :budget_post => valid_attributes
+        response.should redirect_to(@budget_post)
       end
     end
 
     describe "with invalid params" do
       it "assigns the budget_post as @budget_post" do
-        budget_post = BudgetPost.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         BudgetPost.any_instance.stub(:save).and_return(false)
-        put :update, :id => budget_post.id.to_s, :budget_post => {}
-        assigns(:budget_post).should eq(budget_post)
+        put :update, :id => @budget_post.id.to_s, :budget_post => {}
+        assigns(:budget_post).should eq(@budget_post)
       end
 
       it "re-renders the 'edit' template" do
-        budget_post = BudgetPost.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         BudgetPost.any_instance.stub(:save).and_return(false)
-        put :update, :id => budget_post.id.to_s, :budget_post => {}
+        put :update, :id => @budget_post.id.to_s, :budget_post => {}
         response.should render_template("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
+    before(:each) do
+      @budget_post = Factory :budget_post, valid_attributes
+    end
+
     it "destroys the requested budget_post" do
-      budget_post = BudgetPost.create! valid_attributes
       expect {
-        delete :destroy, :id => budget_post.id.to_s
+        delete :destroy, :id => @budget_post.id.to_s
       }.to change(BudgetPost, :count).by(-1)
     end
 
     it "redirects to the budget_posts list" do
-      budget_post = BudgetPost.create! valid_attributes
-      delete :destroy, :id => budget_post.id.to_s
+      delete :destroy, :id => @budget_post.id.to_s
       response.should redirect_to(budget_posts_url)
     end
   end
