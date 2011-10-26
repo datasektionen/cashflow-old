@@ -2,12 +2,10 @@ require 'spec_helper'
 
 describe "purchases/edit.html.haml" do
   before(:each) do
-    @purchase = assign(:purchase, stub_model(Purchase,
-      :new_record? => false
-    ))
+    @purchase = assign(:purchase, stub_model(Purchase, {:new_record? => false, :slug => "testslug"}))
   end
 
-  xit "renders the edit purchase form" do
+  it "renders the edit purchase form" do
     render
 
     # Run the generator again with the --webrat-matchers flag if you want to use webrat matchers

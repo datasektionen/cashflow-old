@@ -50,7 +50,7 @@ describe Ability do
       @ability.should_not be_able_to(:manage, :people)
     end
 
-    %w[product_types business_units purchases debts].each do |model|
+    %w[product_types business_units purchases debts budget_posts].each do |model|
       it "should be able to manage #{model.gsub(/\s/,' ')}" do
         @ability.should be_able_to(:magane, model.to_sym)
       end

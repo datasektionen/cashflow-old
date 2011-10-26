@@ -27,7 +27,7 @@ describe DebtsController do
   end
 
   describe "GET new" do
-    xit "assigns a new debt as @debt" do
+    it "assigns a new debt as @debt" do
       Debt.stub(:new) { mock_debt }
       get :new
       assigns(:debt).should be(mock_debt)
@@ -52,14 +52,13 @@ describe DebtsController do
     end
 
     describe "with invalid params" do
-      xit "assigns a newly created but unsaved debt as @debt" do
+      it "assigns a newly created but unsaved debt as @debt" do
         debt = Factory.build :invalid_debt
         post :create, :debt => debt.attributes
-        debugger
-        assigns(:debt).should be debt
+        assigns(:debt).attributes.should eq debt.attributes
       end
 
-      xit "re-renders the 'new' template" do
+      it "re-renders the 'new' template" do
         Debt.stub(:new) { mock_debt(:save => false) }
         post :create, :debt => {}
         response.should render_template("new")

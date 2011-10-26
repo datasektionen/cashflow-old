@@ -5,9 +5,10 @@ describe "people/edit.html.haml" do
     @person = assign(:person, stub_model(Person,
       :new_record? => false
     ))
+    @controller.stub(:current_user).and_return { stub_model(Person) }
   end
 
-  xit "renders the edit person form" do
+  it "renders the edit person form" do
     render
 
     # Run the generator again with the --webrat-matchers flag if you want to use webrat matchers

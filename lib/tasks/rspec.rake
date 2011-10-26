@@ -38,12 +38,6 @@ task :stats => "spec:statsetup"
 desc "Run all specs in spec directory (excluding plugin specs)"
 RSpec::Core::RakeTask.new(:spec => spec_prereq)
 
-desc  "Run all specs with rcov"
-RSpec::Core::RakeTask.new(:rcov => spec_prereq) do |t|
-  t.rcov = true
-  t.rcov_opts = %w{--rails --exclude osx\/objc,gems\/,spec\/,features\/}
-end
-
 namespace :spec do
   [:requests, :models, :controllers, :views, :helpers, :mailers, :lib, :routing].each do |sub|
     desc "Run the code examples in spec/#{sub}"

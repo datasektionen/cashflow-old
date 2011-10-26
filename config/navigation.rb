@@ -1,7 +1,7 @@
 # Configures your navigation
 SimpleNavigation::Configuration.run do |navigation|
   navigation.items do |primary|
-    primary.item :my_page, I18n.t('navigation.my_page'), person_path(current_person)
+    primary.item :my_page, I18n.t('navigation.my_page'), person_path(current_user)
     primary.item :purchases, I18n.t('navigation.purchases'), purchases_path, :highlights_on => /\/purchases/ do |sub|
       sub.item :all_purchases, I18n.t('navigation.all_purchases'), purchases_path
       if can?(:manage, Purchase)
@@ -17,7 +17,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
-    if current_person.is?(:admin)
+    if current_user.is?(:admin)
       primary.item(:people, I18n.t('navigation.people'), people_path, :highlights_on => /\/people/)
     end
 
@@ -34,6 +34,8 @@ SimpleNavigation::Configuration.run do |navigation|
         sub.item :new_product_type, I18n.t('navigation.new_product_type'), new_product_type_path
       end
     end
+
+    primary.item :budgets, I18n.t('navigation.budgets'), budget_path(:id => Time.now.year), :highlights_on => /\/budget\/\d{4}/
 
     if can?(:manage, BudgetPost)
       primary.item :budget_posts, I18n.t('navigation.budget_posts'), budget_posts_path, :highlights_on => /\/budget_posts/ do |sub|

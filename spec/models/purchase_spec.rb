@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Purchase do
   before(:all) do
     @person = Factory :person
+    PaperTrail.whodunnit = @person.id.to_s
   end
   
   before(:each) do
@@ -40,7 +41,6 @@ describe Purchase do
   end
 
   it "should be created by someone" do
-    pending "move to cucumber scenario"
     @purchase.originator.should_not be_blank
   end
 

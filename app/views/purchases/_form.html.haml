@@ -3,8 +3,10 @@
   = form.semantic_errors :base
   = form.inputs :name => "Beskrivning" do
     = form.input :purchased_at, :as => :datepicker
-    = form.input :business_unit, :collection => BusinessUnit.all
-    = form.input :budget_post, :collection => @purchase.try(:business_unit).try(:budget_posts), :include_blank=>false
+    %li
+      = label :business_unit, t('business_unit')
+      = select_tag :business_unit, options_from_collection_for_select(BusinessUnit.all, 'id', 'name')
+    = form.input :budget_post, :collection => budget_posts_for_purchase(@purchase), :include_blank=>false
     = form.input :description, :as => :text
   
   = form.inputs :name => "Inköpsdelar" do
@@ -19,9 +21,9 @@
 
 :javascript
   budget_posts = #{ bp = Hash.new; BusinessUnit.all.each { |bu| bp[bu.id] = bu.budget_posts } ; bp.to_json  }
-  $("#purchase_business_unit_id").change(function(){
+  $("#business_unit").change(function(){
     var new_html = ""
-    $.each(budget_posts[$("#purchase_business_unit_id").val()],function(index, bp) {
+    $.each(budget_posts[$("#business_unit").val()],function(index, bp) {
       new_html += "<option value='"+bp.id+"'>"+bp.name+"</option>"
     })
     $("#purchase_budget_post_id").html(new_html)

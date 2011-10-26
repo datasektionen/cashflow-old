@@ -25,38 +25,41 @@ describe BudgetPostsController do
   # BudgetPost. As you add validations to BudgetPost, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {:business_unit_id => 1, :name => 'budgetpost'}
   end
 
-  before(:each) do
-    @budget_post = Factory :budget_post, valid_attributes
-  end
 
-  describe "GET index" do
-    it "assigns all budget_posts as @budget_posts" do
-      get :index
-      assigns(:budget_posts).should eq([@budget_post])
+  context "GET actions" do
+    before(:each) do
+      @budget_post = Factory :budget_post, valid_attributes
     end
-  end
 
-  describe "GET show" do
-    it "assigns the requested budget_post as @budget_post" do
-      get :show, :id => @budget_post.id.to_s
-      assigns(:budget_post).should eq(@budget_post)
+    describe "GET index" do
+      it "assigns all budget_posts as @budget_posts" do
+        get :index
+        assigns(:budget_posts).should eq([@budget_post])
+      end
     end
-  end
 
-  describe "GET new" do
-    it "assigns a new budget_post as @budget_post" do
-      get :new
-      assigns(:budget_post).should be_a_new(BudgetPost)
+    describe "GET show" do
+      it "assigns the requested budget_post as @budget_post" do
+        get :show, :id => @budget_post.id.to_s
+        assigns(:budget_post).should eq(@budget_post)
+      end
     end
-  end
 
-  describe "GET edit" do
-    it "assigns the requested budget_post as @budget_post" do
-      get :edit, :id => @budget_post.id.to_s
-      assigns(:budget_post).should == @budget_post
+    describe "GET new" do
+      it "assigns a new budget_post as @budget_post" do
+        get :new
+        assigns(:budget_post).should be_a_new(BudgetPost)
+      end
+    end
+
+    describe "GET edit" do
+      it "assigns the requested budget_post as @budget_post" do
+        get :edit, :id => @budget_post.id.to_s
+        assigns(:budget_post).should == @budget_post
+      end
     end
   end
 
@@ -98,6 +101,9 @@ describe BudgetPostsController do
   end
 
   describe "PUT update" do
+    before(:each) do
+      @budget_post = Factory :budget_post, valid_attributes
+    end
     describe "with valid params" do
       it "updates the requested budget_post" do
         # Assuming there are no other budget_posts in the database, this
@@ -137,6 +143,10 @@ describe BudgetPostsController do
   end
 
   describe "DELETE destroy" do
+    before(:each) do
+      @budget_post = Factory :budget_post, valid_attributes
+    end
+
     it "destroys the requested budget_post" do
       expect {
         delete :destroy, :id => @budget_post.id.to_s
