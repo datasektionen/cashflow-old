@@ -10,7 +10,6 @@
     %tr
       %th= t 'activerecord.attributes.budget_post.name'
       %th= t 'activerecord.models.business_unit'
-      %td= t 'activerecord.attributes.budget_post.status'
       - if can?(:manage, BudgetPost)
         %th.actions
 
@@ -19,7 +18,6 @@
       %tr{ :class => cycle(:odd, :even) }
         %td= budget_post.name
         %td= budget_post.business_unit
-        %td #{currency budget_post.row(@year).total} av #{currency budget_post.row(@year).sum} 
         - if can?(:manage, BudgetPost)
           %td
             = link_to t('edit'), edit_budget_post_path(budget_post)

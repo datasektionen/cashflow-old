@@ -82,13 +82,4 @@ class BudgetPostsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-
-  def set_budget
-    params[:sum].each do |id,sum|
-      br =  BudgetRow.find(id)
-      br.sum = sum
-      br.save
-    end
-    redirect_to budget_posts_path
-  end
 end
