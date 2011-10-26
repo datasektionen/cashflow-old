@@ -66,7 +66,7 @@ describe BudgetRowsController do
         budget_post = Factory :budget_post
         budget_row = budget_post.row(@year)
         put :update, budget_id: @year, id: budget_row.id, budget_row: valid_attributes
-        response.should redirect_to(budget_row)
+        response.should redirect_to(budget_row_path(@year,budget_row))
       end
     end
 

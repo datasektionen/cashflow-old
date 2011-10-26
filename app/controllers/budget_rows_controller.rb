@@ -33,7 +33,7 @@ class BudgetRowsController < ApplicationController
   def update
     respond_to do |format|
       if @budget_row.update_attributes(params[:budget_row])
-        format.html { redirect_to(@budget_row, :notice => 'Budget row was successfully updated.') }
+        format.html { redirect_to(budget_row_path(budget_id: @year, id: @budget_row), :notice => 'Budget row was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
