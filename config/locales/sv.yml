@@ -378,11 +378,8 @@
   formtastic:
     actions:
       commit: "Spara %{model}"
-<<<<<<< HEAD
       create: "Spara %{model}"
       update: "Uppdatera %{model}"
-=======
->>>>>>> added some more swedish translations
     hints:
       business_unit:
         short_name: "exempelvis DKM, QN, eller DRek"
