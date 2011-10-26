@@ -6,7 +6,7 @@ class BudgetController < ApplicationController
   end
 
   def show
-    @budget_rows = BudgetRow.year(@year).joins(:budget_post => [:purchases, :business_unit]).includes(:budget_post => [:purchases, :business_unit])
+    @budget_rows = BudgetRow.year(@year)
   end
 
   def edit
