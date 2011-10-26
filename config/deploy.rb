@@ -84,6 +84,11 @@ namespace :deploy do
     cmd = files.map {|file| "ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}" }.join(" && ")
     run cmd
   end
+
+  desc "compile stylesheets"
+  task :compile_stylesheets do
+    run "cd #{current_path} && rake deploy:compile_stylesheets"
+  end
   
   desc "Restart passenger with restart.txt"
   task :restart, :except => { :no_release => true } do
@@ -140,6 +145,7 @@ end
 
 
 after 'deploy:update_code', 'bundler:bundle_new_release'
+after 'deploy:update_code', 'deploy:compile_stylesheets'
 after "deploy:restart", "stats:git_revision"
 
 def run_rake(cmd)
