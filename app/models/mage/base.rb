@@ -33,12 +33,42 @@ class Mage::Base
 
   # Pushes this model to mage
   def push(current_person)
-    Mage::ApiCall.call("/#{table_name.pluralize}/#{@create_action}",current_person,{self.table_name.to_sym=>attributes})
+    res = Mage::ApiCall.call("/#{table_name.pluralize}/#{@create_action}.json",current_person,{self.table_name.to_sym=>attributes})
+    parse_result(res,self) && true # Make boolean
+  end
+
+  def self.all
+    res = Mage::ApiCall.call("/#{table_name.pluralize}.json",nil,{})
+    p = parse_result(res)
+    if p
+      p.map do |item|
+        self.new(item)
+      end
+    else
+      false
+    end 
   end
 
 protected
+  def self.parse_result(res,item=nil)
+    begin
+      data = JSON.parse res
+    rescue Exception
+      puts res.body
+      item.errors = "Result was not in json format" if item
+      return false
+    end
+
+    if res.code == 200
+      return data
+    else
+      errors = data["errors"] if item
+      return false
+    end
+  end
+
   def self.table_name
-    if self.class.name.match /Mage::(.+)/
+    if name.match /Mage::(.+)/
       return $1.underscore
     else
       false
