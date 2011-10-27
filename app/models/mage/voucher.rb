@@ -1,20 +1,16 @@
 class Mage::Voucher < Mage::Base
   create_action :api_create
+  before_initialize :create_voucher_rows
 
-  def voucher_rows 
-    @voucher_rows = [] unless @voucher_rows
-  end
-
-  def voucher_rows=(vr)
-    @voucher_rows = vr
-  end
-
-  def voucher_rows?
-    return !@voucher_rows.empty?
-  end
 
   def attributes
-    attr = super
-    attr[:voucher_rows_attributes] = @voucher_rows.map { |vr| vr.attributes }
+    attr = super.clone
+    attr.delete(:voucher_rows)
+    attr[:voucher_rows_attributes] = @attr[:voucher_rows].map { |vr| vr.attributes }
+    attr
+  end
+
+  def create_voucher_rows
+    self.voucher_rows = [] 
   end
 end

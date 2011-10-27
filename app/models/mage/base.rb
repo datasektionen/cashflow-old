@@ -1,10 +1,15 @@
 class Mage::Base
   @@create_action = "create"
-  #@@update_action = "update"
-  #@@destroy_action = "destroy"
+  @@after_initialize=[]
+  @@before_initialize=[]
 
   def initialize(attr={})
-    @attr = attr
+    @attr = {}
+    @@before_initialize.each { |c| self.send(c) }
+    attr.each do |key, val|
+      @attr[key] = val
+    end
+    @@after_initialize.each { |c| call(c) }
   end
 
   def method_missing(method,*args)
@@ -40,7 +45,15 @@ protected
     end
   end
 
-  def create_action(val)
+  def self.create_action(val)
     @@create_action = val
+  end
+
+  def self.after_initialize(method)
+    @@after_initialize << method
+  end
+
+  def self.before_initialize(method)
+    @@before_initialize << method
   end
 end
