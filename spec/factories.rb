@@ -65,6 +65,7 @@ Factory.define :business_unit do |f|
   f.short_name { name.slice(0,3) }
   f.description {"blubb"}
   f.active {true}
+  f.email { '' }
 end
 
 Factory.define :product_type do |f|
