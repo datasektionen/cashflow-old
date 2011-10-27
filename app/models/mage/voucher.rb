@@ -13,4 +13,13 @@ class Mage::Voucher < Mage::Base
   def create_voucher_rows
     self.voucher_rows = [] 
   end
+
+  def self.from_purchase(purchase)
+    if purchase.keepable?
+      voucher = Mage::Voucher.new
+      voucher.accounting_date = purchase.purchased_at
+      voucher.accounting_year = purchase.year
+      voucher.material_from = purchase.person.ugid
+    end
+  end
 end

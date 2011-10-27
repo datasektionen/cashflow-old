@@ -4,10 +4,11 @@ class Mage::ApiCall
       "#{Cashflow::Application.settings["mage_url"]}/#{path}",
       Cashflow::Application.settings["mage_apikey"],
       Cashflow::Application.settings["mage_private_apikey"],
-      person.ugid,
+      person ? person.ugid : nil,
       params
     )
   end
+
 private
   def self.full_call(url, key, private_key, user_ugid, params)
     require 'net/http'
@@ -15,7 +16,7 @@ private
     params["apikey"]=key
     #params["action"]=action
     #params["controller"]=controller
-    params["ugid"] = user_ugid
+    params["ugid"] = user_ugid if user_ugid
     body = params.to_json
     checksum = create_hash(body,private_key)
   
@@ -33,8 +34,9 @@ private
   def self.create_hash(body, private_key)
     require 'digest/sha1'
     string = "#{body}#{private_key}"
-    puts string
-    Digest::SHA1.hexdigest(string)
+    cs = Digest::SHA1.hexdigest(string)
+    puts "Checksum: #{cs}"
+    cs
   end
 
 end
