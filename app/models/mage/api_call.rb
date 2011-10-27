@@ -1,7 +1,7 @@
 class Mage::ApiCall
   def self.call(path, person, params)
     full_call(
-      "#{Cashflow::Application.settings["mage_url"])}/#{path}",
+      "#{Cashflow::Application.settings["mage_url"]}/#{path}",
       Cashflow::Application.settings["mage_apikey"],
       Cashflow::Application.settings["mage_private_apikey"],
       person.ugid,
@@ -19,7 +19,7 @@ private
     body = params.to_json
     checksum = create_hash(body,private_key)
   
-    url_ = "#{Cashflow::Application.settings["mage_url"])}#{url}?checksum=#{checksum}"
+    url_ = "#{url}?checksum=#{checksum}"
     uri = URI.parse url_
 
     request = Net::HTTP::Post.new(url_)
