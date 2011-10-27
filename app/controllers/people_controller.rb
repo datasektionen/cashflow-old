@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
   load_and_authorize_resource :person, :except => :search
-  before_filter :get_items, :only => [:show, :edit, :update, :destroy]
+  before_filter :get_items
   
   
   # GET /people
@@ -94,17 +94,19 @@ class PeopleController < ApplicationController
 
   protected
   def get_items
-    @items = [{:key   => :show_person, 
-               :name  => @person.name, 
-               :url   => person_path(@person)},
-              { :key => :edit_person,
-                :name => I18n.t('edit'),
-                :url => edit_person_path(@person)},
-             ]
-    if is_mobile_device?
-      @items.unshift({ :key => :people_list,
-                  :name => I18n.t('back'),
-                  :url => people_path})
+    if @person && @person.persisted?
+      @items = [
+        {key: :show_person, name: @person.name, url: person_path(@person)},
+        {key: :edit_person, name: I18n.t('edit'), url: edit_person_path(@person)},
+      ]
+      if is_mobile_device?
+        @items.unshift({key: :people_list, name: I18n.t('back'), url: people_path})
+      end
+    else
+      @items = [
+        {key: :all_people, name: I18n.t('navigation.all_people'), url: people_path},
+        {key: :new_person, name: I18n.t('navigation.new_person'), url: new_person_path}
+      ]
     end
   end
 end
