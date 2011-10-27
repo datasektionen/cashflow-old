@@ -382,7 +382,9 @@
       update: "Uppdatera %{model}"
     hints:
       business_unit:
-        short_name: "exempelvis DKM, QN, eller DRek"
+        name: "exempelvis Informationsorganet"
+        short_name: "exempelvis Ior, DKM eller QN"
+        email: "tomt fält implicerar kassor@d.kth.se"
   
   edit: "Redigera"
   back: "Tillbaka"
