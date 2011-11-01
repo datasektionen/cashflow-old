@@ -457,6 +457,8 @@
     all_debts: "Alla skulder"
     new_debt: "Ny skuld"
     people: "Användare"
+    all_people: "Alla användare"
+    new_person: "Importera användare"
     business_units: "Affärsenheter"
     all_business_units: "Alla affärsenheter"
     new_business_unit: "Ny affärsenhet"
