@@ -20,6 +20,7 @@ gem 'mysql2', '~> 0.2.0'
 
 group :production do
   gem 'unicorn'
+  gem 'exceptional'
 end
 
 group :development do
