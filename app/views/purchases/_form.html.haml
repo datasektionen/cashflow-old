@@ -17,20 +17,9 @@
   = form.buttons do
     = form.commit_button :commit
 
+= javascript_include_tag 'purchases'
 :javascript
   $(document).ready(function() {
-    var budget_posts = #{ bp = Hash.new; BusinessUnit.all.each { |bu| bp[bu.id] = bu.budget_posts } ; bp.to_json  };
-    var reloadBudgetPosts = function(){
-      var new_html = ""
-      if ($("#business_unit").val()) {
-        $.each(budget_posts[$("#business_unit").val()],function(index, bp) {
-          new_html += "<option value='"+bp.id+"'>"+bp.name+"</option>";
-        });
-      }
-      $("#purchase_budget_post_id").html(new_html);
-    };
-    $("#business_unit").change(reloadBudgetPosts);
-    reloadBudgetPosts();
+    Purchase.setupBudgetPostSelect(#{budget_posts.to_json}, $("#business_unit"), $("#purchase_budget_post_id"));
   });
-- ActiveRecord::Base.include_root_in_json = false
 
