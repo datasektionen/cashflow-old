@@ -5,8 +5,8 @@
     = form.input :purchased_at, :as => :date_picker
     %li
       = label :business_unit, t('activerecord.models.business_unit')
-      = select_tag :business_unit, options_from_collection_for_select(BusinessUnit.all, 'id', 'name')
-    = form.input :budget_post, :collection => budget_posts_for_purchase(@purchase), :include_blank=>false
+      = select_tag :business_unit, options_from_collection_for_select(BusinessUnit.all, 'id', 'name'), include_blank: true
+    = form.input :budget_post, :collection => [], :include_blank=>false
     = form.input :description, :as => :text
   
   = form.inputs :name => "Inköpsdelar" do
@@ -17,14 +17,20 @@
   = form.buttons do
     = form.commit_button :commit
 
+:javascript
+  $(document).ready(function() {
+    var budget_posts = #{ bp = Hash.new; BusinessUnit.all.each { |bu| bp[bu.id] = bu.budget_posts } ; bp.to_json  };
+    var reloadBudgetPosts = function(){
+      var new_html = ""
+      if ($("#business_unit").val()) {
+        $.each(budget_posts[$("#business_unit").val()],function(index, bp) {
+          new_html += "<option value='"+bp.id+"'>"+bp.name+"</option>";
+        });
+      }
+      $("#purchase_budget_post_id").html(new_html);
+    };
+    $("#business_unit").change(reloadBudgetPosts);
+    reloadBudgetPosts();
+  });
 - ActiveRecord::Base.include_root_in_json = false
 
-:javascript
-  budget_posts = #{ bp = Hash.new; BusinessUnit.all.each { |bu| bp[bu.id] = bu.budget_posts } ; bp.to_json  }
-  $("#business_unit").change(function(){
-    var new_html = ""
-    $.each(budget_posts[$("#business_unit").val()],function(index, bp) {
-      new_html += "<option value='"+bp.id+"'>"+bp.name+"</option>"
-    })
-    $("#purchase_budget_post_id").html(new_html)
-  })
