@@ -124,6 +124,15 @@ class Purchase < ActiveRecord::Base
     states
   end
 
+  # Returns the last person to confirm this purchase (if any)
+  def confirmed_by
+    s = state_history.find { |state|
+      state.workflow_state == "confirmed"
+    }
+    return s.originator if s
+    nil
+  end
+
   def last_updated_by
     Person.find(self.originator.to_i)
   end
