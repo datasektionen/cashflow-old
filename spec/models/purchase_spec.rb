@@ -114,6 +114,10 @@ describe Purchase do
       @purchase.update_attribute(:workflow_state, state)
       lambda {@purchase.cancel!}.should raise_error
     end
+
+    it "should have confirmed_by when #{state}" do
+      @purchase.confirmed_by.should_not == nil
+    end
   end
 
   %w[cancelled finalized].each do |state|
