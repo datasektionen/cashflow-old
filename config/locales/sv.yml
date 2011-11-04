@@ -447,6 +447,11 @@
       success:
         created: "Produkttyp skapad"
         updated: "Produkttyp uppdaterad"
+    budget_post:
+      error:
+        delete_restricted: "Budgetpost kunde inte tas bort eftersom den har relaterade inköp"
+      success:
+        delete: "Budgetpost borttagen"
   navigation:
     my_page: "Min sida"
     purchases: "Inköp"
@@ -457,6 +462,8 @@
     all_debts: "Alla skulder"
     new_debt: "Ny skuld"
     people: "Användare"
+    all_people: "Alla användare"
+    new_person: "Importera användare"
     business_units: "Affärsenheter"
     all_business_units: "Alla affärsenheter"
     new_business_unit: "Ny affärsenhet"

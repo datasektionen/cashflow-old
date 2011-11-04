@@ -1,6 +1,6 @@
 class BudgetPost < ActiveRecord::Base
-  has_many :budget_rows
-  has_many :purchases
+  has_many :purchases, :dependent => :restrict
+  has_many :budget_rows, :dependent => :destroy
   belongs_to :business_unit
 
   after_create :create_rows

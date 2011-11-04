@@ -75,10 +75,15 @@ class BudgetPostsController < ApplicationController
   # DELETE /budget_posts/1.xml
   def destroy
     @budget_post = BudgetPost.find(params[:id])
-    @budget_post.destroy
+    begin
+      @budget_post.destroy
+      notice = I18n.t('notices.budget_post.success.delete')
+    rescue ActiveRecord::DeleteRestrictionError => e
+      notice = I18n.t('notices.budget_post.error.delete_restricted')
+    end
 
     respond_to do |format|
-      format.html { redirect_to(budget_posts_url) }
+      format.html { redirect_to(budget_posts_url, notice: notice) }
       format.xml  { head :ok }
     end
   end

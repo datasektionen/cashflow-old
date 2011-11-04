@@ -17,9 +17,11 @@ gem 'i18n_routing'
 gem 'friendly_id'
 gem 'cocoon'
 gem 'mysql2', '~> 0.2.0'
+gem 'decent_exposure'
 
 group :production do
   gem 'unicorn'
+  gem 'exceptional'
 end
 
 group :development do
