@@ -11,11 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110909142954) do
+ActiveRecord::Schema.define(:version => 20111104213242) do
 
   create_table "budget_posts", :force => true do |t|
-    t.integer "business_unit_id", :null => false
-    t.string  "name",             :null => false
+    t.integer "business_unit_id",        :null => false
+    t.string  "name",                    :null => false
+    t.integer "mage_arrangement_number"
   end
 
   create_table "budget_rows", :force => true do |t|
@@ -32,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20110909142954) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email",                         :null => false
+    t.integer  "mage_number"
   end
 
   create_table "debts", :force => true do |t|
@@ -60,10 +62,11 @@ ActiveRecord::Schema.define(:version => 20110909142954) do
   end
 
   create_table "product_types", :force => true do |t|
-    t.string   "name",        :null => false
-    t.string   "description", :null => false
+    t.string   "name",                :null => false
+    t.string   "description",         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "mage_account_number"
   end
 
   create_table "purchase_items", :force => true do |t|
