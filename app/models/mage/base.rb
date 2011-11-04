@@ -65,7 +65,7 @@ class Mage::Base
 protected
   def self.parse_result(res,item=nil)
     begin
-      puts res.body
+      data = JSON.parse res.body
     rescue Exception
       puts $!
       puts "Error: Result not in json"
