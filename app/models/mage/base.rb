@@ -6,6 +6,9 @@ class Mage::Base
   def initialize(attr={})
     @attr = {}
     @@before_initialize.each { |c| self.send(c) }
+    if attr[table_name]
+      attr = attr[table_name]
+    end
     attr.each do |key, val|
       @attr[key.to_sym] = val
     end
@@ -42,7 +45,7 @@ class Mage::Base
     p = parse_result(res)
     if p
       return p.map do |item|
-        self.new(item[table_name])
+        self.new(item)
       end
     else
       false
@@ -53,7 +56,7 @@ class Mage::Base
     res = Mage::ApiCall.call("/#{table_name.pluralize}/#{id}.json", nil, {}, :get)
     p = parse_result(res)
     if p
-      return self.new(p[table_name])
+      return self.new(p)
     else
         false
     end
