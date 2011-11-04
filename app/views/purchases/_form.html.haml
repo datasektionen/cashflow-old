@@ -9,10 +9,12 @@
     = form.input :budget_post, :collection => [], :include_blank=>false
     = form.input :description, :as => :text
   
-  = form.inputs :name => "Inköpsdelar" do
+  %fieldset#purchase_items
+    %legend Inköpsdelar
     = form.semantic_fields_for :items do |item|
       = render 'item_fields', :f => item
-    = link_to_add_association 'Lägg till inköpsdel', form, :items
+    .links
+      = link_to_add_association 'Lägg till inköpsdel', form, :items
 
   = form.buttons do
     = form.commit_button :commit
