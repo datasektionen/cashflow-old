@@ -34,6 +34,8 @@
     #root
       = render :partial => 'menus/session'
       = render :partial => 'menus/apps'
+      - if notice
+        = notice
       %header.main
         %h1= link_to "Cashflow", root_url
         - if user_signed_in?

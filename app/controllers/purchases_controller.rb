@@ -2,6 +2,10 @@ class PurchasesController < ApplicationController
   load_and_authorize_resource :except => [:confirmed, :pay_multiple]
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
 
+  
+  expose(:budget_posts) { BudgetPost.all.group_by(&:business_unit_id)}
+
+  #
   # GET /purchases
   # GET /purchases.xml
   def index
