@@ -15,9 +15,14 @@ end
 
 Given /^I have made a purchase that needs registering$/ do
   # setup some stuff that will be needed later
-  @budget_post = Factory :budget_post
-  @business_unit = @budget_post.business_unit
-  @product_type = Factory :product_type
+  @budget_post ||= Factory :budget_post
+  @business_unit ||= @budget_post.business_unit
+  @product_type ||= Factory :product_type
+end
+
+Given /^a purchase$/ do
+  Given 'I have made a purchase that needs registering'
+  Given 'I fill out the new purchase form accordingly'
 end
 
 When /^I fill out the new purchase form accordingly$/ do
