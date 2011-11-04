@@ -1,16 +1,18 @@
 class Mage::ApiCall
-  def self.call(path, person, params)
+  # Method == :get, :post, :put or :delete
+  def self.call(path, person, params, method)
     full_call(
       "#{Cashflow::Application.settings["mage_url"]}/#{path}",
       Cashflow::Application.settings["mage_apikey"],
       Cashflow::Application.settings["mage_private_apikey"],
       person ? person.ugid : nil,
-      params
+      params,
+      method
     )
   end
 
 private
-  def self.full_call(url, key, private_key, user_ugid, params)
+  def self.full_call(url, key, private_key, user_ugid, params, method)
     require 'net/http'
     require 'uri'
     params["apikey"]=key
@@ -22,8 +24,19 @@ private
   
     url_ = "#{url}?checksum=#{checksum}"
     uri = URI.parse url_
-
-    request = Net::HTTP::Post.new(url_)
+    
+    case method
+      when :get
+        request = Net::HTTP::Get.new(url_)
+      when :post
+        request = Net::HTTP::Post.new(url_)
+      when :put
+        request = Net::HTTP::Put.new(url_)
+      when :delete
+        request = Net::HTTP::Delete.new(url_)
+      else
+        raise "Invalid method!"
+    end
     request.add_field "Content-Type", "application/json"
     request.body = body
   

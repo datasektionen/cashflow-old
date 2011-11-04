@@ -33,15 +33,15 @@ class Mage::Base
 
   # Pushes this model to mage
   def push(current_person)
-    res = Mage::ApiCall.call("/#{table_name.pluralize}/#{@create_action}.json",current_person,{self.table_name.to_sym=>attributes})
+    res = Mage::ApiCall.call("/#{table_name.pluralize}/#{@create_action}.json",current_person,{self.table_name.to_sym=>attributes}, :post)
     parse_result(res,self) && true # Make boolean
   end
 
   def self.all
-    res = Mage::ApiCall.call("/#{table_name.pluralize}.json",nil,{})
+    res = Mage::ApiCall.call("/#{table_name.pluralize}.json",nil,{}, :get)
     p = parse_result(res)
     if p
-      p.map do |item|
+      return p.map do |item|
         self.new(item)
       end
     else
@@ -52,16 +52,19 @@ class Mage::Base
 protected
   def self.parse_result(res,item=nil)
     begin
-      data = JSON.parse res
+      data = JSON.parse res.body
     rescue Exception
+      puts $!
+      puts "Error: Result not in json"
       puts res.body
       item.errors = "Result was not in json format" if item
       return false
     end
 
-    if res.code == 200
+    if res.kind_of? Net::HTTPSuccess
       return data
     else
+      puts "Invalid return code (#{res.code})"
       errors = data["errors"] if item
       return false
     end
