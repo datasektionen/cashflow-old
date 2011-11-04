@@ -36,8 +36,8 @@ class Mage::Base
 
   # Pushes this model to mage
   def push(current_person)
-    res = Mage::ApiCall.call("/#{table_name.pluralize}/#{@create_action}.json",current_person,{self.table_name.to_sym=>attributes}, :post)
-    parse_result(res,self) && true # Make boolean
+    res = Mage::ApiCall.call("/#{self.class.table_name.pluralize}/#{@@create_action}.json",current_person,{self.class.table_name.to_sym=>attributes}, :post)
+    return self.class.parse_result(res,self) && true # Make boolean
   end
 
   def self.all
@@ -65,7 +65,7 @@ class Mage::Base
 protected
   def self.parse_result(res,item=nil)
     begin
-      data = JSON.parse res.body
+      puts res.body
     rescue Exception
       puts $!
       puts "Error: Result not in json"
