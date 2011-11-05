@@ -31,6 +31,8 @@ class PurchasesController < ApplicationController
     @purchase = Purchase.new
     @purchase.items.build
 
+    @purchase.person = current_user
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @purchase }
@@ -45,6 +47,10 @@ class PurchasesController < ApplicationController
   # POST /purchases.xml
   def create
     @purchase = @current_user.purchases.new(params[:purchase])
+
+    if @purchase.person_id != current_user.id
+      authorize! :edit, :purchase_owner
+    end
 
     respond_to do |format|
       if @purchase.save

@@ -2,6 +2,8 @@
   = form.semantic_errors
   = form.semantic_errors :base
   = form.inputs :name => "Beskrivning" do
+    - if @purchase.new? && can?(:edit, :purchase_owner)
+      = form.input :person 
     = form.input :purchased_at, :as => :date_picker
     %li
       = label :business_unit, t('activerecord.models.business_unit')
