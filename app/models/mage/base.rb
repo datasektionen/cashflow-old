@@ -6,9 +6,8 @@ class Mage::Base
   def initialize(attr={})
     @attr = {}
     @@before_initialize.each { |c| self.send(c) }
-    if attr[table_name]
-      attr = attr[table_name]
-    end
+    attr = attr[self.class.table_name] if attr[self.class.table_name]
+    attr = attr[self.class.table_name.to_sym] if attr[self.class.table_name.to_sym]
     attr.each do |key, val|
       @attr[key.to_sym] = val
     end
