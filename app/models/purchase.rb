@@ -26,6 +26,7 @@ class Purchase < ActiveRecord::Base
   
   scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
   scope :confirmed , where(:workflow_state => %w[confirmed bookkept paid finalized])
+  scope :keepable, where(:workflow_state => :paid)
   
   # workflow for Purchase model
   #                                   :keep --> (bookkept) -- :pay --
