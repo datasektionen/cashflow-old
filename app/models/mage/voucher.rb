@@ -32,6 +32,9 @@ class Mage::Voucher < Mage::Base
         #vr.comment = i.comment
         vr.account_number = i.product_type.mage_account_number
         vr.arrangement = purchase.budget_post.mage_arrangement_number
+        if vr.arrangement.nil?
+         raise "Arrangement for purchase #{purchase.id}, budget_post #{purchase.budget_post} is nil"
+        end
         voucher.voucher_rows << vr
       end
       voucher.voucher_rows << Mage::VoucherRow.new(:sum=>-total_sum, :account_number=>2820)
