@@ -31,6 +31,8 @@ class PurchasesController < ApplicationController
     @purchase = Purchase.new
     @purchase.items.build
 
+    @purchase.person = current_user
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @purchase }
@@ -45,6 +47,10 @@ class PurchasesController < ApplicationController
   # POST /purchases.xml
   def create
     @purchase = @current_user.purchases.new(params[:purchase])
+
+    if @purchase.person_id != current_user.id
+      authorize! :edit, :purchase_owner
+    end
 
     respond_to do |format|
       if @purchase.save
@@ -86,7 +92,7 @@ class PurchasesController < ApplicationController
 
   def confirmed
     authorize! :manage, Purchase
-    @purchases = Purchase.where(:workflow_state => :confirmed)
+    @purchases = Purchase.confirmed
     @purchases = @purchases.group_by{|p| p.person }.map{|k, v| {k => v.sum(&:total)} }
     @purchases = @purchases.inject({}){|s, h| s.merge(h)}
     respond_to do |format|
@@ -97,8 +103,8 @@ class PurchasesController < ApplicationController
 
   def pay_multiple
     authorize! :manage, Purchase
-    people_ids = params[:pay].keep_if{|k,v| v.to_i == 1 }.keys
-    @purchases = Purchase.where(:workflow_state => :confirmed).where(:person_id => people_ids)
+    people_ids = params[:pay].keep_if {|k,v| v.to_i == 1 }.keys
+    @purchases = Purchase.confirmed.where(:person_id => people_ids)
     @purchases.each{|p| p.pay! }
     respond_to do |format|
       format.html { redirect_to(confirmed_purchases_path, :notice => "Betalda (#{@purchases.map(&:id)})!") }
