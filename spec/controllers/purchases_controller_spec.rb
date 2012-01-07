@@ -26,9 +26,17 @@ describe PurchasesController do
 
   describe "GET new" do
     it "assigns a new purchase as @purchase" do
-      Purchase.stub(:new) { mock_purchase }
+      purchase = double("purchase", 
+               :items => double("array", :build => []),
+               :person= => nil,
+               :person_id= => nil
+      )
+      Purchase.stub(:new) { purchase }
+      #Purchase.stub_chain(:new, :items, :build).and_return( double([]) )
+      #Purchase.stub(:new) { mock_purchase }
+      #Purchase.stub_chain(:items, :build).and_return([])
       get :new
-      assigns(:purchase).should be(mock_purchase)
+      assigns(:purchase).should be(purchase)
     end
   end
 
