@@ -2,6 +2,14 @@ require "spec_helper"
 
 describe BudgetPost do
   describe "all_years" do
+    before(:each) do
+      DatabaseCleaner.start
+    end
+
+    after(:each) do
+      DatabaseCleaner.clean
+    end
+
     it "should contain all years for which there are purchases" do
       p1 = Factory :purchase, year: Time.now.year
       p2 = Factory :purchase, purchased_at: 1.year.ago

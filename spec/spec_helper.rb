@@ -7,7 +7,7 @@ require 'rspec/rails'
 require 'controller_macros'
 require 'formtastic'
 
-require 'database_cleaner'
+#require 'database_cleaner'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -18,7 +18,7 @@ ActiveRecord::Observer.disable_observers
 RSpec.configure do |config|
   config.mock_with :rspec
   config.fail_fast = false
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   config.include Devise::TestHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
@@ -28,14 +28,6 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
   end
 
 end

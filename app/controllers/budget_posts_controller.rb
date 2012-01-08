@@ -7,7 +7,7 @@ class BudgetPostsController < ApplicationController
     @budget_posts = BudgetPost.all
     @year = params[:year]
     @year = Time.now.year if @year.nil?
-    BudgetRow.create_rows_if_not_exists(@year)
+    BudgetRow.create_rows_if_not_exists(@year) # TODO: Refactor this to put it elsewhere. It doesn't belong here.
 
     @edit = params[:edit]
 

@@ -4,7 +4,7 @@ describe BudgetRowsController do
   login_admin
 
   before(:all) do
-    @year = Time.now.year
+    @year = Time.now.year.to_s
   end
 
   before(:each) do
@@ -19,10 +19,14 @@ describe BudgetRowsController do
     {sum: 1000, year: @year}
   end
 
+  def mock_budget_row(extra_attributes = {})
+    double('budget_row', valid_attributes.merge(extra_attributes))
+  end
+
   describe "GET index" do
     it "assigns all budget_rows as @budget_rows" do
-      budget_post = Factory :budget_post
-      budget_row = budget_post.row(@year)
+      budget_row = mock_budget_row
+      BudgetRow.stub(:year).with(@year).and_return([budget_row])
       get :index, budget_id: @year
       assigns(:budget_rows).should eq([budget_row])
     end
