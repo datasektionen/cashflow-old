@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe "product_types/index.html.haml" do
   before(:each) do
+    product_type = stub_model(ProductType, :to_s => "product_type")
     assign(:product_types, [
-      stub_model(ProductType),
-      stub_model(ProductType)
+      product_type,
+      product_type
     ])
   end
 

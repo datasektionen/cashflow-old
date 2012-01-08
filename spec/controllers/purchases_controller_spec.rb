@@ -32,9 +32,7 @@ describe PurchasesController do
                :person_id= => nil
       )
       Purchase.stub(:new) { purchase }
-      #Purchase.stub_chain(:new, :items, :build).and_return( double([]) )
-      #Purchase.stub(:new) { mock_purchase }
-      #Purchase.stub_chain(:items, :build).and_return([])
+
       get :new
       assigns(:purchase).should be(purchase)
     end
@@ -52,8 +50,9 @@ describe PurchasesController do
 
     describe "with valid params" do
       it "assigns a newly created purchase as @purchase" do
-        Purchase.stub(:new).with({'these' => 'params'}) { mock_purchase(:save => true) }
-        post :create, :purchase => {'these' => 'params'}
+        Purchase.any_instance.stub(:save).and_return(true)
+        Purchase.stub(:new) { mock_purchase(:save => true) }
+        post :create, {:purchase => {'these' => 'params'}}
         assigns(:purchase).should be(mock_purchase)
       end
 
@@ -66,9 +65,11 @@ describe PurchasesController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved purchase as @purchase" do
-        Purchase.stub(:new).with({'these' => 'params'}) { mock_purchase(:save => false) }
-        post :create, :purchase => {'these' => 'params'}
-        assigns(:purchase).should be(mock_purchase)
+        Purchase.any_instance.stub(:save).and_return(false)
+        Purchase.stub(:new).and_return(mock_purchase)
+        purchase = mock_purchase
+        post :create, {:purchase => {'these' => 'params'}}
+        assigns(:purchase).should be(purchase)
       end
 
       it "re-renders the 'new' template" do

@@ -14,7 +14,7 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/active_record'
   require 'net/https'
-  require 'omniauth/enterprise'
+#  require 'omniauth/enterprise'
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is

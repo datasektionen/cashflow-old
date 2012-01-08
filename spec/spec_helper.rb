@@ -17,7 +17,7 @@ local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
 ActiveRecord::Observer.disable_observers
 RSpec.configure do |config|
   config.mock_with :rspec
-  config.fail_fast = true
+  config.fail_fast = false
   config.use_transactional_fixtures = true
 
   config.include Devise::TestHelpers, :type => :controller
