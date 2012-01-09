@@ -18,7 +18,8 @@ describe PurchasesController do
 
   describe "GET show" do
     it "assigns the requested purchase as @purchase" do
-      purchase = Factory(:purchase)
+      purchase = mock_purchase
+      Purchase.stub(:find).and_return { purchase }
       get :show, :id => purchase.id
       assigns(:purchase).should == purchase
     end
