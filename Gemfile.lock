@@ -260,6 +260,9 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    turnip (0.3.0)
+      gherkin (>= 2.5)
+      rspec (~> 2.0)
     tzinfo (0.3.31)
     unicorn (4.1.1)
       kgio (~> 2.4)
@@ -320,5 +323,6 @@ DEPENDENCIES
   selenium
   shoulda
   simple-navigation
+  turnip
   unicorn
   workflow

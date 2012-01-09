@@ -4,10 +4,14 @@ ENV["RAILS_ENV"] ||= 'test'
 require "cover_me"
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require "turnip"
+require "turnip/capybara"
 require 'controller_macros'
 require 'formtastic'
+require "headless"
+require 'database_cleaner'
 
-#require 'database_cleaner'
+headless = Headless.new
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -30,4 +34,12 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
+  config.before(:each) do
+    headless.start if Capybara.current_driver == :selenium
+  end
+
+  config.after(:each) do
+    headless.stop if Capybara.current_driver == :selenium
+  end
 end
+

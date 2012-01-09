@@ -20,6 +20,7 @@
 
 require 'cucumber/rails'
 require 'capybara/rspec'
+require 'headless'
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
@@ -47,4 +48,15 @@ ActionController::Base.allow_rescue = false
 # Remove this line if your app doesn't have a database.
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
 DatabaseCleaner.strategy = :transaction
+
+headless = Headless.new
+Before('@selenium,@javascript') do
+  if Capybara.current_driver == :selenium
+    headless.start
+  end
+end
+
+After do
+  headless.stop if Capybara.current_driver == :selenium
+end
 
