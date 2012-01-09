@@ -4,8 +4,6 @@ ENV["RAILS_ENV"] ||= 'test'
 require "cover_me"
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require "turnip"
-require "turnip/capybara"
 require 'controller_macros'
 require 'formtastic'
 require "headless"

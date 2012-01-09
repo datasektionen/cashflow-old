@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 steps_for :purchases do
+  use_steps :budget_posts
   def fill_out_purchase_details
-    sleep 2
     fill_in("purchase_purchased_at", with: Date.today.to_s)
     select(@business_unit.name, from: "business_unit")
     select(@budget_post.name, from: "purchase_budget_post_id")
@@ -54,7 +54,7 @@ steps_for :purchases do
     click_button("Spara Inköp")
   end
 
-  step "(?:(?:the|my|that) )?purchase should have \":count\" purchase items" do |n|
+  step "the purchase should have \":count\" purchase items" do |n|
     Purchase.last.items.count.should == n.to_i
   end
 end

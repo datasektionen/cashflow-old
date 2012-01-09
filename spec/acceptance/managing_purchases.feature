@@ -5,7 +5,7 @@ Feature: Managing purchases
   
   Background:
     Given a person with the "treasurer" role
-    And I am logged in as the person
+    And I log in as the person
     
   @wip
   Scenario: Confirming a made purchase

@@ -1,4 +1,6 @@
 steps_for :login do
+  use_steps :people
+
   step "I am admin" do
     @person ||= Factory :person
     @person.role = 'admin'
@@ -16,7 +18,7 @@ steps_for :login do
     visit(new_session_path)
   end
 
-  step "I am logged in as the person" do
+  step "I log in as the person" do
     OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(:cas, {:uid => @person.ugid })
 
