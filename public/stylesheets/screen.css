@@ -4,3 +4,17 @@
     padding-top: 60px;
   }
 }
+
+meter {
+  -webkit-appearance: none;
+}
+
+meter::-webkit-meter-value {
+  height: 10px;
+  background-color: #0f0;
+}
+
+meter::-webkit-meter-bar {
+  height: 10px;
+  background-color: #bbb;
+}

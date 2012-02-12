@@ -1,7 +1,3 @@
-
-- if can?(:manage, :budget_posts)
-  = button_to t('edit_budget'), edit_budget_path(id: @year), method: :get, id: 'edit_budget'
-
 %header.row-fluid
   .span10.offset2
     %h1 #{t('.title')} #{@year} 
@@ -15,15 +11,15 @@
         %tr
           %th= t 'activerecord.attributes.budget_post.name'
           %th= t 'activerecord.models.business_unit'
-          %th= t 'activerecord.attributes.budget_post.status'
-          - if can?(:manage, BudgetPost)
-            %th.actions
+          %th= t 'activerecord.attributes.budget_post.budget'
+          %th= t 'activerecord.attributes.budget_post.used'
+          %th
       %tbody
         - @budget_rows.each do |row|
           %tr{ class: cycle(:odd, :even) }
             %td= row.budget_post.name
             %td= row.business_unit
-            %td #{currency row.total} av #{currency row.sum}
-            - if can?(:manage, BudgetPost)
-              %td
-                = link_to t('edit'), edit_budget_row_path(@year, row)
+            %td #{currency row.sum}
+            %td #{currency row.total}
+            %td
+              %meter{ min: 0, max: row.sum, value: row.total}
