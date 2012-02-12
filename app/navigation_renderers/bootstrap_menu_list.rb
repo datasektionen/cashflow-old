@@ -3,13 +3,14 @@
 #
 # Register the renderer and use following code in your view:
 #   render_navigation(level: 1..2, renderer: :bootstrap_topbar_list, expand_all: true)
-class BootstrapTopbarList < SimpleNavigation::Renderer::Base
+class BootstrapMenuList < SimpleNavigation::Renderer::Base
 
   def render(item_container)
     if options[:is_subnavigation]
       ul_class = "dropdown-menu"
     else
       ul_class = "nav"
+      ul_class = [ul_class, options[:bootstrap_menu_type]].flatten.compact.join(' ')
     end
 
     list_content = item_container.items.inject([]) do |list, item|

@@ -2,17 +2,14 @@
 - if can?(:manage, :budget_posts)
   = button_to t('edit_budget'), edit_budget_path(id: @year), method: :get, id: 'edit_budget'
 
-%div.row-fluid
-  .span-12
+%header.row-fluid
+  .span10.offset2
     %h1 #{t('.title')} #{@year} 
 
-%div.row-fluid
-  %div.span-4
-    = javascript_include_tag 'budget'
-    = form_tag '',id: :year_select_form, method: :get do
-      = label_tag :year, t('show_budget_rows_for')
-      = select_tag(:year, options_from_collection_for_select(BudgetPost.all_years, :to_i, :to_s, @year))
-  %div.span-8
+.row-fluid
+  .span2
+    = render_navigation(level: 2, renderer: BootstrapMenuList, bootstrap_menu_type: "nav-pills nav-stacked")
+  .span10
     %table.table.table-striped
       %thead
         %tr

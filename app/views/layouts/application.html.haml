@@ -30,29 +30,13 @@
       %div.navbar-inner
         %div.container-fluid
           %a.brand{ href: root_url } Cashflow
+          = render_navigation(:level => 1..2, renderer: BootstrapMenuList, expand_all: true)
 
-          = render_navigation(:level => 1..2, renderer: BootstrapTopbarList, expand_all: true)
-
-    %br
-    %br
-    %br
-    %br
-    %br
-    %br
-    %br
-    %br
+    - if notice
+      = notice
 
     %div.container-fluid
       = content_for?(:content) ? yield(:content) : yield
 
-    #root
-      - if notice
-        = notice
-      %section.clearfix#content
-        %nav#sub_menu.horizontal
-          - if @items
-            = render_navigation(:items => @items)
-          - else
-            = render_navigation(:level => 2)
     %footer.main
       = textilize(t('layouts.application.footer')).html_safe

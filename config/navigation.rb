@@ -16,7 +16,11 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
-    primary.item :budgets, I18n.t('navigation.budgets'), budget_path(:id => Time.now.year), :highlights_on => /\/budget\/\d{4}/
+    primary.item :budgets, I18n.t('navigation.budgets'), budget_path(:id => Time.now.year), :highlights_on => /\/budget\/\d{4}/ do |secondary|
+      BudgetPost.all_years.each { |year|
+        secondary.item :"budget_year_#{year}", year, budget_path(id: year)
+      }
+    end
 
     if current_user.is?(:admin)
       primary.item(:people, I18n.t('navigation.people'), people_path, :highlights_on => /\/people/)
