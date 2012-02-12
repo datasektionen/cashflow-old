@@ -43,8 +43,7 @@
     %br
 
     %div.container-fluid
-      %div.row-fluid
-        = content_for?(:content) ? yield(:content) : yield
+      = content_for?(:content) ? yield(:content) : yield
 
     #root
       - if notice
