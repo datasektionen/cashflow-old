@@ -48,7 +48,7 @@ SimpleNavigation::Configuration.run do |navigation|
     end
 
     if user_signed_in?
-      primary.item :user, current_user.name, "#", class: "dropdown-toggle" do |secondary|
+      primary.item :user, current_user.name, person_path(current_user) do |secondary|
         secondary.item :my_page, I18n.t('navigation.my_page'), person_path(current_user)
         secondary.item :logout, "Logga ut", destroy_user_session_path
       end
