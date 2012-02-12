@@ -51,7 +51,11 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
       return link_to(item.name << content, "#", link_options_for(item))
     end
 
-    link_to(item.name, item.url, link_options_for(item))
+    if item.url.nil?
+      item.name
+    else
+      link_to(item.name, item.url, link_options_for(item))
+    end
   end
 
   # Extracts the options relevant for the generated link

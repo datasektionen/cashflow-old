@@ -1,7 +1,12 @@
 .row-fluid
-  .span12
+  .offset2.span10
     %h1= t('.title')
 
+.row-fluid
+  .span3
+    .well{ style: "padding: 8px 0;" }
+      = render_navigation(level: 2, renderer: BootstrapMenuList, bootstrap_menu_type: "nav-list")
+  .span9
     %table.table.table-striped
       %thead
         %tr
