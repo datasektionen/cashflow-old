@@ -1,18 +1,22 @@
-%h1= t('.title')
+.row-fluid
+  .span12
+    %h1= t('.title')
 
-%table.datatable
-  %thead
-    %tr
-      %th KTH-ID
-      %th Namn (användarnamn)
-      %th E-post
-      %th.actions{:colspan => 3}
-  
-  %tbody
-    - for person in @people
-      %tr{ :class => cycle(:odd, :even) }
-        %td= link_to person.ugid, person_path(person)
-        %td= link_to person.cn,   person_path(person)
-        %td= person.email
-        %td.actions
-          = link_to t('edit'), edit_person_path(person)
+    %table.table.table-striped
+      %thead
+        %tr
+          %th KTH-ID
+          %th Användarnam
+          %th Namn
+          %th E-post
+          %th.actions
+      
+      %tbody
+        - for person in @people
+          %tr
+            %td= link_to person.ugid, person_path(person)
+            %td= link_to person.login,   person_path(person)
+            %td= link_to person.name,   person_path(person)
+            %td= person.email
+            %td.actions
+              = link_to t('edit'), edit_person_path(person)
