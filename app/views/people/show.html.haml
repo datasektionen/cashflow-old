@@ -1,5 +1,7 @@
-%h1= @person.name
-= link_to "Nytt inköp", new_purchase_path, :id => "new_purchase"
+.row-fluid
+  .span12
+    .hero-unit
+      %h1= @person.name
 
 = render(:partial => 'info', :locals => {:person => @person})
 

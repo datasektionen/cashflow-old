@@ -10,7 +10,6 @@
     %table.table.table-striped
       %thead
         %tr
-          %th KTH-ID
           %th Användarnam
           %th Namn
           %th E-post
@@ -19,7 +18,6 @@
       %tbody
         - for person in @people
           %tr
-            %td= link_to person.ugid, person_path(person)
             %td= link_to person.login,   person_path(person)
             %td= link_to person.name,   person_path(person)
             %td= person.email
