@@ -46,5 +46,7 @@
     %div.container-fluid
       = content_for?(:content) ? yield(:content) : yield
 
-    %footer.main
-      = textilize(t('layouts.application.footer')).html_safe
+    %footer.container-fluid
+      .row-fluid
+        .span12
+          = textilize(t('layouts.application.footer')).html_safe
