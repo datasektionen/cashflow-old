@@ -1,16 +1,18 @@
-%h1= t('.title')
+.row-fluid
+  .span12
+    %h1= t('.title')
 
-%table
-  %thead
-    %tr
-      %th Skuld
-      %th Person
-      %th Summa
-  
-  %tbody
-    - for debt in @debts
-      %tr{ :class => cycle(:odd, :even) }
-        %td= link_to debt.id, debt
-        %td= link_to debt.person
-        %td= currency debt.amount
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Skuld
+          %th Person
+          %th Summa
+      
+      %tbody
+        - for debt in @debts
+          %tr{ :class => cycle(:odd, :even) }
+            %td= link_to debt.id, debt
+            %td= link_to debt.person
+            %td= currency debt.amount
 
