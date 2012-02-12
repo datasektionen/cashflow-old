@@ -30,8 +30,15 @@
     %div.navbar.navbar-fixed-top
       %div.navbar-inner
         %div.container-fluid
+          %a.btn.btn-navbar{ data: { toggle: "collapse", target: ".nav-collapse" } }
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+
           %a.brand{ href: root_url } Cashflow
-          = render_navigation(:level => 1..2, renderer: BootstrapMenuList, expand_all: true)
+
+          .nav-collapse
+            = render_navigation(:level => 1..2, renderer: BootstrapMenuList, expand_all: true)
 
     - if notice
       = notice
