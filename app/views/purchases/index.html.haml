@@ -1,6 +1,6 @@
 %h1 Inköp
 
-%table.datatable
+%table
   %thead
     %tr
       %th ID
@@ -14,9 +14,9 @@
       
       %th
   
-  %tbody
+  %tbody.table-striped.table-bordered
     - for purchase in @purchases
-      %tr{ :class => cycle(:odd, :even) }
+      %tr
         %td= link_to ("%03d" % purchase.id), purchase
         %td= truncate purchase.description
         %td= currency purchase.total

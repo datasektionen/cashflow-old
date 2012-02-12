@@ -4,21 +4,16 @@
     %meta{:charset => "utf-8"}
     %title Cashflow
     %meta{:name => "viewport", :content => "initial-scale=1.0, width=device-width, maximum-scale=1.0"}
+
     = javascript_include_tag 'jquery.min.js'
-    = javascript_include_tag 'jquery-ui.min.js'
-    = javascript_include_tag 'jquery.dataTables.js'
-    = javascript_include_tag 'cocoon.js'
+    = javascript_include_tag 'bootstrap.js'
     / [if lt IE 9]
       = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
     
     = javascript_include_tag 'rails'
-    = stylesheet_link_tag 'less'
-    - if is_mobile_device?
-      = stylesheet_link_tag 'mobile'
-    - else
-      = stylesheet_link_tag 'screen'
-      = stylesheet_link_tag 'sticky'
-      = stylesheet_link_tag 'jquery-ui.css'
+
+    = stylesheet_link_tag 'bootstrap.css'
+
     :javascript
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', "#{Cashflow::Application.settings[:google_analytics]}"]);
@@ -31,22 +26,34 @@
       })();
 
   %body
+    %div.navbar.navbar-fixed-top
+      %div.navbar-inner
+        %div.container-fluid
+          %a.brand{ href: root_url } Cashflow
+
+          = render_navigation(:level => 1..2, renderer: BootstrapTopbarList, expand_all: true)
+
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+
+    %div.container-fluid
+      %div.row-fluid
+        = content_for?(:content) ? yield(:content) : yield
+
     #root
-      = render :partial => 'menus/session'
-      = render :partial => 'menus/apps'
       - if notice
         = notice
-      %header.main
-        %h1= link_to "Cashflow", root_url
-        - if user_signed_in?
-          %nav#main_menu.horizontal
-            = render_navigation(:level => 1)
       %section.clearfix#content
         %nav#sub_menu.horizontal
           - if @items
             = render_navigation(:items => @items)
           - else
             = render_navigation(:level => 2)
-        = content_for?(:content) ? yield(:content) : yield
     %footer.main
       = textilize(t('layouts.application.footer')).html_safe
