@@ -90,10 +90,9 @@ namespace :deploy do
     run "cd #{current_path} && /usr/local/bin/1.9.2_bundle exec rake deploy:compile_stylesheets"
   end
   
-  desc "Restart passenger with restart.txt"
   task :restart, :except => { :no_release => true } do
     pid = "#{shared_path}/pids/unicorn.pid"
-    run "test -e #{pid} && kill `cat #{pid}` || /bin/true"
+    run "test -e #{pid} && kill -USR2 `cat #{pid}` || /bin/true"
   end
 
   desc "Run migrations"
