@@ -28,10 +28,8 @@ class PurchasesController < ApplicationController
   # GET /purchases/new
   # GET /purchases/new.xml
   def new
-    @purchase = Purchase.new
+    @purchase = current_user.purchases.new
     @purchase.items.build
-
-    @purchase.person = current_user
 
     respond_to do |format|
       format.html # new.html.erb

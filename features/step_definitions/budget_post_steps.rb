@@ -4,9 +4,7 @@ end
 
 Given /^a budget post exists with a bunch of purchases$/ do
   Given 'a budget post exists without any purchases'
-  3.times do
-    Given 'a purchase'
-  end
+  Given 'a purchase'
 end
 
 When /^I try to delete it$/ do

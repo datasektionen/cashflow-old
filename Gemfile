@@ -1,11 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.0.9'
+gem 'rails', '~> 3.1.0'
 gem 'haml-rails'
 gem 'sass'
 gem 'workflow'
 gem 'devise'
-gem "oa-enterprise", "0.3.0.rc3"
+gem 'oa-core'
+gem "oa-enterprise"
 gem 'RedCloth', "~> 4.2.8"
 gem 'net-ldap'
 gem 'paper_trail'
@@ -16,7 +17,7 @@ gem 'jquery-rails'
 gem 'i18n_routing'
 gem 'friendly_id'
 gem 'cocoon'
-gem 'mysql2', '~> 0.2.0'
+gem 'mysql2'
 gem 'decent_exposure'
 
 group :production do
@@ -35,11 +36,11 @@ group :test do
   gem "rspec-rails"
   gem "rspec-mocks"
   gem 'cover_me'
-  gem 'shoulda'
+  gem 'shoulda', ">= 3.0.0.beta2"
   gem 'capybara'
+  gem 'selenium'
   gem 'database_cleaner'
   gem 'cucumber-rails'
-  gem 'spork'
   gem 'guard'
   gem 'guard-bundler'
   gem 'guard-rspec'
@@ -47,6 +48,8 @@ group :test do
   gem 'launchy'    # So you can do Then show me the page
   gem 'factory_girl_rails'
   gem 'libnotify'
+  gem 'headless'
+  gem 'turnip'
 end
 
 group :deploy do

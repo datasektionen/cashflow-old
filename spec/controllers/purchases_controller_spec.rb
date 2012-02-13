@@ -18,7 +18,8 @@ describe PurchasesController do
 
   describe "GET show" do
     it "assigns the requested purchase as @purchase" do
-      purchase = Factory(:purchase)
+      purchase = mock_purchase
+      Purchase.stub(:find).and_return { purchase }
       get :show, :id => purchase.id
       assigns(:purchase).should == purchase
     end
@@ -26,9 +27,15 @@ describe PurchasesController do
 
   describe "GET new" do
     it "assigns a new purchase as @purchase" do
-      Purchase.stub(:new) { mock_purchase }
+      purchase = double("purchase", 
+               :items => double("array", :build => []),
+               :person= => nil,
+               :person_id= => nil
+      )
+      Purchase.stub(:new) { purchase }
+
       get :new
-      assigns(:purchase).should be(mock_purchase)
+      assigns(:purchase).should be(purchase)
     end
   end
 
@@ -44,8 +51,9 @@ describe PurchasesController do
 
     describe "with valid params" do
       it "assigns a newly created purchase as @purchase" do
-        Purchase.stub(:new).with({'these' => 'params'}) { mock_purchase(:save => true) }
-        post :create, :purchase => {'these' => 'params'}
+        Purchase.any_instance.stub(:save).and_return(true)
+        Purchase.stub(:new) { mock_purchase(:save => true) }
+        post :create, {:purchase => {'these' => 'params'}}
         assigns(:purchase).should be(mock_purchase)
       end
 
@@ -58,9 +66,11 @@ describe PurchasesController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved purchase as @purchase" do
-        Purchase.stub(:new).with({'these' => 'params'}) { mock_purchase(:save => false) }
-        post :create, :purchase => {'these' => 'params'}
-        assigns(:purchase).should be(mock_purchase)
+        Purchase.any_instance.stub(:save).and_return(false)
+        Purchase.stub(:new).and_return(mock_purchase)
+        purchase = mock_purchase
+        post :create, {:purchase => {'these' => 'params'}}
+        assigns(:purchase).should be(purchase)
       end
 
       it "re-renders the 'new' template" do
