@@ -60,6 +60,15 @@ describe Ability do
       @ability.should be_able_to(:edit, @user)
       @ability.should be_able_to(:update, @user)
     end
+
+    it "should be able to manage purchases" do
+      @ability.should be_able_to(:manage, Purchase.new)
+      @ability.should be_able_to(:manage, PurchaseItem.new)
+    end
+
+    it "should be able to manage debts" do
+      @ability.should be_able_to(:manage, Debt.new)
+    end
   end
 
   describe "ordinary user" do
