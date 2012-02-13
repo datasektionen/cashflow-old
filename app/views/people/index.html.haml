@@ -13,6 +13,7 @@
           %th Användarnam
           %th Namn
           %th E-post
+          %th Roll
           %th.actions
       
       %tbody
@@ -21,5 +22,6 @@
             %td= link_to person.login,   person_path(person)
             %td= link_to person.name,   person_path(person)
             %td= person.email
+            %td= person.role
             %td.actions
               = link_to t('edit'), edit_person_path(person)
