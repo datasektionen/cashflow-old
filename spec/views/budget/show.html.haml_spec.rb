@@ -36,5 +36,4 @@ describe "budget/show.html.haml" do
 
   it { should =~ /#{I18n.t('edit_budget')}/ }
   it { should_not =~ /translation_missing/ }
-  it { should =~ /<form [^>]+action="\/budget\/\d+\/edit"/ }
 end

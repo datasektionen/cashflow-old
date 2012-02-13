@@ -2,7 +2,7 @@ Given /^I (?:log|am logged) in as the person$/ do
   OmniAuth.config.test_mode = true
   OmniAuth.config.add_mock(:cas, {:uid => @person.ugid })
 
-  visit(new_user_session_path)
+  visit(new_session_path)
 end
 
 Given /^I am not authenticated$/ do

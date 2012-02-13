@@ -316,7 +316,8 @@
       title: "Redigera produkttyp"
   budget:
     show:
-      title: "Budget"
+      html:
+        title: "Budget"
     edit:
       title: "Ändra Budget"
   budget_posts:

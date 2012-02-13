@@ -16,6 +16,7 @@ class Ability
         can :manage, [:product_types, :business_units, :purchases, :debts, :budget_posts]
         can [:index, :new, :create], Person
         can [:edit, :update], Person, :id => user.id
+        can :manage, [Purchase, PurchaseItem, Debt]
 		  can :edit, :purchase_owner
       elsif user.is? :accountant
         # Accountants should be able to read everything
