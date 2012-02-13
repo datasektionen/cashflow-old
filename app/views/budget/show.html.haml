@@ -22,4 +22,4 @@
             %td #{currency row.sum}
             %td #{currency row.total}
             %td
-              %meter{ min: 0, max: row.sum, value: row.total}
+              %progress{ min: 0, max: row.sum, value: row.total, style: "vertical-align: middle"}
