@@ -1,6 +1,6 @@
-%fieldset
-  %legend Inköp
-  %table.datatable
+%section
+  %h1 Inköp
+  %table.table.table-striped
     %thead
       %tr
         %th Beskrivning
@@ -21,6 +21,4 @@
     %tfoot
       %tr
         %th Total
-        %td= currency person.total_purchased_amount
-        %th{:colspan => 3}
-
+        %td{ colspan: 4}= currency person.total_purchased_amount
