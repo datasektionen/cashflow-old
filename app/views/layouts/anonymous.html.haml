@@ -8,13 +8,10 @@
       = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
     
     = stylesheet_link_tag 'less'
-    - if is_mobile_device?
-      = stylesheet_link_tag 'mobile'
-    - else
-      = stylesheet_link_tag 'screen'
-      = stylesheet_link_tag 'sticky'
-      = stylesheet_link_tag 'jquery-ui.css'
-      = render 'global/google_analytics'
+    = stylesheet_link_tag 'screen'
+    = stylesheet_link_tag 'sticky'
+    = stylesheet_link_tag 'jquery-ui.css'
+    = render 'global/google_analytics'
 
   %body
     #root
