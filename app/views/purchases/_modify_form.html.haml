@@ -1,9 +1,9 @@
-%nav
-  %ul
+%nav.pull-right
+  .btn-group
     - if purchase.editable? && ! purchase.confirmed?
-      %li= button_to t('.confirm'), confirm_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
-      %li= button_to t('.cancel'), cancel_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
+      = button_to t('.confirm'), confirm_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
+      = button_to t('.cancel'), cancel_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
     - if purchase.keepable?
-      %li= button_to t('.bookkeep'), keep_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
+      = button_to t('.bookkeep'), keep_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
     - if purchase.payable?
-      %li= button_to t('.pay'), pay_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
+      = button_to t('.pay'), pay_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')

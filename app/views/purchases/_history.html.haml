@@ -1,15 +1,15 @@
-%fieldset
-  %legend Historik
-  %table
-    %thead
-      %tr
-        %th Status
-        %th Tidpunkt
-        %th Person
-    %tbody
-      - purchase.state_history.each do |version|
+%section.row-fluid
+  .span12
+    %h2 Historik
+    %table.table.table-striped
+      %thead
         %tr
-          %td= status version
-          %td= short_time version.version_date
-          %td= link_to_originator version
-
+          %th Status
+          %th Tidpunkt
+          %th Person
+      %tbody
+        - purchase.state_history.each do |version|
+          %tr
+            %td= status version
+            %td= short_time version.version_date
+            %td= link_to_originator version
