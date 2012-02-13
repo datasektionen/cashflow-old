@@ -52,6 +52,6 @@ Cashflow::Application.routes.draw do
     # och så kan man gå till /mina/inkop, /mina/skulder eller whatever
     # 
 
-    root :to => "welcome#index"
+    root :to => "dashboard#index"
   end
 end
