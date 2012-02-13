@@ -26,4 +26,5 @@
         %h1= link_to "Cashflow", root_url
       %section.clearfix#content
         = content_for?(:content) ? yield(:content) : yield
-    = render 'global/footer'
+    %footer.main
+      = textilize(t('layouts.application.footer')).html_safe

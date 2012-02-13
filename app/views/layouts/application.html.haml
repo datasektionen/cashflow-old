@@ -39,4 +39,5 @@
           - else
             = render_navigation(:level => 2)
         = content_for?(:content) ? yield(:content) : yield
-    = render 'global/footer'
+    %footer.main
+      = textilize(t('layouts.application.footer')).html_safe
