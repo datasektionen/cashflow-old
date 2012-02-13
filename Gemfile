@@ -36,7 +36,7 @@ group :test do
   gem "rspec-rails"
   gem "rspec-mocks"
   gem 'cover_me'
-  gem 'shoulda'
+  gem 'shoulda', ">= 3.0.0.beta2"
   gem 'capybara'
   gem 'selenium'
   gem 'database_cleaner'
