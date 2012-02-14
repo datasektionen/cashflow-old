@@ -13,6 +13,7 @@ gem 'paper_trail'
 gem 'cancan'#, :git => "git://github.com/ryanb/cancan.git", :branch => "2.0"
 gem 'formtastic'
 gem 'formtastic-bootstrap', git: 'git://github.com/cgunther/formtastic-bootstrap.git', branch: 'bootstrap-2'
+gem 'less-rails-bootstrap'
 gem 'simple-navigation'
 gem 'jquery-rails'
 gem 'i18n_routing'
