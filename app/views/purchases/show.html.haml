@@ -1,8 +1,11 @@
-%h1 Inköp
-- if can?(:manage, Purchase)
-  = render :partial => "modify_form", :locals => {:purchase => @purchase}
+= stylesheet_link_tag params[:controller], media: "all"
 
-= render :partial => 'info', :locals => {:purchase => @purchase}
-= render :partial => 'items', :locals => {:purchase => @purchase}
-= render :partial => 'history', :locals => {:purchase => @purchase}
+.row-fluid
+  .span12
+    %h1= @purchase.friendly_id
+    - if can?(:manage, Purchase)
+      = render :partial => "modify_form", :locals => {:purchase => @purchase}
 
+    = render :partial => 'info', :locals => {:purchase => @purchase}
+    = render :partial => 'items', :locals => {:purchase => @purchase}
+    = render :partial => 'history', :locals => {:purchase => @purchase}

@@ -1,0 +1,16 @@
+@media print {
+  nav, #history, #items, #budget {
+    display: none;
+  }
+
+  #receipt {
+    border: 1px solid;
+  }
+}
+
+@media screen {
+  #receipt {
+    display: none;
+  }
+}
+
