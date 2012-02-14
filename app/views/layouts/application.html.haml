@@ -31,8 +31,7 @@
     - if notice
       = notice
 
-    %div.container-fluid
-      = content_for?(:content) ? yield(:content) : yield
+    = content_for?(:content) ? yield(:content) : yield
 
     %footer.container-fluid
       .row-fluid

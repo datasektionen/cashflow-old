@@ -1,11 +1,13 @@
 = stylesheet_link_tag params[:controller], media: "all"
 
-.row-fluid
-  .span12
-    %h1= @purchase.friendly_id
-    - if can?(:manage, Purchase)
-      = render :partial => "modify_form", :locals => {:purchase => @purchase}
+%header.alert-hero.alert-info
+  .container-fluid
+    .row-fluid
+      .span12
+        %h1= "#" + @purchase.id.to_s
+        %p= status @purchase
 
-    = render :partial => 'info', :locals => {:purchase => @purchase}
-    = render :partial => 'items', :locals => {:purchase => @purchase}
-    = render :partial => 'history', :locals => {:purchase => @purchase}
+.container-fluid
+  = render :partial => 'info', :locals => {:purchase => @purchase}
+  = render :partial => 'items', :locals => {:purchase => @purchase}
+  = render :partial => 'history', :locals => {:purchase => @purchase}

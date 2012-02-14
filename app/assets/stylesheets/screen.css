@@ -5,6 +5,7 @@
  *
  *= require formtastic-bootstrap
  *= require twitter/bootstrap
+ *= require alert_hero
  *= require_self
 */
 

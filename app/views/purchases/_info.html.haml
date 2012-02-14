@@ -7,10 +7,10 @@
       %dd= short_time purchase.purchased_at
       %dt Beskrivning
       %dd= purchase.description
-      %dt Status
-      %dd= status purchase
   .span3#budget
     %dl
+      %dt Kostnadsställe
+      %dd= link_to purchase.budget_post.business_unit
       %dt Budgetpost
       %dd= link_to purchase.budget_post, purchase.budget_post
       -if can? :manage, BudgetPost
@@ -18,3 +18,6 @@
         %dd #{currency purchase.budget_row.total} av #{currency purchase.budget_row.sum}
   .span8#receipt
     Häfta fast ditt kvitto här!
+  %nav.span6.btn-toolbar
+    %span.pull-right
+      = render :partial => "modify_form", :locals => {:purchase => @purchase}
