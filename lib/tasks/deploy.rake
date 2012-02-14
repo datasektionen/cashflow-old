@@ -1,3 +1,5 @@
+require "sass"
+require "sass/plugin"
 namespace :deploy do
   desc "compile stylesheets"
   task :compile_stylesheets do
