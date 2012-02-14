@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/cgunther/formtastic-bootstrap.git
+  revision: 85d7931c4c6c9007f4de99eb66c891b8ee02fe43
+  branch: bootstrap-2
+  specs:
+    formtastic-bootstrap (1.2.0)
+      formtastic
+      rails (>= 3.1.0)
+
+GIT
   remote: https://github.com/dbalatero/no-peeping-toms.git
   revision: 4c97f5da5b606da9bb7309f55658594e415d9a75
   specs:
@@ -301,6 +310,7 @@ DEPENDENCIES
   exceptional
   factory_girl_rails
   formtastic
+  formtastic-bootstrap!
   friendly_id
   guard
   guard-bundler
