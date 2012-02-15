@@ -28,7 +28,7 @@ class Person < ActiveRecord::Base
   # Basically the same as the cn column in the LDAP server, that is:
   # "Firstname Lastname (ugid)"
   def to_s
-    cn
+    name
   end
   
   def cn

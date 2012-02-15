@@ -24,8 +24,8 @@
               %td= truncate purchase.description
               %td= currency purchase.total
               %td= purchase.purchased_at.to_s(:iso)
-              %td= link_to purchase.person, purchase.person
-              %td= link_to purchase.business_unit, purchase.business_unit
+              %td= link_to purchase.person, purchase.person, title: purchase.person.login
+              %td= link_to purchase.business_unit, purchase.business_unit, title: purchase.business_unit.short_name
               %td= purchase.created_at.to_date.to_s(:iso)
               %td= status purchase
               %td

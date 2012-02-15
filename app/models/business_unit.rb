@@ -8,7 +8,7 @@ class BusinessUnit < ActiveRecord::Base
   default_scope order("name ASC")
   
   def to_s
-    "%s (%s)" % [name, short_name]
+    name
   end
   
   def active_text

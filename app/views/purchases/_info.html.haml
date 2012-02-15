@@ -2,7 +2,7 @@
   .span3
     %dl
       %dt Inköpt av
-      %dd= link_to purchase.person, purchase.person
+      %dd= link_to purchase.person, purchase.person, title: purchase.person.login
       %dt Inköpt
       %dd= short_time purchase.purchased_at
       %dt Beskrivning
