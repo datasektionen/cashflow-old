@@ -51,8 +51,14 @@ describe Ability do
     end
 
     %w[product_types business_units purchases debts budget_posts].each do |model|
-      it "should be able to manage #{model.gsub(/\s/,' ')}" do
-        @ability.should be_able_to(:magane, model.to_sym)
+      let(:class_name) { model.gsub(/\s/,'_').singularize.camelize.constantize }
+
+      it "should be able to manage model" do
+        @ability.should be_able_to(:manage, class_name)
+      end
+
+      it "should be able to index model" do
+        @ability.should be_able_to(:index, class_name)
       end
     end
 
