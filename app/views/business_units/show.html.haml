@@ -7,4 +7,4 @@
 %article
   = @business_unit.description
 
-  = render 'purchases/list', purchases: @business_unit.purchases
+  = render 'purchases/list', purchases: @business_unit.purchases.order("year desc, slug")
