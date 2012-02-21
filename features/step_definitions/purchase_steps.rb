@@ -1,5 +1,6 @@
 # encoding: utf-8
 def fill_out_purchase_details
+  sleep 2
   fill_in("purchase_purchased_at", with: Date.today.to_s)
   select(@business_unit.name, from: "business_unit")
   select(@budget_post.name, from: "purchase_budget_post_id")
@@ -22,14 +23,16 @@ end
 
 Given /^a purchase$/ do
   Given 'I have made a purchase that needs registering'
-  Given 'I fill out the new purchase form accordingly'
+  #Given 'I fill out the new purchase form accordingly'
+  PaperTrail.whodunnit = @person.id.to_s
+  @purchase = Factory :purchase, person: @person
 end
 
 When /^I fill out the new purchase form accordingly$/ do
   visit("/purchases/new")
   fill_out_purchase_details
   fill_out_last_purchase_item_details
-  click_button("purchase_submit")
+  click_button("Spara Inköp")
 end
 
 
@@ -46,7 +49,7 @@ When /^I fill out the new purchase form with "(\d+)" items$/ do |n|
     click_link("Lägg till inköpsdel")
     fill_out_last_purchase_item_details
   end
-  click_button("purchase_submit")
+  click_button("Spara Inköp")
 end
 
 Then /^(?:(?:the|my|that) )?purchase should have "(\d+)" purchase items$/ do |n|

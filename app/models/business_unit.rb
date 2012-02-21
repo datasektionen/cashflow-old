@@ -2,6 +2,7 @@ class BusinessUnit < ActiveRecord::Base
   validates_presence_of :name, :short_name, :description
   
   has_many :budget_posts
+  has_many :purchases, through: :budget_posts
 
   has_friendly_id :short_name
 

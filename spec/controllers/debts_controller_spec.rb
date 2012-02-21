@@ -4,6 +4,11 @@ describe DebtsController do
   # render_views
   login_admin
 
+  def valid_attributes
+    {description: "foo", amount: 100}
+  end
+
+
   def mock_debt(stubs={})
     (@mock_debt ||= mock_model(Debt).as_null_object).tap do |debt|
       debt.stub(stubs) unless stubs.empty?
@@ -12,9 +17,11 @@ describe DebtsController do
 
   describe "GET index" do
     it "assigns all debts as @debts" do
-      debts = Debt.all
+      debts = [mock_debt, mock_debt]
+      Debt.stub(:accessible_by).and_return(debts)
+
       get :index
-      assigns(:debts).should eq debts
+      assigns(:debts).should == debts
     end
   end
 
@@ -38,26 +45,25 @@ describe DebtsController do
 
     describe "with valid params" do
       it "assigns a newly created debt as @debt" do
-        debt = Factory.build(:debt)
+        debt = mock_debt
+        Debt.stub(:new).and_return(debt)
+        debt.stub(:save).and_return(true)
+
         post :create, :debt => debt.attributes
-        
-        assigns(:debt).should == Debt.last
+        assigns(:debt).should == debt
       end
 
       it "redirects to the created debt" do
-        debt = Factory.build(:debt)
+        debt = mock_debt
+        Debt.stub(:new).and_return(debt)
+        debt.stub(:save).and_return(true)
+
         post :create, :debt => debt.attributes
-        response.should redirect_to(debt_url(Debt.last))
+        response.should redirect_to(debt_url(debt))
       end
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved debt as @debt" do
-        debt = Factory.build :invalid_debt
-        post :create, :debt => debt.attributes
-        assigns(:debt).attributes.should eq debt.attributes
-      end
-
       it "re-renders the 'new' template" do
         Debt.stub(:new) { mock_debt(:save => false) }
         post :create, :debt => {}
