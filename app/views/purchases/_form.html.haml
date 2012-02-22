@@ -8,11 +8,7 @@
       = form.input :person, include_blank: false
 
     = form.input :purchased_at
-
-    = label :business_unit, t('activerecord.models.business_unit')
-    = select_tag :business_unit, options_from_collection_for_select(BusinessUnit.all, 'id', 'name'), include_blank: true
-    = form.input :budget_post, :collection => [], :include_blank=>false
-
+    = form.input :budget_post
     = form.input :description
   
   %fieldset#purchase_items
@@ -25,8 +21,7 @@
   = form.buttons do
     = form.commit_button button_html: { class: "btn-primary" }
 
-= javascript_include_tag 'purchases'
 :javascript
   $(document).ready(function() {
-    Purchase.setupBudgetPostSelect(#{budget_posts.to_json}, $("#business_unit"), $("#purchase_budget_post_id"));
+    $("select").chosen();
   });
