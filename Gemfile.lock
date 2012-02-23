@@ -74,6 +74,7 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.2.2)
       ffi (~> 1.0.6)
+    chosen_rails (0.1.0)
     cocoon (1.0.14)
     columnize (0.3.4)
     commonjs (0.2.0)
@@ -314,6 +315,7 @@ DEPENDENCIES
   capistrano-ext
   capistrano_colors
   capybara
+  chosen_rails
   cocoon
   cover_me
   cucumber-rails
