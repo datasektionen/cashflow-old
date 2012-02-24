@@ -6,6 +6,7 @@
  *= require formtastic-bootstrap
  *= require twitter/bootstrap
  *= require chosen
+ *= require datepicker
  *= require alert_hero
  *= require_self
 */

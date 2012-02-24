@@ -8,4 +8,5 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require chosen
+//= require bootstrap-datepicker
 //= require_tree .
