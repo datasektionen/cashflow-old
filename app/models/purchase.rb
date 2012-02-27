@@ -25,7 +25,7 @@ class Purchase < ActiveRecord::Base
   accepts_nested_attributes_for :items
   
   scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
-  scope :confirmed , where(:workflow_state => %w[confirmed bookkept paid finalized])
+  scope :confirmed , where(:workflow_state => %w[confirmed edited])
   
   # workflow for Purchase model
   #                                   :keep --> (bookkept) -- :pay --
