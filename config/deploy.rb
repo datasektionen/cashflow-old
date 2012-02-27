@@ -66,7 +66,6 @@ namespace :deploy do
   desc "Update the deployed code."
   task :update_code, :except => { :no_release => true } do
     run "cd #{current_path}; git pull; git reset --hard #{branch}"
-    finalize_update
   end
   
   desc "Update the database (overwritten to avoid symlink)"
