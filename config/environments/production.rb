@@ -63,5 +63,5 @@ Cashflow::Application.configure do
   # config.assets.manifest = YOUR_PATH
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  # config.assets.precompile += %w( search.js )
+  config.assets.precompile += %w( search.js screen.css print.css )
 end
