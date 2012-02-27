@@ -1,10 +1,16 @@
-%h1= t '.title'
-%p
-  = link_to t('back'), purchases_path
-  = link_to t('show'), purchase_path(@purchase)
-= render 'form'
-:javascript
-  $(document).ready(function(){
-    $("#business_unit").val(#{@purchase.business_unit.id});
-    $("#business_unit").trigger('change');
-  });
+%section.container-fluid
+  .row-fluid
+    .span12
+      %h1= t '.title'
+
+      %p
+        = link_to t('back'), purchases_path
+        = link_to t('show'), purchase_path(@purchase)
+
+      = render 'form'
+
+      :javascript
+        $(document).ready(function(){
+          $("#business_unit").val(#{@purchase.business_unit.id});
+          $("#business_unit").trigger('change');
+        });

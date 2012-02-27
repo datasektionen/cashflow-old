@@ -60,11 +60,6 @@ protected
                 :name => I18n.t('edit'),
                 :url => edit_budget_row_path(budget_id: @budget_row.year, id: @budget_row.id)},
              ]
-    if is_mobile_device?
-      @items.unshift({ :key => :budget_rows_list,
-                  :name => I18n.t('back'),
-                  :url => budget_rows_path(@year)})
-    end
   end
 
 end

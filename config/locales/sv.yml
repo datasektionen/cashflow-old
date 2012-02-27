@@ -204,7 +204,8 @@
         name: "Namn"
       budget_post:
         name: "Namn"
-        status: "Status"
+        used: "Använt"
+        budget: "Budgeterat"
         business_unit: "Affärsenhet"
       budget_row:
         sum: "Summa"

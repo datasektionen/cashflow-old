@@ -4,40 +4,36 @@
     %meta{:charset => "utf-8"}
     %title Cashflow
     %meta{:name => "viewport", :content => "initial-scale=1.0, width=device-width, maximum-scale=1.0"}
-    = javascript_include_tag 'jquery.min.js'
-    = javascript_include_tag 'jquery-ui.min.js'
-    = javascript_include_tag 'jquery.dataTables.js'
-    = javascript_include_tag 'cocoon.js'
+
+    = stylesheet_link_tag "screen"
+    = stylesheet_link_tag "print", media: "print"
+    = javascript_include_tag "application"
+
     / [if lt IE 9]
       = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
     
-    = javascript_include_tag 'rails'
-    = stylesheet_link_tag 'less'
-    - if is_mobile_device?
-      = stylesheet_link_tag 'mobile'
-    - else
-      = stylesheet_link_tag 'screen'
-      = stylesheet_link_tag 'sticky'
-      = stylesheet_link_tag 'jquery-ui.css'
-
     = render 'global/google_analytics'
 
   %body
-    #root
-      = render :partial => 'menus/session'
-      = render :partial => 'menus/apps'
-      - if notice
-        = notice
-      %header.main
-        %h1= link_to "Cashflow", root_url
-        %nav#main_menu.horizontal
-          = render_navigation(:level => 1)
-      %section.clearfix#content
-        %nav#sub_menu.horizontal
-          - if @items
-            = render_navigation(:items => @items)
-          - else
-            = render_navigation(:level => 2)
-        = content_for?(:content) ? yield(:content) : yield
-    %footer.main
-      = textilize(t('layouts.application.footer')).html_safe
+    %div.navbar.navbar-fixed-top
+      %div.navbar-inner
+        %nav.container-fluid
+          %a.btn.btn-navbar{ data: { toggle: "collapse", target: ".nav-collapse" } }
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+
+          %a.brand{ href: root_url } Cashflow
+
+          .nav-collapse
+            = render_navigation(:level => 1..2, renderer: BootstrapMenuList, expand_all: true)
+
+    - if notice
+      = notice
+
+    = content_for?(:content) ? yield(:content) : yield
+
+    %footer.container-fluid
+      .row-fluid
+        .span12
+          = textilize(t('layouts.application.footer')).html_safe
