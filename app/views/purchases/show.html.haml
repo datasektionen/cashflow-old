@@ -4,7 +4,7 @@
   .container-fluid
     .row-fluid
       .span12
-        %h1= "#" + @purchase.id.to_s
+        %h1= "#" + @purchase.slug.upcase
         %p= status @purchase
 
 .container-fluid
