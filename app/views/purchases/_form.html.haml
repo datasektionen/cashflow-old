@@ -8,7 +8,7 @@
       = form.input :person, include_blank: false
 
     = form.input :purchased_at, as: :string
-    = form.input :budget_post
+    = form.input :budget_post, collection: grouped_options_for_select(budget_posts)
     = form.input :description
   
   %fieldset#purchase_items
