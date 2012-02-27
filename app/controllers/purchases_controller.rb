@@ -3,7 +3,7 @@ class PurchasesController < ApplicationController
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
 
   
-  expose(:budget_posts) { BudgetPost.includes(:business_unit).group_by(&:business_unit)}
+  expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
   #
   # GET /purchases
