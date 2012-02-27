@@ -22,6 +22,7 @@ gem 'friendly_id'
 gem 'cocoon'
 gem 'mysql2'
 gem 'decent_exposure'
+gem 'uglifier'
 
 group :production do
   gem 'unicorn'

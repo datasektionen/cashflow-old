@@ -87,7 +87,7 @@ namespace :deploy do
 
   desc "compile stylesheets"
   task :compile_stylesheets do
-    run "cd #{current_path} && /usr/local/bin/1.9.2_bundle exec rake deploy:compile_stylesheets"
+    run "cd #{current_path} && /usr/local/bin/1.9.2_bundle exec rake assets:precompile"
   end
   
   task :restart, :except => { :no_release => true } do
