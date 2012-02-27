@@ -1,8 +1,13 @@
-%h1 Inköp
-- if can?(:manage, Purchase)
-  = render :partial => "modify_form", :locals => {:purchase => @purchase}
+= stylesheet_link_tag params[:controller], media: "all"
 
-= render :partial => 'info', :locals => {:purchase => @purchase}
-= render :partial => 'items', :locals => {:purchase => @purchase}
-= render :partial => 'history', :locals => {:purchase => @purchase}
+%header.alert-hero.alert-info
+  .container-fluid
+    .row-fluid
+      .span12
+        %h1= "#" + @purchase.id.to_s
+        %p= status @purchase
 
+.container-fluid
+  = render :partial => 'info', :locals => {:purchase => @purchase}
+  = render :partial => 'items', :locals => {:purchase => @purchase}
+  = render :partial => 'history', :locals => {:purchase => @purchase}

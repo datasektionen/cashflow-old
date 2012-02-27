@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   layout 'application'
 
   protect_from_forgery
-  has_mobile_fu
   
   before_filter :authenticate_user!
 

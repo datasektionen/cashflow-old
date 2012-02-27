@@ -1,0 +1,57 @@
+@import "twitter/bootstrap/variables";
+
+.alert-hero {
+    padding: 2*@baseLineHeight 0 2*@baseLineHeight 0;
+    margin-bottom: @baseLineHeight;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    background-color: @warningBackground;
+    border-bottom: 1px solid @warningBorder;
+    position: relative;
+    top: -20px;
+    color: @warningText;
+
+    h1 {
+        color: @warningText;
+        font-size: 60px;
+        line-height: 1;
+        letter-spacing: -1px;
+    }
+
+    p {
+        font-size: 18px;
+        font-weight: 200;
+        line-height: @baseLineHeight * 1.5;
+    }
+}
+
+.alert-success {
+    background-color: @successBackground;
+    border-color: @successBorder;  
+}
+
+.alert-success,
+.alert-success h1 {
+    color: @successText;
+}
+
+.alert-danger,
+.alert-error {
+    background-color: @errorBackground;
+    border-color: @errorBorder;
+}
+
+.alert-danger,
+.alert-error,
+.alert-danger h1,
+.alert-error h1 {
+    color: @errorText;
+}
+
+.alert-info {
+    background-color: @infoBackground;
+    border-color: @infoBorder;
+}
+.alert-info,
+.alert-info h1 {
+    color: @infoText;
+}
