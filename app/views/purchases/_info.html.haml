@@ -10,7 +10,7 @@
   .span3#budget
     %dl
       %dt Kostnadsställe
-      %dd= link_to purchase.budget_post.business_unit
+      %dd= link_to purchase.business_unit, purchase.business_unit
       %dt Budgetpost
       %dd= link_to purchase.budget_post, purchase.budget_post
       -if can? :manage, BudgetPost
