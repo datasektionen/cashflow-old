@@ -7,7 +7,7 @@
     - if @purchase.new? && can?(:edit, :purchase_owner)
       = form.input :person, include_blank: false
 
-    = form.input :purchased_at
+    = form.input :purchased_at, as: :string
     = form.input :budget_post
     = form.input :description
   
@@ -24,7 +24,7 @@
 :javascript
   $(document).ready(function() {
     $("select").chosen();
-    $(".datepicker").datepicker({
+    $("#purchase_purchased_at").datepicker({
       weekStart: 1,
       format: "yyyy-mm-dd"
     });
