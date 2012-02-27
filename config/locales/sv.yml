@@ -454,6 +454,7 @@
       success:
         delete: "Budgetpost borttagen"
   navigation:
+    sign_in: "Logga in"
     my_page: "Min sida"
     purchases: "Inköp"
     all_purchases: "Alla inköp"
