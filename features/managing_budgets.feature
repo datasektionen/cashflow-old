@@ -20,6 +20,7 @@ Feature: Manage budgets
     When I go to the budget page for last year
     Then I should see the budget posts for last year
 
+  @wip
   Scenario: Edit budget for the current year
     When I go to the budget page
     And I change the sum of "Alpha" to "400"

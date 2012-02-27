@@ -1,20 +1,20 @@
-%fieldset
-  %legend Inköpsdelar
-  %table
-    %thead
-      %tr
-        %th Kommentar
-        %th Produkttyp
-        %th Summa
-    %tbody
-      - purchase.items.each do |item|
+%section.row-fluid#items
+  .span12
+    %h2 Inköpsdelar
+    %table.table.table-striped
+      %thead
         %tr
-          %td= item.comment
-          %td= item.product_type
-          %td= currency item.amount
-    %tfoot
-      %tr
-        %th
-        %th Total
-        %th= currency purchase.total
-
+          %th Kommentar
+          %th Produkttyp
+          %th Summa
+      %tbody
+        - purchase.items.each do |item|
+          %tr
+            %td= item.comment
+            %td= item.product_type
+            %td= currency item.amount
+      %tfoot
+        %tr
+          %th
+          %th Total
+          %th= currency purchase.total

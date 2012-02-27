@@ -1,21 +1,23 @@
-%dl
-  %dt Inköpt av
-  %dd= link_to purchase.person, purchase.person
-  %dt Inköpt
-  %dd= short_time purchase.purchased_at
-  %dt Beskrivning
-  %dd= purchase.description
-  %dt Total summa
-  %dd= currency purchase.total
-  %dt Status
-  %dd= status purchase
-  %dt Budgetpost
-  %dd= link_to purchase.budget_post, purchase.budget_post
-  -if can? :manage, BudgetPost
-    %dt Budgetstatus
-    %dd #{currency purchase.budget_row.total} av #{currency purchase.budget_row.sum}
-  %dt Senast uppdaterad
-  %dd= short_time purchase.updated_at 
-  %dt Uppdaterad av
-  %dd= link_to purchase.last_updated_by.name, person_path(purchase.last_updated_by)
-
+%section.row-fluid
+  .span3
+    %dl
+      %dt Inköpt av
+      %dd= link_to purchase.person, purchase.person, title: purchase.person.login
+      %dt Inköpt
+      %dd= short_time purchase.purchased_at
+      %dt Beskrivning
+      %dd= purchase.description
+  .span3#budget
+    %dl
+      %dt Kostnadsställe
+      %dd= link_to purchase.budget_post.business_unit
+      %dt Budgetpost
+      %dd= link_to purchase.budget_post, purchase.budget_post
+      -if can? :manage, BudgetPost
+        %dt Budgetstatus
+        %dd #{currency purchase.budget_row.total} av #{currency purchase.budget_row.sum}
+  .span8#receipt
+    Häfta fast ditt kvitto här!
+  %nav.span6.btn-toolbar
+    %span.pull-right
+      = render :partial => "modify_form", :locals => {:purchase => @purchase}

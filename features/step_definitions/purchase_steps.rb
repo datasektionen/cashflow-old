@@ -1,9 +1,14 @@
 # encoding: utf-8
+def select_from_chosen(item_text, options)
+  field = find_field(options[:from])
+  option_value = page.evaluate_script("$(\"##{field[:id]} option:contains('#{item_text}')\").val()")
+  page.execute_script("$('##{field[:id]}').val('#{option_value}')")
+end
+
 def fill_out_purchase_details
   sleep 2
   fill_in("purchase_purchased_at", with: Date.today.to_s)
-  select(@business_unit.name, from: "business_unit")
-  select(@budget_post.name, from: "purchase_budget_post_id")
+  select_from_chosen(@budget_post.name, from: "purchase_budget_post_id")
   fill_in("purchase_description", with: "foo")
 end
 
@@ -11,7 +16,7 @@ def fill_out_last_purchase_item_details
   amount = all(".purchase_item .number.required input").last[:id]
   product_type = all(".purchase_item .select.required select").last[:id]
   fill_in(amount, with: "100")
-  select(@product_type.name, from: product_type)
+  select_from_chosen(@product_type.name, from: product_type)
 end
 
 Given /^I have made a purchase that needs registering$/ do

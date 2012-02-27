@@ -1,9 +1,19 @@
-%nav
-  %ul
+.btn-group
+  %button.btn
+    %i.icon-print
+
+- if can?(:edit, purchase)
+  .btn-group
+    %a{ href: edit_purchase_path(purchase), class: "btn" }
+      %i.icon-pencil
+      = t('edit')
+
+- if can?(:manage, purchase)
+  .btn-group
     - if purchase.editable? && ! purchase.confirmed?
-      %li= button_to t('.confirm'), confirm_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
-      %li= button_to t('.cancel'), cancel_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
+      = link_to t('.confirm'), confirm_purchase_path(purchase), method: :put, confirm: t('are_you_sure'), class: "btn btn-success"
+      = link_to t('.cancel'), cancel_purchase_path(purchase), method: :put, confirm: t('are_you_sure'), class: "btn btn-danger"
     - if purchase.keepable?
-      %li= button_to t('.bookkeep'), keep_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
+      = link_to t('.bookkeep'), keep_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure'), class: "btn btn-info"
     - if purchase.payable?
-      %li= button_to t('.pay'), pay_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure')
+      = link_to t('.pay'), pay_purchase_path(purchase), :method => :put, :confirm => t('are_you_sure'), class: "btn btn-info"

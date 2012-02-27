@@ -31,8 +31,6 @@ class Ability
         cannot :cancel, :debts
         cannot :index, :people
       end
-    else
-      can :read, :welcome
     end
   end
 end
