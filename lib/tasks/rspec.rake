@@ -10,5 +10,7 @@ begin
   RSpec::Core::RakeTask.new do |t|
     t.pattern = "./spec/**/*_spec.rb"
   end
+rescue Exception => e
+  # do nothing
 end
 
