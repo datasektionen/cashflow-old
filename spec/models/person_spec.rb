@@ -90,11 +90,6 @@ describe Person do
     @person.reload.total_purchased_amount.should == 0
   end
   
-  it "should have a string representation matching its LDAP cn" do
-    @person.cn.should == "#{@person.first_name} #{@person.last_name} (#{@person.login})"
-    @person.to_s.should == @person.cn
-  end
-
   # create an LDAP connection for these specs to wor
   describe "LDAP connection" do
     it "should correctly fetch information from LDAP" do
