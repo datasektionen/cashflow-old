@@ -4,6 +4,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require "cover_me"
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'rspec/autorun'
 require 'controller_macros'
 require 'formtastic'
 require "headless"
@@ -26,6 +27,7 @@ RSpec.configure do |config|
   config.extend ControllerMacros, :type => :controller
   config.include Devise::TestHelpers, :type => :view
   config.extend ControllerMacros, :type => :view
+  config.infer_base_class_for_anonymous_controllers = false
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
