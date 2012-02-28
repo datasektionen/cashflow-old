@@ -8,25 +8,15 @@
           %tr
             %th ID
             %th Beskrivning
-            %th Summa
-            %th Inköpt
             %th Köpt av
-            %th Affärsenhet
-            %th Registrerad
+            %th Inköpt
             %th Status
-
-            %th
 
         %tbody
           - for purchase in @purchases
             %tr
               %td= link_to ("%03d" % purchase.id), purchase
               %td= truncate purchase.description
-              %td= currency purchase.total
-              %td= purchase.purchased_at.to_s(:iso)
               %td= link_to purchase.person, purchase.person, title: purchase.person.login
-              %td= link_to purchase.business_unit, purchase.business_unit, title: purchase.business_unit.short_name
-              %td= purchase.created_at.to_date.to_s(:iso)
+              %td= purchase.purchased_at.to_s(:iso)
               %td= status purchase
-              %td
-                = link_to t('edit'), edit_purchase_path(purchase)
