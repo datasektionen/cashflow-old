@@ -1,5 +1,6 @@
 require 'capistrano/ext/multistage'
 require 'capistrano_colors'
+load 'deploy/assets'
 
 capistrano_color_matchers = [
   { :match => /^\s+$/,       :color => :hide,      :prio => 10 },
