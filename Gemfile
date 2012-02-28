@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 3.1.0'
 gem 'haml-rails'
-gem 'sass'
 gem 'workflow'
 gem 'devise'
 gem 'oa-core'

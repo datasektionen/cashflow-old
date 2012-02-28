@@ -258,7 +258,6 @@ GEM
       archive-tar-minitar (>= 0.5.2)
     rubyntlm (0.1.1)
     rubyzip (0.9.4)
-    sass (3.1.10)
     selenium (0.2.2)
       jar_wrapper
       jar_wrapper
@@ -354,7 +353,6 @@ DEPENDENCIES
   rspec-mocks
   rspec-rails
   ruby-debug19
-  sass
   selenium
   shoulda (>= 3.0.0.beta2)
   simple-navigation
