@@ -30,8 +30,11 @@
           .nav-collapse
             = render_navigation(:level => 1..2, renderer: BootstrapMenuList, expand_all: true)
 
-    - if notice
-      = notice
+    - flash.each do |key, message|
+      .container-fluid
+        .alert
+          = link_to "x", "#", class: "close", data: { dismiss: "alert" }
+          = message
 
     = content_for?(:content) ? yield(:content) : yield
 
