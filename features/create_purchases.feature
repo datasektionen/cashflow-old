@@ -17,3 +17,9 @@ Feature: Registering purchases
     When I fill out the new purchase form with "2" items
     Then my purchase should be registered
     And the purchase should have "2" purchase items
+
+  @javascript
+  Scenario: Forgetting budget post
+    When I forget to choose a "budget post"
+    Then my purchase should not be registered
+    And I should get an error message on the "budget post" field

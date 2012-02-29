@@ -11,7 +11,7 @@ class Purchase < ActiveRecord::Base
 
   has_many :items, :class_name => "PurchaseItem", :dependent => :destroy
   
-  validates_presence_of :person, :description, :purchased_at
+  validates_presence_of :person, :description, :purchased_at, :budget_post
   
   validate :cannot_purchase_stuff_in_the_future, :locked_when_finalized
   
