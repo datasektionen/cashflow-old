@@ -23,6 +23,7 @@ gem 'mysql2'
 gem 'decent_exposure'
 gem 'uglifier'
 gem 'airbrake'
+gem 'kaminari'
 
 group :production do
   gem 'unicorn'

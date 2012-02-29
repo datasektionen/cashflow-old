@@ -386,6 +386,14 @@
         name: "exempelvis Informationsorganet"
         short_name: "exempelvis Ior, DKM eller QN"
         email: "tomt fält implicerar kassor@d.kth.se"
+
+  views:
+    pagination:
+      first: "Första"
+      last: "Sista"
+      previous: "&larr;"
+      next: "&rarr;"
+      truncate: "..."
   
   edit: "Redigera"
   back: "Tillbaka"
