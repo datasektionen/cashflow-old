@@ -36,3 +36,7 @@ progress::-webkit-progress-bar {
   height: 8px;
   background-color: #ddd;
 }
+
+.pagination {
+  text-align: center;
+}
