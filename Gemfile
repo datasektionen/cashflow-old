@@ -22,10 +22,10 @@ gem 'cocoon'
 gem 'mysql2'
 gem 'decent_exposure'
 gem 'uglifier'
+gem 'airbrake'
 
 group :production do
   gem 'unicorn'
-  gem 'exceptional'
 end
 
 group :development do
