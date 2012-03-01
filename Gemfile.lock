@@ -157,6 +157,10 @@ GEM
       thor (~> 0.14)
     json (1.6.4)
     json_pure (1.6.1)
+    kaminari (0.13.0)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      railties (>= 3.0.0)
     kgio (2.6.0)
     launchy (2.0.5)
       addressable (~> 2.2.6)
@@ -340,6 +344,7 @@ DEPENDENCIES
   headless
   i18n_routing
   jquery-rails (~> 1.0.19)
+  kaminari
   launchy
   less-rails-bootstrap
   libnotify
