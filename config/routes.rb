@@ -4,7 +4,7 @@ Cashflow::Application.routes.draw do
   devise_for :users, :class_name => "Person", :controllers => {:omniauth_callbacks => "people/omniauth_callbacks"} do
     get "sign_in", :to => "people/omniauth_callbacks#new", :as => :new_session
     get "sign_out", :to => "people/omniauth_callbacks#destroy", :as => :destroy_user_session
-    root to: "welcome#index"
+    root to: "dashboard#welcome"
   end
 
   localized(['sv']) do
@@ -53,6 +53,6 @@ Cashflow::Application.routes.draw do
     # och så kan man gå till /mina/inkop, /mina/skulder eller whatever
     # 
 
-    root :to => "welcome#index"
+    root :to => "dashboard#index"
   end
 end

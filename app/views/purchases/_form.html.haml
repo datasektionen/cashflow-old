@@ -1,15 +1,15 @@
-= semantic_form_for @purchase do |form|
+
+= semantic_form_for(@purchase, html: { class: "form-horizontal" }) do |form|
   = form.semantic_errors
   = form.semantic_errors :base
+
   = form.inputs :name => "Beskrivning" do
     - if @purchase.new? && can?(:edit, :purchase_owner)
-      = form.input :person 
-    = form.input :purchased_at, :as => :date_picker
-    %li
-      = label :business_unit, t('activerecord.models.business_unit')
-      = select_tag :business_unit, options_from_collection_for_select(BusinessUnit.all, 'id', 'name'), include_blank: true
-    = form.input :budget_post, :collection => [], :include_blank=>false
-    = form.input :description, :as => :text
+      = form.input :person, include_blank: false
+
+    = form.input :purchased_at, as: :string
+    = form.input :budget_post, collection: option_groups_from_collection_for_select(BusinessUnit.all, :budget_posts, :name, :id, :name, @purchase.budget_post.try(:id))
+    = form.input :description
   
   %fieldset#purchase_items
     %legend Inköpsdelar
@@ -19,11 +19,13 @@
       = link_to_add_association 'Lägg till inköpsdel', form, :items
 
   = form.buttons do
-    = form.commit_button :commit
+    = form.commit_button button_html: { class: "btn-primary" }
 
-= javascript_include_tag 'purchases'
 :javascript
   $(document).ready(function() {
-    Purchase.setupBudgetPostSelect(#{budget_posts.to_json}, $("#business_unit"), $("#purchase_budget_post_id"));
+    $("select").chosen();
+    $("#purchase_purchased_at").datepicker({
+      weekStart: 1,
+      format: "yyyy-mm-dd"
+    });
   });
-

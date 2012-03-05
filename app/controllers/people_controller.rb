@@ -99,9 +99,6 @@ class PeopleController < ApplicationController
         {key: :show_person, name: @person.name, url: person_path(@person)},
         {key: :edit_person, name: I18n.t('edit'), url: edit_person_path(@person)},
       ]
-      if is_mobile_device?
-        @items.unshift({key: :people_list, name: I18n.t('back'), url: people_path})
-      end
     else
       @items = [
         {key: :all_people, name: I18n.t('navigation.all_people'), url: people_path},

@@ -204,7 +204,8 @@
         name: "Namn"
       budget_post:
         name: "Namn"
-        status: "Status"
+        used: "Använt"
+        budget: "Budgeterat"
         business_unit: "Affärsenhet"
       budget_row:
         sum: "Summa"
@@ -315,8 +316,7 @@
       title: "Redigera produkttyp"
   budget:
     show:
-      html:
-        title: "Budget"
+      title: "Budget"
     edit:
       title: "Ändra Budget"
   budget_posts:
@@ -386,6 +386,14 @@
         name: "exempelvis Informationsorganet"
         short_name: "exempelvis Ior, DKM eller QN"
         email: "tomt fält implicerar kassor@d.kth.se"
+
+  views:
+    pagination:
+      first: "Första"
+      last: "Sista"
+      previous: "&larr;"
+      next: "&rarr;"
+      truncate: "..."
   
   edit: "Redigera"
   back: "Tillbaka"
@@ -454,6 +462,7 @@
       success:
         delete: "Budgetpost borttagen"
   navigation:
+    sign_in: "Logga in"
     my_page: "Min sida"
     purchases: "Inköp"
     all_purchases: "Alla inköp"

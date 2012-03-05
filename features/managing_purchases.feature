@@ -27,3 +27,9 @@ Feature: Managing purchases
 
   @wip
   Scenario: Finalizing a payed purchase
+
+  @javascript
+  Scenario: Editing a purchase
+    Given a purchase
+    When I edit the description of that purchase
+    Then the description should be updated

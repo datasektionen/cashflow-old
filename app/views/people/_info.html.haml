@@ -1,23 +1,27 @@
-%fieldset
-  %legend Användaruppgifter
-  %dl
-    %dt Namn
-    %dd= person.name
-  
-    %dt Användarnamn
-    %dd= person.login
-  
-    %dt E-post
-    %dd= link_to person.email, "mailto:#{person.email}"
-  
-    %dt KTH-ID
-    %dd= person.ugid
-  
-    %dt Clearingnummer
-    %dd= person.bank_clearing_number
-  
-    %dt Kontonummer
-    %dd= person.bank_account_number
-  
-    %dt Banknamn
-    %dd= person.bank_name
+%section.row-fluid
+  .span12
+    %h1 Användaruppgifter
+
+    .row-fluid
+      .span3
+        %dl
+          %dt Namn
+          %dd= person.name
+
+          %dt Användarnamn
+          %dd= person.login
+
+          %dt E-post
+          %dd= link_to person.email, "mailto:#{person.email}"
+      .span3
+        %dl
+          %dt Clearingnummer
+          %dd= person.bank_clearing_number
+
+          %dt Kontonummer
+          %dd= person.bank_account_number
+
+          %dt Banknamn
+          %dd= person.bank_name
+
+    = link_to "Uppdatera profil", edit_person_path(person), class: "btn btn-small btn-primary"

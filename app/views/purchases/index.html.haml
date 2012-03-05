@@ -1,29 +1,24 @@
-%h1 Inköp
+%section.container-fluid
+  .row-fluid
+    .span12
+      %h1 Inköp
 
-%table.datatable
-  %thead
-    %tr
-      %th ID
-      %th Beskrivning
-      %th Summa
-      %th Inköpt
-      %th Köpt av
-      %th Affärsenhet
-      %th Registrerad
-      %th Status
-      
-      %th
-  
-  %tbody
-    - for purchase in @purchases
-      %tr{ :class => cycle(:odd, :even) }
-        %td= link_to ("%03d" % purchase.id), purchase
-        %td= truncate purchase.description
-        %td= currency purchase.total
-        %td= purchase.purchased_at.to_s(:iso)
-        %td= link_to purchase.person, purchase.person
-        %td= link_to purchase.business_unit, purchase.business_unit
-        %td= purchase.created_at.to_date.to_s(:iso)
-        %td= status purchase
-        %td
-          = link_to t('edit'), edit_purchase_path(purchase)
+      %table.table.table-striped
+        %thead
+          %tr
+            %th ID
+            %th Beskrivning
+            %th Köpt av
+            %th Inköpt
+            %th Status
+
+        %tbody
+          - for purchase in @purchases
+            %tr
+              %td= link_to ("%03d" % purchase.id), purchase
+              %td= truncate purchase.description
+              %td= link_to purchase.person, purchase.person, title: purchase.person.login
+              %td= purchase.purchased_at.to_s(:iso)
+              %td= status purchase
+
+      = paginate @purchases

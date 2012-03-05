@@ -3,13 +3,13 @@ class PurchasesController < ApplicationController
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
 
   
-  expose(:budget_posts) { BudgetPost.all.group_by(&:business_unit_id)}
+  expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
   #
   # GET /purchases
   # GET /purchases.xml
   def index
-    @purchases = Purchase.joins(:person, :items, :budget_post => :business_unit).includes(:person, :items, :budget_post => :business_unit)
+    @purchases = Purchase.joins(:person).includes(:person).page(params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @purchases }

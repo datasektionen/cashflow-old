@@ -11,7 +11,7 @@ class Purchase < ActiveRecord::Base
 
   has_many :items, :class_name => "PurchaseItem", :dependent => :destroy
   
-  validates_presence_of :person, :description, :purchased_at
+  validates_presence_of :person, :description, :purchased_at, :budget_post
   
   validate :cannot_purchase_stuff_in_the_future, :locked_when_finalized
   
@@ -25,7 +25,7 @@ class Purchase < ActiveRecord::Base
   accepts_nested_attributes_for :items
   
   scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
-  scope :confirmed , where(:workflow_state => %w[confirmed bookkept paid finalized])
+  scope :confirmed , where(:workflow_state => %w[confirmed edited])
   
   # workflow for Purchase model
   #                                   :keep --> (bookkept) -- :pay --

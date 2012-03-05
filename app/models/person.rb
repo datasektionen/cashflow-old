@@ -24,11 +24,8 @@ class Person < ActiveRecord::Base
 
   has_friendly_id :login
   
-  # String representation of a user.
-  # Basically the same as the cn column in the LDAP server, that is:
-  # "Firstname Lastname (ugid)"
   def to_s
-    cn
+    name
   end
   
   def cn

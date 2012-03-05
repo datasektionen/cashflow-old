@@ -6,7 +6,6 @@ doc
 tmp
 log
 config/database.yml
-public/stylesheets/*.css
 .sass-cache/
 config/configuration.yml
 coverage/
@@ -16,3 +15,4 @@ tags
 *.swp
 coverage.data
 config/exceptional.yml
+public/stylesheets/*
