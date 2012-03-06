@@ -1,15 +1,16 @@
 class PurchasesController < ApplicationController
   load_and_authorize_resource :except => [:confirmed, :pay_multiple]
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
-
   
   expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
-  #
   # GET /purchases
   # GET /purchases.xml
   def index
-    @purchases = Purchase.joins(:person).includes(:person).page(params[:page])
+    @purchases = Purchase.joins(:person).includes(:person)
+    @purchases = @purchases.where(:workflow_state => params[:workflow_state]) if params[:workflow_state]
+    @purchases = @purchases.page(params[:page])
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @purchases }

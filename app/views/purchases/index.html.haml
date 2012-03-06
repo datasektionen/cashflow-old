@@ -3,6 +3,11 @@
     .span12
       %h1 Inköp
 
+      .btn-group
+        = link_to "All", purchases_path(:workflow_state => nil), :class => "btn"
+        - %w[new confirmed edited cancelled paid bookkept finalized].each do |state|
+          = link_to state.titleize, purchases_path(:workflow_state => state), :class => "btn"
+
       %table.table.table-striped
         %thead
           %tr
