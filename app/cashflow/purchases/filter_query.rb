@@ -9,7 +9,7 @@ module Cashflow
 
       def execute
         if @filters.empty?
-          Purchase.all
+          Purchase
         else
           Purchase.where(@filters)
         end

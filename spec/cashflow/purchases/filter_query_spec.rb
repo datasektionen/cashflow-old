@@ -34,22 +34,18 @@ module Cashflow
 
       describe "#execute" do
         context "no filters" do
-          it "queries for all purchases" do
-            Purchase.should_receive(:all)
-
+          it "returns the base class" do
             filter = filter_class.new({})
 
-            filter.execute
+            filter.execute.should == Purchase
           end
         end
 
         context "with nil parameters" do
-          it "queries for all purchases" do
-            Purchase.should_receive(:all)
-
+          it "returns the base class" do
             filter = filter_class.new(nil)
 
-            filter.execute
+            filter.execute.should == Purchase
           end
         end
 
