@@ -3,10 +3,7 @@
     .span12
       %h1 Inköp
 
-      .btn-group
-        = link_to "All", purchases_path(:workflow_state => nil), :class => "btn"
-        - Purchase.workflow_spec.states.each do |name, state|
-          = link_to t(name, scope: [:workflow_state]), purchases_path(:workflow_state => state), :class => "btn"
+      = render "filter_form"
 
       %table.table.table-striped
         %thead

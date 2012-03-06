@@ -1,0 +1,19 @@
+= form_tag purchases_path, method: :get do
+  = field_set_tag("Status") do
+    #purchase_filters.btn-group{"data-toggle" => "buttons-checkbox"}
+      - Purchase.workflow_spec.states.each do |name, state|
+        = hidden_filter_tag(name, params[:filter])
+        = filter_button(name, params[:filter])
+  
+  %button#filter_submit.btn Filtrera!
+
+:javascript
+  $('#purchase_filters .btn').click(function() {
+    var element = "#filter_workflow_state_" + $(this).attr('value');
+    if($(this).hasClass("active")) {
+      $(element).attr('disabled', 'disabled');
+    } else {
+      $(element).removeAttr('disabled');
+    }
+  });
+

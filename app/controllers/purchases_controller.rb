@@ -7,9 +7,8 @@ class PurchasesController < ApplicationController
   # GET /purchases
   # GET /purchases.xml
   def index
-    @purchases = Purchase.joins(:person).includes(:person)
-    @purchases = @purchases.where(:workflow_state => params[:workflow_state]) if params[:workflow_state]
-    @purchases = @purchases.page(params[:page])
+    query = Cashflow::Purchases::FilterQuery.new(params[:filter])
+    @purchases = query.execute.joins(:person).includes(:person).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
