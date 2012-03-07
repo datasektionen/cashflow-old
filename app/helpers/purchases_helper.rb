@@ -23,6 +23,6 @@ module PurchasesHelper
   end
 
   def filter_button(state, filters)
-    content_tag(:div, I18n.t(state.to_s, scope: [:workflow_state]), {value: state.to_s, class: active_filter?(state, filters) ? "btn active" : "btn"})
+    content_tag(:div, I18n.t(state.to_s, scope: [:workflow_state]), {name: state.to_s, value: state.to_s, class: active_filter?(state, filters) ? "btn active" : "btn"})
   end
 end

@@ -12,17 +12,16 @@ Feature: Filtering purchases
     When I go to the purchases page
     Then I should see all purchases
 
-  @wip
+  @javascript
   Scenario: Filter by single status
     When I go to the purchases page
-    And I filter the purchases by status "new"
-    Then I should see new purchases
+    And I filter the purchases by statuses "new"
+    Then I should see purchases with statuses "new"
     And I should not see any other purchases
 
-  @wip
+  @javascript
   Scenario: Filter by multiple statuses
     When I go to the purchases page
     And I filter the purchases by statuses "new, edited"
-    Then I should see new purchases
-    Then I should see edited purchases
+    Then I should see purchases with statuses "new, edited"
     And I should not see any other purchases
