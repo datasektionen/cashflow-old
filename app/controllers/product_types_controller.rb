@@ -44,7 +44,7 @@ class ProductTypesController < ApplicationController
 
     respond_to do |format|
       if @product_type.save
-        format.html { redirect_to(@product_type, :notice => I18n.t('notice.product_type.success.created')) }
+        format.html { redirect_to(@product_type, :notice => I18n.t('notices.product_type.success.created')) }
         format.xml  { render :xml => @product_type, :status => :created, :location => @product_type }
       else
         format.html { render :action => "new" }
@@ -58,7 +58,7 @@ class ProductTypesController < ApplicationController
   def update
     respond_to do |format|
       if @product_type.update_attributes(params[:product_type])
-        format.html { redirect_to(@product_type, :notice => I18n.t('notice.product_type.success.updated')) }
+        format.html { redirect_to(@product_type, :notice => I18n.t('notices.product_type.success.updated')) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

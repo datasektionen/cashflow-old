@@ -1,7 +1,6 @@
 class PurchasesController < ApplicationController
   load_and_authorize_resource :except => [:confirmed, :pay_multiple]
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
-
   
   expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
@@ -52,7 +51,7 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @purchase.save
-        format.html { redirect_to(@purchase, :notice => I18n.t('notice.purchase.success.created')) }
+        format.html { redirect_to(@purchase, :notice => I18n.t('notices.purchase.success.created')) }
         format.xml  { render :xml => @purchase, :status => :created, :location => @purchase }
       else
         format.html { render :action => "new" }
@@ -68,7 +67,7 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
-        format.html { redirect_to(@purchase, :notice => I18n.t('notice.purchase.success.updated')) }
+        format.html { redirect_to(@purchase, :notice => I18n.t('notices.purchase.success.updated')) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
