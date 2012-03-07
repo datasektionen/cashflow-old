@@ -4,11 +4,12 @@ class PurchasesController < ApplicationController
   
   expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
-  #
   # GET /purchases
   # GET /purchases.xml
   def index
-    @purchases = Purchase.joins(:person).includes(:person).page(params[:page])
+    query = Cashflow::Purchases::FilterQuery.new(params[:filter])
+    @purchases = query.execute.joins(:person).includes(:person).page(params[:page])
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @purchases }
