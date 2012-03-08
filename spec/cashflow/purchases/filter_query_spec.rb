@@ -18,7 +18,7 @@ module Cashflow
 
           it "accepts filter parameters" do
             expect {
-              filter_class.new(:foo)
+              filter_class.new({})
             }.not_to raise_exception
           end
 
@@ -56,6 +56,25 @@ module Cashflow
           it "queries for the requested workflow_state" do
             Purchase.should_receive(:where).with(filters)
             
+            filter.execute
+          end
+        end
+
+        context "filter person_id" do
+          it "queries for the requested person" do
+            filters = {person_id: "1"}
+            filter = filter_class.new(filters)
+            Purchase.should_receive(:where).with(filters)
+            
+            filter.execute
+          end
+
+          it "does not include nil filters" do
+            filters = {person_id: "", workflow_state: ["foo"]}
+            filter = filter_class.new(filters)
+
+            Purchase.should_receive(:where).with({workflow_state: ["foo"]})
+
             filter.execute
           end
         end

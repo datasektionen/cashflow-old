@@ -4,7 +4,10 @@ module Cashflow
       attr_reader :filters
 
       def initialize(filter = {})
-        @filters = filter || {}
+        filter ||= {}
+        filter.delete_if {|key, value| value.nil? || value.empty? }
+
+        @filters = filter
       end
 
       def execute
