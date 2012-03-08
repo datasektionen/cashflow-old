@@ -43,7 +43,7 @@ class BusinessUnitsController < ApplicationController
 
     respond_to do |format|
       if @business_unit.save
-        format.html { redirect_to(@business_unit, :notice => I18n.t('notice.business_unit.success.created')) }
+        format.html { redirect_to(@business_unit, :notice => I18n.t('notices.business_unit.success.created')) }
         format.xml  { render :xml => @business_unit, :status => :created, :location => @business_unit }
       else
         format.html { render :action => "new" }
@@ -57,7 +57,7 @@ class BusinessUnitsController < ApplicationController
   def update
     respond_to do |format|
       if @business_unit.update_attributes(params[:business_unit])
-        format.html { redirect_to(@business_unit, :notice => I18n.t('notice.business_unit.success.updated')) }
+        format.html { redirect_to(@business_unit, :notice => I18n.t('notices.business_unit.success.updated')) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
