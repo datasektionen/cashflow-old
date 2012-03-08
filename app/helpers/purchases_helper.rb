@@ -12,7 +12,7 @@ module PurchasesHelper
   end
 
   def active_filter?(state, filters)
-    filters = { workflow_state: [] }.merge(filters)
+    filters = { workflow_state: [] }.merge(filters || {})
     filters[:workflow_state].include?(state.to_s)
   end
 
