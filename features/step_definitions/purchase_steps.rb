@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 def select_from_chosen(item_text, options)
   field = find_field(options[:from])
   option_value = page.evaluate_script("$(\"##{field[:id]} option:contains('#{item_text}')\").val()")
@@ -47,13 +48,13 @@ When /^I forget to choose a "budget post"$/ do
 
   fill_in("purchase_purchased_at", with: Date.today.to_s)
   fill_in("purchase_description", with: @description)
-  
+
   fill_out_last_purchase_item_details
   click_button("Spara Inköp")
 end
 
 Then /^my purchase should be registered$/ do
-  page.should have_content(Purchase.last.slug)  
+  page.should have_content(Purchase.last.slug)
 end
 
 When /^I fill out the new purchase form with "(\d+)" items$/ do |n|
@@ -78,7 +79,7 @@ Then /^my purchase should not be registered$/ do
   end
 end
 
-Then /^I should get an error message on the "budget post" field$/ do 
+Then /^I should get an error message on the "budget post" field$/ do
   page.should have_content "måste anges"
 end
 
@@ -88,7 +89,7 @@ When /^I edit the description of that purchase$/ do
   visit("/purchases/#{@purchase.slug}/edit")
 
   fill_in("purchase_description", with: @description)
-  
+
   click_button("Uppdatera Inköp")
 end
 
@@ -97,3 +98,37 @@ Then /^the description should be updated$/ do
   @purchase.description.should == @description
 end
 
+Given /^there exists at least one purchase of each status$/ do
+  Purchase.workflow_spec.states.each do |name, state|
+    Given 'a purchase'
+    @purchase.update_attribute(:workflow_state, state)
+  end
+end
+
+When /^I go to the purchases page$/ do
+  visit purchases_path
+end
+
+Then /^I should see all purchases$/ do
+  Purchase.all.each do |purchase|
+    page.should have_content purchase.id
+  end
+end
+
+When /^I filter the purchases by statuses "([^"]*)"$/ do |statuses|
+  pending
+  statuses.split(/,/).map(&:strip).each do |status|
+    # TODO: click element
+  end
+  click_button("Filtrera!")
+end
+
+Then /^I should see purchases with statuses "([^"]*)"$/ do |statuses|
+  Purchase.where(:workflow_status => statuses.split(/,/).map(&:strip)).each do |purchase|
+    page.should have_content purchase.id
+  end
+end
+
+Then /^I should not see any other purchases$/ do
+  pending
+end
