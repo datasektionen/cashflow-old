@@ -16,10 +16,11 @@ class Mage::Voucher < Mage::Base
 
   ##
   # Creates a vouchers from a given purchase in the series specified
-  def self.from_purchase(purchase, series)
+  # @param series_letter The letter for the series to put the voucher in
+  def self.from_purchase(purchase, series_letter)
     if purchase.keepable?
       voucher = Mage::Voucher.new
-      voucher.series = series.letter
+      voucher.series = series_letter
       voucher.activity_year = purchase.year
       voucher.authorized_by = purchase.confirmed_by.ugid
       voucher.material_from = purchase.person.ugid
