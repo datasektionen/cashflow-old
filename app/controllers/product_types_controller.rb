@@ -35,6 +35,7 @@ class ProductTypesController < ApplicationController
 
   # GET /product_types/1/edit
   def edit
+    
   end
 
   # POST /product_types

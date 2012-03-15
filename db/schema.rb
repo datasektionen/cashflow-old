@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20111104213242) do
     t.boolean  "active",      :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email",       :default => "",   :null => false
+    t.string   "email",                         :null => false
     t.integer  "mage_number"
   end
 
