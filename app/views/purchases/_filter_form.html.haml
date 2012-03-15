@@ -2,8 +2,8 @@
   = field_set_tag("Status") do
     #purchase_status_filter.btn-group{"data-toggle" => "buttons-checkbox"}
       - Purchase.workflow_spec.states.each do |name, state|
-        = hidden_filter_tag name, params[:filter]
-        = filter_button name, params[:filter]
+        = workflow_state_hidden_filter_tag name, params[:filter]
+        = workflow_state_filter_button name, params[:filter]
   = field_set_tag("Inköpt av") do
     #purchase_person_filter
       = select_tag "filter[person_id]", options_from_collection_for_select(Person.all, "id", "name", params[:filter].try(:[], "person_id")), :include_blank => true, :prompt => "Välj person"
