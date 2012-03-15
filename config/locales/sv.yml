@@ -214,11 +214,14 @@
         name: "Namn"
         short_name: "Kort namn"
         description: "Beskrivning"
+        mage_number: "Nämnd i MAGE"
+        mage_default_series: "Serie i MAGE"
         active: "Aktiv"
       purchase:
         business_unit: "Affärsenhet"
         description: "Beskrivning"
         purchased_at: "Inköpsdatum"
+        mage_number: "Kontonummer i MAGE"
       purchase_item:
         amount: "Summa"
         comment: "Kommentar"
