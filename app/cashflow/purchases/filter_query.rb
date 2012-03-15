@@ -10,12 +10,7 @@ module Cashflow
         filter ||= {}
         filter.delete_if {|key, value| !FILTETED_PARAM_SYMS.include?(key.to_sym) || value.nil? || value.empty? }
 
-        # prefix params on associations with association table name
-        FILTERED_PARAMS.select{|param| param.is_a? Hash }.each do |hash|
-          param, assoc = hash.keys.first, hash.values.first
-          value = filter.delete(param.to_sym) || filter.delete(param.to_s)
-          filter["%s.%s" % [assoc, param]] = value unless value.nil?
-        end
+        prefix_params_on_associations_with_association_table_name(filter)
 
         @filters = filter
       end
@@ -25,6 +20,16 @@ module Cashflow
           Purchase
         else
           Purchase.where(@filters)
+        end
+      end
+
+    private
+
+      def prefix_params_on_associations_with_association_table_name(filter)
+        FILTERED_PARAMS.select{|param| param.is_a? Hash }.each do |hash|
+          param, assoc = hash.keys.first, hash.values.first
+          value = filter.delete(param.to_sym) || filter.delete(param.to_s)
+          filter["%s.%s" % [assoc, param]] = value unless value.nil?
         end
       end
     end
