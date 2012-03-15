@@ -49,6 +49,15 @@ module Cashflow
           end
         end
 
+        context "non-filterable field filters" do
+          it "doesn't query for non-filterable fields" do
+            filters = { id: 0, foo: :bar }
+            filter = filter_class.new(filters)
+
+            filter.execute.should == Purchase
+          end
+        end
+
         context "filter workflow_states" do
           let(:filters) { {workflow_state: ["foo"] } }
           let(:filter) { filter_class.new(filters) }
@@ -71,6 +80,25 @@ module Cashflow
 
           it "does not include nil filters" do
             filters = {person_id: "", workflow_state: ["foo"]}
+            filter = filter_class.new(filters)
+
+            Purchase.should_receive(:where).with({workflow_state: ["foo"]})
+
+            filter.execute
+          end
+        end
+
+        context "filter business_unit_id" do
+          it "queries for the requested business unit" do
+            filters = {business_unit_id: "1"}
+            filter = filter_class.new(filters)
+            Purchase.should_receive(:where).with("budget_post.business_unit_id" => "1")
+
+            filter.execute
+          end
+
+          it "does not include nil filters" do
+            filters = {business_unit_id: "", workflow_state: ["foo"]}
             filter = filter_class.new(filters)
 
             Purchase.should_receive(:where).with({workflow_state: ["foo"]})
