@@ -92,7 +92,7 @@ module Cashflow
           it "queries for the requested business unit" do
             filters = {business_unit_id: "1"}
             filter = filter_class.new(filters)
-            Purchase.should_receive(:where).with("budget_post.business_unit_id" => "1")
+            Purchase.should_receive(:where).with("budget_posts.business_unit_id" => "1")
 
             filter.execute
           end
