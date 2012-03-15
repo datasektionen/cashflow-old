@@ -48,7 +48,6 @@ private
     require 'digest/sha1'
     string = "#{body}#{private_key}"
     cs = Digest::SHA1.hexdigest(string)
-    puts "Checksum: #{cs}"
     cs
   end
 
