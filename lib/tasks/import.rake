@@ -23,7 +23,7 @@ task :import_organ_numbers_from_mage => :environment do
 end
 
 task :import_account_numbers_from_mage => :environment do
-  Mage::Account.all.each do |a|
+  Mage::Account.all(Cashflow::Application.settings["mage_activity_year"]).each do |a|
     pt = ProductType.find_by_name(a.name)
     pt = ProductType.find_by_name(a.name.gsub(/Inköp /,"")) unless pt
     pt = ProductType.find_by_description(a.name) unless pt
@@ -38,7 +38,7 @@ task :import_account_numbers_from_mage => :environment do
 end
 
 task :import_arrangement_numbers_from_mage => :environment do
-  Mage::Arrangement.all.each do |a|
+  Mage::Arrangement.all(Cashflow::Application.settings["mage_activity_year"]).each do |a|
     bp = BudgetPost.find_by_name(a.name)
     if bp
       bp.mage_arrangement_number = a.number
