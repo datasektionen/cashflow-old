@@ -3,6 +3,8 @@ class BudgetPost < ActiveRecord::Base
   has_many :budget_rows, :dependent => :destroy
   belongs_to :business_unit
 
+  validates :mage_arrangement_number, :presence=>true
+
   after_create :create_rows
 
   default_scope order("name ASC")
