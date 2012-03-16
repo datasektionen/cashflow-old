@@ -84,7 +84,6 @@ protected
     rescue Exception
       puts $!
       puts "Error: Result not in json"
-      puts res.body
       item.errors = "Result was not in json format" if item
       return false
     end
