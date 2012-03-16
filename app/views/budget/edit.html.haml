@@ -8,6 +8,7 @@
           %th= t 'activerecord.attributes.budget_post.name'
           %th= t 'activerecord.models.business_unit'
           %td= t 'activerecord.attributes.budget_post.status'
+          %td= t 'activerecord.attributes.budget_post.mage_number'
           - if can?(:manage, :budget_posts)
             %th.actions
 
@@ -17,7 +18,7 @@
             %td= label_tag "budget_rows[#{row.id}][sum]", row.budget_post.name
             %td= row.budget_post.business_unit
             - if can?(:manage, :budget_posts)
-              %td
-                = text_field_tag "budget_rows[#{row.id}][sum]", row.sum
+              %td= text_field_tag "budget_rows[#{row.id}][sum]", row.sum
+              %td= select_tag "budget_posts[#{row.budget_post.id}][mage_arrangement_number]", options_from_collection_for_select(@mage_arrangements_grouped[row.business_unit.mage_number] || @mage_arrangements, :number, :name, row.budget_post.mage_arrangement_number)
       = submit_tag t('save_budget_changes')
 
