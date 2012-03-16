@@ -8,7 +8,10 @@ class PurchaseObserver < ActiveRecord::Observer
   end
 
   def after_keep(purchase)
-    #TODO: skapa verifikat i mage
+    voucher = Mage::Voucher.from_purchase(purchase)
+    if not voucher.push(purchase.last_updated_by)
+      voucher.unkeep!
+    end
   end
 
   def after_pay(purchase)
