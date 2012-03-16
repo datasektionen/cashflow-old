@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120315234017) do
+ActiveRecord::Schema.define(:version => 20120316131951) do
 
   create_table "budget_posts", :force => true do |t|
     t.integer "business_unit_id",        :null => false
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20120315234017) do
     t.boolean  "active",              :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email",                                 :null => false
+    t.string   "email",               :default => "",   :null => false
     t.integer  "mage_number"
     t.string   "mage_default_series"
   end
