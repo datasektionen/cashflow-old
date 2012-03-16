@@ -65,12 +65,9 @@ class Purchase < ActiveRecord::Base
     
     state :bookkept do
       event :pay, :transitions_to => :finalized
-      event :unkeep, :transitions_to => :confirmed
     end
     
-    state :finalized do
-      event :unkeep, :transitions_to => :paid
-    end
+    state :finalized
     
     state :cancelled
   end
