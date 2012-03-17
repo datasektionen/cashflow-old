@@ -8,7 +8,7 @@ module Cashflow
 
       def initialize(filter = {})
         filter ||= {}
-        filter.delete_if {|key, value| !FILTETED_PARAM_SYMS.include?(key.to_sym) || value.nil? || value.empty? }
+        filter.delete_if {|key, value| filter_param_should_be_removed?(key, value) }
 
         prefix_params_on_associations_with_association_table_name(filter)
 
@@ -24,6 +24,9 @@ module Cashflow
       end
 
     private
+      def filter_param_should_be_removed?(key, value)
+        !FILTETED_PARAM_SYMS.include?(key.to_sym) || value.nil? || value.empty?
+      end
 
       def prefix_params_on_associations_with_association_table_name(filter)
         FILTERED_PARAMS.select{|param| param.is_a? Hash }.each do |hash|
