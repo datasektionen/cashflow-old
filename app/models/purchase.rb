@@ -22,7 +22,7 @@ class Purchase < ActiveRecord::Base
   before_validation :generate_slug
   after_save :generate_slug
 
-  accepts_nested_attributes_for :items
+  accepts_nested_attributes_for :items, allow_destroy: true
   
   scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
   scope :confirmed , where(:workflow_state => %w[confirmed edited])
