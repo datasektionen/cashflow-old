@@ -156,7 +156,7 @@
         debt:
           finalized_cannot_be_edited: "Du kan inte redigera en avslutad skuld"
         purchase:
-          purchased_in_future: "Du kan inte ha köpt in något i framtiden. Har du uppfunnit en tidsmaskin får du gärna kontakta mig på frost@ceri.se."
+          purchased_in_future: "Du kan inte ha köpt in något i framtiden. Har du uppfunnit en tidsmaskin får du gärna kontakta mig på blame@kth.se."
           finalized: "Du kan inte ändra ett avslutat inköp"
           attributes:
             purchased_at:

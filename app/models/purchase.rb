@@ -133,7 +133,7 @@ class Purchase < ActiveRecord::Base
   def cannot_purchase_stuff_in_the_future
     if !self.purchased_at.blank? && self.purchased_at > Date.today
       errors.add(:base, I18n.t('activerecord.errors.models.purchase.purchased_in_future'))
-      errors.add(:purchased_at, I18n.t('purchased_in_future'))
+      errors.add(:purchased_at, I18n.t('activerecord.errors.models.purchase.attributes.purchased_at.purchased_in_future'))
     end
   end
   
