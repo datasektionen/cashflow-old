@@ -1,4 +1,4 @@
-mode = ENV["spec"] || "model"
+mode = ENV["SPEC"] || "model"
 
 require "spec_helper_#{mode}"
 

@@ -5,7 +5,7 @@ module PurchasesHelper
 
   def link_to_originator(version)
     if version.originator
-      link_to(version.originator.name, person_path(version.originator))
+      link_to(version.originator.name, person_path(version.originator.id))
     else
       ""
     end

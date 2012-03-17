@@ -30,7 +30,7 @@ describe PurchasesHelper do
     it "returns a link to a given purchase version's originator" do
       person = stub_model(Person, :id => 37, :login => 'foobar', :first_name => 'foo', :last_name => 'bar')
       version = OpenStruct.new(:purchase_date => Time.now, :originator => person, :workflow_state => "New")
-      helper.link_to_originator(version).should == link_to(version.originator.name, person_path(version.originator))
+      helper.link_to_originator(version).should == link_to(version.originator.name, person_path(version.originator.id))
     end
 
     it "returns an empty string when originator is missing" do
