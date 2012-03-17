@@ -53,7 +53,6 @@ group :test do
   gem 'factory_girl_rails'
   gem 'libnotify'
   gem 'headless'
-  gem 'turnip'
 end
 
 group :deploy do
