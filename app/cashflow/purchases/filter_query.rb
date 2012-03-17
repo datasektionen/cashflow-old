@@ -1,8 +1,9 @@
 module Cashflow
   module Purchases
     class FilterQuery
-      FILTERED_PARAMS = [:workflow_state, :person_id, business_unit_id: :budget_posts]
-      FILTETED_PARAM_SYMS = FILTERED_PARAMS.map{|p| p.is_a?(Hash) ? p.keys : p }.flatten
+      FILTERED_PARAMS = [:workflow_state, :person_id, ]
+      FILTERED_ASSOCIATION_PARAMS = { business_unit_id: :budget_posts }
+      FILTETED_PARAM_SYMS = FILTERED_PARAMS | FILTERED_ASSOCIATION_PARAMS.keys
 
       attr_reader :filters
 
@@ -29,8 +30,7 @@ module Cashflow
       end
 
       def prefix_params_on_associations_with_association_table_name(filter)
-        FILTERED_PARAMS.select{|param| param.is_a? Hash }.each do |hash|
-          param, assoc = hash.keys.first, hash.values.first
+        FILTERED_ASSOCIATION_PARAMS.each do |param,assoc|
           value = filter.delete(param.to_sym) || filter.delete(param.to_s)
           filter["%s.%s" % [assoc, param]] = value unless value.nil?
         end
