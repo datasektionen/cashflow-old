@@ -497,7 +497,7 @@
 
   layouts:
     application:
-      footer: 'Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Martin Frost":http://www.d.kth.se/people/blame 2010. För att rapportera eventuella buggar, klicka "här":https://www.d.kth.se/redmine/projects/cashflow/issues/new.'
+      footer: 'Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Martin Frost":http://www.datasektionen.se/people/blame 2010. För att rapportera eventuella buggar, klicka "här":https://github.com/datasektionen/cashflow/issues/new.'
       logout: 'Klicka "här":https://login.kth.se/logout för att även logga ut från KTH.'
   show_budget_rows_for: "Visa budget för år:"
   budget_for_year: 'Budget %{year}'
