@@ -1,10 +1,11 @@
 ENV["RAILS_ENV"] ||= 'test'
+require "ostruct"
 
 RAILS_ROOT = Pathname.new(File.expand_path("../..", __FILE__))
 
 require 'active_support'
 require 'active_support/dependencies'
-%w[helpers validators mailers models].each do |dir|
+%w[helpers validators mailers models cashflow].each do |dir|
   ActiveSupport::Dependencies.autoload_paths << File.expand_path("../../app/#{dir}", __FILE__)
 end
 
@@ -58,3 +59,20 @@ end
 
 ActiveRecord::Base.send(:configurations=, YAML::load(ERB.new(IO.read(RAILS_ROOT + "config/database.yml")).result))
 
+def Rails.root
+  RAILS_ROOT
+end
+
+# settings hack
+module Cashflow
+  class Application
+    def self.settings=(settings)
+      @@settings = settings
+    end
+    def self.settings
+      @@settings
+    end
+  end
+end
+
+require  "#{RAILS_ROOT}/config/initializers/00_load_configuration.rb"

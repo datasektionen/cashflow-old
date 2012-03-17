@@ -1,3 +1,5 @@
+require 'workflow'
+require 'paper_trail'
 class Debt < ActiveRecord::Base
   include Workflow
   has_paper_trail

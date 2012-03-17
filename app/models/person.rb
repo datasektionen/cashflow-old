@@ -1,4 +1,5 @@
 require 'friendly_id'
+require "net-ldap"
 class Person < ActiveRecord::Base
   extend FriendlyId
   # Include default devise modules. Others available are:

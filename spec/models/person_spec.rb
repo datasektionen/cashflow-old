@@ -1,4 +1,6 @@
-require 'spec_helper'
+mode = ENV["SPEC"] || "model"
+
+require "spec_helper_#{mode}"
 
 describe Person do
   before(:all) do
