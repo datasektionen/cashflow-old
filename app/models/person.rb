@@ -1,4 +1,6 @@
+require 'friendly_id'
 class Person < ActiveRecord::Base
+  extend FriendlyId
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   #devise :database_authenticatable, :registerable,
@@ -22,7 +24,7 @@ class Person < ActiveRecord::Base
   has_many :debts, :dependent => :restrict
   has_many :purchases, :dependent => :restrict
 
-  has_friendly_id :login
+  friendly_id :login
   
   def to_s
     name

@@ -1,4 +1,6 @@
-require 'spec_helper'
+mode = ENV["spec"] || "model"
+
+require "spec_helper_#{mode}"
 
 describe Purchase do
   before(:all) do

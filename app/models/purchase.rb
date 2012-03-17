@@ -1,7 +1,10 @@
+require 'workflow'
+require 'paper_trail'
 class Purchase < ActiveRecord::Base
   include Workflow
+  extend FriendlyId
   has_paper_trail
-  has_friendly_id :slug
+  friendly_id :slug
   
   belongs_to :person
   belongs_to :budget_post
