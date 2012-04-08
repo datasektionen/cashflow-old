@@ -24,6 +24,7 @@ gem 'decent_exposure'
 gem 'uglifier'
 gem 'airbrake'
 gem 'kaminari'
+gem 'sunspot_rails'
 
 group :production do
   gem 'unicorn'
