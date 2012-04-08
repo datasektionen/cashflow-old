@@ -7,14 +7,16 @@ class PurchasesController < ApplicationController
   # GET /purchases
   # GET /purchases.xml
   def index
-    workflow_state = params[:filter].try(:[], "workflow_state")
-    person_id = params[:filter].try(:[], "person_id")
-    business_unit_id = params[:filter].try(:[], "business_unit_id")
-
     @search = Purchase.joins(:budget_post).joins(:person).includes(:person).search do
-      with(:workflow_state, workflow_state) unless workflow_state.blank?
-      with(:person_id, person_id) unless person_id.blank?
-      with(:business_unit_id, business_unit_id) unless business_unit_id.blank?
+      with(:workflow_state, filter_param(:workflow_state)) unless filter_param(:workflow_state).blank?
+      with(:person_id, filter_param(:person_id)) unless filter_param(:person_id).blank?
+      with(:business_unit_id, filter_param(:business_unit_id)) unless filter_param(:business_unit_id).blank?
+
+      with(:purchased_at).greater_than(filter_param :purchased_at_from) unless filter_param(:purchased_at_from).blank?
+      with(:purchased_at).less_than(filter_param :purchased_at_to) unless filter_param(:purchased_at_to).blank?
+
+      with(:updated_at).greater_than(filter_param :updated_at_from) unless filter_param(:updated_at_from).blank?
+      with(:updated_at).less_than(filter_param :updated_at_to) unless filter_param(:updated_at_to).blank?
 
       paginate :page => params[:page]
     end
@@ -160,5 +162,11 @@ protected
         :url   => edit_purchase_path(@purchase)
       }
     end
+  end
+
+private
+
+  def filter_param name
+    params[:filter].try(:[], name.to_s)
   end
 end
