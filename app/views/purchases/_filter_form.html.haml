@@ -12,6 +12,12 @@
     #purchase_business_unit_filter
       = filter_select_tag 'business_unit_id', BusinessUnit.all, 'id', 'name', 'Välj affärsenhet(er)', :include_blank => true, :multiple => true
 
+  = field_set_tag('Inköpsdatum') do
+    = filter_date_range_tags :purchased_at
+
+  = field_set_tag('Ändringsdatum') do
+    = filter_date_range_tags :updated_at
+
   %button#filter_submit.btn.btn-primary Filtrera!
 
 :javascript
@@ -25,3 +31,8 @@
   });
 
   $("select").chosen();
+
+  $(".datepicker").datepicker({
+    weekStart: 1,
+    format: "yyyy-mm-dd"
+  });
