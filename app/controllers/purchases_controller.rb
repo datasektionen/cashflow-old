@@ -7,8 +7,18 @@ class PurchasesController < ApplicationController
   # GET /purchases
   # GET /purchases.xml
   def index
-    query = Cashflow::Purchases::FilterQuery.new(params[:filter])
-    @purchases = query.execute.joins(:budget_post).joins(:person).includes(:person).page(params[:page])
+    workflow_state = params[:filter].try(:[], "workflow_state")
+    person_id = params[:filter].try(:[], "person_id")
+    business_unit_id = params[:filter].try(:[], "business_unit_id")
+
+    @search = Purchase.joins(:budget_post).joins(:person).includes(:person).search do
+      with(:workflow_state, workflow_state) unless workflow_state.blank?
+      with(:person_id, person_id) unless person_id.blank?
+      with(:business_unit_id, business_unit_id) unless business_unit_id.blank?
+
+      paginate :page => params[:page]
+    end
+    @purchases = @search.results
 
     respond_to do |format|
       format.html # index.html.erb

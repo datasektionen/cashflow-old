@@ -18,6 +18,7 @@ class Purchase < ActiveRecord::Base
   attr_readonly :person, :person_id
 
   delegate :business_unit, :to => :budget_post
+  delegate :business_unit_id, :to => :budget_post
   
   before_validation :generate_slug
   after_save :generate_slug
@@ -26,7 +27,8 @@ class Purchase < ActiveRecord::Base
 
   searchable do
     string :workflow_state
-    integer :person_id
+    integer :person_id, :references => Person
+    integer :business_unit_id
 
     date :purchased_at
     date :updated_at
