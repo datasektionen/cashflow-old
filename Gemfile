@@ -37,6 +37,7 @@ end
 # Gems for test environment
 group :test do
   gem 'no_peeping_toms', :git => "https://github.com/dbalatero/no-peeping-toms.git"
+  gem 'rspec', '>= 2.8.0'
   gem "rspec-rails"
   gem "rspec-mocks"
   gem 'cover_me'
@@ -45,10 +46,12 @@ group :test do
   gem 'selenium'
   gem 'database_cleaner'
   gem 'cucumber-rails'
-  gem 'guard'
+  gem 'guard', '>= 1.0.0'
   gem 'guard-bundler'
   gem 'guard-rspec'
   gem 'guard-cucumber'
+  gem 'rb-inotify'
+  gem 'libnotify'
   gem 'launchy'    # So you can do Then show me the page
   gem 'factory_girl_rails'
   gem 'libnotify'
