@@ -1,24 +1,26 @@
-= form_tag purchases_path, method: :get do
-  = field_set_tag('Status') do
-    #purchase_status_filter
-      -# workflow_state.new => "Ny"
-      = filter_select_tag 'workflow_state', Purchase.workflow_spec.states.map{ |s| name = s.first.to_s; [name, t("workflow_state.#{name}")] }, 'first', 'last', 'Välj status(ar)', :include_blank => true, :multiple => true
+= content_tag :div, 'Visa/dölj filter', :id => 'purchase_filter_toggle', :class => 'btn active'
+= content_tag :div, :id => 'purchase_filter' do
+  = form_tag purchases_path, method: :get do
+    = field_set_tag('Status') do
+      #purchase_status_filter
+        -# workflow_state.new => "Ny"
+        = filter_select_tag 'workflow_state', Purchase.workflow_spec.states.map{ |s| name = s.first.to_s; [name, t("workflow_state.#{name}")] }, 'first', 'last', 'Välj status(ar)', :include_blank => true, :multiple => true
 
-  = field_set_tag('Inköpt av') do
-    #purchase_person_filter
-      = filter_select_tag 'person_id', Person.all, 'id', 'name', 'Välj en person', :include_blank => true
+    = field_set_tag('Inköpt av') do
+      #purchase_person_filter
+        = filter_select_tag 'person_id', Person.all, 'id', 'name', 'Välj en person', :include_blank => true
 
-  = field_set_tag('Affärsenhet') do
-    #purchase_business_unit_filter
-      = filter_select_tag 'business_unit_id', BusinessUnit.all, 'id', 'name', 'Välj affärsenhet(er)', :include_blank => true, :multiple => true
+    = field_set_tag('Affärsenhet') do
+      #purchase_business_unit_filter
+        = filter_select_tag 'business_unit_id', BusinessUnit.all, 'id', 'name', 'Välj affärsenhet(er)', :include_blank => true, :multiple => true
 
-  = field_set_tag('Inköpsdatum') do
-    = filter_date_range_tags :purchased_at
+    = field_set_tag('Inköpsdatum') do
+      = filter_date_range_tags :purchased_at
 
-  = field_set_tag('Ändringsdatum') do
-    = filter_date_range_tags :updated_at
+    = field_set_tag('Ändringsdatum') do
+      = filter_date_range_tags :updated_at
 
-  %button#filter_submit.btn.btn-primary Filtrera!
+    %button#filter_submit.btn.btn-primary Filtrera!
 
 :javascript
   $('#purchase_status_filter .btn').click(function() {
@@ -35,4 +37,15 @@
   $(".datepicker").datepicker({
     weekStart: 1,
     format: "yyyy-mm-dd"
+  });
+
+  $("#purchase_filter_toggle").click(function() {
+    if($("#purchase_filter").is(":visible")) {
+      $("#purchase_filter").hide();
+      $("#purchase_filter_toggle").removeClass('active');
+    }
+    else {
+      $("#purchase_filter").show();
+      $("#purchase_filter_toggle").addClass('active');
+    }
   });
