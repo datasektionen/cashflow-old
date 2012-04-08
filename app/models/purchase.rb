@@ -23,6 +23,16 @@ class Purchase < ActiveRecord::Base
   after_save :generate_slug
 
   accepts_nested_attributes_for :items, allow_destroy: true
+
+  searchable do
+    string :workflow_state
+    integer :person_id
+
+    date :purchased_at
+    date :updated_at
+    text :description
+    float :total
+  end
   
   scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
   scope :confirmed , where(:workflow_state => %w[confirmed edited])
