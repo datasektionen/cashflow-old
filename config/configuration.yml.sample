@@ -7,8 +7,6 @@ common: &common
   mage_url: "http://mage.staging.datasektionen.se"
   mage_apikey: KEY
   mage_private_apikey: private_key
-  #This is an unfortunate hack cause by the fact that there is no equivalence to activity_years on purchase_types in cashflow
-  mage_activity_year: 2012
 
 development: &development
   <<: *common
