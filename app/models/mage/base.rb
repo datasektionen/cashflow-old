@@ -82,8 +82,7 @@ protected
     begin
       data = JSON.parse res.body
     rescue Exception
-      puts $!
-      puts "Error: Result not in json"
+      puts "Error: Result not in json, #{$!}: #{res.body}"
       item.errors = "Result was not in json format" if item
       return false
     end
