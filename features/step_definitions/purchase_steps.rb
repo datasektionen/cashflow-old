@@ -1,37 +1,56 @@
 # encoding: utf-8
 
-def select_from_chosen(item_text, options)
-  field = find_field(options[:from])
-  option_value = page.evaluate_script("$(\"##{field[:id]} option:contains('#{item_text}')\").val()")
-  page.execute_script("$('##{field[:id]}').val('#{option_value}')")
+module PurchaseHelpers
+  def select_from_chosen(item_text, options)
+    field = find_field(options[:from])
+    option_value = page.evaluate_script("$(\"##{field[:id]} option:contains('#{item_text}')\").val()")
+    page.execute_script("$('##{field[:id]}').val('#{option_value}')")
+  end
+
+  def fill_out_purchase_details
+    fill_in("purchase_purchased_at", with: Date.today.to_s)
+    select_from_chosen(@budget_post.name, from: "purchase_budget_post_id")
+    fill_in("purchase_description", with: "foo")
+  end
+
+  def fill_out_last_purchase_item_details
+    amount = all(".purchase_item .number.required input").last[:id]
+    product_type = all(".purchase_item .select.required select").last[:id]
+    fill_in(amount, with: "100")
+    select_from_chosen(@product_type.name, from: product_type)
+  end
+
+  def setup_purchase_prerequisits
+    @budget_post ||= Factory :budget_post
+    @business_unit ||= @budget_post.business_unit
+    @product_type ||= Factory :product_type
+  end
+
+  def create_purchase(number_of_items =  1)
+    setup_purchase_prerequisits
+    PaperTrail.whodunnit = @person.id.to_s
+
+    @purchase = Factory :purchase, person: @person
+
+    number_of_items.times do
+      @purchase.items << Factory(:purchase_item, purchase: @purchase)
+    end
+    @purchase.reload
+  end
 end
 
-def fill_out_purchase_details
-  fill_in("purchase_purchased_at", with: Date.today.to_s)
-  select_from_chosen(@budget_post.name, from: "purchase_budget_post_id")
-  fill_in("purchase_description", with: "foo")
-end
-
-def fill_out_last_purchase_item_details
-  amount = all(".purchase_item .number.required input").last[:id]
-  product_type = all(".purchase_item .select.required select").last[:id]
-  fill_in(amount, with: "100")
-  select_from_chosen(@product_type.name, from: product_type)
-end
+World(PurchaseHelpers)
 
 Given /^I have made a purchase that needs registering$/ do
-  # setup some stuff that will be needed later
-  @budget_post ||= Factory :budget_post
-  @business_unit ||= @budget_post.business_unit
-  @product_type ||= Factory :product_type
+  setup_purchase_prerequisits
 end
 
 Given /^a purchase$/ do
-  Given 'I have made a purchase that needs registering'
-  PaperTrail.whodunnit = @person.id.to_s
-  @purchase = Factory :purchase, person: @person
-  @purchase.items << Factory(:purchase_item, purchase: @purchase)
-  @purchase.reload
+  create_purchase
+end
+
+Given /^a purchase with "([^"]*)" items$/ do |number_of_items|
+  create_purchase(2)
 end
 
 When /^I fill out the new purchase form accordingly$/ do
@@ -132,3 +151,16 @@ end
 Then /^I should not see any other purchases$/ do
   pending
 end
+
+When /^I remove the first of those items$/ do
+  visit(edit_purchase_path(@purchase))
+  click_link("Ta bort inköpsdel")
+  click_button("Uppdatera Inköp")
+end
+
+Then /^only the second item should remain$/ do
+  @purchase.reload
+
+  @purchase.items.count.should == 1
+end
+

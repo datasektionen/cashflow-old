@@ -46,6 +46,7 @@ Then /^I should see the budget posts for last year$/ do
 end
 
 When /^I change the sum of "([^"]*)" to "([^"]*)"$/ do |label, sum|
+  pending("TODO: add links to budget editing feature")
   click_button("edit_budget")
   fill_in("Alpha", with: sum)
   click_button("Spara")

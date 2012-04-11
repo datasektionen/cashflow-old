@@ -8,7 +8,7 @@ class PurchasesController < ApplicationController
   # GET /purchases.xml
   def index
     query = Cashflow::Purchases::FilterQuery.new(params[:filter])
-    @purchases = query.execute.joins(:person).includes(:person).page(params[:page])
+    @purchases = query.execute.joins(:budget_post).joins(:person).includes(:person).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
