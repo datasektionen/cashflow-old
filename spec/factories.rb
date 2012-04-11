@@ -66,6 +66,7 @@ Factory.define :business_unit do |f|
   f.description {"blubb"}
   f.active {true}
   f.mage_number {1}
+  f.mage_default_series {"C"}
   f.email { '' }
 end
 
