@@ -25,7 +25,7 @@ describe BudgetPostsController do
   # BudgetPost. As you add validations to BudgetPost, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {business_unit_id: 1, name: 'budgetpost'}
+    {business_unit_id: 1, name: 'budgetpost', mage_arrangement_number: 1}
   end
 
   def mock_budget_post(extra_attributes = {})
