@@ -1,4 +1,5 @@
 require "spec_helper"
+require "mage_api"
 
 describe BudgetController do
   login_admin
@@ -75,6 +76,7 @@ describe BudgetController do
 
     describe "with invalid params" do
       it "re-renders the 'edit' template" do
+        initialize_mage_webmock
         params = {foo: {bar: 'baz'}}
         put :update, id: @year, foo: params
         response.should render_template('edit')
