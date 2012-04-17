@@ -9,6 +9,7 @@
  *= require datepicker
  *= require alert_hero
  *= require_self
+ *= require twitter/bootstrap-responsive
 */
 
 @media (min-width: 980px) {
