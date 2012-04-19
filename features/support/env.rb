@@ -59,4 +59,5 @@ end
 After do
   headless.stop if Capybara.current_driver == :selenium
 end
-
+require 'webmock/cucumber'
+WebMock.allow_net_connect!

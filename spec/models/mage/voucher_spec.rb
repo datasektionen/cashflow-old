@@ -28,6 +28,6 @@ describe Mage::Voucher do
     voucher.authorized_by.should == purchase.confirmed_by.ugid
     voucher.material_from.should == purchase.person.ugid
     voucher.organ.should == purchase.budget_post.business_unit.mage_number
-    voucher.title.should == purchase.description
+    voucher.title.should == "#{purchase.slug.upcase} - #{purchase.description}"
   end
 end
