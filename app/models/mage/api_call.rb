@@ -1,6 +1,7 @@
 class Mage::ApiCall
   # Method == :get, :post, :put or :delete
   def self.call(path, person, params, method)
+    path = path[1..-1] if path[0] == "/" #Trim starting /
     full_call(
       "#{Cashflow::Application.settings["mage_url"]}/#{path}",
       Cashflow::Application.settings["mage_apikey"],

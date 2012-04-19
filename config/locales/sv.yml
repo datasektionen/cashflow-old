@@ -156,7 +156,7 @@
         debt:
           finalized_cannot_be_edited: "Du kan inte redigera en avslutad skuld"
         purchase:
-          purchased_in_future: "Du kan inte ha köpt in något i framtiden. Har du uppfunnit en tidsmaskin får du gärna kontakta mig på frost@ceri.se."
+          purchased_in_future: "Du kan inte ha köpt in något i framtiden. Har du uppfunnit en tidsmaskin får du gärna kontakta mig på blame@kth.se."
           finalized: "Du kan inte ändra ett avslutat inköp"
           attributes:
             purchased_at:
@@ -207,6 +207,7 @@
         used: "Använt"
         budget: "Budgeterat"
         business_unit: "Affärsenhet"
+        mage_arrangement_number: "Arrangemang i MAGE"
       budget_row:
         sum: "Summa"
         year: "År"
@@ -214,11 +215,14 @@
         name: "Namn"
         short_name: "Kort namn"
         description: "Beskrivning"
+        mage_number: "Nämnd i MAGE"
+        mage_default_series: "Serie i MAGE"
         active: "Aktiv"
       purchase:
         business_unit: "Affärsenhet"
         description: "Beskrivning"
         purchased_at: "Inköpsdatum"
+        mage_number: "Kontonummer i MAGE"
       purchase_item:
         amount: "Summa"
         comment: "Kommentar"
@@ -497,7 +501,7 @@
 
   layouts:
     application:
-      footer: 'Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Martin Frost":http://www.d.kth.se/people/blame 2010. För att rapportera eventuella buggar, klicka "här":https://www.d.kth.se/redmine/projects/cashflow/issues/new.'
+      footer: 'Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Martin Frost":http://www.datasektionen.se/people/blame 2010. För att rapportera eventuella buggar, klicka "här":https://github.com/datasektionen/cashflow/issues/new.'
       logout: 'Klicka "här":https://login.kth.se/logout för att även logga ut från KTH.'
   show_budget_rows_for: "Visa budget för år:"
   budget_for_year: 'Budget %{year}'

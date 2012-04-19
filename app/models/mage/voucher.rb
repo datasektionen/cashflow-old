@@ -16,10 +16,21 @@ class Mage::Voucher < Mage::Base
 
   ##
   # Creates a vouchers from a given purchase in the series specified
-  def self.from_purchase(purchase, series)
+  # @param series_letter The letter for the series to put the voucher in
+  def self.from_purchase(purchase, series_letter = nil)
+    if series_letter.nil?
+      # Fetch series letter from purchase if nil
+      series_letter = purchase.business_unit.mage_default_series
+    end
+
     if purchase.keepable?
+
+      if series_letter.nil?
+        raise "BusinessUnit lacks default MAGE series"
+      end
+
       voucher = Mage::Voucher.new
-      voucher.series = series.letter
+      voucher.series = series_letter
       voucher.activity_year = purchase.year
       voucher.authorized_by = purchase.confirmed_by.ugid
       voucher.material_from = purchase.person.ugid
@@ -36,6 +47,9 @@ class Mage::Voucher < Mage::Base
         vr.arrangement = purchase.budget_post.mage_arrangement_number
         if vr.arrangement.nil?
          raise "Arrangement for purchase #{purchase.id}, budget_post #{purchase.budget_post} is nil"
+        end
+        if vr.account_number.nil?
+          raise "AccountNumber for product type #{i.product_type.name} is nil"
         end
         voucher.voucher_rows << vr
       end

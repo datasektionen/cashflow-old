@@ -17,16 +17,17 @@ describe Mage::Voucher do
   it "should convert purchase into voucher correctly" do
     person = Factory :person
     PaperTrail.whodunnit = person.id.to_s
-    p = Factory :purchase, workflow_state: :paid
-    pi = Factory.build(:purchase_item)
-    pi.purchase = p
-    pi.save
+    purchase = Factory :purchase
+    purchase_item = Factory.build(:purchase_item)
+    purchase_item.purchase = purchase
+    purchase_item.save
+    purchase.confirm!
 
-    v = Mage::Voucher.from_purchase(p,"M")
-    v.accounting_date.should == p.purchased_at
-    v.authorized_by.should == p.confirmed_by.ugid
-    v.material_from.should == p.person.ugid
-    v.organ.should == p.budget_post.business_unit.mage_number
-    v.title.should == p.description
+    voucher = Mage::Voucher.from_purchase(purchase,"M")
+    voucher.accounting_date.should == purchase.purchased_at
+    voucher.authorized_by.should == purchase.confirmed_by.ugid
+    voucher.material_from.should == purchase.person.ugid
+    voucher.organ.should == purchase.budget_post.business_unit.mage_number
+    voucher.title.should == purchase.description
   end
 end

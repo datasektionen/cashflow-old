@@ -1,7 +1,5 @@
-
 = semantic_form_for(@purchase, html: { class: "form-horizontal" }) do |form|
   = form.semantic_errors
-  = form.semantic_errors :base
 
   = form.inputs :name => "Beskrivning" do
     - if @purchase.new? && can?(:edit, :purchase_owner)

@@ -8,7 +8,10 @@ class PurchaseObserver < ActiveRecord::Observer
   end
 
   def after_keep(purchase)
-    #TODO: skapa verifikat i mage
+    voucher = Mage::Voucher.from_purchase(purchase)
+    if not voucher.push(purchase.last_updated_by)
+      raise "An error occured when pushing #{purchase.inspect} to MAGE (push returned false)"
+    end
   end
 
   def after_pay(purchase)

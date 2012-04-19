@@ -14,7 +14,7 @@ class BudgetRow < ActiveRecord::Base
 
   def total
     return @amount if @amount
-    @amount = PurchaseItem.where(purchase_id: purchases.confirmed).sum(:amount)
+    @amount = PurchaseItem.where(purchase_id: purchases.accepted).sum(:amount)
   end
 
   def self.create_rows_if_not_exists(year)

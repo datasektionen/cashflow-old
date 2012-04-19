@@ -1,4 +1,5 @@
 require "spec_helper"
+require "mage_api"
 
 describe BudgetController do
   login_admin
@@ -44,27 +45,38 @@ describe BudgetController do
     describe "with valid params" do
       it "updates the selected year's budget_rows" do
         rows = [Factory(:budget_row), Factory(:budget_row)]
-        params = {}
+        budget_rows = {}
+        budget_posts = {}
+
         rows.map do |row|
-          params[row.id] = {sum: row.sum + 1000 }  
+          budget_rows[row.id] = {sum: row.sum + 1000 }  
+          budget_posts[row.budget_post.id] = {mage_arrangement_number: row.budget_post.mage_arrangement_number+1}
         end
-        put :update, id: @year, budget_rows: params
+        put :update, id: @year, budget_rows: budget_rows, budget_posts: budget_posts
         rows.map do |row|
           BudgetRow.find(row.id).sum.should == row.sum + 1000
+          BudgetPost.find(row.budget_post.id).mage_arrangement_number.should == row.budget_post.mage_arrangement_number+1
         end
       end
 
       it "redirects to the selected year's budget" do
         rows = [Factory(:budget_row), Factory(:budget_row)]
-        params = {}
-        rows.map {|row| params[row.id] = {sum: row.sum += 1000 }}
-        put :update, id: @year, budget_rows: params
+        budget_rows = {}
+        budget_posts = {}
+
+        rows.map do |row|
+          budget_rows[row.id] = {sum: row.sum + 1000 }  
+          budget_posts[row.budget_post.id] = {mage_arrangement_number: row.budget_post.mage_arrangement_number+1}
+        end
+
+        put :update, id: @year, budget_rows: budget_rows, budget_posts: budget_posts
         response.should redirect_to budget_path(id: @year)
       end
     end
 
     describe "with invalid params" do
       it "re-renders the 'edit' template" do
+        initialize_mage_webmock
         params = {foo: {bar: 'baz'}}
         put :update, id: @year, foo: params
         response.should render_template('edit')

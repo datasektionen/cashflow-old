@@ -2,5 +2,6 @@
  = form.inputs :name => "Attribut" do
   = form.input :name
   = form.input :business_unit
+  = form.input :mage_arrangement_number, :as=>:select, :collection=>Mage::Arrangement.all(@budget_post.business_unit.mage_number).map{|a| [a.name, a.number]}
  = form.buttons do
   = form.commit_button :commit
