@@ -109,10 +109,19 @@ describe Purchase do
     @purchase.should be_finalized
   end
   
-  %w[paid bookkept finalized confirmed].each do |state|
-    it "should not be cancellable when #{state}" do
-      @purchase.update_attribute(:workflow_state, state)
-      lambda {@purchase.cancel!}.should raise_error
+  describe "" do
+    %w[paid bookkept finalized confirmed].each do |state|
+      before(:each) do
+        @purchase.update_attribute(:workflow_state, state)
+      end
+
+      it "should not be cancellable when #{state}" do
+        lambda {@purchase.cancel!}.should raise_error
+      end
+
+      it "should have confirmed_by when #{state}" do
+        @purchase.confirmed_by.should_not be_nil
+      end
     end
   end
 
