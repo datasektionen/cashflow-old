@@ -35,7 +35,7 @@ class Mage::Voucher < Mage::Base
       voucher.authorized_by = purchase.confirmed_by.ugid
       voucher.material_from = purchase.person.ugid
       voucher.organ = purchase.budget_post.business_unit.mage_number
-      voucher.title = purchase.description
+      voucher.title = purchase.slug.upcase+ " - " + purchase.description
       voucher.accounting_date = purchase.purchased_at
       total_sum = 0
       purchase.items.each do |i|
