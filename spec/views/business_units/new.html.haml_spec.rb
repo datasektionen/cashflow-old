@@ -1,7 +1,9 @@
 require 'spec_helper'
+require 'mage_api'
 
 describe "business_units/new.html.haml" do
   before(:each) do
+    initialize_mage_webmock
     assign(:business_unit, stub_model(BusinessUnit).as_new_record)
   end
 

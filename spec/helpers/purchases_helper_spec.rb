@@ -13,7 +13,7 @@ require 'spec_helper'
 describe PurchasesHelper do
   describe "budget posts for purchase" do
     it "returns the available budget posts to the purchase's business unit" do
-      budget_posts = [stub_model(BudgetPost), stub_model(BudgetPost)]
+      budget_posts = [Factory(:budget_post), Factory(:budget_post)]
       business_unit = stub_model(BusinessUnit, :budget_posts => budget_posts)
       purchase = stub_model(Purchase, :business_unit => business_unit, :budget_post => budget_posts.first)
 
