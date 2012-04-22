@@ -28,14 +28,18 @@ fi
 
 # Database config
 if [ ! -f config/database.yml ]; then
-    echo "[+] No database config found, copying template..."
+    echo "[-] No database config found, copying template..."
     cp config/database.yml.sample config/database.yml
+    echo "[-] Now, go ahead and update config/database.yml to match your setup!"
+    exit 1
 fi
 
 # Local user config
 if [ ! -f config/local.yml ]; then
-    echo "[+] No local user config found, copying template..."
+    echo "[-] No local user config found, copying template..."
     cp config/local.yml.sample config/local.yml
+    echo "[-] Now, go ahead and fill in config/local.yml with your details!"
+    exit 1
 fi
 
 # Setup rake tasks
