@@ -30,6 +30,7 @@ class BudgetPostsController < ApplicationController
   # GET /budget_posts/new.xml
   def new
     @budget_post = BudgetPost.new
+    @budget_post.mage_arrangement_number = 0 # THIS IS A HACK 
 
     respond_to do |format|
       format.html
