@@ -58,6 +58,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'libnotify'
   gem 'headless'
+  gem 'webmock'
 end
 
 group :deploy do

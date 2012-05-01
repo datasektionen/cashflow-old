@@ -38,6 +38,7 @@ class Purchase < ActiveRecord::Base
   
   scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
   scope :confirmed , where(:workflow_state => %w[confirmed edited])
+  scope :keepable, where(:workflow_state => :paid)
   scope :accepted, where(:workflow_state => %w[confirmed bookkept paid finalized])
   
   # workflow for Purchase model
@@ -135,6 +136,15 @@ class Purchase < ActiveRecord::Base
       version = version.previous_version
     end
     states
+  end
+
+  # Returns the last person to confirm this purchase (if any)
+  def confirmed_by
+    s = state_history.find { |state|
+      state.workflow_state == "confirmed"
+    }
+    return s.originator if s
+    nil
   end
 
   def last_updated_by
