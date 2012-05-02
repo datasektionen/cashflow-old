@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module PurchasesHelper
   def budget_posts_for_purchase(purchase)
     purchase.budget_post.blank? ? nil : purchase.business_unit.budget_posts
@@ -11,18 +13,19 @@ module PurchasesHelper
     end
   end
 
-  def workflow_state_active_filter?(state, filters)
-    filters = { "workflow_state" => [] }.merge(filters || {})
-    filters["workflow_state"].include?(state.to_s)
+  def filter_select_tag name, collection, value_method, text_method, placeholder, options
+    options = {:'data-placeholder' => placeholder}.merge(options)
+    select_tag "filter[#{name}]", options_from_collection_for_select(collection, value_method, text_method, params[:filter].try(:[], name)), options
   end
 
-  def workflow_state_hidden_filter_tag(state, filters)
-    options = {id: "filter_workflow_state_#{state}"}
-    options[:disabled] = "disabled" unless workflow_state_active_filter?(state, filters)
-    hidden_field_tag "filter[workflow_state][]", state.to_s, options
-  end
-
-  def workflow_state_filter_button(state, filters)
-    content_tag(:div, I18n.t(state.to_s, scope: [:workflow_state]), {name: state.to_s, value: state.to_s, class: workflow_state_active_filter?(state, filters) ? "btn active" : "btn"})
+  def filter_date_range_tags name
+    content_tag :div, :id => "purchase_#{name}_filter" do
+      content = ""
+      content += label_tag "filter[#{name.to_s}_from]", 'Från'
+      content += text_field_tag "filter[#{name.to_s}_from]", params['filter'].try(:[], "#{name.to_s}_from"), :class => 'datepicker', :placeholder => 'Välj ett startdatum'
+      content += label_tag "filter[#{name.to_s}_to]", 'till och med'
+      content += text_field_tag "filter[#{name.to_s}_to]", params['filter'].try(:[], "#{name.to_s}_to"), :class => 'datepicker', :placeholder => 'Välj ett slutdatum'
+      content.html_safe
+    end
   end
 end

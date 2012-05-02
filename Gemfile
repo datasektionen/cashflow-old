@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source :rubygems
 
 gem 'rails', '~> 3.1.0'
 gem 'haml-rails'
@@ -24,6 +24,7 @@ gem 'decent_exposure'
 gem 'uglifier'
 gem 'airbrake'
 gem 'kaminari'
+gem 'sunspot_rails'
 
 group :production do
   gem 'unicorn'
@@ -32,6 +33,7 @@ end
 group :development do
   gem 'linecache19'
   gem 'ruby-debug19', :require => "ruby-debug"
+  gem 'sunspot_solr'
 end
 
 # Gems for test environment
