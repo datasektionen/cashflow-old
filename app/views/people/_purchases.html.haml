@@ -9,7 +9,7 @@
         %th Status
         %th
     %tbody
-      - person.purchases.each do |purchase|
+      - purchases.each do |purchase|
         %tr
           %td= link_to purchase.description, purchase
           %td= currency purchase.total
