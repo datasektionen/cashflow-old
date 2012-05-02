@@ -1,4 +1,4 @@
-= content_tag :div, 'Visa/dölj filter', :id => 'purchase_filter_toggle', :class => 'btn active'
+= content_tag :div, 'Visa/dölj filter', :id => 'purchase_filter_toggle', :class => 'btn'
 = content_tag :div, :id => 'purchase_filter' do
   = form_tag purchases_path, method: :get, class: "form form-inline" do
     = field_set_tag("Filter") do 
@@ -49,3 +49,5 @@
       $("#purchase_filter_toggle").addClass('active');
     }
   });
+
+  $("#purchase_filter").hide();
