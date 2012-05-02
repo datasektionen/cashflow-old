@@ -1,16 +1,26 @@
-= form_tag purchases_path, method: :get do
-  = field_set_tag("Status") do
-    #purchase_status_filter.btn-group{"data-toggle" => "buttons-checkbox"}
-      - Purchase.workflow_spec.states.each do |name, state|
-        = workflow_state_hidden_filter_tag name, params[:filter]
-        = workflow_state_filter_button name, params[:filter]
-  = field_set_tag("Inköpt av") do
-    #purchase_person_filter
-      = select_tag "filter[person_id]", options_from_collection_for_select(Person.all, "id", "name", params[:filter].try(:[], "person_id")), :include_blank => true, :prompt => "Välj en person"
-  = field_set_tag("Affärsenhet") do
-    #purchase_business_unit_filter
-      = select_tag "filter[business_unit_id]", options_from_collection_for_select(BusinessUnit.all, "id", "name", params[:filter].try(:[], "business_unit_id")), :include_blank => true, :prompt => "Välj en affärsenhet"
-  %button#filter_submit.btn.btn-primary Filtrera!
+= content_tag :div, 'Visa/dölj filter', :id => 'purchase_filter_toggle', :class => 'btn'
+= content_tag :div, :id => 'purchase_filter' do
+  = form_tag purchases_path, method: :get, class: "form form-inline" do
+    = field_set_tag("Filter") do 
+      #purchase_status_filter{style: "display: inline;"}
+        = label_tag "Status"
+        = filter_select_tag 'workflow_state', Purchase.workflow_spec.states.map{ |s| name = s.first.to_s; [name, t("workflow_state.#{name}")] }, 'first', 'last', 'Välj status(ar)', :include_blank => true, :multiple => true
+
+      #purchase_person_filter{style: "display: inline;"}
+        = label_tag "Inköpt av"
+        = filter_select_tag 'person_id', Person.all, 'id', 'name', 'Välj en person', :include_blank => true
+
+      #purchase_business_unit_filter{style: "display: inline;"}
+        = label_tag "Affärsenhet"
+        = filter_select_tag 'business_unit_id', BusinessUnit.all, 'id', 'name', 'Välj affärsenhet(er)', :include_blank => true, :multiple => true
+
+    = field_set_tag('Inköpsdatum') do
+      = filter_date_range_tags :purchased_at
+
+    = field_set_tag('Ändringsdatum') do
+      = filter_date_range_tags :updated_at
+
+    %button#filter_submit.btn.btn-primary Filtrera!
 
 :javascript
   $('#purchase_status_filter .btn').click(function() {
@@ -23,3 +33,21 @@
   });
 
   $("select").chosen();
+
+  $(".datepicker").datepicker({
+    weekStart: 1,
+    format: "yyyy-mm-dd"
+  });
+
+  $("#purchase_filter_toggle").click(function() {
+    if($("#purchase_filter").is(":visible")) {
+      $("#purchase_filter").hide();
+      $("#purchase_filter_toggle").removeClass('active');
+    }
+    else {
+      $("#purchase_filter").show();
+      $("#purchase_filter_toggle").addClass('active');
+    }
+  });
+
+  $("#purchase_filter").hide();
