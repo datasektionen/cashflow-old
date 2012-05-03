@@ -62,6 +62,7 @@ describe Person do
   end
   
   it "should corretly sum the total of all purchases" do
+    stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").to_return(:status => 200, :body => "")
     p1 = Factory :purchase, :person_id => @person.id
     @person.reload.total_purchased_amount.should == p1.total
     

@@ -13,6 +13,7 @@ describe BudgetRow do
     end
 
     before(:each) do
+      stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").to_return(:status => 200, :body => "")
       @purchase = Factory :purchase, year: Time.now.year
       Factory :purchase_item, amount: 100, purchase_id: @purchase.id
       @purchase.save

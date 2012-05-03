@@ -7,6 +7,7 @@ describe Purchase do
   end
   
   before(:each) do
+    stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").to_return(:status => 200, :body => "")
     @purchase = Factory :purchase
   end
   

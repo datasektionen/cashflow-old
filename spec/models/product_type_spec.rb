@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe ProductType do
   before(:each) do
+    stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").to_return(:status => 200, :body => "")
     @product_type = Factory :product_type
   end
   %w[name description].each do |field|
