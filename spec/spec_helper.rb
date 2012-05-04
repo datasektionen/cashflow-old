@@ -1,14 +1,15 @@
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
-ENV["RAILS_ENV"] ||= 'test'
-require "cover_me"
-require File.expand_path("../../config/environment", __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+require 'cover_me'
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'controller_macros'
 require 'formtastic'
-require "headless"
+require 'headless'
 require 'database_cleaner'
+require 'webmock/rspec'
 
 headless = Headless.new
 
@@ -18,6 +19,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
 ActiveRecord::Observer.disable_observers
+
 RSpec.configure do |config|
   config.mock_with :rspec
   config.fail_fast = false
@@ -42,4 +44,3 @@ RSpec.configure do |config|
     headless.stop if Capybara.current_driver == :selenium
   end
 end
-
