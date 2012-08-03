@@ -27,6 +27,11 @@
               %i.icon-trash
               = t('destroy')
 
+.well
+  = link_to new_budget_post_path, class: 'btn btn-info' do
+    %i.icon-file
+    Ny budgetpost
+
 :javascript
   $("#save_budget").submit(function() {
     $("#set_budget").submit()
