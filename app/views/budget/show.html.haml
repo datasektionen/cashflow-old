@@ -17,8 +17,8 @@
       %tbody
         - @budget_rows.each do |row|
           %tr{ class: cycle(:odd, :even) }
-            %td= row.budget_post.name
-            %td= row.business_unit
+            %td= link_to row.budget_post.name, row.budget_post
+            %td= link_to row.business_unit, row.business_unit
             %td #{currency row.sum}
             %td #{currency row.total}
             %td
