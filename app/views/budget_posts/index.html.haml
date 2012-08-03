@@ -20,8 +20,12 @@
         %td= budget_post.business_unit
         - if can?(:manage, BudgetPost)
           %td
-            = link_to t('edit'), edit_budget_post_path(budget_post)
-            = button_to t('destroy'), budget_post, :confirm => t('are_you_sure'), :method => :delete
+            = link_to edit_budget_post_path(budget_post), class: 'btn' do
+              %i.icon-pencil
+              = t('edit')
+            = link_to budget_post, confirm: t('are_you_sure'), method: :delete, class: 'btn btn-danger' do
+              %i.icon-trash
+              = t('destroy')
 
 :javascript
   $("#save_budget").submit(function() {

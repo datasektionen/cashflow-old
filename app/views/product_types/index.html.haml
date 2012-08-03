@@ -14,5 +14,9 @@
         %td= product_type.description
         - if can?(:manage, ProductType)
           %td
-            = link_to t('edit'), edit_product_type_path(product_type)
-            = button_to t('destroy'), product_type, :confirm => t('are_you_sure'), :method => :delete
+            = link_to edit_product_type_path(product_type), class: 'btn' do
+              %i.icon-pencil
+              = t('edit')
+            = link_to product_type, confirm: t('are_you_sure'), method: :delete, class: 'btn btn-danger' do
+              %i.icon-trash
+              = t('destroy')

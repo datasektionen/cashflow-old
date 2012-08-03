@@ -15,5 +15,9 @@
         %td= business_unit.short_name
         %td= business_unit.active_text
         %td
-          = link_to t('edit'), edit_business_unit_path(business_unit)
-          = button_to t('destroy'), business_unit, :confirm => t('are_you_sure'), :method => :delete
+          = link_to edit_business_unit_path(business_unit), class: 'btn' do
+            %i.icon-pencil
+            = t('edit')
+          = link_to business_unit, confirm: t('are_you_sure'), method: :delete, class: 'btn btn-danger' do
+            %i.icon-trash
+            = t('destroy')
