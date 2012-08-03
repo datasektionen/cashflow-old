@@ -1,26 +1,19 @@
-.row-fluid
-  .offset2.span10
-    %h1= t('.title')
+%h2= t('.title')
 
-.row-fluid
-  .span3
-    .well{ style: "padding: 8px 0;" }
-      = render_navigation(level: 2, renderer: BootstrapMenuList, bootstrap_menu_type: "nav-list")
-  .span9
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Namn
-          %th Förkortning
-          %th Aktiv
-          %th.actions
-      
-      %tbody
-        - for business_unit in @business_units
-          %tr
-            %td= link_to business_unit.name, business_unit_path(business_unit)
-            %td= business_unit.short_name
-            %td= business_unit.active_text
-            %td
-              = link_to t('edit'), edit_business_unit_path(business_unit)
-              = button_to t('destroy'), business_unit, :confirm => t('are_you_sure'), :method => :delete
+%table.table.table-striped
+  %thead
+    %tr
+      %th Namn
+      %th Förkortning
+      %th Aktiv
+      %th.actions
+  
+  %tbody
+    - for business_unit in @business_units
+      %tr
+        %td= link_to business_unit.name, business_unit_path(business_unit)
+        %td= business_unit.short_name
+        %td= business_unit.active_text
+        %td
+          = link_to t('edit'), edit_business_unit_path(business_unit)
+          = button_to t('destroy'), business_unit, :confirm => t('are_you_sure'), :method => :delete

@@ -1,25 +1,18 @@
-.row-fluid
-  .offset2.span10
-    %h1= t('.title')
+%h2= t('.title')
 
-.row-fluid
-  .span3
-    .well{ style: "padding: 8px 0;" }
-      = render_navigation(level: 2, renderer: BootstrapMenuList, bootstrap_menu_type: "nav-list")
-  .span9
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Användarnam
-          %th Namn
-          %th Roll
-          %th.actions
-      
-      %tbody
-        - for person in @people
-          %tr
-            %td= link_to person.login,   person_path(person)
-            %td= link_to person.name,   person_path(person)
-            %td= person.role
-            %td.actions
-              = link_to t('edit'), edit_person_path(person)
+%table.table.table-striped
+  %thead
+    %tr
+      %th Användarnam
+      %th Namn
+      %th Roll
+      %th.actions
+
+  %tbody
+    - for person in @people
+      %tr
+        %td= link_to person.login,   person_path(person)
+        %td= link_to person.name,   person_path(person)
+        %td= person.role
+        %td.actions
+          = link_to t('edit'), edit_person_path(person)
