@@ -7,6 +7,11 @@ class PurchasesController < ApplicationController
   # GET /purchases
   # GET /purchases.xml
   def index
+    # default to ignore states cancelled and finalized
+    unless params[:filter]
+      params[:filter] = {workflow_state: %w[new edited confirmed paid bookkept]}
+    end
+
     @search = Purchase.joins(:budget_post).joins(:person).includes(:person).search do
       with(:workflow_state, filter_param(:workflow_state)) unless filter_param(:workflow_state).blank?
       with(:person_id, filter_param(:person_id)) unless filter_param(:person_id).blank?
