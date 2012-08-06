@@ -3,35 +3,37 @@
     = label_tag :year, t('show_budget_rows_for')
     = select_tag(:year, options_from_collection_for_select(BudgetPost.all_years, :to_i, :to_s, @year))
 
-.row-fluid
-  .offset2.span10
-    %h1= t('.title')
+%h2= t('.title')
 
-.row-fluid
-  .span3
-    .well{ style: "padding: 8px 0;" }
-      = render_navigation(level: 2, renderer: BootstrapMenuList, bootstrap_menu_type: "nav-list")
-  .span9
-    %table.table.table-striped
-      %thead
-        %tr
-          %th= t 'activerecord.attributes.budget_post.name'
-          %th= t 'activerecord.models.business_unit'
-          - if can?(:manage, BudgetPost)
-            %th.actions
+%table.table.table-striped
+  %thead
+    %tr
+      %th= t 'activerecord.attributes.budget_post.name'
+      %th= t 'activerecord.models.business_unit'
+      - if can?(:manage, BudgetPost)
+        %th.actions
 
-      %tbody
-        - for budget_post in @budget_posts
-          %tr{ :class => cycle(:odd, :even) }
-            %td= budget_post.name
-            %td= budget_post.business_unit
-            - if can?(:manage, BudgetPost)
-              %td
-                = link_to t('edit'), edit_budget_post_path(budget_post)
-                = button_to t('destroy'), budget_post, :confirm => t('are_you_sure'), :method => :delete
+  %tbody
+    - for budget_post in @budget_posts
+      %tr{ :class => cycle(:odd, :even) }
+        %td= budget_post.name
+        %td= budget_post.business_unit
+        - if can?(:manage, BudgetPost)
+          %td
+            = link_to edit_budget_post_path(budget_post), class: 'btn' do
+              %i.icon-pencil
+              = t('edit')
+            = link_to budget_post, confirm: t('are_you_sure'), method: :delete, class: 'btn btn-danger' do
+              %i.icon-trash
+              = t('destroy')
 
-    :javascript
-      $("#save_budget").submit(function() {
-        $("#set_budget").submit()
-        return false
-      })
+.well
+  = link_to new_budget_post_path, class: 'btn btn-info' do
+    %i.icon-file
+    Ny budgetpost
+
+:javascript
+  $("#save_budget").submit(function() {
+    $("#set_budget").submit()
+    return false
+  })

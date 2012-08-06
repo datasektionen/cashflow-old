@@ -1,4 +1,6 @@
-= content_tag :div, 'Visa/dölj filter', :id => 'purchase_filter_toggle', :class => 'btn'
+= content_tag :div, :id => 'purchase_filter_toggle', :class => 'btn' do
+  %i.icon-search
+  Visa/dölj filter
 = content_tag :div, :id => 'purchase_filter' do
   = form_tag purchases_path, method: :get, class: "form form-inline" do
     = field_set_tag("Filter") do 
@@ -20,7 +22,7 @@
     = field_set_tag('Ändringsdatum') do
       = filter_date_range_tags :updated_at
 
-    %button#filter_submit.btn.btn-primary Filtrera!
+    = submit_tag 'Filtrera', id: 'filter_submit', class: 'btn btn-primary'
 
 :javascript
   $('#purchase_status_filter .btn').click(function() {

@@ -1,25 +1,27 @@
-.row-fluid
-  .offset2.span10
-    %h1= t('.title')
+%h2= t('.title')
 
-.row-fluid
-  .span3
-    .well{ style: "padding: 8px 0;" }
-      = render_navigation(level: 2, renderer: BootstrapMenuList, bootstrap_menu_type: "nav-list")
-  .span9
-    %table.table.table-striped
-      %thead
-        %tr
-          %th= t 'activerecord.attributes.product_type.name'
-          %th= t 'activerecord.attributes.product_type.description'
-          - if can?(:manage, ProductType)
-            %th.actions
-      %tbody
-        - for product_type in @product_types
-          %tr
-            %td= link_to product_type, product_type
-            %td= product_type.description
-            - if can?(:manage, ProductType)
-              %td
-                = link_to t('edit'), edit_product_type_path(product_type)
-                = button_to t('destroy'), product_type, :confirm => t('are_you_sure'), :method => :delete
+%table.table.table-striped
+  %thead
+    %tr
+      %th= t 'activerecord.attributes.product_type.name'
+      %th= t 'activerecord.attributes.product_type.description'
+      - if can?(:manage, ProductType)
+        %th.actions
+  %tbody
+    - for product_type in @product_types
+      %tr
+        %td= link_to product_type, product_type
+        %td= product_type.description
+        - if can?(:manage, ProductType)
+          %td
+            = link_to edit_product_type_path(product_type), class: 'btn' do
+              %i.icon-pencil
+              = t('edit')
+            = link_to product_type, confirm: t('are_you_sure'), method: :delete, class: 'btn btn-danger' do
+              %i.icon-trash
+              = t('destroy')
+
+.well
+  = link_to new_product_type_path, class: 'btn btn-info' do
+    %i.icon-file
+    Ny produkttyp
