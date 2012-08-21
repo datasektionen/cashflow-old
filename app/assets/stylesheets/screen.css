@@ -41,3 +41,8 @@ progress::-webkit-progress-bar {
 .pagination {
   text-align: center;
 }
+
+img.xfinger {
+  max-height: 80px;
+  max-width: 80px;
+}
