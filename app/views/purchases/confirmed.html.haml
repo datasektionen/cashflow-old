@@ -18,4 +18,5 @@
           %td
             = check_box_tag "pay[#{person.id}]"
             = label_tag "pay[#{person.id}]", "Betala"
-  = submit_tag
+
+  = submit_tag "Betala!", class: 'btn btn-primary'
