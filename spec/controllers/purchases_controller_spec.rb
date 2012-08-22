@@ -134,4 +134,19 @@ describe PurchasesController do
     end
   end
 
+  describe "GET confirmed" do
+    it "calls only fetches payable purchases" do
+      Purchase.should_receive(:payable_grouped_by_person).and_return([])
+
+      get :confirmed
+    end
+  end
+
+  describe "POST pay_multiple" do
+    it "only fetches payable purchases" do
+      Purchase.should_receive(:payable).and_return([])
+
+      post :pay_multiple,  :pay => {}
+    end
+  end
 end

@@ -40,6 +40,7 @@ class Purchase < ActiveRecord::Base
   scope :confirmed , where(:workflow_state => %w[confirmed edited])
   scope :keepable, where(:workflow_state => :paid)
   scope :accepted, where(:workflow_state => %w[confirmed bookkept paid finalized])
+  scope :payable,  where(:workflow_state => %w[confirmed bookkept])
   
   # workflow for Purchase model
   #                                   :keep --> (bookkept) -- :pay --
@@ -187,5 +188,20 @@ class Purchase < ActiveRecord::Base
     unless BudgetRow.find_by_year(self.year)
       BudgetRow.create_rows_if_not_exists(self.year)
     end
+  end
+
+  def self.payable_grouped_by_person
+    Purchase.payable.
+      group_by{|p| p.person }.map{|person, purchases| {person => purchases.sum(&:total)} }.
+      inject({}){|hash, person| hash.merge(person)}
+  end
+
+  def self.pay_multiple!(params)
+    people_ids = params[:pay].collect {|k,v| k if v.to_i == 1 }
+    purchases = Purchase.where(:person_id => people_ids).payable
+
+    purchases.map(&:pay!)
+
+    purchases.map(&:id)
   end
 end
