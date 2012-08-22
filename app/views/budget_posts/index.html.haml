@@ -16,8 +16,8 @@
   %tbody
     - for budget_post in @budget_posts
       %tr{ :class => cycle(:odd, :even) }
-        %td= budget_post.name
-        %td= budget_post.business_unit
+        %td= link_to budget_post.name, budget_post
+        %td= link_to budget_post.business_unit, budget_post.business_unit
         - if can?(:manage, BudgetPost)
           %td
             = link_to edit_budget_post_path(budget_post), class: 'btn' do

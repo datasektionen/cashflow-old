@@ -1,6 +1,6 @@
 class BudgetPost < ActiveRecord::Base
   has_many :purchases, :dependent => :restrict
-  has_many :budget_rows, :dependent => :destroy
+  has_many :budget_rows, :dependent => :destroy, :order => 'year desc'
   belongs_to :business_unit
 
   validates :mage_arrangement_number, :presence=>true
