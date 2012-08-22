@@ -3,8 +3,10 @@
     .span12
       .hero-unit
         .row-fluid
-          .pull-left= xfinger_image(@person)
-          %h1= @person.name
+          .span1
+            = xfinger_image(@person)
+          .span11
+            %h1= @person.name
 
   = render(:partial => 'info', :locals => {:person => @person})
 

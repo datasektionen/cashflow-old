@@ -45,4 +45,5 @@ progress::-webkit-progress-bar {
 img.xfinger {
   max-height: 80px;
   max-width: 80px;
+  border: 1px #ddd solid;
 }
