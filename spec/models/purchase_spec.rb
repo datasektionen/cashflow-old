@@ -169,4 +169,46 @@ describe Purchase do
     @purchase.slug.should_not be_blank
     @purchase.slug.should =~ /-#{@purchase.id}$/
   end
+
+  describe ".payable" do
+    before(:all) do
+      stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").to_return(:status => 200, :body => "", :headers => {})
+      @purchases = {
+        :new => Factory(:purchase),
+        :confirmed => Factory(:purchase, :workflow_state => 'confirmed'),
+        :edited => Factory(:purchase, :workflow_state => 'edited'),
+        :bookkept => Factory(:purchase, :workflow_state => 'bookkept'),
+        :paid => Factory(:purchase, :workflow_state => 'paid'),
+        :finalized => Factory(:purchase)
+      }
+
+      @purchases[:finalized].update_attribute(:workflow_state, 'finalized')
+
+    end
+
+    %w[confirmed bookkept].each do |state|
+      it "should include #{state} purchase" do
+        Purchase.payable.should include(@purchases[state.to_sym])
+      end
+    end
+
+    %w[new edited paid finalized].each do |state|
+      it "should include #{state} purchase" do
+        Purchase.payable.should_not include(@purchases[state.to_sym])
+      end
+    end
+
+    after(:all) do
+      stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").to_return(:status => 200, :body => "", :headers => {})
+      @purchases.values.map(&:destroy)
+    end
+  end
+
+  describe ".payable_grouped_by_person" do
+    pending("write some tests")
+  end
+
+  describe ".pay_payable_by!" do
+    pending("write some tests")
+  end
 end
