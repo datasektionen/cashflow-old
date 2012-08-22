@@ -2,3 +2,21 @@
 
 %article
   %p #{t('activerecord.models.business_unit')}: #{@budget_post.business_unit}
+
+  %h2 Historik
+  %table.table.table-striped
+    %thead
+      %tr
+        %th= t 'activerecord.attributes.budget_row.year'
+        %th= t 'activerecord.attributes.budget_post.budget'
+        %th= t 'activerecord.attributes.budget_post.used'
+        %th
+    %tbody
+      - @budget_post.budget_rows.each do |row|
+        %tr
+          %td= row.year
+          %td= row.sum 
+          %td= row.total
+          %td
+            %progress{ min: 0, max: row.sum, value: row.total, style: "vertical-align: middle"}
+
