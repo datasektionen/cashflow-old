@@ -29,7 +29,7 @@ describe Person do
       @person.send(attribute).should == attr_value
     end
   end
-  
+
   it "should correctly sum the total of all debts" do
     # make sure it can count the total of one debt.
     d1 = Factory :debt, :person_id => @person.id

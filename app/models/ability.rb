@@ -16,7 +16,10 @@ class Ability
         can [:index, :new, :create], Person
         can [:edit, :update], Person, :id => user.id
         can :manage, [Purchase, PurchaseItem, Debt, BusinessUnit, ProductType, BudgetPost]
-		  can :edit, :purchase_owner
+		    can :edit, :purchase_owner
+      elsif user.is? :bookkeeper
+        can :index, [Person, Purchase, Debt, BusinessUnit, ProductType, BudgetPost]
+        can :bookkeep, [Purchase]
       elsif user.is? :accountant
         # Accountants should be able to read everything
         can :read, :all

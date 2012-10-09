@@ -135,6 +135,7 @@ class PurchasesController < ApplicationController
   end
 
   def keep
+    authorize :bookkeep, Purchase
     @purchase.keep!
     respond_to do |format|
       format.html { redirect_to(purchase_path(@purchase))}
