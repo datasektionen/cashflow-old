@@ -1,6 +1,6 @@
 %h1 Bekräftade inköp
 
-= form_tag pay_multiple_purchases_path, :method => :put do
+= form_tag pay_and_keep_multiple_purchases_path, :method => :put do
   %table.datatable.table.table-striped
     %thead
       %tr
@@ -17,6 +17,6 @@
           %td= currency sum
           %td
             = check_box_tag "pay[#{person.id}]"
-            = label_tag "pay[#{person.id}]", "Betala"
+            = label_tag "pay[#{person.id}]", "Betala & Bokför"
 
   = submit_tag "Betala!", class: 'btn btn-primary'
