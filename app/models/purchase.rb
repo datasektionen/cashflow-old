@@ -192,17 +192,23 @@ class Purchase < ActiveRecord::Base
 
   def self.payable_grouped_by_person_and_unit
     Purchase.payable.
-      group_by{|p| p.person }.group_by{|p| p.business_unit }.map{|person, purchases| {person => purchases.sum(&:total)} }.
-      inject({}){|hash, person| hash.merge(person)}
+      joins(:person, budget_post: [:business_unit]).
+      order('people.last_name').
+      group_by{|p| [p.person, p.business_unit] }.
+      map{|pbu, purchases| [*pbu, purchases.map(&:id), purchases.sum(&:total)] }
   end
 
   def self.pay_and_keep_multiple!(params)
-    people_ids = params[:pay].collect {|k,v| k if v.to_i == 1 }
-    purchases = Purchase.where(:person_id => people_ids).payable
+    purchase_ids = params.
+      select{|_,v| v.to_i == 1 }.
+      flat_map{|k,_| k.split('-') }
+    purchases = Purchase.where(id: purchase_ids)
 
-    purchases.map(&:pay!)
-    purchases.map(&:keep!)
-
-    purchases.map(&:id)
+    purchases.each do |purchase|
+      purchase.transaction do
+        purchase.pay!
+        purchase.keep!
+      end
+    end
   end
 end

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class PurchasesController < ApplicationController
   load_and_authorize_resource :except => [:confirmed, :pay_and_keep_multiple]
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
@@ -103,7 +105,7 @@ class PurchasesController < ApplicationController
   def confirmed
     authorize! :manage, Purchase
 
-    @purchases = Purchase.payable_grouped_by_person_and_unit
+    @payables = Purchase.payable_grouped_by_person_and_unit
 
     respond_to do |format|
       format.html # index.html.erb
@@ -114,10 +116,10 @@ class PurchasesController < ApplicationController
   def pay_and_keep_multiple
     authorize! :manage, Purchase
 
-    purchase_ids = Purchase.pay_and_keep_multiple!(params)
+    purchases = Purchase.pay_and_keep_multiple!(params[:pay_and_keep])
 
     respond_to do |format|
-      format.html { redirect_to(confirmed_purchases_path, :notice => "Betalda och bokförda (#{purchase_ids})!") }
+      format.html { redirect_to(confirmed_purchases_path, :notice => "Betalda och bokförda (#{purchases.map(&:id)})!") }
     end
   end
 

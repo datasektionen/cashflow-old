@@ -17,7 +17,7 @@ Cashflow::Application.routes.draw do
     resources :purchases do
       collection do
         get :confirmed
-        put :pay_multiple
+        put :pay_and_keep_multiple
       end
       member do
         put :confirm
