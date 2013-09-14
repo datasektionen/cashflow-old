@@ -7,6 +7,7 @@ common: &common
   mage_url: "http://mage.staging.datasektionen.se"
   mage_apikey: KEY
   mage_private_apikey: private_key
+  secret_token: "herp derp somerandom hash"
 
 development: &development
   <<: *common
