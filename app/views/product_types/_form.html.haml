@@ -2,6 +2,6 @@
  = form.inputs :name => "Attribut" do
   = form.input :name
   = form.input :description
-  = form.input :mage_account_number, :as=>:select, :collection=>Mage::Account.all.map{|a| ["#{a.number}-#{a.name}", a.number]}
+  = form.input :mage_account_number, as: :select, collection: Mage::Account.all.map{|a| ["#{a.number}-#{a.name}", a.number]}
  = form.buttons do
   = form.commit_button :commit

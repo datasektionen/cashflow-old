@@ -50,6 +50,14 @@ if [ ! -f config/sunspot.yml ]; then
     exit 1
 fi
 
+# fake mage config
+if [ ! -f config/mage_fake_values.yml ]; then
+  echo "[-] No fake mage config found, copying template..."
+  cp config/fake_mage.yml.sample config/fake_mage.yml
+  echo "[-] Now, go ahead and update config/fake_mage.yml to match your setup!"
+  exit 1
+fi
+
 # Setup rake tasks
 echo "[+] Running setup rake tasks..."
 bundle exec rake db:create db:migrate db:seed sunspot:reindex
