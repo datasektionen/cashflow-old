@@ -95,7 +95,7 @@ protected
       return data
     else
       puts "Invalid return code (#{res.code})"
-      # errors = data["errors"] if item
+      item.errors = data["errors"] if item
       return false
     end
   end
