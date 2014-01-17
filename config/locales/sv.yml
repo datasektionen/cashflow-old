@@ -489,7 +489,7 @@
     all_budget_posts: "Alla budgetposter"
     new_budget_post: "Ny budgetpost"
   
-  mailer:
+  mailers:
     notifier:
       purchase_created: "Inköp skapat"
       purchase_approved: "Inköp godkänt"
