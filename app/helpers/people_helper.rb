@@ -1,5 +1,12 @@
 module PeopleHelper
   def xfinger_image(person)
-    image_tag("http://www.csc.kth.se/hacks/new/xfinger/image.php?user=#{person.login}", class: "xfinger", alt: "xfinger", title: "xfinger")
+    size = "80x80"
+    url = "http://dumnaglar.datasektionen.se/"
+    image_tag(
+      "#{url}/#{person.login}/#{size}",
+      class: "xfinger",
+      alt: "xfinger",
+      title: "xfinger"
+    )
   end
 end
