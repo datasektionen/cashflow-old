@@ -15,7 +15,7 @@ describe Ability do
     it "should be able to index people" do
       @ability.should be_able_to(:index, Person)
     end
-    
+
     it "should be able to manage purchases" do
       @ability.should be_able_to(:manage, Purchase.new)
       @ability.should be_able_to(:manage, PurchaseItem.new)
@@ -39,7 +39,7 @@ describe Ability do
       @user = Factory(:treasurer)
       @ability = Ability.new(@user)
     end
-    
+
     %w[create index].each do |action|
       it "should be able to #{action} people" do
         @ability.should be_able_to(action.to_sym, Person)
@@ -82,7 +82,7 @@ describe Ability do
       @user = Factory(:bookkeeper)
       @ability = Ability.new(@user)
     end
-    
+
     %w[index].each do |action|
       it "should be able to #{action} people" do
         @ability.should be_able_to(action.to_sym, Person)
@@ -121,6 +121,10 @@ describe Ability do
 
     it "should be able to bookkeep purchases" do
       @ability.should be_able_to(:bookkeep, Purchase.new)
+    end
+
+    it "should be able to mark purchases as paid" do
+      @ability.should be_able_to(:pay, Purchase.new)
     end
   end
 
@@ -171,7 +175,7 @@ describe Ability do
       @ability.should be_able_to(:edit, @user)
       @ability.should be_able_to(:update, @user)
     end
-    
+
     it "should not be able to edit its own debts" do
       @ability.should_not be_able_to(:edit, @user.debts.new)
     end
