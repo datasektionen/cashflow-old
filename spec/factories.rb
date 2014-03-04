@@ -100,16 +100,10 @@ Factory.define :purchase_item do |f|
   f.amount    { 17.0 }
 end
 
-Factory.define :admin, :parent => :person do |f|
-  f.role "admin"
-end
-
-Factory.define :treasurer, :parent => :person do |f|
-  f.role "treasurer"
-end
-
-Factory.define :accountant, :parent => :person do |f|
-  f.role "accountant"
+Person::ROLES.each do |role|
+  Factory.define role.to_sym, :parent => :person do |f|
+    f.role role
+  end
 end
 
 Factory.define :budget_post do |f|

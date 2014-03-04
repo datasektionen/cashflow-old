@@ -2,7 +2,6 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    
     if user
       can [:edit, :update, :show], Person, :id => user.id
       can [:read, :create, :edit, :update, :show], Purchase, :person_id => user.id
@@ -16,7 +15,11 @@ class Ability
         can [:index, :new, :create], Person
         can [:edit, :update], Person, :id => user.id
         can :manage, [Purchase, PurchaseItem, Debt, BusinessUnit, ProductType, BudgetPost]
-		  can :edit, :purchase_owner
+        can :edit, :purchase_owner
+      elsif user.is? :bookkeeper
+        can :index, [Person, Purchase, Debt, BusinessUnit, ProductType, BudgetPost]
+        can :bookkeep, [Purchase]
+        can :pay, [Purchase]
       elsif user.is? :accountant
         # Accountants should be able to read everything
         can :read, :all
