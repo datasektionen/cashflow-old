@@ -7,8 +7,8 @@ class Notifier < ActionMailer::Base
   def purchase_created(purchase)
     @purchase = purchase
     @administrator = purchase.last_updated_by
-    mail(:to => @purchase.person.email, 
-         :subject => I18n.t('mailers.notifier.purchase_created'), 
+    mail(:to => @purchase.person.email,
+         :subject => I18n.t('mailers.notifier.purchase_created'),
          :cc => @administrator.email,
          :reply_to => @administrator.email
         ) do |format|
@@ -19,8 +19,8 @@ class Notifier < ActionMailer::Base
   def purchase_approved(purchase)
     @purchase = purchase
     @administrator = purchase.last_updated_by
-    mail(:to => @purchase.person.email, 
-         :subject => I18n.t('mailers.notifier.purchase_approved'), 
+    mail(:to => @purchase.person.email,
+         :subject => I18n.t('mailers.notifier.purchase_approved'),
          :cc => @administrator.email,
          :reply_to => @administrator.email
         ) do |format|
@@ -31,8 +31,8 @@ class Notifier < ActionMailer::Base
   def purchase_denied(purchase)
     @purchase = purchase
     @administrator = purchase.last_updated_by
-    mail(:to => @purchase.person.email, 
-         :subject => I18n.t('mailers.notifier.purchase_denied'), 
+    mail(:to => @purchase.person.email,
+         :subject => I18n.t('mailers.notifier.purchase_denied'),
          :cc => @administrator.email,
          :reply_to => @administrator.email
         ) do |format|
@@ -57,8 +57,8 @@ class Notifier < ActionMailer::Base
   def debt_created(debt)
     @debt = debt
     @administrator = debt.author
-    mail(:to => @debt.person.email, 
-         :subject => I18n.t('mailers.notifier.debt_created'), 
+    mail(:to => @debt.person.email,
+         :subject => I18n.t('mailers.notifier.debt_created'),
          :cc => @administrator.email,
          :reply_to => @administrator.email
         ) do |format|
@@ -69,8 +69,8 @@ class Notifier < ActionMailer::Base
   def debt_paid(debt)
     @debt = debt
     @administrator = debt.last_updated_by
-    mail(:to => @debt.person.email, 
-         :subject => I18n.t('mailers.notifier.debt_paid'), 
+    mail(:to => @debt.person.email,
+         :subject => I18n.t('mailers.notifier.debt_paid'),
          :cc => @administrator.email,
          :reply_to => @administrator.email
         ) do |format|

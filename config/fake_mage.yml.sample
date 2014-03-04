@@ -1,0 +1,18 @@
+mage:
+  account:
+    all:
+      - number: 1
+        name: FAKE
+  organ:
+    all:
+      - number: 1
+        name: FAKE
+  series:
+    all:
+      - letter: A
+        name: FAKE
+  arrangement:
+    all:
+      - number: 1
+        name: FAKE
+        

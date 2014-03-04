@@ -1,3 +1,5 @@
+require 'yaml'
+
 class Mage::Base
   @@create_action = "create"
   @@after_initialize=[]
@@ -28,7 +30,7 @@ class Mage::Base
 
   # Handle getters, setters and ?-methods
   def method_missing(method,*args)
-    if method.match /([^=?]+)([=?])?/
+    if method.match(/([^=?]+)([=?])?/)
       index = $1.to_sym
       if $2=="="
         @attr[index] = args[0]
@@ -55,6 +57,8 @@ class Mage::Base
 
   # Returns all objects of this type
   def self.all
+    return fake("#{name.downcase.gsub(/::/,'.')}.all") if Cashflow::Application.settings[:fake_mage]
+
     res = Mage::ApiCall.call("/#{table_name.pluralize}.json",nil,{}, :get)
     p = parse_result(res)
     if p
@@ -91,7 +95,7 @@ protected
       return data
     else
       puts "Invalid return code (#{res.code})"
-      errors = data["errors"] if item
+      item.errors = data["errors"] if item
       return false
     end
   end
@@ -100,7 +104,7 @@ protected
   # Converts Mage::NameInCamelCase to name_in_camel_case
   # If this model is not in Mage namespace it returns false
   def self.table_name
-    if name.match /Mage::(.+)/
+    if name.match(/Mage::(.+)/)
       return $1.underscore
     else
       false
@@ -121,4 +125,16 @@ protected
   def self.before_initialize(method)
     @@before_initialize << method
   end
+
+  # Fake a mage call
+  def self.fake(key)
+    yml = YAML.load(File.read(Rails.root.join('config', 'fake_mage.yml'), encoding: "utf-8"))
+    values = key.split('.').reduce(yml) { |memo, part| memo[part] }
+    if values.is_a?(Array)
+      return values.map {|value| OpenStruct.new(value)}
+    else
+      return OpenStruct.new(values)
+    end
+  end
 end
+

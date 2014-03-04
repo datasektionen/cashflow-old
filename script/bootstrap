@@ -28,26 +28,26 @@ fi
 
 # Database config
 if [ ! -f config/database.yml ]; then
-    echo "[-] No database config found, copying template..."
+    echo "[+] No database config found, copying template..."
     cp config/database.yml.sample config/database.yml
-    echo "[-] Now, go ahead and update config/database.yml to match your setup!"
-    exit 1
 fi
 
 # Local user config
 if [ ! -f config/local.yml ]; then
-    echo "[-] No local user config found, copying template..."
+    echo "[+] No local user config found, copying template..."
     cp config/local.yml.sample config/local.yml
-    echo "[-] Now, go ahead and fill in config/local.yml with your details!"
-    exit 1
 fi
 
 # Sunspot config
 if [ ! -f config/sunspot.yml ]; then
-    echo "[-] No sunspot config found, copying template..."
+    echo "[+] No sunspot config found, copying template..."
     cp config/sunspot.yml.sample config/sunspot.yml
-    echo "[-] Now, go ahead and update config/sunspot.yml to match your setup!"
-    exit 1
+fi
+
+# Fake MAGE config
+if [ ! -f config/mage_fake.yml ]; then
+    echo "[+] No fake MAGE config found, copying template..."
+    cp config/fake_mage.yml.sample config/fake_mage.yml
 fi
 
 # Setup rake tasks
