@@ -53,7 +53,6 @@ group :test do
   gem 'guard-rspec'
   gem 'guard-cucumber'
   gem 'rb-inotify'
-  gem 'libnotify'
   gem 'launchy'    # So you can do Then show me the page
   gem 'factory_girl_rails'
   gem 'libnotify'
