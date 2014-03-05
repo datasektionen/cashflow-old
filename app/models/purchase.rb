@@ -2,7 +2,7 @@ class Purchase < ActiveRecord::Base
   include Workflow
   has_paper_trail
   has_friendly_id :slug
-  
+
   belongs_to :person
   belongs_to :budget_post
 
@@ -10,16 +10,16 @@ class Purchase < ActiveRecord::Base
   before_validation :set_year
 
   has_many :items, :class_name => "PurchaseItem", :dependent => :destroy
-  
+
   validates_presence_of :person, :description, :purchased_at, :budget_post
-  
+
   validate :cannot_purchase_stuff_in_the_future, :locked_when_finalized
-  
+
   attr_readonly :person, :person_id
 
   delegate :business_unit, :to => :budget_post
   delegate :business_unit_id, :to => :budget_post
-  
+
   before_validation :generate_slug
   after_save :generate_slug
 
@@ -35,13 +35,13 @@ class Purchase < ActiveRecord::Base
     text :description
     float :total
   end
-  
+
   scope :unpaid, where(:workflow_state => %w[new edited confirmed bookkept])
   scope :confirmed , where(:workflow_state => %w[confirmed edited])
   scope :keepable, where(:workflow_state => :paid)
   scope :accepted, where(:workflow_state => %w[confirmed bookkept paid finalized])
   scope :payable,  where(:workflow_state => %w[confirmed bookkept])
-  
+
   # workflow for Purchase model
   #                                   :keep --> (bookkept) -- :pay --
   #                                /                                  \
@@ -53,36 +53,36 @@ class Purchase < ActiveRecord::Base
   #     \                   \
   #      \                   \
   #       ------------------> :cancel -->  (cancelled)
-  # 
+  #
   workflow do
     state :new do
       event :confirm, :transitions_to => :confirmed
       event :cancel, :transitions_to => :cancelled
       event :edit, :transitions_to => :edited
     end
-    
-    
+
+
     state :edited do
       event :cancel, :transitions_to => :cancelled
       event :confirm, :transitions_to => :confirmed
     end
-    
+
     state :confirmed do
       event :edit, :transitions_to => :edited
       event :pay, :transitions_to => :paid
       event :keep, :transitions_to => :bookkept
     end
-    
+
     state :paid do
       event :keep, :transitions_to => :finalized
     end
-    
+
     state :bookkept do
       event :pay, :transitions_to => :finalized
     end
-    
+
     state :finalized
-    
+
     state :cancelled
   end
 
@@ -106,7 +106,7 @@ class Purchase < ActiveRecord::Base
   def total
     items.inject(0) {|sum,i| sum += i.amount }
   end
-  
+
   # Check whether a purchase is editable
   # A purchase is editable if it's in any of the "new", "edited" or "confirmed" states.
   def editable?
@@ -153,14 +153,14 @@ class Purchase < ActiveRecord::Base
   end
 
   protected
-  
+
   def cannot_purchase_stuff_in_the_future
     if !self.purchased_at.blank? && self.purchased_at > Date.today
       errors.add(:base, I18n.t('activerecord.errors.models.purchase.purchased_in_future'))
       errors.add(:purchased_at, I18n.t('activerecord.errors.models.purchase.attributes.purchased_at.purchased_in_future'))
     end
   end
-  
+
   def locked_when_finalized
     errors.add(:base, I18n.t('activerecord.errors.models.purchase.finalized')) if finalized?
   end
@@ -170,7 +170,7 @@ class Purchase < ActiveRecord::Base
       self.slug = "temp-slug-#{Time.now}"
       return true
     end
-    
+
     slug = "%s%d-%d" % [self.business_unit.try(:short_name), self.year.to_i, self.id]
 
     if self.slug !~ /#{slug}/
@@ -190,18 +190,25 @@ class Purchase < ActiveRecord::Base
     end
   end
 
-  def self.payable_grouped_by_person
+  def self.payable_grouped_by_person_and_unit
     Purchase.payable.
-      group_by{|p| p.person }.map{|person, purchases| {person => purchases.sum(&:total)} }.
-      inject({}){|hash, person| hash.merge(person)}
+      joins(:person, budget_post: [:business_unit]).
+      order('people.last_name').
+      group_by{|p| [p.person, p.business_unit] }.
+      map{|pbu, purchases| [*pbu, purchases.map(&:id), purchases.sum(&:total)] }
   end
 
-  def self.pay_multiple!(params)
-    people_ids = params[:pay].collect {|k,v| k if v.to_i == 1 }
-    purchases = Purchase.where(:person_id => people_ids).payable
+  def self.pay_and_keep_multiple!(params)
+    purchase_ids = params.
+      select{|_,v| v.to_i == 1 }.
+      flat_map{|k,_| k.split('-') }
+    purchases = Purchase.where(id: purchase_ids)
 
-    purchases.map(&:pay!)
-
-    purchases.map(&:id)
+    purchases.each do |purchase|
+      purchase.transaction do
+        purchase.pay!
+        purchase.keep!
+      end
+    end
   end
 end

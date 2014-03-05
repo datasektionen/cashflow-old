@@ -1,7 +1,9 @@
+# encoding: utf-8
+
 class PurchasesController < ApplicationController
-  load_and_authorize_resource :except => [:confirmed, :pay_multiple]
+  load_and_authorize_resource :except => [:confirmed, :pay_and_keep_multiple]
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
-  
+
   expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
   # GET /purchases
@@ -103,21 +105,21 @@ class PurchasesController < ApplicationController
   def confirmed
     authorize! :manage, Purchase
 
-    @purchases = Purchase.payable_grouped_by_person
-    
+    @payables = Purchase.payable_grouped_by_person_and_unit
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @purchases }
     end
   end
 
-  def pay_multiple
+  def pay_and_keep_multiple
     authorize! :manage, Purchase
-    
-    purchase_ids = Purchase.pay_multiple!(params)
-    
+
+    purchases = Purchase.pay_and_keep_multiple!(params[:pay_and_keep])
+
     respond_to do |format|
-      format.html { redirect_to(confirmed_purchases_path, :notice => "Betalda (#{purchase_ids})!") }
+      format.html { redirect_to(confirmed_purchases_path, :notice => "Betalda och bokförda (#{purchases.map(&:id)})!") }
     end
   end
 
@@ -157,7 +159,7 @@ protected
                :url   => purchase_path(@purchase)}
     ]
     if @purchase.editable?
-      @items << { 
+      @items << {
         :key   => :edit_purchase_path,
         :name  => I18n.t('edit'),
         :url   => edit_purchase_path(@purchase)
