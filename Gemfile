@@ -25,6 +25,7 @@ gem 'uglifier'
 gem 'airbrake'
 gem 'kaminari'
 gem 'sunspot_rails'
+gem 'nokogiri', '~> 1.5.4'
 
 group :production do
   gem 'unicorn'

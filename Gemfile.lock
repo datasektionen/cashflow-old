@@ -194,7 +194,7 @@ GEM
     net-ssh (2.2.1)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
-    nokogiri (1.5.0)
+    nokogiri (1.5.11)
     oa-core (0.3.2)
     oa-enterprise (0.3.2)
       XMLCanonicalizer (~> 1.0.1)
@@ -364,6 +364,7 @@ DEPENDENCIES
   mysql2
   net-ldap
   no_peeping_toms!
+  nokogiri (~> 1.5.4)
   oa-core
   oa-enterprise
   paper_trail
