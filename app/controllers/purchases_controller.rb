@@ -1,7 +1,7 @@
 class PurchasesController < ApplicationController
   load_and_authorize_resource :except => [:confirmed, :pay_multiple]
   before_filter :get_items, :only => [:show, :edit, :update, :destroy]
-  
+
   expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
   # GET /purchases
@@ -104,7 +104,7 @@ class PurchasesController < ApplicationController
     authorize! :manage, Purchase
 
     @purchases = Purchase.payable_grouped_by_person
-    
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @purchases }
@@ -113,9 +113,9 @@ class PurchasesController < ApplicationController
 
   def pay_multiple
     authorize! :manage, Purchase
-    
+
     purchase_ids = Purchase.pay_multiple!(params)
-    
+
     respond_to do |format|
       format.html { redirect_to(confirmed_purchases_path, :notice => "Betalda (#{purchase_ids})!") }
     end
@@ -135,7 +135,7 @@ class PurchasesController < ApplicationController
   end
 
   def keep
-    authorize :bookkeep, Purchase
+    authorize! :bookkeep, Purchase
     @purchase.keep!
     respond_to do |format|
       format.html { redirect_to(purchase_path(@purchase))}
@@ -149,7 +149,7 @@ class PurchasesController < ApplicationController
     end
   end
 
-protected
+  protected
 
   def get_items
     @items = [{:key   => :show_purchase_path,
@@ -157,7 +157,7 @@ protected
                :url   => purchase_path(@purchase)}
     ]
     if @purchase.editable?
-      @items << { 
+      @items << {
         :key   => :edit_purchase_path,
         :name  => I18n.t('edit'),
         :url   => edit_purchase_path(@purchase)
@@ -165,7 +165,7 @@ protected
     end
   end
 
-private
+  private
 
   def filter_param name
     params[:filter].try(:[], name.to_s)
