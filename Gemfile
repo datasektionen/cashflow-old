@@ -13,6 +13,7 @@ gem 'formtastic-bootstrap',
   branch: 'bootstrap-2'
 gem 'friendly_id'
 gem 'haml-rails'
+gem 'haml-contrib'
 gem 'i18n_routing'
 gem 'jquery-rails', '~>1.0.19'
 gem 'kaminari'
