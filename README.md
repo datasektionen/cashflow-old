@@ -15,7 +15,7 @@ or
 
     sudo apt-get install mysql-server libmysqlclient-dev
 
-2. Run `script/bootstrap`. If you are prompted for a database password: kill the
+3. Run `script/bootstrap`. If you are prompted for a database password: kill the
 script with C-c, update `config/database.yml` with your database credentials and
 try again.
 
@@ -33,7 +33,7 @@ try again.
 
     bundle exec rails server
 
-replacing KTHID with your KTH username, like koronen.
+replacing KTHID with your KTH username, like `koronen`.
 
 ## Running the tests
 
