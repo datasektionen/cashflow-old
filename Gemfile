@@ -57,9 +57,3 @@ group :test do
   gem 'shoulda', '>= 3.0.0.beta2'
   gem 'webmock'
 end
-
-group :deploy do
-  gem 'capistrano'
-  gem 'capistrano-ext'
-  gem 'capistrano_colors'
-end
