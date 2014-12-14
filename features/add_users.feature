@@ -1,7 +1,7 @@
 Feature: Add users
   In order to make our members happy
   We need to register their info
-  
+
   Scenario: First login
     Given a person exists with the following attributes:
       | ugid | u1dhz6b0 |

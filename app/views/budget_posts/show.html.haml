@@ -15,7 +15,7 @@
       - @budget_post.budget_rows.each do |row|
         %tr
           %td= row.year
-          %td= row.sum 
+          %td= row.sum
           %td= row.total
           %td
             %progress{ min: 0, max: row.sum, value: row.total, style: "vertical-align: middle"}
