@@ -11,7 +11,6 @@ describe 'debts/edit.html.haml' do
     render
 
     # Run the generator again with the --webrat-matchers flag if you want to use webrat matchers
-    assert_select 'form', action: debt_path(@debt), method: 'post' do
-    end
+    assert_select 'form', action: debt_path(@debt), method: 'post'
   end
 end

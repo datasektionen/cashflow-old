@@ -13,7 +13,6 @@ describe 'business_units/edit.html.haml' do
     render
 
     # Run the generator again with the --webrat-matchers flag if you want to use webrat matchers
-    assert_select 'form', action: business_unit_path(@business_unit), method: 'post' do
-    end
+    assert_select 'form', action: business_unit_path(@business_unit), method: 'post'
   end
 end

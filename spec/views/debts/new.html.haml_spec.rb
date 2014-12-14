@@ -9,7 +9,6 @@ describe 'debts/new.html.haml' do
     render
 
     # Run the generator again with the --webrat-matchers flag if you want to use webrat matchers
-    assert_select 'form', action: debts_path, method: 'post' do
-    end
+    assert_select 'form', action: debts_path, method: 'post'
   end
 end
