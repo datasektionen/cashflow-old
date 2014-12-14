@@ -7,5 +7,4 @@ require 'rake'
 Cashflow::Application.load_tasks
 
 Rake::Task[:default].prerequisites.clear
-task :default => [:spec, :cucumber]
-
+task default: [:spec, :cucumber]

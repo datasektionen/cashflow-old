@@ -9,8 +9,8 @@ gem 'decent_exposure'
 gem 'devise'
 gem 'formtastic'
 gem 'formtastic-bootstrap',
-  git: 'git://github.com/cgunther/formtastic-bootstrap.git',
-  branch: 'bootstrap-2'
+    git: 'git://github.com/cgunther/formtastic-bootstrap.git',
+    branch: 'bootstrap-2'
 gem 'friendly_id'
 gem 'haml-rails'
 gem 'haml-contrib'

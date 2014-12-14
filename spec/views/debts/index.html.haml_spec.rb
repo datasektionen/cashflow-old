@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "debts/index.html.haml" do
+describe 'debts/index.html.haml' do
   before(:each) do
     assign(:debts, [
       stub_model(Debt),
@@ -8,7 +8,7 @@ describe "debts/index.html.haml" do
     ])
   end
 
-  it "renders a list of debts" do
+  it 'renders a list of debts' do
     render
   end
 end

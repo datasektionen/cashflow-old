@@ -15,8 +15,8 @@ Given /^I am logged in$/ do
     Given 'a person with the "person" role'
   end
   OmniAuth.config.test_mode = true
-  OmniAuth.config.add_mock(:cas, {uid: @person.ugid})
-  visit("/users/auth/cas")
+  OmniAuth.config.add_mock(:cas, uid: @person.ugid)
+  visit('/users/auth/cas')
 end
 
 Given /^I am admin$/ do

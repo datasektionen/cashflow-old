@@ -1,8 +1,7 @@
 class PeopleController < ApplicationController
-  load_and_authorize_resource :person, :except => :search
+  load_and_authorize_resource :person, except: :search
   before_filter :get_items
-  
-  
+
   # GET /people
   # GET /people.xml
   def index
@@ -10,7 +9,7 @@ class PeopleController < ApplicationController
     authorize! :access, @people
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @people }
+      format.xml  { render xml: @people }
     end
   end
 
@@ -19,7 +18,7 @@ class PeopleController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @person }
+      format.xml  { render xml: @person }
     end
   end
 
@@ -30,7 +29,7 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @person }
+      format.xml  { render xml: @person }
     end
   end
 
@@ -41,18 +40,17 @@ class PeopleController < ApplicationController
   # POST /people
   # POST /people.xml
   def create
-    search_options = params[:person].slice(*%w[login ugid email])
+    search_options = params[:person].slice(*%w(login ugid email))
     @person = Person.where(search_options).first unless search_options.blank?
     @person ||= Person.from_ldap(search_options)
-    
 
     respond_to do |format|
       if @person.save
-        format.html { redirect_to(@person, :notice => I18n.t('notices.person.success.created')) }
-        format.xml  { render :xml => @person, :status => :created, :location => @person }
+        format.html { redirect_to(@person, notice: I18n.t('notices.person.success.created')) }
+        format.xml  { render xml: @person, status: :created, location: @person }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.xml  { render xml: @person.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -66,45 +64,45 @@ class PeopleController < ApplicationController
     end
     respond_to do |format|
       if @person.update_attributes(params[:person])
-        format.html { redirect_to(@person, :notice => I18n.t('notices.person.success.created')) }
+        format.html { redirect_to(@person, notice: I18n.t('notices.person.success.created')) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @person.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def search
-    search_options = params.slice(*%w[login ugid email])
+    search_options = params.slice(*%w(login ugid email))
     Rails.logger.info(search_options)
 
     respond_to do |format|
       format.json do
         if Person.where(search_options).any? && person = Person.where(search_options).first
-           render :json => {:person => {:name => person.name}, :error => I18n.t('activerecord.errors.models.person.exists'), :url => person_url(person)}
+          render json: { person: { name: person.name }, error: I18n.t('activerecord.errors.models.person.exists'), url: person_url(person) }
         else
           person = Person.from_ldap(search_options)
           Rails.logger.info(person)
-          render :json => person.to_json
+          render json: person.to_json
         end
       end
     end
   end
 
   protected
+
   def get_items
     if @person && @person.persisted?
       @items = [
-        {key: :show_person, name: @person.name, url: person_path(@person)},
-        {key: :edit_person, name: I18n.t('edit'), url: edit_person_path(@person)},
+        { key: :show_person, name: @person.name, url: person_path(@person) },
+        { key: :edit_person, name: I18n.t('edit'), url: edit_person_path(@person) }
       ]
     else
       @items = [
-        {key: :all_people, name: I18n.t('navigation.all_people'), url: people_path},
-        {key: :new_person, name: I18n.t('navigation.new_person'), url: new_person_path}
+        { key: :all_people, name: I18n.t('navigation.all_people'), url: people_path },
+        { key: :new_person, name: I18n.t('navigation.new_person'), url: new_person_path }
       ]
     end
   end
 end
-

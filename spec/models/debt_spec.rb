@@ -7,8 +7,8 @@ describe Debt do
   before(:each) do
     @debt = Factory :debt
   end
-  
-  %w[description amount].each do |attribute|
+
+  %w(description amount).each do |attribute|
     it "should be invalid without an attribute #{attribute}" do
       @debt.send("#{attribute}=", nil)
       @debt.should be_invalid
@@ -16,99 +16,99 @@ describe Debt do
     end
   end
 
-  %w[person business_unit].each do |relation|
+  %w(person business_unit).each do |relation|
     it "should be invalid without a relation #{relation}" do
       @debt.send(relation).should_not be_nil
-      @debt.send("#{relation}=",nil)
+      @debt.send("#{relation}=", nil)
       @debt.should be_invalid
       @debt.errors[relation.to_sym].should_not be_empty
     end
   end
 
   it "should have a starting workflow_state \"new\"" do
-    @debt.workflow_state.should == "new"
+    @debt.workflow_state.should == 'new'
   end
-  
-  it "should be cancelable when new" do
-    @debt.versions.last.update_attribute(:whodunnit,@admin.id)
+
+  it 'should be cancelable when new' do
+    @debt.versions.last.update_attribute(:whodunnit, @admin.id)
     @debt.cancel!
     @debt.save
     @debt.should be_valid
     @debt.should be_anulled
   end
-  
-  it "should not be editable once finalized" do
-    @debt.update_attribute(:workflow_state, "finalized")
+
+  it 'should not be editable once finalized' do
+    @debt.update_attribute(:workflow_state, 'finalized')
     @debt.save.should be_false
   end
-  
+
   # finalized not present here since a Debt should never be editable at all when finalized
-  %w[paid bookkept anulled].each do |state|
+  %w(paid bookkept anulled).each do |state|
     it "should not be cancelable once #{state}" do
       @debt.workflow_state = state
       @debt.save
       @debt.should be_valid
       @debt.cancellable?.should be_false
       @debt.send("#{state}?").should be_true
-      lambda {@debt.cancel!}.should raise_error(Workflow::NoTransitionAllowed)
+      lambda { @debt.cancel! }.should raise_error(Workflow::NoTransitionAllowed)
     end
   end
-  
-  it "should not allow mass update of workflow state" do
-    attrs = {:workflow_state => "foobar"}
+
+  it 'should not allow mass update of workflow state' do
+    attrs = { workflow_state: 'foobar' }
     @debt.update_attributes(attrs)
     @debt.save
     @debt.should be_valid
-    @debt.workflow_state.should_not == "foobar"
+    @debt.workflow_state.should_not == 'foobar'
   end
-  
-  %w[new bookkept].each do |state|
+
+  %w(new bookkept).each do |state|
     it "should be payable if #{state}" do
       @debt.workflow_state = state
       @debt.save
       @debt.payable?.should be_true
       @debt.should be_valid
-      @debt.versions.last.update_attribute(:whodunnit,@admin.id)
-      lambda {@debt.pay!}.should_not raise_error
+      @debt.versions.last.update_attribute(:whodunnit, @admin.id)
+      lambda { @debt.pay! }.should_not raise_error
     end
   end
-  
-  %w[new paid].each do |state|
+
+  %w(new paid).each do |state|
     it "should be 'bookkeepable' if #{state}" do
       @debt.workflow_state = state
       @debt.save
       @debt.keepable?.should be_true
       @debt.should be_valid
-      lambda {@debt.keep!}.should_not raise_error
+      lambda { @debt.keep! }.should_not raise_error
     end
   end
-  
-  it "should get finalized when paid and bookkept" do
-    @debt.workflow_state = "paid"
+
+  it 'should get finalized when paid and bookkept' do
+    @debt.workflow_state = 'paid'
     @debt.save
     @debt.should be_valid
-    lambda {@debt.keep!}.should_not raise_error
+    lambda { @debt.keep! }.should_not raise_error
     @debt.should be_finalized
-    
-    @debt.workflow_state = "bookkept"
+
+    @debt.workflow_state = 'bookkept'
     @debt.save
     @debt.should be_valid
-    @debt.versions.last.update_attribute(:whodunnit,@admin.id)
-    lambda {@debt.pay!}.should_not raise_error
+    @debt.versions.last.update_attribute(:whodunnit, @admin.id)
+    lambda { @debt.pay! }.should_not raise_error
     @debt.should be_finalized
   end
-  
-  it "should not ever change owner" do
+
+  it 'should not ever change owner' do
     @debt.person.should_not be_nil
     @debt.should be_valid
-    
+
     new_person = Factory :person
-    @debt.update_attributes(:person_id => new_person.id)
+    @debt.update_attributes(person_id: new_person.id)
     @debt.save.should be_true
-    @debt.reload.person.should_not ==(new_person)
+    @debt.reload.person.should_not == (new_person)
 
     @debt.person = new_person
     @debt.save.should be_true
-    @debt.reload.person.should_not ==(new_person)
+    @debt.reload.person.should_not == (new_person)
   end
 end

@@ -1,6 +1,6 @@
 class BusinessUnitsController < ApplicationController
-  load_and_authorize_resource# :find_by => :short_name
-  before_filter :get_items, :only => [:show, :edit, :update, :destroy]
+  load_and_authorize_resource # :find_by => :short_name
+  before_filter :get_items, only: [:show, :edit, :update, :destroy]
 
   # GET /business_units
   # GET /business_units.xml
@@ -9,7 +9,7 @@ class BusinessUnitsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @business_units }
+      format.xml  { render xml: @business_units }
     end
   end
 
@@ -18,7 +18,7 @@ class BusinessUnitsController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @business_unit }
+      format.xml  { render xml: @business_unit }
     end
   end
 
@@ -28,7 +28,7 @@ class BusinessUnitsController < ApplicationController
     @business_unit = BusinessUnit.new
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @business_unit }
+      format.xml  { render xml: @business_unit }
     end
   end
 
@@ -43,11 +43,11 @@ class BusinessUnitsController < ApplicationController
 
     respond_to do |format|
       if @business_unit.save
-        format.html { redirect_to(@business_unit, :notice => I18n.t('notices.business_unit.success.created')) }
-        format.xml  { render :xml => @business_unit, :status => :created, :location => @business_unit }
+        format.html { redirect_to(@business_unit, notice: I18n.t('notices.business_unit.success.created')) }
+        format.xml  { render xml: @business_unit, status: :created, location: @business_unit }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @business_unit.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.xml  { render xml: @business_unit.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -57,11 +57,11 @@ class BusinessUnitsController < ApplicationController
   def update
     respond_to do |format|
       if @business_unit.update_attributes(params[:business_unit])
-        format.html { redirect_to(@business_unit, :notice => I18n.t('notices.business_unit.success.updated')) }
+        format.html { redirect_to(@business_unit, notice: I18n.t('notices.business_unit.success.updated')) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @business_unit.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @business_unit.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -78,15 +78,16 @@ class BusinessUnitsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   protected
+
   def get_items
-    @items = [{:key   => :show_business_unit, 
-               :name  => @business_unit.name, 
-               :url   => business_unit_path(@business_unit)},
-              {:key   => :edit_business_unit,
-               :name  => I18n.t('edit'),
-               :url   => edit_business_unit_path(@business_unit)},
+    @items = [{ key: :show_business_unit,
+                name: @business_unit.name,
+                url: business_unit_path(@business_unit) },
+              { key: :edit_business_unit,
+                name: I18n.t('edit'),
+                url: edit_business_unit_path(@business_unit) }
              ]
   end
 end

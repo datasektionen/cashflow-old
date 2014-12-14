@@ -8,7 +8,7 @@ class DebtsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @debts }
+      format.xml  { render xml: @debts }
     end
   end
 
@@ -17,7 +17,7 @@ class DebtsController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @debt }
+      format.xml  { render xml: @debt }
     end
   end
 
@@ -28,7 +28,7 @@ class DebtsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @debt }
+      format.xml  { render xml: @debt }
     end
   end
 
@@ -39,11 +39,11 @@ class DebtsController < ApplicationController
 
     respond_to do |format|
       if @debt.save
-        format.html { redirect_to(@debt, :notice => I18n.t('notices.debt.success.created')) }
-        format.xml  { render :xml => @debt, :status => :created, :location => @debt }
+        format.html { redirect_to(@debt, notice: I18n.t('notices.debt.success.created')) }
+        format.xml  { render xml: @debt, status: :created, location: @debt }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @debt.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.xml  { render xml: @debt.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -61,7 +61,7 @@ class DebtsController < ApplicationController
       format.html { redirect_to(debt_path(@debt)) }
     end
   end
-  
+
   def keep
     @debt.keep!
     respond_to do |format|

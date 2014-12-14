@@ -1,6 +1,6 @@
 class ProductTypesController < ApplicationController
   load_and_authorize_resource
-  before_filter :get_items, :only => [:show, :edit, :update, :destroy]
+  before_filter :get_items, only: [:show, :edit, :update, :destroy]
 
   # GET /product_types
   # GET /product_types.xml
@@ -9,7 +9,7 @@ class ProductTypesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @product_types }
+      format.xml  { render xml: @product_types }
     end
   end
 
@@ -18,7 +18,7 @@ class ProductTypesController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @product_type }
+      format.xml  { render xml: @product_type }
     end
   end
 
@@ -29,13 +29,12 @@ class ProductTypesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @product_type }
+      format.xml  { render xml: @product_type }
     end
   end
 
   # GET /product_types/1/edit
   def edit
-    
   end
 
   # POST /product_types
@@ -45,11 +44,11 @@ class ProductTypesController < ApplicationController
 
     respond_to do |format|
       if @product_type.save
-        format.html { redirect_to(@product_type, :notice => I18n.t('notices.product_type.success.created')) }
-        format.xml  { render :xml => @product_type, :status => :created, :location => @product_type }
+        format.html { redirect_to(@product_type, notice: I18n.t('notices.product_type.success.created')) }
+        format.xml  { render xml: @product_type, status: :created, location: @product_type }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @product_type.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.xml  { render xml: @product_type.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -59,11 +58,11 @@ class ProductTypesController < ApplicationController
   def update
     respond_to do |format|
       if @product_type.update_attributes(params[:product_type])
-        format.html { redirect_to(@product_type, :notice => I18n.t('notices.product_type.success.updated')) }
+        format.html { redirect_to(@product_type, notice: I18n.t('notices.product_type.success.updated')) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @product_type.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @product_type.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -82,13 +81,14 @@ class ProductTypesController < ApplicationController
   end
 
   protected
+
   def get_items
-    @items = [{:key   => :show_product_type, 
-               :name  => @product_type.name, 
-               :url   => product_type_path(@product_type)},
-              { :key => :edit_product_type,
-                :name => I18n.t('edit'),
-                :url => edit_product_type_path(@product_type)},
+    @items = [{ key: :show_product_type,
+                name: @product_type.name,
+                url: product_type_path(@product_type) },
+              { key: :edit_product_type,
+                name: I18n.t('edit'),
+                url: edit_product_type_path(@product_type) }
              ]
   end
 end

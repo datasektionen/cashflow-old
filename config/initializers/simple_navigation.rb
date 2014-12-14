@@ -1,2 +1,2 @@
 
-SimpleNavigation.config.selected_class = "active"
+SimpleNavigation.config.selected_class = 'active'

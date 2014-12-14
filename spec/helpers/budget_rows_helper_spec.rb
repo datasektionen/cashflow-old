@@ -11,8 +11,8 @@ require 'spec_helper'
 #   end
 # end
 describe BudgetRowsHelper do
-  describe "budget row urls" do
-    it "should add its year to the generated link" do
+  describe 'budget row urls' do
+    it 'should add its year to the generated link' do
       budget_post = Factory :budget_post
       row = budget_post.row(Time.now.year)
 

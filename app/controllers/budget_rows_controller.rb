@@ -11,7 +11,7 @@ class BudgetRowsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @budget_rows }
+      format.xml  { render xml: @budget_rows }
     end
   end
 
@@ -20,7 +20,7 @@ class BudgetRowsController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @budget_row }
+      format.xml  { render xml: @budget_row }
     end
   end
 
@@ -33,33 +33,32 @@ class BudgetRowsController < ApplicationController
   def update
     respond_to do |format|
       if @budget_row.update_attributes(params[:budget_row])
-        format.html { redirect_to(budget_row_path(budget_id: @year, id: @budget_row), :notice => 'Budget row was successfully updated.') }
+        format.html { redirect_to(budget_row_path(budget_id: @year, id: @budget_row), notice: 'Budget row was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @budget_row.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @budget_row.errors, status: :unprocessable_entity }
       end
     end
   end
 
-protected
+  protected
 
   def get_year
     @year = params[:budget_id]
-  end  
-
-  def get_items
-    @items = [{key:  :show_budget,
-               name: t('budget_for_year', year: @year),
-               url:   budget_path(id: @year)
-              },
-              {:key   => :show_budget_row, 
-               :name  => @budget_row.budget_post.name, 
-               :url   => budget_row_path(budget_id: @budget_row.year, id: @budget_row.id)},
-              { :key => :edit_budget_row,
-                :name => I18n.t('edit'),
-                :url => edit_budget_row_path(budget_id: @budget_row.year, id: @budget_row.id)},
-             ]
   end
 
+  def get_items
+    @items = [{ key:  :show_budget,
+                name: t('budget_for_year', year: @year),
+                url:   budget_path(id: @year)
+              },
+              { key: :show_budget_row,
+                name: @budget_row.budget_post.name,
+                url: budget_row_path(budget_id: @budget_row.year, id: @budget_row.id) },
+              { key: :edit_budget_row,
+                name: I18n.t('edit'),
+                url: edit_budget_row_path(budget_id: @budget_row.year, id: @budget_row.id) }
+             ]
+  end
 end

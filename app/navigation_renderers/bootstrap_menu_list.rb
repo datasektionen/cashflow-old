@@ -4,22 +4,21 @@
 # Register the renderer and use following code in your view:
 #   render_navigation(level: 1..2, renderer: :bootstrap_topbar_list, expand_all: true)
 class BootstrapMenuList < SimpleNavigation::Renderer::Base
-
   def render(item_container)
     if options[:is_subnavigation]
-      ul_class = "dropdown-menu"
+      ul_class = 'dropdown-menu'
     else
-      ul_class = "nav"
+      ul_class = 'nav'
       ul_class = [ul_class, options[:bootstrap_menu_type]].flatten.compact.join(' ')
     end
 
     list_content = item_container.items.inject([]) do |list, item|
       # remove the link from the list item options
-      li_options = item.html_options.reject {|k, v| k == :link}
+      li_options = item.html_options.reject { |k, _v| k == :link }
 
       # add the dropdown html class if we have subitems and should render them
       if include_sub_navigation?(item)
-        li_options[:class] = [li_options[:class], "dropdown"].flatten.compact.join(' ')
+        li_options[:class] = [li_options[:class], 'dropdown'].flatten.compact.join(' ')
       end
 
       # create the link and add possible sub navigation
@@ -35,20 +34,20 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
     if skip_if_empty? && item_container.empty?
       ''
     else
-      content_tag(:ul, list_content, { :id => item_container.dom_id, :class => [item_container.dom_class, ul_class].flatten.compact.join(' ') })
+      content_tag(:ul, list_content,  id: item_container.dom_id, class: [item_container.dom_class, ul_class].flatten.compact.join(' '))
     end
   end
 
   def render_sub_navigation_for(item)
-    item.sub_navigation.render(self.options.merge(:is_subnavigation => true))
+    item.sub_navigation.render(options.merge(is_subnavigation: true))
   end
 
   protected
 
   def tag_for(item)
     if include_sub_navigation?(item)
-      content = content_tag(:b, "", class: "caret")
-      return link_to(item.name << content, "#", link_options_for(item))
+      content = content_tag(:b, '', class: 'caret')
+      return link_to(item.name << content, '#', link_options_for(item))
     end
 
     if item.url.nil?
@@ -61,10 +60,10 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
   # Extracts the options relevant for the generated link
   #
   def link_options_for(item)
-    special_options = {:method => item.method}.reject {|k, v| v.nil? }
+    special_options = { method: item.method }.reject { |_k, v| v.nil? }
 
     if include_sub_navigation?(item) && !options[:is_subnavigation]
-      special_options[:'data-toggle'] = "dropdown"
+      special_options[:'data-toggle'] = 'dropdown'
     end
 
     link_options = item.html_options[:link] || {}
@@ -76,7 +75,7 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
 
   def dropdown_link_class(item)
     if include_sub_navigation?(item) && !options[:is_subnavigation]
-      "dropdown-toggle"
+      'dropdown-toggle'
     end
   end
 end

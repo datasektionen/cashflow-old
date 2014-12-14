@@ -1,6 +1,6 @@
 class PurchasesController < ApplicationController
-  load_and_authorize_resource :except => [:confirmed, :pay_multiple]
-  before_filter :get_items, :only => [:show, :edit, :update, :destroy]
+  load_and_authorize_resource except: [:confirmed, :pay_multiple]
+  before_filter :get_items, only: [:show, :edit, :update, :destroy]
 
   expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
@@ -18,13 +18,13 @@ class PurchasesController < ApplicationController
       with(:updated_at).greater_than(filter_param :updated_at_from) unless filter_param(:updated_at_from).blank?
       with(:updated_at).less_than(filter_param :updated_at_to) unless filter_param(:updated_at_to).blank?
 
-      paginate :page => params[:page]
+      paginate page: params[:page]
     end
     @purchases = @search.results
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @purchases }
+      format.xml  { render xml: @purchases }
     end
   end
 
@@ -33,7 +33,7 @@ class PurchasesController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @purchase }
+      format.xml  { render xml: @purchase }
     end
   end
 
@@ -45,7 +45,7 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @purchase }
+      format.xml  { render xml: @purchase }
     end
   end
 
@@ -64,11 +64,11 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @purchase.save
-        format.html { redirect_to(@purchase, :notice => I18n.t('notices.purchase.success.created')) }
-        format.xml  { render :xml => @purchase, :status => :created, :location => @purchase }
+        format.html { redirect_to(@purchase, notice: I18n.t('notices.purchase.success.created')) }
+        format.xml  { render xml: @purchase, status: :created, location: @purchase }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.xml  { render xml: @purchase.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,15 +76,15 @@ class PurchasesController < ApplicationController
   # PUT /purchases/1
   # PUT /purchases/1.xml
   def update
-    @purchase.workflow_state = "edited"
+    @purchase.workflow_state = 'edited'
 
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
-        format.html { redirect_to(@purchase, :notice => I18n.t('notices.purchase.success.updated')) }
+        format.html { redirect_to(@purchase, notice: I18n.t('notices.purchase.success.updated')) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @purchase.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -92,7 +92,7 @@ class PurchasesController < ApplicationController
   # DELETE /purchases/1
   # DELETE /purchases/1.xml
   def destroy
-    #@purchase.destroy
+    # @purchase.destroy
 
     respond_to do |format|
       format.html { redirect_to(purchases_url) }
@@ -107,7 +107,7 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @purchases }
+      format.xml  { render xml: @purchases }
     end
   end
 
@@ -117,20 +117,21 @@ class PurchasesController < ApplicationController
     purchase_ids = Purchase.pay_multiple!(params)
 
     respond_to do |format|
-      format.html { redirect_to(confirmed_purchases_path, :notice => "Betalda (#{purchase_ids})!") }
+      format.html { redirect_to(confirmed_purchases_path, notice: "Betalda (#{purchase_ids})!") }
     end
   end
 
   def confirm
     @purchase.confirm!
     respond_to do |format|
-      format.html { redirect_to(purchase_path(@purchase))}
+      format.html { redirect_to(purchase_path(@purchase)) }
     end
   end
+
   def pay
     @purchase.pay!
     respond_to do |format|
-      format.html { redirect_to(purchase_path(@purchase))}
+      format.html { redirect_to(purchase_path(@purchase)) }
     end
   end
 
@@ -138,36 +139,36 @@ class PurchasesController < ApplicationController
     authorize! :bookkeep, Purchase
     @purchase.keep!
     respond_to do |format|
-      format.html { redirect_to(purchase_path(@purchase))}
+      format.html { redirect_to(purchase_path(@purchase)) }
     end
   end
 
   def cancel
     @purchase.cancel!
     respond_to do |format|
-      format.html { redirect_to(purchase_path(@purchase))}
+      format.html { redirect_to(purchase_path(@purchase)) }
     end
   end
 
   protected
 
   def get_items
-    @items = [{:key   => :show_purchase_path,
-               :name  => @purchase.slug,
-               :url   => purchase_path(@purchase)}
-    ]
+    @items = [{ key: :show_purchase_path,
+                name: @purchase.slug,
+                url: purchase_path(@purchase) }
+             ]
     if @purchase.editable?
       @items << {
-        :key   => :edit_purchase_path,
-        :name  => I18n.t('edit'),
-        :url   => edit_purchase_path(@purchase)
+        key: :edit_purchase_path,
+        name: I18n.t('edit'),
+        url: edit_purchase_path(@purchase)
       }
     end
   end
 
   private
 
-  def filter_param name
+  def filter_param(name)
     params[:filter].try(:[], name.to_s)
   end
 end

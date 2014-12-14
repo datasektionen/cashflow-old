@@ -12,8 +12,8 @@ class BudgetPostsController < ApplicationController
     @edit = params[:edit]
 
     respond_to do |format|
-      format.html 
-      format.xml  { render :xml => @budget_posts }
+      format.html
+      format.xml  { render xml: @budget_posts }
     end
   end
 
@@ -21,8 +21,8 @@ class BudgetPostsController < ApplicationController
   # GET /budget_posts/1.xml
   def show
     respond_to do |format|
-      format.html 
-      format.xml  { render :xml => @budget_post }
+      format.html
+      format.xml  { render xml: @budget_post }
     end
   end
 
@@ -30,11 +30,11 @@ class BudgetPostsController < ApplicationController
   # GET /budget_posts/new.xml
   def new
     @budget_post = BudgetPost.new
-    @budget_post.mage_arrangement_number = 0 # THIS IS A HACK 
+    @budget_post.mage_arrangement_number = 0 # THIS IS A HACK
 
     respond_to do |format|
       format.html
-      format.xml  { render :xml => @budget_post }
+      format.xml  { render xml: @budget_post }
     end
   end
 
@@ -49,11 +49,11 @@ class BudgetPostsController < ApplicationController
 
     respond_to do |format|
       if @budget_post.save
-        format.html { redirect_to(@budget_post, :notice => 'Budget post was successfully created.') }
-        format.xml  { render :xml => @budget_post, :status => :created, :location => @budget_post }
+        format.html { redirect_to(@budget_post, notice: 'Budget post was successfully created.') }
+        format.xml  { render xml: @budget_post, status: :created, location: @budget_post }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @budget_post.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.xml  { render xml: @budget_post.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -63,11 +63,11 @@ class BudgetPostsController < ApplicationController
   def update
     respond_to do |format|
       if @budget_post.update_attributes(params[:budget_post])
-        format.html { redirect_to(budget_post_path(@budget_post), :notice => I18n.t('notices.budget_post.success.updated')) }
+        format.html { redirect_to(budget_post_path(@budget_post), notice: I18n.t('notices.budget_post.success.updated')) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @budget_post.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @budget_post.errors, status: :unprocessable_entity }
       end
     end
   end

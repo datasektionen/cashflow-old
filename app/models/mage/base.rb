@@ -1,20 +1,20 @@
 require 'yaml'
 
 class Mage::Base
-  @@create_action = "create"
-  @@after_initialize=[]
-  @@before_initialize=[]
+  @@create_action = 'create'
+  @@after_initialize = []
+  @@before_initialize = []
 
   ##
   # Initialize an object with the specified attributes
-  def initialize(attr={})
+  def initialize(attr = {})
     @attr = {}
-    #Run before initialize hooks
-    @@before_initialize.each { |c| self.send(c) }
+    # Run before initialize hooks
+    @@before_initialize.each { |c| send(c) }
 
-    # If data is stored in subarray under table name, extract it 
+    # If data is stored in subarray under table name, extract it
     # Ex:
-    # attr[vouchers] = {:id=>0, :foo=>'bar', :baz=>'foobar'} 
+    # attr[vouchers] = {:id=>0, :foo=>'bar', :baz=>'foobar'}
     # We then need to extract the hash under vouchers
     attr = attr[self.class.table_name] if attr[self.class.table_name]
     attr = attr[self.class.table_name.to_sym] if attr[self.class.table_name.to_sym]
@@ -24,19 +24,19 @@ class Mage::Base
       @attr[key.to_sym] = val
     end
 
-    #Run after initialize hooks
+    # Run after initialize hooks
     @@after_initialize.each { |c| call(c) }
   end
 
   # Handle getters, setters and ?-methods
-  def method_missing(method,*args)
+  def method_missing(method, *args)
     if method.match(/([^=?]+)([=?])?/)
-      index = $1.to_sym
-      if $2=="="
+      index = Regexp.last_match[1].to_sym
+      if Regexp.last_match[2] == '='
         @attr[index] = args[0]
-      elsif $2=="?"
+      elsif Regexp.last_match[2] == '?'
         !@attr[index].nil?
-      else 
+      else
         @attr[index]
       end
     else
@@ -51,23 +51,23 @@ class Mage::Base
   # Pushes this model to mage
   # Note that this always creates a new item.
   def push(current_person)
-    res = Mage::ApiCall.call("/#{self.class.table_name.pluralize}/#{@@create_action}.json",current_person,{self.class.table_name.to_sym=>attributes}, :post)
-    return self.class.parse_result(res,self) && true # Make boolean
+    res = Mage::ApiCall.call("/#{self.class.table_name.pluralize}/#{@@create_action}.json", current_person, { self.class.table_name.to_sym => attributes }, :post)
+    self.class.parse_result(res, self) && true # Make boolean
   end
 
   # Returns all objects of this type
   def self.all
-    return fake("#{name.downcase.gsub(/::/,'.')}.all") if Cashflow::Application.settings[:fake_mage]
+    return fake("#{name.downcase.gsub(/::/, '.')}.all") if Cashflow::Application.settings[:fake_mage]
 
-    res = Mage::ApiCall.call("/#{table_name.pluralize}.json",nil,{}, :get)
+    res = Mage::ApiCall.call("/#{table_name.pluralize}.json", nil, {}, :get)
     p = parse_result(res)
     if p
       return p.map do |item|
-        self.new(item)
+        new(item)
       end
     else
       false
-    end 
+    end
   end
 
   # Finds a model by id in mage and returns that model
@@ -75,28 +75,27 @@ class Mage::Base
     res = Mage::ApiCall.call("/#{table_name.pluralize}/#{id}.json", nil, {}, :get)
     p = parse_result(res)
     if p
-      return self.new(p)
+      new(p)
     else
-        false
+      false
     end
   end
 
-protected
-  def self.parse_result(res,item=nil)
+  def self.parse_result(res, item = nil)
     begin
       data = JSON.parse res.body
     rescue Exception
-      puts "Error: Result not in json, #{$!}: #{res.body}"
-      item.errors = "Result was not in json format" if item
-      return false
+      puts "Error: Result not in json, #{$ERROR_INFO}: #{res.body}"
+      item.errors = 'Result was not in json format' if item
+      false
     end
 
-    if res.kind_of? Net::HTTPSuccess
-      return data
+    if res.is_a? Net::HTTPSuccess
+      data
     else
       puts "Invalid return code (#{res.code})"
-      item.errors = data["errors"] if item
-      return false
+      item.errors = data['errors'] if item
+      false
     end
   end
 
@@ -105,7 +104,7 @@ protected
   # If this model is not in Mage namespace it returns false
   def self.table_name
     if name.match(/Mage::(.+)/)
-      return $1.underscore
+      Regexp.last_match[1].underscore
     else
       false
     end
@@ -128,13 +127,12 @@ protected
 
   # Fake a mage call
   def self.fake(key)
-    yml = YAML.load(File.read(Rails.root.join('config', 'fake_mage.yml'), encoding: "utf-8"))
+    yml = YAML.load(File.read(Rails.root.join('config', 'fake_mage.yml'), encoding: 'utf-8'))
     values = key.split('.').reduce(yml) { |memo, part| memo[part] }
     if values.is_a?(Array)
-      return values.map {|value| OpenStruct.new(value)}
+      values.map { |value| OpenStruct.new(value) }
     else
-      return OpenStruct.new(values)
+      OpenStruct.new(values)
     end
   end
 end
-
