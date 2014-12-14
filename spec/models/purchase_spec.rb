@@ -11,11 +11,6 @@ describe Purchase do
     @purchase = Factory :purchase
   end
 
-  after(:each) do
-    @purchase.destroy
-    @purchase.person.destroy if @purchase.person
-  end
-
   it 'should be invalid without an owner' do
     @purchase.person = nil
     @purchase.should_not be_valid
