@@ -54,6 +54,6 @@ group :test do
   gem 'rspec-mocks'
   gem 'rspec-rails'
   gem 'selenium'
-  gem 'shoulda', '>= 3.0.0.beta2'
+  gem 'shoulda-matchers'
   gem 'webmock'
 end
