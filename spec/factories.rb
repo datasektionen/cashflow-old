@@ -88,7 +88,7 @@ Factory.define :purchase do |f|
   f.person        { Factory :person }
   f.description   { "test purchase" }
   f.slug          { "test" }
-  f.purchased_at  { Date.today }
+  f.purchased_on  { Date.today }
   f.budget_post   { Factory :budget_post }
   f.year { Time.now.year }
 end

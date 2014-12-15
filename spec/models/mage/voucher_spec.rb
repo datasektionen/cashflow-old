@@ -3,6 +3,7 @@ describe Mage::Voucher do
   before(:each) do
     stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").to_return(:status => 200, :body => "")
   end
+
   it "should have proper voucher_rows functionality" do
     v = Mage::Voucher.new
     v.accounting_date = "2011-11-11"
@@ -27,7 +28,7 @@ describe Mage::Voucher do
     purchase.confirm!
 
     voucher = Mage::Voucher.from_purchase(purchase,"M")
-    voucher.accounting_date.should == purchase.purchased_at
+    voucher.accounting_date.should == purchase.purchased_on
     voucher.authorized_by.should == purchase.confirmed_by.ugid
     voucher.material_from.should == purchase.person.ugid
     voucher.organ.should == purchase.budget_post.business_unit.mage_number

@@ -5,12 +5,12 @@ describe Purchase do
     @person = Factory :person
     PaperTrail.whodunnit = @person.id.to_s
   end
-  
+
   before(:each) do
     stub_request(:post, "#{Sunspot.config.solr.url}/update?wt=ruby").to_return(status: 200, body: '')
     @purchase = Factory :purchase
   end
-  
+
   after(:each) do
     @purchase.destroy
     @purchase.person.destroy if @purchase.person
@@ -50,66 +50,66 @@ describe Purchase do
   end
 
   it "should be purchased at some date" do
-    @purchase.purchased_at.should_not be_blank
-    @purchase.purchased_at = nil
+    @purchase.purchased_on.should_not be_blank
+    @purchase.purchased_on = nil
     @purchase.should_not be_valid
-    @purchase.errors[:purchased_at].should_not be_empty
+    @purchase.errors[:purchased_on].should_not be_empty
   end
-  
+
   it "should not be purchased in the future" do
-    @purchase.purchased_at.should <= Date.today
-    @purchase.purchased_at = Date.today + 1
+    @purchase.purchased_on.should <= Date.today
+    @purchase.purchased_on = Date.today + 1
     @purchase.should be_invalid
-    @purchase.errors[:purchased_at].should_not be_empty
+    @purchase.errors[:purchased_on].should_not be_empty
   end
-  
+
   %w[new edited].each do |state|
     it "should be cancellable when #{state}" do
       @purchase.update_attribute(:workflow_state, state)
       lambda {@purchase.cancel!}.should_not raise_error
     end
   end
-  
+
   %w[new confirmed].each do |state|
     it "should be editable when #{state}" do
       @purchase.update_attribute(:workflow_state, state)
       lambda {@purchase.edit!}.should_not raise_error
     end
   end
-  
+
   %w[new edited].each do |state|
     it "should be confirmable when #{state}" do
       @purchase.update_attribute(:workflow_state, state)
       lambda {@purchase.confirm!}.should_not raise_error
     end
   end
-  
+
   %w[confirmed paid].each do |state|
     it "should be bookkeepable when #{state}" do
       @purchase.update_attribute(:workflow_state, state)
       lambda {@purchase.keep!}.should_not raise_error
     end
   end
-  
+
   %w[confirmed bookkept].each do |state|
     it "should be payable when #{state}" do
       @purchase.update_attribute(:workflow_state, state)
       lambda {@purchase.pay!}.should_not raise_error
     end
   end
-  
+
   it "should be finalized when both paid and bookkept (in any order)" do
     @purchase.update_attribute(:workflow_state, "confirmed")
     lambda {@purchase.pay!}.should_not raise_error
     lambda {@purchase.keep!}.should_not raise_error
     @purchase.should be_finalized
-    
+
     @purchase.update_attribute(:workflow_state, "confirmed")
     lambda {@purchase.keep!}.should_not raise_error
     lambda {@purchase.pay!}.should_not raise_error
     @purchase.should be_finalized
   end
-  
+
   describe "" do
     %w[paid bookkept finalized confirmed].each do |state|
       before(:each) do
@@ -139,7 +139,7 @@ describe Purchase do
     @purchase.update_attribute(:workflow_state, "finalized")
     @purchase.save.should be_false
   end
-  
+
   it "should cascade delete its related purchase items" do
     @purchase.items.should be_empty
     pi = Factory.build(:purchase_item)
@@ -147,12 +147,12 @@ describe Purchase do
     pi.save
 
     item = @purchase.reload.items.first
-    
+
     item.should_not be_nil
-    
+
     item_id = item.id
     purchase_id = @purchase.id
-    
+
     @purchase.destroy
     Purchase.exists?(:id => purchase_id).should be_false
     PurchaseItem.exists?(:id => item_id).should be_false
