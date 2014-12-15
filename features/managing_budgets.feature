@@ -11,7 +11,7 @@ Feature: Manage budgets
       | Alpha            | 100 | 0           |
       | Beta             | 200 | 0           |
       | Gamma            | 300 | -1          |
-  
+
   Scenario: View budget for the current year
     When I go to the budget page
     Then I should see the current year's budget posts

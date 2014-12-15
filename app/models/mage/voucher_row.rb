@@ -1,3 +1,4 @@
-class Mage::VoucherRow < Mage::Base
-  
+module Mage
+  class VoucherRow < Base
+  end
 end

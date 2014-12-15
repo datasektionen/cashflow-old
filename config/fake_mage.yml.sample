@@ -15,4 +15,3 @@ mage:
     all:
       - number: 1
         name: FAKE
-        

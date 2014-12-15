@@ -8,7 +8,7 @@
     = form.input :email, :as => :email, :input_html => {:class => "search"}
     = form.input :ugid, :input_html => {:class => "search"}
     - if current_user.is?(:admin)
-      = form.input :role, :as => :select, :collection => Person::ROLES 
+      = form.input :role, :as => :select, :collection => Person::ROLES
   = form.buttons do
     = form.commit_button :commit
 
@@ -18,7 +18,7 @@
     var param = $(this).val();
     var search_param = $(this).attr('name').replace(/person\[(\w+)\]/, '$1');
     if(param){
-      $.get("/people/search.json?" + search_param + "=" + param, 
+      $.get("/people/search.json?" + search_param + "=" + param,
             function (data) {
               var person = data.person;
               if (!data.error) {

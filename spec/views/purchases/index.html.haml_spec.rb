@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "purchases/index.html.haml" do
+describe 'purchases/index.html.haml' do
   pending("TODO: either implement something proper here, or delete #{__FILE__}.")
   # before(:each) do
   #   purchases = [

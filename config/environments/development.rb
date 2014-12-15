@@ -15,7 +15,7 @@ Cashflow::Application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
-  
+
   # view deprecation messages in log.
   config.active_support.deprecation = :log
 

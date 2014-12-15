@@ -15,7 +15,7 @@ headless = Headless.new
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
 ActiveRecord::Observer.disable_observers
@@ -25,10 +25,10 @@ RSpec.configure do |config|
   config.fail_fast = false
   config.use_transactional_fixtures = false
 
-  config.include Devise::TestHelpers, :type => :controller
-  config.extend ControllerMacros, :type => :controller
-  config.include Devise::TestHelpers, :type => :view
-  config.extend ControllerMacros, :type => :view
+  config.include Devise::TestHelpers, type: :controller
+  config.extend ControllerMacros, type: :controller
+  config.include Devise::TestHelpers, type: :view
+  config.extend ControllerMacros, type: :view
   config.infer_base_class_for_anonymous_controllers = false
 
   config.before(:suite) do

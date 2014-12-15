@@ -1,7 +1,7 @@
 def parse_attrs_table(table)
   attrs = {}
   table.raw.each do |(attr, value)|
-    sanitized_attr = attr.gsub(/\s+/,"-").underscore
+    sanitized_attr = attr.gsub(/\s+/, '-').underscore
     attrs[sanitized_attr.to_sym] = value
   end
   attrs

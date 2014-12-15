@@ -1,15 +1,15 @@
 class BudgetRow < ActiveRecord::Base
   belongs_to :budget_post
-  delegate :business_unit, :to => :budget_post
+  delegate :business_unit, to: :budget_post
 
-  scope :year, lambda {|year| includes(budget_post: :purchases).where(:year => year) }
+  scope :year, lambda { |year| includes(budget_post: :purchases).where(year: year) }
 
   def purchases
     budget_post.purchases.where(year: year)
   end
 
   def sum
-    read_attribute(:sum) or 0
+    read_attribute(:sum) || 0
   end
 
   def total
@@ -20,7 +20,7 @@ class BudgetRow < ActiveRecord::Base
   def self.create_rows_if_not_exists(year)
     BudgetPost.all.each do |bp|
       unless find_by_budget_post_id_and_year(bp.id, year)
-        create(:budget_post=>bp, :year=>year) 
+        create(budget_post: bp, year: year)
       end
     end
   end

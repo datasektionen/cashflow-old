@@ -1,0 +1,5 @@
+Rails/ActionFilter:
+  Enabled: false
+
+Style/DotPosition:
+  EnforcedStyle: trailing

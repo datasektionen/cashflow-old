@@ -8,7 +8,7 @@
     = form.input :purchased_on, as: :string
     = form.input :budget_post, collection: option_groups_from_collection_for_select(BusinessUnit.all, :budget_posts, :name, :id, :name, @purchase.budget_post.try(:id))
     = form.input :description
-  
+
   %fieldset#purchase_items
     %legend Inköpsdelar
     = form.semantic_fields_for :items do |item|

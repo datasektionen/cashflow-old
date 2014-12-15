@@ -1,16 +1,16 @@
-Cashflow::Application.routes.draw do  
+Cashflow::Application.routes.draw do
   resources :budget_posts
 
-  devise_for :users, :class_name => "Person", :controllers => {:omniauth_callbacks => "people/omniauth_callbacks"} do
-    get "sign_in", :to => "people/omniauth_callbacks#new", :as => :new_session
-    get "sign_out", :to => "people/omniauth_callbacks#destroy", :as => :destroy_user_session
-    root to: "dashboard#welcome"
+  devise_for :users, class_name: 'Person', controllers: { omniauth_callbacks: 'people/omniauth_callbacks' } do
+    get 'sign_in', to: 'people/omniauth_callbacks#new', as: :new_session
+    get 'sign_out', to: 'people/omniauth_callbacks#destroy', as: :destroy_user_session
+    root to: 'dashboard#welcome'
   end
 
   localized(['sv']) do
     resources :product_types
     resources :budget do
-      resources :budget_rows, :as => "rows", only: [:index, :show, :edit, :update]
+      resources :budget_rows, as: 'rows', only: [:index, :show, :edit, :update]
     end
     resources :budget_posts
     resources :business_units
@@ -26,7 +26,7 @@ Cashflow::Application.routes.draw do
         put :cancel
       end
     end
-    resources :debts, :except => [:edit, :update, :destroy] do
+    resources :debts, except: [:edit, :update, :destroy] do
       member do
         put :pay
         put :keep
@@ -34,7 +34,7 @@ Cashflow::Application.routes.draw do
       end
     end
 
-    resources :people, :except => [:destroy] do
+    resources :people, except: [:destroy] do
       collection do
         get :search
       end
@@ -51,8 +51,8 @@ Cashflow::Application.routes.draw do
     # En annan tanke är att lägga sånt under en /my controller,
     # så att man loggar in och hamnar på /mina/sidor (eller något lämpligare), som är en overview,
     # och så kan man gå till /mina/inkop, /mina/skulder eller whatever
-    # 
+    #
 
-    root :to => "dashboard#index"
+    root to: 'dashboard#index'
   end
 end

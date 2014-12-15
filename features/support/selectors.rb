@@ -9,14 +9,14 @@ module HtmlSelectorsHelpers
     case locator
 
     when /the page/
-      "html > body"
+      'html > body'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
     #  when /the (notice|error|info) flash/
     #    ".flash.#{$1}"
-    
+
     # You can also return an array to use a different selector
     # type, like:
     #
@@ -27,10 +27,10 @@ module HtmlSelectorsHelpers
     # for "within" steps as was previously the default for the
     # web steps:
     when /"(.+)"/
-      $1
+      Regexp.last_match[1]
 
     else
-      raise "Can't find mapping from \"#{locator}\" to a selector.\n" +
+      fail "Can't find mapping from \"#{locator}\" to a selector.\n" \
         "Now, go and add a mapping in #{__FILE__}"
     end
   end

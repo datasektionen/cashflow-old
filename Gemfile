@@ -9,8 +9,8 @@ gem 'decent_exposure'
 gem 'devise'
 gem 'formtastic'
 gem 'formtastic-bootstrap',
-  git: 'git://github.com/cgunther/formtastic-bootstrap.git',
-  branch: 'bootstrap-2'
+    git: 'git://github.com/cgunther/formtastic-bootstrap.git',
+    branch: 'bootstrap-2'
 gem 'friendly_id'
 gem 'haml-rails'
 gem 'haml-contrib'
@@ -47,25 +47,13 @@ group :test do
   gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
-  gem 'guard', '>= 1.0.0'
-  gem 'guard-bundler'
-  gem 'guard-cucumber'
-  gem 'guard-rspec'
   gem 'headless'
   gem 'launchy'
-  gem 'libnotify'
   gem 'no_peeping_toms', git: 'https://github.com/dbalatero/no-peeping-toms.git'
-  gem 'rb-inotify'
   gem 'rspec', '>= 2.8.0'
   gem 'rspec-mocks'
   gem 'rspec-rails'
   gem 'selenium'
   gem 'shoulda', '>= 3.0.0.beta2'
   gem 'webmock'
-end
-
-group :deploy do
-  gem 'capistrano'
-  gem 'capistrano-ext'
-  gem 'capistrano_colors'
 end

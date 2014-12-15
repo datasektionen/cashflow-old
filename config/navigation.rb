@@ -17,17 +17,17 @@ SimpleNavigation::Configuration.run do |navigation|
         end
       end
 
-      primary.item :budgets, I18n.t('navigation.budgets'), budget_path(:id => Time.now.year) do |secondary|
-        BudgetPost.all_years.each { |year|
+      primary.item :budgets, I18n.t('navigation.budgets'), budget_path(id: Time.now.year) do |secondary|
+        BudgetPost.all_years.each do |year|
           secondary.item :"budget_year_#{year}", year, budget_path(id: year)
-        }
+        end
       end
 
-      #sub.item :new_business_unit, I18n.t('navigation.new_business_unit'), new_business_unit_path
-      #sub.item :new_product_type, I18n.t('navigation.new_product_type'), new_product_type_path
-      #sub.item :new_budget_post, I18n.t('navigation.new_budget_post'), new_budget_post_path
+      # sub.item :new_business_unit, I18n.t('navigation.new_business_unit'), new_business_unit_path
+      # sub.item :new_product_type, I18n.t('navigation.new_product_type'), new_product_type_path
+      # sub.item :new_budget_post, I18n.t('navigation.new_budget_post'), new_budget_post_path
 
-      primary.item :administration, "Administration", "" do |secondary|
+      primary.item :administration, 'Administration', '' do |secondary|
         if current_user.is?(:admin)
           secondary.item(:people, I18n.t('navigation.people'), people_path)
         end
@@ -44,10 +44,10 @@ SimpleNavigation::Configuration.run do |navigation|
 
       primary.item :user, current_user.name, person_path(current_user) do |secondary|
         secondary.item :my_page, I18n.t('navigation.my_page'), person_path(current_user)
-        secondary.item :logout, "Logga ut", destroy_user_session_path
+        secondary.item :logout, 'Logga ut', destroy_user_session_path
       end
     else
-      primary.item :login, I18n.t('navigation.sign_in'), "/users/auth/cas"
+      primary.item :login, I18n.t('navigation.sign_in'), '/users/auth/cas'
     end
   end
 end
