@@ -4,7 +4,7 @@
       %dt Inköpt av
       %dd= link_to purchase.person, purchase.person, title: purchase.person.login
       %dt Inköpt
-      %dd= short_time purchase.purchased_at
+      %dd= l purchase.purchased_on
       %dt Beskrivning
       %dd= purchase.description
   .span3#budget
@@ -15,7 +15,10 @@
       %dd= link_to purchase.budget_post, purchase.budget_post
       -if can? :manage, BudgetPost
         %dt Budgetstatus
-        %dd #{currency purchase.budget_row.total} av #{currency purchase.budget_row.sum}
+        %dd
+          = number_to_currency purchase.budget_row.total
+          av
+          = number_to_currency purchase.budget_row.sum
   .span8#receipt
     Häfta fast ditt kvitto här!
   %nav.span6.btn-toolbar

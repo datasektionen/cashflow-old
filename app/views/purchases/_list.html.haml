@@ -11,6 +11,6 @@
       %tr
         %td= link_to purchase.slug, purchase
         %td= link_to purchase.description, purchase
-        %td= currency purchase.total
-        %td= short_time purchase.purchased_at
+        %td= number_to_currency purchase.total
+        %td= l purchase.purchased_on
         %td= status purchase

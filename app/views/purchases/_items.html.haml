@@ -12,9 +12,9 @@
           %tr
             %td= item.comment
             %td= item.product_type
-            %td= currency item.amount
+            %td= number_to_currency item.amount
       %tfoot
         %tr
           %th
           %th Total
-          %th= currency purchase.total
+          %th= number_to_currency purchase.total

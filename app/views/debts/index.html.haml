@@ -8,11 +8,9 @@
           %th Skuld
           %th Person
           %th Summa
-      
       %tbody
         - for debt in @debts
           %tr{ :class => cycle(:odd, :even) }
             %td= link_to debt.id, debt
             %td= link_to debt.person
-            %td= currency debt.amount
-
+            %td= number_to_currency debt.amount

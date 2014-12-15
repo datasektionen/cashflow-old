@@ -159,7 +159,7 @@
           purchased_in_future: "Du kan inte ha köpt in något i framtiden. Har du uppfunnit en tidsmaskin får du gärna kontakta mig på blame@kth.se."
           finalized: "Du kan inte ändra ett avslutat inköp"
           attributes:
-            purchased_at:
+            purchased_on:
               purchased_in_future: "får inte vara senare än dagens datum"
 
     # Translate model names. Used in Model.human_name().
@@ -221,7 +221,7 @@
       purchase:
         business_unit: "Affärsenhet"
         description: "Beskrivning"
-        purchased_at: "Inköpsdatum"
+        purchased_on: "Inköpsdatum"
         mage_number: "Kontonummer i MAGE"
       purchase_item:
         amount: "Summa"
@@ -291,7 +291,7 @@
 
   time:
     formats:
-      default: "%a, %e %b %Y %H:%M:%S %z"
+      default: "%Y-%m-%d %H:%M:%S %Z"
       short: "%e %b %H:%M"
       long: "%e %B %Y %H:%M"
     am: ""

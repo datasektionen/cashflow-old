@@ -11,5 +11,5 @@
         - purchase.state_history.each do |version|
           %tr
             %td= status version
-            %td= short_time version.version_date
+            %td= l version.version_date, format: :long
             %td= link_to_originator version

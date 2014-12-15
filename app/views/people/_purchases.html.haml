@@ -12,8 +12,8 @@
       - purchases.each do |purchase|
         %tr
           %td= link_to purchase.description, purchase
-          %td= currency purchase.total
-          %td= short_time purchase.purchased_at
+          %td= number_to_currency purchase.total
+          %td= l purchase.purchased_on
           %td= status purchase
           %td
             - if purchase.editable? && can?(:edit, purchase)
@@ -21,4 +21,4 @@
     %tfoot
       %tr
         %th Total (obetalda inköp)
-        %td{ colspan: 4}= currency person.total_purchased_amount
+        %td{ colspan: 4}= number_to_currency person.total_purchased_amount
