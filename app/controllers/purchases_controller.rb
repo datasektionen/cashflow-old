@@ -4,8 +4,6 @@ class PurchasesController < ApplicationController
 
   expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
-  # GET /purchases
-  # GET /purchases.xml
   def index
     @search = Purchase.joins(:budget_post).joins(:person).includes(:person).search do
       with(:workflow_state, filter_param(:workflow_state)) unless filter_param(:workflow_state).blank?
@@ -21,40 +19,19 @@ class PurchasesController < ApplicationController
       paginate page: params[:page]
     end
     @purchases = @search.results
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render xml: @purchases }
-    end
   end
 
-  # GET /purchases/1
-  # GET /purchases/1.xml
   def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render xml: @purchase }
-    end
   end
 
-  # GET /purchases/new
-  # GET /purchases/new.xml
   def new
     @purchase = current_user.purchases.new
     @purchase.items.build
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render xml: @purchase }
-    end
   end
 
-  # GET /purchases/1/edit
   def edit
   end
 
-  # POST /purchases
-  # POST /purchases.xml
   def create
     @purchase = @current_user.purchases.new(params[:purchase])
 
@@ -62,41 +39,20 @@ class PurchasesController < ApplicationController
       authorize! :edit, :purchase_owner
     end
 
-    respond_to do |format|
-      if @purchase.save
-        format.html { redirect_to(@purchase, notice: I18n.t('notices.purchase.success.created')) }
-        format.xml  { render xml: @purchase, status: :created, location: @purchase }
-      else
-        format.html { render action: 'new' }
-        format.xml  { render xml: @purchase.errors, status: :unprocessable_entity }
-      end
+    if @purchase.save
+      redirect_to(@purchase, notice: I18n.t('notices.purchase.success.created'))
+    else
+      render action: 'new'
     end
   end
 
-  # PUT /purchases/1
-  # PUT /purchases/1.xml
   def update
     @purchase.workflow_state = 'edited'
 
-    respond_to do |format|
-      if @purchase.update_attributes(params[:purchase])
-        format.html { redirect_to(@purchase, notice: I18n.t('notices.purchase.success.updated')) }
-        format.xml  { head :ok }
-      else
-        format.html { render action: 'edit' }
-        format.xml  { render xml: @purchase.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /purchases/1
-  # DELETE /purchases/1.xml
-  def destroy
-    # @purchase.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(purchases_url) }
-      format.xml  { head :ok }
+    if @purchase.update_attributes(params[:purchase])
+      redirect_to(@purchase, notice: I18n.t('notices.purchase.success.updated'))
+    else
+      render action: 'edit'
     end
   end
 
@@ -104,11 +60,6 @@ class PurchasesController < ApplicationController
     authorize! :manage, Purchase
 
     @purchases = Purchase.payable_grouped_by_person
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render xml: @purchases }
-    end
   end
 
   def pay_multiple
@@ -116,38 +67,28 @@ class PurchasesController < ApplicationController
 
     purchase_ids = Purchase.pay_multiple!(params)
 
-    respond_to do |format|
-      format.html { redirect_to(confirmed_purchases_path, notice: "Betalda (#{purchase_ids})!") }
-    end
+    redirect_to(confirmed_purchases_path, notice: "Betalda (#{purchase_ids})!")
   end
 
   def confirm
     @purchase.confirm!
-    respond_to do |format|
-      format.html { redirect_to(purchase_path(@purchase)) }
-    end
+    redirect_to(purchase_path(@purchase))
   end
 
   def pay
     @purchase.pay!
-    respond_to do |format|
-      format.html { redirect_to(purchase_path(@purchase)) }
-    end
+    redirect_to(purchase_path(@purchase))
   end
 
   def keep
     authorize! :bookkeep, Purchase
     @purchase.keep!
-    respond_to do |format|
-      format.html { redirect_to(purchase_path(@purchase)) }
-    end
+    redirect_to(purchase_path(@purchase))
   end
 
   def cancel
     @purchase.cancel!
-    respond_to do |format|
-      format.html { redirect_to(purchase_path(@purchase)) }
-    end
+    redirect_to(purchase_path(@purchase))
   end
 
   protected

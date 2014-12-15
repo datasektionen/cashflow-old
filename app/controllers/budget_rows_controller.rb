@@ -4,41 +4,21 @@ class BudgetRowsController < ApplicationController
   before_filter :get_year
   before_filter :get_items, except: [:index]
 
-  # GET /budget_rows
-  # GET /budget_rows.xml
   def index
     @budget_rows = BudgetRow.year(@year)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render xml: @budget_rows }
-    end
   end
 
-  # GET /budget_rows/1
-  # GET /budget_rows/1.xml
   def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render xml: @budget_row }
-    end
   end
 
-  # GET /budget_rows/1/edit
   def edit
   end
 
-  # PUT /budget_rows/1
-  # PUT /budget_rows/1.xml
   def update
-    respond_to do |format|
-      if @budget_row.update_attributes(params[:budget_row])
-        format.html { redirect_to(budget_row_path(budget_id: @year, id: @budget_row), notice: 'Budget row was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render action: 'edit' }
-        format.xml  { render xml: @budget_row.errors, status: :unprocessable_entity }
-      end
+    if @budget_row.update_attributes(params[:budget_row])
+      redirect_to(budget_row_path(budget_id: @year, id: @budget_row), notice: 'Budget row was successfully updated.')
+    else
+      render action: 'edit'
     end
   end
 

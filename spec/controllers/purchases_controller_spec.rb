@@ -116,20 +116,6 @@ describe PurchasesController do
     end
   end
 
-  describe 'DELETE destroy' do
-    it 'destroys the requested purchase' do
-      Purchase.should_receive(:find).with('37') { mock_purchase }
-      mock_purchase.should_not_receive(:destroy)
-      delete :destroy, id: '37'
-    end
-
-    it 'redirects to the purchases list' do
-      Purchase.stub(:find) { mock_purchase }
-      delete :destroy, id: '1'
-      response.should redirect_to(purchases_url)
-    end
-  end
-
   describe 'GET confirmed' do
     it 'calls only fetches payable purchases' do
       Purchase.should_receive(:payable_grouped_by_person).and_return([])

@@ -1,8 +1,6 @@
 class BudgetPostsController < ApplicationController
   load_and_authorize_resource
 
-  # GET /budget_posts
-  # GET /budget_posts.xml
   def index
     @budget_posts = BudgetPost.all
     @year = params[:year]
@@ -10,70 +8,37 @@ class BudgetPostsController < ApplicationController
     BudgetRow.create_rows_if_not_exists(@year) # TODO: Refactor this to put it elsewhere. It doesn't belong here.
 
     @edit = params[:edit]
-
-    respond_to do |format|
-      format.html
-      format.xml  { render xml: @budget_posts }
-    end
   end
 
-  # GET /budget_posts/1
-  # GET /budget_posts/1.xml
   def show
-    respond_to do |format|
-      format.html
-      format.xml  { render xml: @budget_post }
-    end
   end
 
-  # GET /budget_posts/new
-  # GET /budget_posts/new.xml
   def new
     @budget_post = BudgetPost.new
     @budget_post.mage_arrangement_number = 0 # THIS IS A HACK
-
-    respond_to do |format|
-      format.html
-      format.xml  { render xml: @budget_post }
-    end
   end
 
-  # GET /budget_posts/1/edit
   def edit
   end
 
-  # POST /budget_posts
-  # POST /budget_posts.xml
   def create
     @budget_post = BudgetPost.new(params[:budget_post])
 
-    respond_to do |format|
-      if @budget_post.save
-        format.html { redirect_to(@budget_post, notice: 'Budget post was successfully created.') }
-        format.xml  { render xml: @budget_post, status: :created, location: @budget_post }
-      else
-        format.html { render action: 'new' }
-        format.xml  { render xml: @budget_post.errors, status: :unprocessable_entity }
-      end
+    if @budget_post.save
+      redirect_to(@budget_post, notice: 'Budget post was successfully created.')
+    else
+      render action: 'new'
     end
   end
 
-  # PUT /budget_posts/1
-  # PUT /budget_posts/1.xml
   def update
-    respond_to do |format|
-      if @budget_post.update_attributes(params[:budget_post])
-        format.html { redirect_to(budget_post_path(@budget_post), notice: I18n.t('notices.budget_post.success.updated')) }
-        format.xml  { head :ok }
-      else
-        format.html { render action: 'edit' }
-        format.xml  { render xml: @budget_post.errors, status: :unprocessable_entity }
-      end
+    if @budget_post.update_attributes(params[:budget_post])
+      redirect_to(budget_post_path(@budget_post), notice: I18n.t('notices.budget_post.success.updated'))
+    else
+      render action: 'edit'
     end
   end
 
-  # DELETE /budget_posts/1
-  # DELETE /budget_posts/1.xml
   def destroy
     @budget_post = BudgetPost.find(params[:id])
     begin
@@ -83,9 +48,6 @@ class BudgetPostsController < ApplicationController
       notice = I18n.t('notices.budget_post.error.delete_restricted')
     end
 
-    respond_to do |format|
-      format.html { redirect_to(budget_posts_url, notice: notice) }
-      format.xml  { head :ok }
-    end
+    redirect_to(budget_posts_url, notice: notice)
   end
 end
