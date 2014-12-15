@@ -14,7 +14,7 @@
         %tr{ :class => cycle(:odd, :even) }
           %td= link_to person, person
           %td= "%s, %s, %s" % [person.bank_name, person.bank_clearing_number, person.bank_account_number]
-          %td= currency sum
+          %td= number_to_currency sum
           %td
             = check_box_tag "pay[#{person.id}]"
             = label_tag "pay[#{person.id}]", "Betala"

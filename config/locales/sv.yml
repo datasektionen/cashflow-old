@@ -291,7 +291,7 @@
 
   time:
     formats:
-      default: "%a, %e %b %Y %H:%M:%S %z"
+      default: "%Y-%m-%d %H:%M:%S %Z"
       short: "%e %b %H:%M"
       long: "%e %B %Y %H:%M"
     am: ""

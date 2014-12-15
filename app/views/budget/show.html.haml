@@ -19,8 +19,8 @@
           %tr{ class: cycle(:odd, :even) }
             %td= link_to row.budget_post.name, row.budget_post
             %td= link_to row.business_unit, row.business_unit
-            %td #{currency row.sum}
-            %td #{currency row.total}
+            %td= number_to_currency row.sum
+            %td= number_to_currency row.total
             %td
               %progress{ min: 0, max: row.sum, value: row.total, style: "vertical-align: middle"}
 
