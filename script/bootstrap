@@ -52,4 +52,4 @@ fi
 
 # Setup rake tasks
 echo "[+] Running setup rake tasks..."
-bundle exec rake db:create db:migrate db:seed sunspot:reindex
+bundle exec rake db:create db:migrate db:seed

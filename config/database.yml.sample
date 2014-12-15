@@ -3,8 +3,8 @@
 development:
   adapter: mysql2
   database: cashflow_development
-  username: cashflow
-  password: cashflow
+  username: root
+  password:
   host: localhost
 
 # Warning: The database defined as "test" will be erased and
@@ -13,10 +13,9 @@ development:
 test: &test
   adapter: mysql2
   database: cashflow_test
-  username: cashflow
-  password: cashflow
+  username: root
+  password:
   host: localhost
 
 cucumber:
   <<: *test
-
