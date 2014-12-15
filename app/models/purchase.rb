@@ -11,7 +11,7 @@ class Purchase < ActiveRecord::Base
 
   has_many :items, :class_name => "PurchaseItem", :dependent => :destroy
   
-  validates_presence_of :person, :description, :purchased_at, :budget_post
+  validates_presence_of :person, :description, :purchased_on, :budget_post
   
   validate :cannot_purchase_stuff_in_the_future, :locked_when_finalized
   
@@ -30,7 +30,7 @@ class Purchase < ActiveRecord::Base
     integer :person_id, :references => Person
     integer :business_unit_id
 
-    date :purchased_at
+    date :purchased_on
     date :updated_at
     text :description
     float :total
@@ -155,9 +155,9 @@ class Purchase < ActiveRecord::Base
   protected
   
   def cannot_purchase_stuff_in_the_future
-    if !self.purchased_at.blank? && self.purchased_at > Date.today
+    if !self.purchased_on.blank? && self.purchased_on > Date.today
       errors.add(:base, I18n.t('activerecord.errors.models.purchase.purchased_in_future'))
-      errors.add(:purchased_at, I18n.t('activerecord.errors.models.purchase.attributes.purchased_at.purchased_in_future'))
+      errors.add(:purchased_on, I18n.t('activerecord.errors.models.purchase.attributes.purchased_on.purchased_in_future'))
     end
   end
   
@@ -181,7 +181,7 @@ class Purchase < ActiveRecord::Base
   end
 
   def set_year
-    self.year = purchased_at.try(:year) || Time.now.year
+    self.year = purchased_on.try(:year) || Time.now.year
   end
 
   def check_budget_rows_exists

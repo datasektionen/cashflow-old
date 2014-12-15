@@ -8,7 +8,7 @@ module PurchaseHelpers
   end
 
   def fill_out_purchase_details
-    fill_in("purchase_purchased_at", with: Date.today.to_s)
+    fill_in("purchase_purchased_on", with: Date.today.to_s)
     select_from_chosen(@budget_post.name, from: "purchase_budget_post_id")
     fill_in("purchase_description", with: "foo")
   end
@@ -65,7 +65,7 @@ When /^I forget to choose a "budget post"$/ do
 
   visit("/purchases/new")
 
-  fill_in("purchase_purchased_at", with: Date.today.to_s)
+  fill_in("purchase_purchased_on", with: Date.today.to_s)
   fill_in("purchase_description", with: @description)
 
   fill_out_last_purchase_item_details

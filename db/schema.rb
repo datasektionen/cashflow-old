@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110909142954) do
+ActiveRecord::Schema.define(:version => 20141215194551) do
 
   create_table "budget_posts", :force => true do |t|
     t.integer "business_unit_id",        :null => false
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(:version => 20110909142954) do
     t.integer  "person_id",                         :null => false
     t.integer  "budget_post_id",                    :null => false
     t.integer  "year",                              :null => false
-    t.date     "purchased_at",                      :null => false
+    t.date     "purchased_on",                      :null => false
     t.string   "slug",           :default => "",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"

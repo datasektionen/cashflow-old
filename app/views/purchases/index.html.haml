@@ -20,7 +20,7 @@
               %td= link_to ("%03d" % purchase.id), purchase
               %td= truncate purchase.description
               %td= link_to purchase.person, purchase.person, title: purchase.person.login
-              %td= purchase.purchased_at.to_s(:iso)
+              %td= purchase.purchased_on.to_s(:iso)
               %td= status purchase
 
       = paginate @purchases

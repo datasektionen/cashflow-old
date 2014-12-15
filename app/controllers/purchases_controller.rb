@@ -12,8 +12,8 @@ class PurchasesController < ApplicationController
       with(:person_id, filter_param(:person_id)) unless filter_param(:person_id).blank?
       with(:business_unit_id, filter_param(:business_unit_id)) unless filter_param(:business_unit_id).blank?
 
-      with(:purchased_at).greater_than(filter_param :purchased_at_from) unless filter_param(:purchased_at_from).blank?
-      with(:purchased_at).less_than(filter_param :purchased_at_to) unless filter_param(:purchased_at_to).blank?
+      with(:purchased_on).greater_than(filter_param :purchased_on_from) unless filter_param(:purchased_on_from).blank?
+      with(:purchased_on).less_than(filter_param :purchased_on_to) unless filter_param(:purchased_on_to).blank?
 
       with(:updated_at).greater_than(filter_param :updated_at_from) unless filter_param(:updated_at_from).blank?
       with(:updated_at).less_than(filter_param :updated_at_to) unless filter_param(:updated_at_to).blank?

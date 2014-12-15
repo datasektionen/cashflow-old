@@ -17,7 +17,7 @@
         = filter_select_tag 'business_unit_id', BusinessUnit.all, 'id', 'name', 'Välj affärsenhet(er)', :include_blank => true, :multiple => true
 
     = field_set_tag('Inköpsdatum') do
-      = filter_date_range_tags :purchased_at
+      = filter_date_range_tags :purchased_on
 
     = field_set_tag('Ändringsdatum') do
       = filter_date_range_tags :updated_at
