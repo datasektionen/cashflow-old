@@ -48,6 +48,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'headless'
   gem 'launchy'
+  gem 'sunspot_test'
   gem 'no_peeping_toms', git: 'https://github.com/dbalatero/no-peeping-toms.git'
   gem 'rspec', '>= 2.8.0'
   gem 'rspec-mocks'
