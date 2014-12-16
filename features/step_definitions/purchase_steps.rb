@@ -46,6 +46,7 @@ Given /^I have made a purchase that needs registering$/ do
 end
 
 Given /^a purchase$/ do
+  Purchase.paper_trail_on!
   create_purchase
 end
 
@@ -119,8 +120,8 @@ end
 
 Given /^there exists at least one purchase of each status$/ do
   Purchase.workflow_spec.states.each do |_name, state|
-    Given 'a purchase'
-    @purchase.update_attribute(:workflow_state, state)
+    Given "a purchase"
+    @purchase.update_column(:workflow_state, state)
   end
 end
 
@@ -130,7 +131,7 @@ end
 
 Then /^I should see all purchases$/ do
   Purchase.all.each do |purchase|
-    page.should have_content purchase.id
+    page.should have_content purchase.description
   end
 end
 
