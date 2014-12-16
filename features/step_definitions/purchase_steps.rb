@@ -41,27 +41,27 @@ end
 
 World(PurchaseHelpers)
 
-Given /^I have made a purchase that needs registering$/ do
+Given(/^I have made a purchase that needs registering$/) do
   setup_purchase_prerequisits
 end
 
-Given /^a purchase$/ do
+Given(/^a purchase$/) do
   Purchase.paper_trail_on!
   create_purchase
 end
 
-Given /^a purchase with "([^"]*)" items$/ do |_number_of_items|
+Given(/^a purchase with "([^"]*)" items$/) do |_number_of_items|
   create_purchase(2)
 end
 
-When /^I fill out the new purchase form accordingly$/ do
+When(/^I fill out the new purchase form accordingly$/) do
   visit('/purchases/new')
   fill_out_purchase_details
   fill_out_last_purchase_item_details
   click_button('Spara Inköp')
 end
 
-When /^I forget to choose a "budget post"$/ do
+When(/^I forget to choose a "budget post"$/) do
   @description = Time.now.to_s
 
   visit('/purchases/new')
@@ -73,11 +73,11 @@ When /^I forget to choose a "budget post"$/ do
   click_button('Spara Inköp')
 end
 
-Then /^my purchase should be registered$/ do
+Then(/^my purchase should be registered$/) do
   page.should have_content(Purchase.last.slug)
 end
 
-When /^I fill out the new purchase form with "(\d+)" items$/ do |n|
+When(/^I fill out the new purchase form with "(\d+)" items$/) do |n|
   n = n.to_i
   visit('/purchases/new')
   fill_out_purchase_details
@@ -89,21 +89,21 @@ When /^I fill out the new purchase form with "(\d+)" items$/ do |n|
   click_button('Spara Inköp')
 end
 
-Then /^(?:(?:the|my|that) )?purchase should have "(\d+)" purchase items$/ do |n|
+Then(/^(?:(?:the|my|that) )?purchase should have "(\d+)" purchase items$/) do |n|
   Purchase.last.items.count.should == n.to_i
 end
 
-Then /^my purchase should not be registered$/ do
+Then(/^my purchase should not be registered$/) do
   if last_purchase = Purchase.last
     last_purchase.description.should_not == @description
   end
 end
 
-Then /^I should get an error message on the "budget post" field$/ do
+Then(/^I should get an error message on the "budget post" field$/) do
   page.should have_content 'måste anges'
 end
 
-When /^I edit the description of that purchase$/ do
+When(/^I edit the description of that purchase$/) do
   @description = Time.now.to_s
 
   visit("/purchases/#{@purchase.slug}/edit")
@@ -113,29 +113,29 @@ When /^I edit the description of that purchase$/ do
   click_button('Uppdatera Inköp')
 end
 
-Then /^the description should be updated$/ do
+Then(/^the description should be updated$/) do
   @purchase = @purchase.reload
   @purchase.description.should == @description
 end
 
-Given /^there exists at least one purchase of each status$/ do
+Given(/^there exists at least one purchase of each status$/) do
   Purchase.workflow_spec.states.each do |_name, state|
     Given "a purchase"
     @purchase.update_column(:workflow_state, state)
   end
 end
 
-When /^I go to the purchases page$/ do
+When(/^I go to the purchases page$/) do
   visit purchases_path
 end
 
-Then /^I should see all purchases$/ do
+Then(/^I should see all purchases$/) do
   Purchase.all.each do |purchase|
     page.should have_content purchase.description
   end
 end
 
-When /^I filter the purchases by statuses "([^"]*)"$/ do |statuses|
+When(/^I filter the purchases by statuses "([^"]*)"$/) do |statuses|
   pending
   statuses.split(/,/).map(&:strip).each do |_status|
     # TODO: click element
@@ -143,23 +143,23 @@ When /^I filter the purchases by statuses "([^"]*)"$/ do |statuses|
   click_button('Filtrera!')
 end
 
-Then /^I should see purchases with statuses "([^"]*)"$/ do |statuses|
+Then(/^I should see purchases with statuses "([^"]*)"$/) do |statuses|
   Purchase.where(workflow_status: statuses.split(/,/).map(&:strip)).each do |purchase|
     page.should have_content purchase.id
   end
 end
 
-Then /^I should not see any other purchases$/ do
+Then(/^I should not see any other purchases$/) do
   pending
 end
 
-When /^I remove the first of those items$/ do
+When(/^I remove the first of those items$/) do
   visit(edit_purchase_path(@purchase))
   click_link('Ta bort inköpsdel')
   click_button('Uppdatera Inköp')
 end
 
-Then /^only the second item should remain$/ do
+Then(/^only the second item should remain$/) do
   @purchase.reload
 
   @purchase.items.count.should == 1
