@@ -22,7 +22,7 @@ class BusinessUnitsController < ApplicationController
     if @business_unit.save
       redirect_to(@business_unit, notice: I18n.t('notices.business_unit.success.created'))
     else
-      render action: 'new'
+      render :new
     end
   end
 
@@ -30,7 +30,7 @@ class BusinessUnitsController < ApplicationController
     if @business_unit.update_attributes(params[:business_unit])
       redirect_to(@business_unit, notice: I18n.t('notices.business_unit.success.updated'))
     else
-      render action: 'edit'
+      render :edit
     end
   end
 

@@ -30,7 +30,7 @@ describe Person do
     end
   end
 
-  it 'should correctly sum the total of all debts' do
+  it 'should correctly sum the total of all debts', versioning: true do
     # make sure it can count the total of one debt.
     d1 = Factory :debt, person_id: @person.id
     @person.reload.total_debt_amount.should == d1.amount

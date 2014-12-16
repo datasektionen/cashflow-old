@@ -5,6 +5,9 @@ describe Debt do
     @admin = Factory :admin
   end
   before(:each) do
+    Purchase.paper_trail_on!
+    PaperTrail.enabled = true
+    PaperTrail.whodunnit = @admin.id.to_s
     @debt = Factory :debt
   end
 

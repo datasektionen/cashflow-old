@@ -7,11 +7,11 @@ Feature: Delete budget posts
   @javascript
   Scenario: Deleting a budget post with purchases
     Given a budget post exists with a bunch of purchases
-    When I try to delete it
-    Then it should not be deleted
+    When I try to delete the budget post
+    Then the budget post should still exist
 
   @javascript
   Scenario: Deleting a budget post without purchases
     Given a budget post exists without any purchases
-    When I try to delete it
-    Then it should be deleted
+    When I try to delete the budget post
+    Then the budget post should be deleted
