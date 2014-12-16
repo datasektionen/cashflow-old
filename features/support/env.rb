@@ -60,3 +60,6 @@ After do
 end
 require 'webmock/cucumber'
 WebMock.allow_net_connect!
+
+# travis is really really slow to start stuff
+SunspotTest.solr_startup_timeout = 60
