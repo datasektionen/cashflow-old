@@ -186,9 +186,8 @@ class Purchase < ActiveRecord::Base
   end
 
   def self.payable_grouped_by_person
-    Purchase.payable.
-      group_by(&:person).map { |person, purchases| { person => purchases.sum(&:total) } }.
-      inject({}) { |hash, person| hash.merge(person) }
+    grouped = Purchase.payable.group_by(&:person)
+    grouped.reduce({}) {|hash, (key, val)| hash.merge(key => val.sum(&:total))}
   end
 
   def self.pay_multiple!(params)
