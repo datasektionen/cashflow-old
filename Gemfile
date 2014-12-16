@@ -43,7 +43,6 @@ end
 # Gems for test environment
 group :test do
   gem 'capybara'
-  gem 'cover_me'
   gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
@@ -55,5 +54,6 @@ group :test do
   gem 'rspec-rails'
   gem 'selenium'
   gem 'shoulda-matchers'
+  gem 'simplecov', '~> 0.9', require: false
   gem 'webmock'
 end

@@ -39,3 +39,10 @@ replacing KTHID with your KTH username, like `koronen`.
 
 Insert your ugid into config/local.yml in order to get the controller specs to
 work properly (otherwise the test code can't log in).
+
+### Test coverage
+
+To generate coverage data, set the environment variable `COVERAGE` before
+running the test.
+
+    COVERAGE=1 bundle exec rake
