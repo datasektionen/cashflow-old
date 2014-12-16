@@ -11,7 +11,7 @@ class Purchase < ActiveRecord::Base
 
   has_many :items, class_name: 'PurchaseItem', dependent: :destroy
 
-  validates_presence_of :person, :description, :purchased_on, :budget_post
+  validates_presence_of :person_id, :description, :purchased_on, :budget_post
 
   validate :cannot_purchase_stuff_in_the_future, :locked_when_finalized
 
@@ -169,9 +169,9 @@ class Purchase < ActiveRecord::Base
     slug = '%s%d-%d' % [business_unit.try(:short_name), year.to_i, id]
 
     if self.slug !~ /#{slug}/
-      Purchase.paper_trail_off
+      Purchase.paper_trail_off!
       update_attribute(:slug, slug)
-      Purchase.paper_trail_on
+      Purchase.paper_trail_on!
     end
   end
 
