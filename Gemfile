@@ -52,7 +52,7 @@ group :test do
   gem 'rspec', '>= 2.8.0'
   gem 'rspec-mocks'
   gem 'rspec-rails'
-  gem 'selenium'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'simplecov', '~> 0.9', require: false
   gem 'webmock'

@@ -119,8 +119,6 @@ GEM
     i18n (0.6.11)
     i18n_routing (0.6.2)
       i18n (> 0.3.5)
-    jar_wrapper (0.1.8)
-      zip
     journey (1.0.4)
     jquery-rails (1.0.19)
       railties (~> 3.0)
@@ -221,8 +219,6 @@ GEM
       rspec (~> 2.8.0)
     rubyntlm (0.1.1)
     rubyzip (1.1.6)
-    selenium (0.2.11)
-      jar_wrapper
     selenium-webdriver (2.44.0)
       childprocess (~> 0.5)
       multi_json (~> 1.0)
@@ -279,7 +275,6 @@ GEM
     workflow (0.8.1)
     xpath (0.1.4)
       nokogiri (~> 1.3)
-    zip (2.0.2)
 
 PLATFORMS
   ruby
@@ -320,7 +315,7 @@ DEPENDENCIES
   rspec (>= 2.8.0)
   rspec-mocks
   rspec-rails
-  selenium
+  selenium-webdriver
   shoulda-matchers
   simple-navigation
   simplecov (~> 0.9)
