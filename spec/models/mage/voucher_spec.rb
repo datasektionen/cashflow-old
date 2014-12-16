@@ -18,7 +18,7 @@ describe Mage::Voucher do
     v.accounting_date.should == '2011-11-11'
   end
 
-  it 'should convert purchase into voucher correctly' do
+  it 'should convert purchase into voucher correctly', versioning: true do
     person = Factory :person
     PaperTrail.whodunnit = person.id.to_s
     purchase = Factory :purchase

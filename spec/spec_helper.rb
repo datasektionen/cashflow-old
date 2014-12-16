@@ -15,6 +15,7 @@ require 'formtastic'
 require 'headless'
 require 'database_cleaner'
 require 'webmock/rspec'
+require 'sunspot_test/rspec'
 
 headless = Headless.new
 
