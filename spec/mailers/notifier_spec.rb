@@ -16,8 +16,6 @@ describe Notifier do
     describe "purchase_created" do
       subject { Notifier.purchase_created(@purchase) }
 
-      before(:each) { subject.deliver }
-
       it "delivers the email" do
         subject.deliver
         ActionMailer::Base.deliveries.should_not be_empty
@@ -39,8 +37,6 @@ describe Notifier do
 
     describe "purchase_approved" do
       subject { Notifier.purchase_approved(@purchase) }
-
-      before(:each) { subject.deliver }
 
       it "delivers the email" do
         subject.deliver
@@ -64,8 +60,6 @@ describe Notifier do
     describe "purchase_denied" do
       subject { Notifier.purchase_denied(@purchase) }
 
-      before(:each) { subject.deliver }
-
       it "delivers the email" do
         subject.deliver
         ActionMailer::Base.deliveries.should_not be_empty
@@ -87,8 +81,6 @@ describe Notifier do
 
     describe "purchase_paid" do
       subject { Notifier.purchase_paid(@purchase) }
-
-      before(:each) { subject.deliver }
 
       it "delivers the email" do
         subject.deliver
@@ -137,8 +129,6 @@ describe Notifier do
     describe "debt_created" do
       subject { Notifier.debt_created(@debt) }
 
-      before(:each) { subject.deliver }
-
       it "delivers the email" do
         subject.deliver
         ActionMailer::Base.deliveries.should_not be_empty
@@ -161,8 +151,6 @@ describe Notifier do
     describe "debt_paid" do
       subject { Notifier.debt_paid(@debt).deliver }
 
-      before(:each) { subject.deliver }
-
       it "delivers the email" do
         subject.deliver
         ActionMailer::Base.deliveries.should_not be_empty
@@ -184,8 +172,6 @@ describe Notifier do
 
     describe "debt_cancelled" do
       subject { Notifier.debt_cancelled(@debt).deliver }
-
-      before(:each) { subject.deliver }
 
       it "delivers the email" do
         subject.deliver

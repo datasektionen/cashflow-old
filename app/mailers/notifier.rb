@@ -4,12 +4,11 @@ class Notifier < ActionMailer::Base
   default cc: 'kassor@d.kth.se'
   default_url_options[:host] = Cashflow::Application.settings['default_host']
 
-  %w[created approved denied].each do |method|
-    name = "purchase_#{method}"
+  %w[purchase_created purchase_approved purchase_denied].each do |name|
     define_method name do |purchase|
       @purchase = purchase
       @administrator = purchase.last_updated_by
-      notify(mail_header_params(purchase, name))
+      mail(mail_header_params(purchase, name))
     end
   end
 
@@ -18,14 +17,14 @@ class Notifier < ActionMailer::Base
     @administrator = purchase.last_updated_by
     options = mail_header_params(purchase, 'purchase_paid')
     options.store(:cc, purchase.business_unit.email || @administrator.email)
-    notify(options)
+    mail(options)
   end
 
   define_debt_email = ->(name, admin_method) {
     define_method name do |debt|
       @debt = debt
       @administrator = debt.send(admin_method)
-      notify(mail_header_params(debt, name))
+      mail(mail_header_params(debt, name))
     end
   }
 
@@ -34,11 +33,6 @@ class Notifier < ActionMailer::Base
   define_debt_email["debt_cancelled", :last_updated_by]
 
   private
-
-
-  def notify(options)
-    mail(options) { |format| format.text }
-  end
 
   def mail_header_params(source, subject)
     {
