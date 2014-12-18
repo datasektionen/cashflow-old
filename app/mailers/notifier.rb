@@ -16,21 +16,18 @@ class Notifier < ActionMailer::Base
     @purchase = purchase
     @administrator = purchase.last_updated_by
     options = mail_header_params(purchase, 'purchase_paid')
-    options.store(:cc, purchase.business_unit.email || @administrator.email)
+    options[:cc]= purchase.business_unit.email || @administrator.email
     mail(options)
   end
 
-  define_debt_email = ->(name, admin_method) {
+  %w[created paid cancelled].each do |method|
+    name = "debt_#{method}"
     define_method name do |debt|
       @debt = debt
-      @administrator = debt.send(admin_method)
+      @administrator = debt.last_updated_by
       mail(mail_header_params(debt, name))
     end
-  }
-
-  define_debt_email["debt_created", :author]
-  define_debt_email["debt_paid", :last_updated_by]
-  define_debt_email["debt_cancelled", :last_updated_by]
+  end
 
   private
 
