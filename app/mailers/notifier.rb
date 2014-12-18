@@ -4,7 +4,8 @@ class Notifier < ActionMailer::Base
   default cc: 'kassor@d.kth.se'
   default_url_options[:host] = Cashflow::Application.settings['default_host']
 
-  %w[purchase_created purchase_approved purchase_denied].each do |name|
+  %w[created approved denied].each do |method|
+    name = "purchase_#{method}"
     define_method name do |purchase|
       @purchase = purchase
       @administrator = purchase.last_updated_by
