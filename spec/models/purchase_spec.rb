@@ -60,7 +60,7 @@ describe Purchase do
   end
 
   it 'should not be purchased in the future' do
-    subject.purchased_on.should <= Date.today
+    subject.purchased_on.should be <= Date.today
     subject.purchased_on = Date.today + 1
     subject.should be_invalid
     subject.errors[:purchased_on].should_not be_empty
@@ -207,7 +207,30 @@ describe Purchase do
   end
 
   describe '.payable_grouped_by_person' do
-    pending('write some tests')
+    before(:all) do
+      Purchase.delete_all
+      @purchase_1 = Factory(:purchase, workflow_state: 'confirmed')
+      @purchase_2 = Factory(:purchase, workflow_state: 'confirmed')
+      @person_1 = @purchase_1.person
+      @person_2 = @purchase_2.person
+    end
+
+    subject { Purchase.payable_grouped_by_person }
+
+    it "keeps different people separate" do
+      subject.keys.should == [@person_1, @person_2]
+    end
+
+    it "sums the total payable amount per person" do
+      p = Factory(:purchase, workflow_state: 'confirmed', person: @person_1)
+
+      expected = {
+        @person_1 => @purchase_1.total + p.total,
+        @person_2 => @purchase_2.total
+      }
+
+      subject.should == expected
+    end
   end
 
   describe '.pay_payable_by!' do
