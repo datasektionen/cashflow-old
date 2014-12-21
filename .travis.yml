@@ -6,5 +6,8 @@ before_script:
 notifications:
   slack:
     secure: JnVWYUGH28Rrqj/cb6QXNd0hCUvzeUmp1GtZeCCER2l65HMoXWKWjmRtrY2y91/HneBYsHN7GJfsOBdNVuyEUX/XgH2e/zkkQZgkYx/fyffzfbnE9M4BaAXiXeT7CqCDsGbRObXjki1C6tHz78VLdmm9HwbqnamKjWZWwGrgPWs=
+branches:
+  only:
+    - master
 rvm:
 - 1.9.3
