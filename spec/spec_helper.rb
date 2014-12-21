@@ -1,5 +1,5 @@
-# This file is copied to ~/spec when you run 'ruby script/generate rspec'
-# from the project root directory.
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 ENV['RAILS_ENV'] ||= 'test'
 
 if ENV['COVERAGE']

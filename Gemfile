@@ -57,4 +57,5 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', '~> 0.9', require: false
   gem 'webmock'
+  gem "codeclimate-test-reporter", group: :test, require: nil
 end
