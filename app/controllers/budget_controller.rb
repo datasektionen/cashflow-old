@@ -11,8 +11,6 @@ class BudgetController < ApplicationController
 
   def edit
     @budget_rows = BudgetRow.year(@year)
-    @mage_arrangements = Mage::Arrangement.all(@year)
-    @mage_arrangements_grouped = @mage_arrangements.group_by(&:organ_number)
   end
 
   def update
