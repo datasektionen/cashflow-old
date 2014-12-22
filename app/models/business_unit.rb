@@ -1,7 +1,5 @@
 class BusinessUnit < ActiveRecord::Base
   validates_presence_of :name, :short_name, :description
-  validates :mage_number, presence: true
-  validates :mage_default_series, presence: true
 
   has_many :budget_posts
   has_many :purchases, through: :budget_posts

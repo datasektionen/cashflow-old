@@ -15,7 +15,6 @@ class BudgetPostsController < ApplicationController
 
   def new
     @budget_post = BudgetPost.new
-    @budget_post.mage_arrangement_number = 0 # THIS IS A HACK
   end
 
   def edit

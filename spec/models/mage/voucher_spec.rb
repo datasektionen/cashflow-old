@@ -27,11 +27,10 @@ describe Mage::Voucher do
     purchase_item.save
     purchase.confirm!
 
-    voucher = Mage::Voucher.from_purchase(purchase, 'M')
+    voucher = Mage::Voucher.from_purchase(purchase)
     voucher.accounting_date.should == purchase.purchased_on
     voucher.authorized_by.should == purchase.confirmed_by.ugid
     voucher.material_from.should == purchase.person.ugid
-    voucher.organ.should == purchase.budget_post.business_unit.mage_number
     voucher.title.should == "#{purchase.slug.upcase} - #{purchase.description}"
   end
 end

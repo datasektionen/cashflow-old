@@ -1,3 +1,7 @@
+require 'mage/base'
+require 'mage/mapper'
+require 'mage/voucher_row'
+
 class Mage::Voucher < Mage::Base
   create_action :api_create
   before_initialize :create_voucher_rows
@@ -15,25 +19,16 @@ class Mage::Voucher < Mage::Base
 
   ##
   # Creates a vouchers from a given purchase in the series specified
-  # @param series_letter The letter for the series to put the voucher in
-  def self.from_purchase(purchase, series_letter = nil)
-    if series_letter.nil?
-      # Fetch series letter from purchase if nil
-      series_letter = purchase.business_unit.mage_default_series
-    end
+  def self.from_purchase(purchase)
+    mapper = Mage::Mapper.instance
 
     if purchase.keepable?
-
-      if series_letter.nil?
-        fail 'BusinessUnit lacks default MAGE series'
-      end
-
       voucher = Mage::Voucher.new
-      voucher.series = series_letter
+      voucher.series = mapper.series!(purchase.business_unit)
       voucher.activity_year = purchase.year
       voucher.authorized_by = purchase.confirmed_by.ugid
       voucher.material_from = purchase.person.ugid
-      voucher.organ = purchase.budget_post.business_unit.mage_number
+      voucher.organ = mapper.organ_number!(purchase.business_unit)
       voucher.title = "#{purchase.slug.upcase} - #{purchase.description}"
       voucher.accounting_date = purchase.purchased_on
       total_sum = 0
@@ -41,8 +36,8 @@ class Mage::Voucher < Mage::Base
         total_sum += i.amount
         vr = Mage::VoucherRow.new
         vr.sum = i.amount
-        vr.account_number = i.product_type.mage_account_number
-        vr.arrangement = purchase.budget_post.mage_arrangement_number
+        vr.account_number = mapper.account_number!(i.product_type)
+        vr.arrangement = mapper.arrangement_number!(purchase.budget_post)
         if vr.arrangement.nil?
           fail "Arrangement for purchase #{purchase.id}, budget_post #{purchase.budget_post} is nil"
         end
