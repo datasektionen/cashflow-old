@@ -61,6 +61,8 @@ describe PurchasesController do
         post :create, purchase: {}
         response.should redirect_to(purchase_url(mock_purchase))
       end
+
+      it "sends an email to the owner and to the cashier"
     end
 
     describe 'with invalid params' do
@@ -129,6 +131,54 @@ describe PurchasesController do
       Purchase.should_receive(:payable).and_return([])
 
       post :pay_multiple,  pay: {}
+    end
+  end
+
+  describe "PUT confirm" do
+    context "with valid parameters" do
+      it "marks the purchase as confirmed"
+      it "sends a confirmation email"
+    end
+
+    context "without valid parameters" do
+      it "does not change the status of the purchase"
+      it "does not send a confirmation email"
+    end
+  end
+
+  describe "PUT pay" do
+    context "with valid parameters" do
+      it "marks the purchase as paid"
+      it "sends an email to the owner of the purchase"
+    end
+
+    context "without valid parameters" do
+      it "does not change the status of the purchase"
+      it "does not send an email notification"
+    end
+  end
+
+  describe "PUT keep" do
+    context "with valid parameters" do
+      it "marks the purchase as bookkept"
+      it "pushes the purchase to MAGE"
+    end
+
+    context "without valid parameters" do
+      it "does not change the status of the purchase"
+      it "does not push the purchase to MAGE"
+    end
+  end
+
+  describe "PUT cancel" do
+    context "with valid parameters" do
+      it "marks the purchase as cancelled"
+      it "sends an email notification to the owner"
+    end
+
+    context "without valid parameters" do
+      it "does not change the status of the purchase"
+      it "does not send an email notification"
     end
   end
 end
