@@ -1,0 +1,47 @@
+= form_tag(mage_mappings_path, method: :put) do
+  %h3 Business units
+  %table.table.table-bordered.table-striped.table-condensed
+    %thead
+      %tr
+        %th Name
+        %th Organ number
+        %th Series
+    %tbody
+      - @business_units.each do |business_unit|
+        %tr
+          %td= business_unit.name
+          %td
+            = text_field_tag "mappings[business_units][#{business_unit.id}][organ_number]", @mapper.organ_number(business_unit)
+          %td
+            = text_field_tag "mappings[business_units][#{business_unit.id}][default_series]", @mapper.series(business_unit)
+
+  %h3 Budget posts
+  %table.table.table-bordered.table-striped.table-condensed
+    %thead
+      %tr
+        %th Business unit name
+        %th Name
+        %th Arrangement number
+    %tbody
+    - @budget_posts.each do |budget_post|
+      %tr
+        %td= budget_post.business_unit.name
+        %td= budget_post.name
+        %td
+          = text_field_tag "mappings[budget_posts][#{budget_post.id}][arrangement_number]", @mapper.arrangement_number(budget_post)
+
+  %h3 Product types
+  %table.table.table-bordered.table-striped.table-condensed
+    %thead
+      %tr
+        %th Name
+        %th Account number
+    %tbody
+    - @product_types.each do |product_type|
+      %tr
+        %td= product_type.name
+        %td
+          = text_field_tag "mappings[product_types][#{product_type.id}][account_number]", @mapper.account_number(product_type)
+
+  %p
+    = submit_tag

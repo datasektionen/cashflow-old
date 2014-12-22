@@ -40,6 +40,14 @@ Cashflow::Application.routes.draw do
       end
     end
 
+    namespace :mage do
+      resources :mappings, only: [:index] do
+        collection do
+          put :update
+        end
+      end
+    end
+
     # TODO: borde vi ha kanske nästla purchases och debts under people också?
     # Det skulle kinda make sense för mobil-appen, om man inte vill rendera all den infon på people#show
     # Det skulle också vara vettigt för icke-admin/kassör/revisor, då de ändå bara ska kunna se sina egna inköp/skulder.
