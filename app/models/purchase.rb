@@ -1,3 +1,5 @@
+require 'bookkeeper'
+
 class Purchase < ActiveRecord::Base
   include Workflow
   has_paper_trail
@@ -90,7 +92,7 @@ class Purchase < ActiveRecord::Base
   end
 
   def keep
-    notify_observers(:after_keep)
+    Bookkeeper.new(self).keep
   end
 
   def pay

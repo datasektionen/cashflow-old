@@ -4,10 +4,8 @@ common: &common
   ldap_port: 389
   default_host: "cashflow.staging.datasektionen.se"
   google_analytics: UA-SOMERANDOMSTRING
-  mage_url: "http://mage.staging.datasektionen.se"
-  mage_apikey: KEY
-  mage_private_apikey: private_key
   secret_token: "herp derp some random and secure hash"
+  bookkeeper: fake
 
 development: &development
   <<: *common
@@ -19,3 +17,7 @@ test:
 
 production:
   <<: *development
+  bookkeeper: mage
+  mage_url: "http://mage.staging.datasektionen.se"
+  mage_apikey: KEY
+  mage_private_apikey: private_key

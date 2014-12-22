@@ -6,6 +6,7 @@ doc
 tmp
 log
 config/database.yml
+config/mage_mappings.yml
 config/sunspot.yml
 .sass-cache/
 config/configuration.yml
