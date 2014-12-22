@@ -9,6 +9,4 @@
             %h1= @person.name
 
   = render(:partial => 'info', :locals => {:person => @person})
-
-  = render(:partial => 'debts', :locals => {:person => @person}) if @person.debts.any?
   = render(:partial => 'purchases', :locals => {:person => @person, :purchases => @person.purchases.unpaid}) if @person.purchases.any?

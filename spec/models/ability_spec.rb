@@ -21,10 +21,6 @@ describe Ability do
       @ability.should be_able_to(:manage, PurchaseItem.new)
     end
 
-    it 'should be able to manage debts' do
-      @ability.should be_able_to(:manage, Debt.new)
-    end
-
     it 'should be able to manage business units' do
       @ability.should be_able_to(:manage, BusinessUnit.new)
     end
@@ -50,7 +46,7 @@ describe Ability do
       @ability.should_not be_able_to(:manage, :people)
     end
 
-    %w(product_types business_units purchases debts budget_posts).each do |model|
+    %w(product_types business_units purchases budget_posts).each do |model|
       let(:class_name) { model.gsub(/\s/, '_').singularize.camelize.constantize }
 
       it 'should be able to manage model' do
@@ -71,10 +67,6 @@ describe Ability do
       @ability.should be_able_to(:manage, Purchase.new)
       @ability.should be_able_to(:manage, PurchaseItem.new)
     end
-
-    it 'should be able to manage debts' do
-      @ability.should be_able_to(:manage, Debt.new)
-    end
   end
 
   describe 'bookkeeper' do
@@ -93,7 +85,7 @@ describe Ability do
       @ability.should_not be_able_to(:manage, :people)
     end
 
-    %w(product_types business_units purchases debts budget_posts).each do |model|
+    %w(product_types business_units purchases budget_posts).each do |model|
       let(:class_name) { model.gsub(/\s/, '_').singularize.camelize.constantize }
 
       it 'should not be able to manage model' do
@@ -113,10 +105,6 @@ describe Ability do
     it 'should not be able to manage purchases' do
       @ability.should_not be_able_to(:manage, Purchase.new)
       @ability.should_not be_able_to(:manage, PurchaseItem.new)
-    end
-
-    it 'should be not able to manage debts' do
-      @ability.should_not be_able_to(:manage, Debt.new)
     end
 
     it 'should be able to bookkeep purchases' do
@@ -163,10 +151,6 @@ describe Ability do
       @ability.should_not be_able_to(:keep, @user.purchases.new(workflow_state: 'confirmed'))
     end
 
-    it 'should be able to read its own debts' do
-      @ability.should be_able_to(:read, @user.debts.new)
-    end
-
     it 'sholud be able to view itself' do
       @ability.should be_able_to(:show, @user)
     end
@@ -174,10 +158,6 @@ describe Ability do
     it 'sholud be able to edit itself' do
       @ability.should be_able_to(:edit, @user)
       @ability.should be_able_to(:update, @user)
-    end
-
-    it 'should not be able to edit its own debts' do
-      @ability.should_not be_able_to(:edit, @user.debts.new)
     end
 
     it 'should not be able to index people' do
@@ -223,16 +203,8 @@ describe Ability do
       @ability.should be_able_to(:read, Purchase.new)
     end
 
-    it 'should be able to read debts' do
-      @ability.should be_able_to(:read, Debt.new)
-    end
-
     it 'should not be able to manage purchases' do
       @ability.should_not be_able_to(:manage, Purchase.new)
-    end
-
-    it 'should not be able to manage debts' do
-      @ability.should_not be_able_to(:manage, Debt.new)
     end
 
     it 'should be able to create new purchases for itself' do

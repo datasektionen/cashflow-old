@@ -29,17 +29,6 @@ Factory.sequence :post_name do |_n|
   budget_posts[rand(budget_posts.length)]
 end
 
-Factory.define :debt do |f|
-  f.description { 'blubb' }
-  f.amount { rand(1000) }
-  f.person { Factory :person }
-  f.business_unit { Factory :business_unit }
-end
-
-Factory.define :invalid_debt, parent: :debt do |f|
-  f.person { nil }
-end
-
 Factory.define :business_unit do |f|
   name = Factory.next :unit_name
   f.name { name }

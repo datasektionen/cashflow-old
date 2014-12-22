@@ -10,22 +10,11 @@ SimpleNavigation::Configuration.run do |navigation|
         sub.item :new_purchase, I18n.t('navigation.new_purchase'), new_purchase_path
       end
 
-      primary.item :debts, I18n.t('navigation.debts'), debts_path do |sub|
-        sub.item :all_debts, I18n.t('navigation.all_debts'), debts_path
-        if can?(:create, Debt)
-          sub.item :new_debt, I18n.t('navigation.new_debt'), new_debt_path
-        end
-      end
-
       primary.item :budgets, I18n.t('navigation.budgets'), budget_path(id: Time.now.year) do |secondary|
         BudgetPost.all_years.each do |year|
           secondary.item :"budget_year_#{year}", year, budget_path(id: year)
         end
       end
-
-      # sub.item :new_business_unit, I18n.t('navigation.new_business_unit'), new_business_unit_path
-      # sub.item :new_product_type, I18n.t('navigation.new_product_type'), new_product_type_path
-      # sub.item :new_budget_post, I18n.t('navigation.new_budget_post'), new_budget_post_path
 
       primary.item :administration, 'Administration', '' do |secondary|
         if current_user.is?(:admin)

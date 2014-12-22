@@ -11,7 +11,6 @@ class Person < ActiveRecord::Base
 
   attr_accessible :email, :bank_clearing_number, :bank_account_number, :bank_name
 
-  has_many :debts, dependent: :restrict
   has_many :purchases, dependent: :restrict
 
   has_friendly_id :login
@@ -26,10 +25,6 @@ class Person < ActiveRecord::Base
 
   def name
     '%s %s' % [first_name, last_name]
-  end
-
-  def total_debt_amount
-    debts.unpaid.inject(0) { |sum, x| sum += x.amount }.to_f
   end
 
   def total_purchased_amount
