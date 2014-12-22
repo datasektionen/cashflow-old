@@ -57,8 +57,6 @@ class Mage::Base
 
   # Returns all objects of this type
   def self.all
-    return fake("#{name.downcase.gsub(/::/, '.')}.all") if Cashflow::Application.settings[:fake_mage]
-
     res = Mage::ApiCall.call("/#{table_name.pluralize}.json", nil, {}, :get)
     p = parse_result(res)
     if p
@@ -123,16 +121,5 @@ class Mage::Base
   # Add hook to run before initialization
   def self.before_initialize(method)
     @@before_initialize << method
-  end
-
-  # Fake a mage call
-  def self.fake(key)
-    yml = YAML.load(File.read(Rails.root.join('config', 'fake_mage.yml'), encoding: 'utf-8'))
-    values = key.split('.').reduce(yml) { |memo, part| memo[part] }
-    if values.is_a?(Array)
-      values.map { |value| OpenStruct.new(value) }
-    else
-      OpenStruct.new(values)
-    end
   end
 end

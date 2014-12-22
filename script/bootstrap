@@ -44,12 +44,6 @@ if [ ! -f config/sunspot.yml ]; then
     cp config/sunspot.yml.sample config/sunspot.yml
 fi
 
-# Fake MAGE config
-if [ ! -f config/mage_fake.yml ]; then
-    echo "[+] No fake MAGE config found, copying template..."
-    cp config/fake_mage.yml.sample config/fake_mage.yml
-fi
-
 # Setup rake tasks
 echo "[+] Running setup rake tasks..."
 bundle exec rake db:create db:migrate db:seed

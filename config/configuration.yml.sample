@@ -8,13 +8,11 @@ common: &common
   mage_apikey: KEY
   mage_private_apikey: private_key
   secret_token: "herp derp some random and secure hash"
-  fake_mage: false
 
 development: &development
   <<: *common
   ldap_host: localhost
   ldap_port: 9999
-  fake_mage: true
 
 test:
   <<: *development
