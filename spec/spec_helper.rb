@@ -17,6 +17,7 @@ require 'database_cleaner'
 require 'webmock/rspec'
 require 'sunspot_test/rspec'
 
+WebMock.disable_net_connect!(:allow => "codeclimate.com")
 headless = Headless.new
 
 # Requires supporting files with custom matchers and macros, etc,
