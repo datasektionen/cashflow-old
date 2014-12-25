@@ -1,15 +1,15 @@
-language: ruby
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - ./script/bootstrap
-notifications:
-  slack:
-    secure: JnVWYUGH28Rrqj/cb6QXNd0hCUvzeUmp1GtZeCCER2l65HMoXWKWjmRtrY2y91/HneBYsHN7GJfsOBdNVuyEUX/XgH2e/zkkQZgkYx/fyffzfbnE9M4BaAXiXeT7CqCDsGbRObXjki1C6tHz78VLdmm9HwbqnamKjWZWwGrgPWs=
-env: CODECLIMATE_REPO_TOKEN=a2f491eaa78f4544998858887ac10503b1b38d90b4868bfb6c5f8b1953911a70
 branches:
   only:
     - master
+env: CODECLIMATE_REPO_TOKEN=a2f491eaa78f4544998858887ac10503b1b38d90b4868bfb6c5f8b1953911a70
+language: ruby
+notifications:
+  slack:
+    secure: JnVWYUGH28Rrqj/cb6QXNd0hCUvzeUmp1GtZeCCER2l65HMoXWKWjmRtrY2y91/HneBYsHN7GJfsOBdNVuyEUX/XgH2e/zkkQZgkYx/fyffzfbnE9M4BaAXiXeT7CqCDsGbRObXjki1C6tHz78VLdmm9HwbqnamKjWZWwGrgPWs=
 rvm:
 - 1.9.3
 - 2.1.5
