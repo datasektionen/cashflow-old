@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PurchasesController do
+describe PurchasesController, type: :controller do
   describe 'routing' do
     it 'recognizes and generates #index' do
       expect({ get: '/purchases' }).to route_to(controller: 'purchases', action: 'index')

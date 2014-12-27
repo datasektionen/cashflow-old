@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PeopleController do
+describe PeopleController, type: :controller do
   describe 'routing' do
     it 'recognizes and generates #index' do
       expect({ get: '/people' }).to route_to(controller: 'people', action: 'index')

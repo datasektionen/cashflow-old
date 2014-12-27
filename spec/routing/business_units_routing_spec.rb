@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BusinessUnitsController do
+describe BusinessUnitsController, type: :controller do
   describe 'routing' do
     it 'recognizes and generates #index' do
       expect({ get: '/business_units' }).to route_to(controller: 'business_units', action: 'index')
