@@ -3,7 +3,9 @@ require 'spec_helper'
 describe BusinessUnitsController do
   def mock_business_unit(stubs = {})
     (@mock_business_unit ||= mock_model(BusinessUnit).as_null_object).tap do |business_unit|
-      allow(business_unit).to receive(stubs) unless stubs.empty?
+      stubs.each do |k, v|
+        allow(business_unit).to receive(k).and_return(v)
+      end
     end
   end
 

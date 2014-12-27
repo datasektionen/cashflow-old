@@ -14,7 +14,7 @@ describe Mage::Voucher do
     expect(v.voucher_rows[0].account_number).to eq(1921)
     expect(v.attributes[:voucher_rows_attributes][0][:sum]).to eq(200)
     expect(v.attributes[:voucher_rows_attributes][0][:account_number]).to eq(1921)
-    expect(v.attributes[:voucher_rows]).to.nil?
+    expect(v.attributes[:voucher_rows]).to be_nil
     expect(v.accounting_date).to eq('2011-11-11')
   end
 

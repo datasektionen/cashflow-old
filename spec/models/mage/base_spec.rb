@@ -6,7 +6,7 @@ describe Mage::Base do
     b.baz = 'derp'
     expect(b.baz).to eq('derp')
     expect(b.foo).to eq('bar')
-    expect(b.moo).to.nil?
+    expect(b.moo).to be_nil
     expect(b.moo?).to eq(false)
     expect(b.baz?).to eq(true)
   end

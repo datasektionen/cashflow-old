@@ -3,7 +3,9 @@ require 'spec_helper'
 describe ProductTypesController do
   def mock_product_type(stubs = {})
     (@mock_product_type ||= mock_model(ProductType).as_null_object).tap do |product_type|
-      allow(product_type).to receive(stubs) unless stubs.empty?
+      stubs.each do |k, v|
+        allow(product_type).to receive(k).and_return(v)
+      end
     end
   end
 
