@@ -153,8 +153,6 @@
           cannot_be_removed: "kunde inte tas bort"
         business_unit:
           cannot_be_removed: "kunde inte tas bort"
-        debt:
-          finalized_cannot_be_edited: "Du kan inte redigera en avslutad skuld"
         purchase:
           purchased_in_future: "Du kan inte ha köpt in något i framtiden. Har du uppfunnit en tidsmaskin får du gärna kontakta mig på blame@kth.se."
           finalized: "Du kan inte ändra ett avslutat inköp"
@@ -169,7 +167,6 @@
       # will translate User model name to "Dude"
     models:
       business_unit: "Affärsenhet"
-      debt: "Skuld"
       person: "Person"
       product_type: "Produkttyp"
       purchase: "Inköp"
@@ -184,12 +181,6 @@
       #     login: "Handle"
       # will translate User attribute "login" as "Handle"
     attributes:
-      debt:
-        author: "Skapad av"
-        amount: "Summa"
-        description: "Beskrivning"
-        workflow_state: "Status"
-        business_unit: "Affärsenhet"
       person:
         first_name: "Förnamn"
         last_name: "Efternamn"
@@ -361,20 +352,6 @@
       cancel: "Avslå"
       bookkeep: "Bokför"
       pay: "Markera som betald"
-  debts:
-    index:
-      title: "Skulder"
-      new_debt: "Lägg till ny skuld"
-    edit:
-      title: "Redigera skuld"
-    show:
-      title: "Skuld"
-    new:
-      title: "Lägg till ny skuld"
-    modify_form:
-      cancel: "Stryk"
-      bookkeep: "Bokför"
-      pay: "Markera som betald"
   roles:
     treasurer: "Kassör"
     admin: "Administratör"
@@ -424,7 +401,6 @@
     product_types: "produkttyper"
     business_units: "affarsenheter"
     purchases: "inkop"
-    debts: "skulder"
     budget_posts: "budgetposter"
   path_names:
     new: "ny"
@@ -448,10 +424,6 @@
       success:
         created: "Inköp skapat"
         updated: "Inköp uppdaterat"
-    debt:
-      success:
-        created: "Skuld skapad"
-        updated: "Skuld uppdaterad"
     business_unit:
       success:
         created: "Affärsenhet skapad"
@@ -472,9 +444,6 @@
     all_purchases: "Alla inköp"
     confirmed_purchases: "Bekräftade inköp"
     new_purchase: "Lägg till inköp"
-    debts: "Skulder"
-    all_debts: "Alla skulder"
-    new_debt: "Ny skuld"
     people: "Användare"
     all_people: "Alla användare"
     new_person: "Importera användare"
@@ -495,9 +464,6 @@
       purchase_approved: "Inköp godkänt"
       purchase_denied: "Inköp avslaget"
       purchase_paid: "Inköp betalat"
-      debt_created: "Skuld inlagd"
-      debt_cancelled: "Skuld struken"
-      debt_paid: "Skuld betald"
 
   layouts:
     application:

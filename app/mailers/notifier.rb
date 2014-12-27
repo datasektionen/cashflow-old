@@ -21,15 +21,6 @@ class Notifier < ActionMailer::Base
     mail(options)
   end
 
-  %w[created paid cancelled].each do |method|
-    name = "debt_#{method}"
-    define_method name do |debt|
-      @debt = debt
-      @administrator = debt.last_updated_by
-      mail(mail_header_params(debt, name))
-    end
-  end
-
   private
 
   def mail_header_params(source, subject)

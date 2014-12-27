@@ -5,7 +5,6 @@ class Ability
     if user
       can [:edit, :update, :show], Person, id: user.id
       can [:read, :create, :edit, :update, :show], Purchase, person_id: user.id
-      can :read, Debt, person_id: user.id
       can :read, ProductType
       if user.is? :admin
         # Admin can do everything
@@ -14,10 +13,10 @@ class Ability
       elsif user.is? :treasurer
         can [:index, :new, :create], Person
         can [:edit, :update], Person, id: user.id
-        can :manage, [Purchase, PurchaseItem, Debt, BusinessUnit, ProductType, BudgetPost]
+        can :manage, [Purchase, PurchaseItem, BusinessUnit, ProductType, BudgetPost]
         can :edit, :purchase_owner
       elsif user.is? :bookkeeper
-        can :index, [Person, Purchase, Debt, BusinessUnit, ProductType, BudgetPost]
+        can :index, [Person, Purchase, BusinessUnit, ProductType, BudgetPost]
         can :bookkeep, [Purchase]
         can :pay, [Purchase]
       elsif user.is? :accountant
@@ -31,7 +30,6 @@ class Ability
         can :manage, :people, id: user.id
         cannot :confirm, :purchase
         cannot :cancel, :purchases
-        cannot :cancel, :debts
         cannot :index, :people
       end
     end

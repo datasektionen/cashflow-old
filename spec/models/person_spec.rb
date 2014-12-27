@@ -30,37 +30,6 @@ describe Person do
     end
   end
 
-  it 'should correctly sum the total of all debts', versioning: true do
-    # make sure it can count the total of one debt.
-    d1 = Factory :debt, person_id: @person.id
-    @person.reload.total_debt_amount.should == d1.amount
-
-    # ...and add the sum of two debts together
-    d2 = Factory :debt, person_id: @person.id
-    @person.reload.total_debt_amount.should == (d1.amount + d2.amount)
-
-    # ..and not count paid debts
-    d2.versions.last.update_attribute(:whodunnit, @admin.id)
-
-    d2.pay!
-    @person.reload.total_debt_amount.should == d1.amount
-
-    # also, do count bookkept debts, but not paid ones
-    d1.keep!
-    d3 = Factory :debt, person_id: @person.id
-    @person.reload.total_debt_amount.should == (d1.amount + d3.amount)
-
-    # if we cancel one debt, it should not be counted
-    d3.versions.last.update_attribute(:whodunnit, @admin.id)
-    d3.cancel!
-    @person.reload.total_debt_amount.should == d1.amount
-
-    # and when no unpaid, uncancelled debts remain, the total debt sum should be zero
-    d1.versions.last.update_attribute(:whodunnit, @admin.id)
-    d1.pay!
-    @person.reload.total_debt_amount.should == 0
-  end
-
   it 'should corretly sum the total of all purchases' do
     stub_request(:post, 'http://localhost:8981/solr/update?wt=ruby').to_return(status: 200, body: '')
     p1 = Factory :purchase, person_id: @person.id

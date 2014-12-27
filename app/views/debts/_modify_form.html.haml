@@ -1,9 +1,0 @@
-%nav
-  %ul
-    - if debt.cancellable?
-      %li= button_to t('.cancel'), cancel_debt_path(debt), :method => :put, :confirm => t('are_you_sure')
-    - if debt.keepable?
-      %li= button_to t('.bookkeep'), keep_debt_path(debt), :method => :put, :confirm => t('are_you_sure')
-    - if debt.payable?
-      %li= button_to t('.pay'), pay_debt_path(debt), :method => :put, :confirm => t('are_you_sure')
-
