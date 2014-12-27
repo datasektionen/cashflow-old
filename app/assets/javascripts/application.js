@@ -6,7 +6,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
 //= require chosen
 //= require bootstrap-datepicker
+//= require bootstrap-sprockets
 //= require_tree .

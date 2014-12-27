@@ -21,10 +21,16 @@ module PurchasesHelper
   def filter_date_range_tags(name)
     content_tag :div, id: "purchase_#{name}_filter" do
       content = ''
-      content += label_tag "filter[#{name}_from]", 'Från'
-      content += text_field_tag "filter[#{name}_from]", params['filter'].try(:[], "#{name}_from"), class: 'datepicker', placeholder: 'Välj ett startdatum'
-      content += label_tag "filter[#{name}_to]", 'till och med'
-      content += text_field_tag "filter[#{name}_to]", params['filter'].try(:[], "#{name}_to"), class: 'datepicker', placeholder: 'Välj ett slutdatum'
+      content += content_tag :div, class: 'form-group' do
+        lt = label_tag "filter[#{name}_from]", 'Från'
+        tft = text_field_tag "filter[#{name}_from]", params['filter'].try(:[], "#{name}_from"), class: 'form-control datepicker', placeholder: 'Välj ett startdatum'
+        lt + tft
+      end
+      content += content_tag :div, class: 'form-group' do
+        lt = label_tag "filter[#{name}_to]", 'till och med'
+        tft = text_field_tag "filter[#{name}_to]", params['filter'].try(:[], "#{name}_to"), class: 'form-control datepicker', placeholder: 'Välj ett slutdatum'
+        lt + tft
+      end
       content.html_safe
     end
   end

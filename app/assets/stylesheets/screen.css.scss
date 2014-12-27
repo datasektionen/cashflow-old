@@ -4,13 +4,14 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *
  *= require formtastic-bootstrap
- *= require twitter/bootstrap
  *= require chosen
  *= require datepicker
- *= require alert_hero
  *= require_self
- *= require twitter/bootstrap-responsive
 */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "alert_hero";
 
 @media (min-width: 980px) {
   body {
