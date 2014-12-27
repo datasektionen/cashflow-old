@@ -18,7 +18,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    RedCloth (4.2.8)
+    RedCloth (4.2.9)
     XMLCanonicalizer (1.0.1)
       log4r (>= 1.0.4)
     actionmailer (3.2.21)
@@ -285,7 +285,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  RedCloth (~> 4.2.8)
+  RedCloth (~> 4.2.9)
   airbrake
   cancan
   capybara

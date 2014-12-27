@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'RedCloth', '~> 4.2.8'
+gem 'RedCloth', '~> 4.2.9'
 gem 'airbrake'
 gem 'cancan'
 gem 'chosen_rails'
