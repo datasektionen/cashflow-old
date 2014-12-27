@@ -18,14 +18,14 @@ describe Notifier do
 
       it "delivers the email" do
         subject.deliver
-        ActionMailer::Base.deliveries.should_not be_empty
+        expect(ActionMailer::Base.deliveries).not_to be_empty
       end
 
       it "sets the correct to, from, and reply addresses" do
-        subject.to.should       == [ @purchase.person.email ]
-        subject.subject.should  == I18n.t('mailers.notifier.purchase_created')
-        subject.cc.should       == [ @admin.email ]
-        subject.reply_to.should == [ @admin.email ]
+        expect(subject.to).to       eq([ @purchase.person.email ])
+        expect(subject.subject).to  eq(I18n.t('mailers.notifier.purchase_created'))
+        expect(subject.cc).to       eq([ @admin.email ])
+        expect(subject.reply_to).to eq([ @admin.email ])
       end
 
       it "renders the body correctly" do
@@ -40,14 +40,14 @@ describe Notifier do
 
       it "delivers the email" do
         subject.deliver
-        ActionMailer::Base.deliveries.should_not be_empty
+        expect(ActionMailer::Base.deliveries).not_to be_empty
       end
 
       it "sets the correct to, from, and reply addresses" do
-        subject.to.should       == [ @purchase.person.email ]
-        subject.subject.should  == I18n.t('mailers.notifier.purchase_approved')
-        subject.cc.should       == [ @admin.email ]
-        subject.reply_to.should == [ @admin.email ]
+        expect(subject.to).to       eq([ @purchase.person.email ])
+        expect(subject.subject).to  eq(I18n.t('mailers.notifier.purchase_approved'))
+        expect(subject.cc).to       eq([ @admin.email ])
+        expect(subject.reply_to).to eq([ @admin.email ])
       end
 
       it "renders the body correctly" do
@@ -62,14 +62,14 @@ describe Notifier do
 
       it "delivers the email" do
         subject.deliver
-        ActionMailer::Base.deliveries.should_not be_empty
+        expect(ActionMailer::Base.deliveries).not_to be_empty
       end
 
       it "sets the correct to, from, and reply addresses" do
-        subject.to.should       == [ @purchase.person.email ]
-        subject.subject.should  == I18n.t('mailers.notifier.purchase_denied')
-        subject.cc.should       == [ @admin.email ]
-        subject.reply_to.should == [ @admin.email ]
+        expect(subject.to).to       eq([ @purchase.person.email ])
+        expect(subject.subject).to  eq(I18n.t('mailers.notifier.purchase_denied'))
+        expect(subject.cc).to       eq([ @admin.email ])
+        expect(subject.reply_to).to eq([ @admin.email ])
       end
 
       it "renders the body correctly" do
@@ -84,7 +84,7 @@ describe Notifier do
 
       it "delivers the email" do
         subject.deliver
-        ActionMailer::Base.deliveries.should_not be_empty
+        expect(ActionMailer::Base.deliveries).not_to be_empty
       end
 
       it "renders the body correctly" do
@@ -97,10 +97,10 @@ describe Notifier do
         before(:all) { @purchase.business_unit.update_column(:email, "a@a.a") }
 
         it "sets the correct to, from, and reply addresses" do
-          subject.to.should       == [ @purchase.person.email ]
-          subject.subject.should  == I18n.t('mailers.notifier.purchase_paid')
-          subject.cc.should       == [ @purchase.business_unit.email ]
-          subject.reply_to.should == [ @admin.email ]
+          expect(subject.to).to       eq([ @purchase.person.email ])
+          expect(subject.subject).to  eq(I18n.t('mailers.notifier.purchase_paid'))
+          expect(subject.cc).to       eq([ @purchase.business_unit.email ])
+          expect(subject.reply_to).to eq([ @admin.email ])
         end
       end
 
@@ -108,10 +108,10 @@ describe Notifier do
         before(:all) { @purchase.business_unit.update_column(:email, nil) }
 
         it "sets the correct to, from, and reply addresses" do
-          subject.to.should       == [ @purchase.person.email ]
-          subject.subject.should  == I18n.t('mailers.notifier.purchase_paid')
-          subject.cc.should       == [ @admin.email ]
-          subject.reply_to.should == [ @admin.email ]
+          expect(subject.to).to       eq([ @purchase.person.email ])
+          expect(subject.subject).to  eq(I18n.t('mailers.notifier.purchase_paid'))
+          expect(subject.cc).to       eq([ @admin.email ])
+          expect(subject.reply_to).to eq([ @admin.email ])
         end
       end
     end

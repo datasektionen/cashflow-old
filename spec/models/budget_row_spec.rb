@@ -4,11 +4,11 @@ describe BudgetRow do
   describe '#total' do
     let(:person) { Factory :person }
 
-    before(:all) do
+    before do
       PaperTrail.whodunnit = person.id
     end
 
-    after(:all) do
+    after do
       PaperTrail.whodunnit = nil
     end
 
@@ -26,7 +26,7 @@ describe BudgetRow do
         it "doesn't include edited purchases" do
           @purchase.update_attribute(:workflow_state, state)
 
-          @budget_row.total.should == 0
+          expect(@budget_row.total).to eq(0)
         end
       end
     end
@@ -36,7 +36,7 @@ describe BudgetRow do
         it "includes #{state} purchases" do
           @purchase.update_attribute(:workflow_state, state)
 
-          @budget_row.total.to_f.should == 100
+          expect(@budget_row.total.to_f).to eq(100)
         end
       end
     end

@@ -1,33 +1,33 @@
 require 'spec_helper'
 
-describe PeopleController do
+describe PeopleController, type: :controller do
   describe 'routing' do
     it 'recognizes and generates #index' do
-      { get: '/people' }.should route_to(controller: 'people', action: 'index')
+      expect({ get: '/people' }).to route_to(controller: 'people', action: 'index')
     end
 
     it 'recognizes and generates #new' do
-      { get: '/people/new' }.should route_to(controller: 'people', action: 'new')
+      expect({ get: '/people/new' }).to route_to(controller: 'people', action: 'new')
     end
 
     it 'recognizes and generates #show' do
-      { get: '/people/1' }.should route_to(controller: 'people', action: 'show', id: '1')
+      expect({ get: '/people/1' }).to route_to(controller: 'people', action: 'show', id: '1')
     end
 
     it 'recognizes and generates #edit' do
-      { get: '/people/1/edit' }.should route_to(controller: 'people', action: 'edit', id: '1')
+      expect({ get: '/people/1/edit' }).to route_to(controller: 'people', action: 'edit', id: '1')
     end
 
     it 'recognizes and generates #create' do
-      { post: '/people' }.should route_to(controller: 'people', action: 'create')
+      expect({ post: '/people' }).to route_to(controller: 'people', action: 'create')
     end
 
     it 'recognizes and generates #update' do
-      { put: '/people/1' }.should route_to(controller: 'people', action: 'update', id: '1')
+      expect({ put: '/people/1' }).to route_to(controller: 'people', action: 'update', id: '1')
     end
 
     it "doesn't recognize and generate #destroy" do
-      { delete: '/people/1' }.should_not be_routable
+      expect({ delete: '/people/1' }).not_to be_routable
     end
   end
 end

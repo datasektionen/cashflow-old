@@ -10,8 +10,8 @@ describe BusinessUnit do
   %w(name short_name description).each do |attribute|
     it "should be invalid with a nil #{attribute}" do
       @business_unit.send("#{attribute}=", nil)
-      @business_unit.should be_invalid
-      @business_unit.errors[attribute.to_sym].should_not be_empty
+      expect(@business_unit).to be_invalid
+      expect(@business_unit.errors[attribute.to_sym]).not_to be_empty
     end
   end
 end

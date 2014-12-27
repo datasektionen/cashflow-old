@@ -41,8 +41,8 @@ module ControllerMacros
         describe page do
           it "should render 'access denied'" do
             get :index
-            response.status.should == 403
-            response.body.should include(I18n.t('access_denied'))
+            expect(response.status).to eq(403)
+            expect(response.body).to include(I18n.t('access_denied'))
           end
         end
       end

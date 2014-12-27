@@ -8,13 +8,13 @@ describe ProductType do
   %w(name description).each do |field|
     it "should be invalid without #{field}" do
       @product_type.send("#{field}=", nil)
-      @product_type.should be_invalid
-      @product_type.errors[field.to_sym].should_not be_empty
+      expect(@product_type).to be_invalid
+      expect(@product_type.errors[field.to_sym]).not_to be_empty
     end
   end
 
   it 'should have associated purchase items' do
-    @product_type.respond_to?(:purchase_items).should be_true
+    expect(@product_type).to respond_to(:purchase_items)
   end
 
   it 'should not be deletable if it has any associated purchase items' do
@@ -22,10 +22,10 @@ describe ProductType do
     purchase_item.product_type = @product_type
     purchase_item.save
 
-    purchase_item.product_type.should == (@product_type)
+    expect(purchase_item.product_type).to eq(@product_type)
 
     product_type_id = @product_type.id
-    lambda { @product_type.destroy }.should raise_error
-    ProductType.find(product_type_id).should_not be_nil
+    expect { @product_type.destroy }.to raise_error
+    expect(ProductType.find(product_type_id)).not_to be_nil
   end
 end
