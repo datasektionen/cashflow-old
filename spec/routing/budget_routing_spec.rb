@@ -27,7 +27,7 @@ describe BudgetController do
     end
 
     it 'routes to #destroy' do
-      delete('/budget/1').should raise_error(NoMethodError)
+      delete('/budget/1').should_not be_routable
     end
   end
 end

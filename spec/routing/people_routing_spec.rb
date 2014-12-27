@@ -27,7 +27,7 @@ describe PeopleController do
     end
 
     it "doesn't recognize and generate #destroy" do
-      lambda { { delete: '/people/1' }.should route_to(controller: 'people', action: 'destroy', id: '1') }.should raise_error(ActionController::RoutingError)
+      { delete: '/people/1' }.should_not be_routable
     end
   end
 end
