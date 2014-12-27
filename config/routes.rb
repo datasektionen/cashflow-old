@@ -9,7 +9,7 @@ Cashflow::Application.routes.draw do
 
   localized(['sv']) do
     resources :product_types
-    resources :budget do
+    resources :budget, except: [:destroy] do
       resources :budget_rows, as: 'rows', only: [:index, :show, :edit, :update]
     end
     resources :budget_posts

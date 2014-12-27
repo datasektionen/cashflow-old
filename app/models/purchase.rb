@@ -85,22 +85,6 @@ class Purchase < ActiveRecord::Base
     state :cancelled
   end
 
-  def confirm
-    notify_observers(:after_confirm)
-  end
-
-  def keep
-    notify_observers(:after_keep)
-  end
-
-  def pay
-    notify_observers(:after_pay)
-  end
-
-  def cancel
-    notify_observers(:after_cancel)
-  end
-
   # calculate total amount for purchase items
   def total
     items.sum(:amount)
