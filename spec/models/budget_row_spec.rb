@@ -4,11 +4,11 @@ describe BudgetRow do
   describe '#total' do
     let(:person) { Factory :person }
 
-    before(:all) do
+    before do
       PaperTrail.whodunnit = person.id
     end
 
-    after(:all) do
+    after do
       PaperTrail.whodunnit = nil
     end
 
