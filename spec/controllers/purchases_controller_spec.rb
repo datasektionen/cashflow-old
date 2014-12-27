@@ -4,7 +4,7 @@ describe PurchasesController do
   login_admin
 
   def mock_purchase(stubs = {})
-    @mock_person ||= mock_model(Purchase, stubs).as_null_object
+    @mock_purchase ||= mock_model(Purchase, stubs).as_null_object
   end
 
   describe 'GET index' do
@@ -135,50 +135,77 @@ describe PurchasesController do
   end
 
   describe "PUT confirm" do
-    context "with valid parameters" do
-      it "marks the purchase as confirmed"
-      it "sends a confirmation email"
+    subject { mock_purchase({id: 4711, confirmed?: false })}
+
+    before do
+      Notifier.stub(:purchase_approved).and_return(double(Mail).as_null_object)
+      Purchase.stub(:find).and_return(subject)
     end
 
-    context "without valid parameters" do
-      it "does not change the status of the purchase"
-      it "does not send a confirmation email"
+    it "marks the purchase as confirmed" do
+      subject.should_receive(:confirm!)
+      put :confirm, id: subject.id
+    end
+
+    it "sends a confirmation email" do
+      subject.stub(:confirmed?).and_return(true)
+      Notifier.should_receive(:purchase_approved).with(subject)
+      put :confirm, id: subject.id
     end
   end
 
   describe "PUT pay" do
-    context "with valid parameters" do
-      it "marks the purchase as paid"
-      it "sends an email to the owner of the purchase"
+    subject { mock_purchase({ id: 4711, paid?: false })}
+
+    before do
+      Notifier.stub(:purchase_paid).and_return(double(Mail).as_null_object)
+      Purchase.stub(:find).and_return(subject)
     end
 
-    context "without valid parameters" do
-      it "does not change the status of the purchase"
-      it "does not send an email notification"
+    it "marks the purchase as paid" do
+      subject.should_receive(:pay!)
+      put :pay, id: subject.id
+    end
+
+    it "sends an email to the owner of the purchase" do
+      subject.stub(:paid?).and_return(true)
+      Notifier.should_receive(:purchase_paid).with(subject)
+      put :pay, id: subject.id
     end
   end
 
   describe "PUT keep" do
-    context "with valid parameters" do
-      it "marks the purchase as bookkept"
-      it "pushes the purchase to MAGE"
+    subject { mock_purchase({ id: 4711, bookkept?: false })}
+
+    before do
+      Purchase.stub(:find).and_return(subject)
     end
 
-    context "without valid parameters" do
-      it "does not change the status of the purchase"
-      it "does not push the purchase to MAGE"
+    it "marks the purchase as bookkept" do
+      subject.should_receive(:keep!)
+      put :keep, id: subject.id
     end
+
+    it "pushes the purchase to MAGE"
   end
 
   describe "PUT cancel" do
-    context "with valid parameters" do
-      it "marks the purchase as cancelled"
-      it "sends an email notification to the owner"
+    subject { mock_purchase({ id: 4711, cancelled?: false })}
+
+    before do
+      Notifier.stub(:purchase_denied).and_return(double(Mail).as_null_object)
+      Purchase.stub(:find).and_return(subject)
     end
 
-    context "without valid parameters" do
-      it "does not change the status of the purchase"
-      it "does not send an email notification"
+    it "marks the purchase as cancelled" do
+      subject.should_receive(:cancel!)
+      put :cancel, id: subject.id
+    end
+
+    it "sends an email notification to the owner" do
+      subject.stub(:cancelled?).and_return(true)
+      Notifier.should_receive(:purchase_denied).with(subject)
+      put :cancel, id: subject.id
     end
   end
 end

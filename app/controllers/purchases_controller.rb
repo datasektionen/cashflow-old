@@ -72,11 +72,17 @@ class PurchasesController < ApplicationController
 
   def confirm
     @purchase.confirm!
+    @purchase.tap do |purchase|
+      Notifier.purchase_approved(purchase).deliver if purchase.confirmed?
+    end
     redirect_to(purchase_path(@purchase))
   end
 
   def pay
     @purchase.pay!
+    @purchase.tap do |purchase|
+      Notifier.purchase_paid(purchase).deliver if purchase.paid?
+    end
     redirect_to(purchase_path(@purchase))
   end
 
@@ -88,6 +94,9 @@ class PurchasesController < ApplicationController
 
   def cancel
     @purchase.cancel!
+    @purchase.tap do |purchase|
+      Notifier.purchase_denied(purchase).deliver if purchase.cancelled?
+    end
     redirect_to(purchase_path(@purchase))
   end
 

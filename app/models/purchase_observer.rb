@@ -3,22 +3,10 @@ class PurchaseObserver < ActiveRecord::Observer
     Notifier.purchase_created(purchase).deliver
   end
 
-  def after_confirm(purchase)
-    Notifier.purchase_approved(purchase).deliver
-  end
-
   def after_keep(purchase)
     voucher = Mage::Voucher.from_purchase(purchase)
     unless voucher.push(purchase.last_updated_by)
       fail "An error occured when pushing #{purchase.inspect} to MAGE (push returned false)"
     end
-  end
-
-  def after_pay(purchase)
-    Notifier.purchase_paid(purchase).deliver
-  end
-
-  def after_cancel(purchase)
-    Notifier.purchase_denied(purchase).deliver
   end
 end
