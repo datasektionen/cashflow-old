@@ -29,11 +29,11 @@ describe Purchase do
     expect(subject).to be_valid
 
     subject.person = new_person
-    expect(subject.save).to be_true
+    expect(subject.save).to be
     expect(subject.reload.person).not_to eq(new_person)
 
     subject.update_attributes(person_id: new_person.id)
-    expect(subject.save).to be_true
+    expect(subject.save).to be
     expect(subject.reload.person).not_to eq(new_person)
   end
 
@@ -140,7 +140,7 @@ describe Purchase do
 
   it 'should not be editable once finalized' do
     subject.update_attribute(:workflow_state, 'finalized')
-    expect(subject.save).to be_false
+    expect(subject.save).not_to be
   end
 
   it 'should cascade delete its related purchase items' do
@@ -157,8 +157,8 @@ describe Purchase do
     purchase_id = subject.id
 
     subject.destroy
-    expect(Purchase.exists?(id: purchase_id)).to be_false
-    expect(PurchaseItem.exists?(id: item_id)).to be_false
+    expect(Purchase.exists?(id: purchase_id)).not_to be
+    expect(PurchaseItem.exists?(id: item_id)).not_to be
   end
 
   it 'should generate a slug before being saved' do

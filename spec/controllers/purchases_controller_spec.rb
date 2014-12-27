@@ -1,9 +1,10 @@
 require 'spec_helper'
 
-describe PurchasesController do
+describe PurchasesController, type: :controller do
   login_admin
 
   def mock_purchase(stubs = {})
+    stubs = stubs.reverse_merge(to_str: nil)
     @mock_purchase ||= mock_model(Purchase, stubs).as_null_object
   end
 
@@ -58,7 +59,7 @@ describe PurchasesController do
     describe 'with valid params' do
       it 'assigns a newly created purchase as @purchase' do
         post :create, purchase: { 'these' => 'params' }
-        expect(assigns(:purchase)).to be(subject)
+        expect(assigns(:purchase)).to eq(subject)
       end
 
       it 'redirects to the created purchase' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BudgetRowsController do
+describe BudgetRowsController, type: :controller do
   login_admin
 
   before(:all) do

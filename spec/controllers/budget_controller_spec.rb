@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'mage_api'
 
-describe BudgetController do
+describe BudgetController, type: :controller do
   login_admin
 
   context 'GET' do

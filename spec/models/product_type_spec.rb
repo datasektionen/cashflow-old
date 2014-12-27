@@ -14,7 +14,7 @@ describe ProductType do
   end
 
   it 'should have associated purchase items' do
-    expect(@product_type.respond_to?(:purchase_items)).to be_true
+    expect(@product_type).to respond_to(:purchase_items)
   end
 
   it 'should not be deletable if it has any associated purchase items' do

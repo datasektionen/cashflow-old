@@ -1,16 +1,6 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the PurchasesHelper. For example:
-#
-# describe PurchasesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       helper.concat_strings("this","that").should == "this that"
-#     end
-#   end
-# end
-describe PurchasesHelper do
+describe PurchasesHelper, type: :helper do
   describe 'budget posts for purchase' do
     it "returns the available budget posts to the purchase's business unit" do
       budget_posts = [Factory(:budget_post), Factory(:budget_post)]

@@ -25,7 +25,7 @@ describe Person do
   %w(first_name last_name ugid login role).each do |attribute|
     it "should protect attribute #{attribute}" do
       attr_value = @person.send(attribute)
-      expect(@person.update_attributes(attribute.to_sym => 'blubb')).to be_true
+      expect(@person.update_attributes(attribute.to_sym => 'blubb')).to be
       expect(@person.send(attribute)).to eq(attr_value)
     end
   end
@@ -64,35 +64,28 @@ describe Person do
   describe 'LDAP connection' do
     it 'should correctly fetch information from LDAP' do
       begin
-        # make this spec search by:
-        # * first_name, last_name
-        # * login
-        # * ugid
-        # * email
-        local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
-        name_search_params  = { first_name: local_config[:yourself][:first_name], last_name: local_config[:yourself][:last_name] }
-        email_search_params = { email: local_config[:yourself][:email] }
-        ugid  = { ugid: local_config[:yourself][:ugid] }
-        login_search_params = { login: local_config[:yourself][:login] }
-
-        expect(Person.from_ldap(name_search_params)).not_to be_nil
-        expect(Person.from_ldap(email_search_params)).not_to be_nil
-        expect(Person.from_ldap(ugid)).not_to be_nil
-        expect(Person.from_ldap(login_search_params)).not_to be_nil
-
-        # TODO: verify a few more things than just searching... like some things should return nil (ugid search of "azovwemzavwmdzvway" for instance)
-      rescue Net::LDAP::LdapError => e
+        Person.from_ldap(first_name: 'LDAP')
+      rescue Net::LDAP::LdapError
         pending 'UNABLE TO CONNECT TO LDAP SERVER'
       end
-    end
 
-    it 'should correctly create users from an LDAP search' do
-      begin
-        local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
-        Person.create_from_ldap(ugid: local_config[:yourself][:ugid])
-      rescue Net::LDAP::LdapError => e
-        pending 'UNABLE TO CONNECT TO LDAP SERVER'
-      end
+      # make this spec search by:
+      # * first_name, last_name
+      # * login
+      # * ugid
+      # * email
+      local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
+      name_search_params  = { first_name: local_config[:yourself][:first_name], last_name: local_config[:yourself][:last_name] }
+      email_search_params = { email: local_config[:yourself][:email] }
+      ugid  = { ugid: local_config[:yourself][:ugid] }
+      login_search_params = { login: local_config[:yourself][:login] }
+
+      expect(Person.from_ldap(name_search_params)).not_to be_nil
+      expect(Person.from_ldap(email_search_params)).not_to be_nil
+      expect(Person.from_ldap(ugid)).not_to be_nil
+      expect(Person.from_ldap(login_search_params)).not_to be_nil
+
+      # TODO: verify a few more things than just searching... like some things should return nil (ugid search of "azovwemzavwmdzvway" for instance)
     end
   end
 end

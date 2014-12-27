@@ -1,8 +1,9 @@
 require 'spec_helper'
 
-describe ProductTypesController do
+describe ProductTypesController, type: :controller do
   def mock_product_type(stubs = {})
     (@mock_product_type ||= mock_model(ProductType).as_null_object).tap do |product_type|
+      stubs = stubs.reverse_merge(to_str: nil)
       stubs.each do |k, v|
         allow(product_type).to receive(k).and_return(v)
       end

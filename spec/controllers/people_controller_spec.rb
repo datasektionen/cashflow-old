@@ -1,7 +1,8 @@
 require 'spec_helper'
 
-describe PeopleController do
+describe PeopleController, type: :controller do
   def mock_person(stubs = {})
+    stubs = stubs.reverse_merge(to_str: nil)
     @mock_person ||= mock_model(Person, stubs).as_null_object
   end
 

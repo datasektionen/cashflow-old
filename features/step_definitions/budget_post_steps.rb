@@ -27,5 +27,5 @@ end
 Then(/^the budget post should be deleted$/) do
   page.should have_content('Budgetpost borttagen')
   # page.should have_no_content(@budget_post.name)
-  BudgetPost.exists?(@budget_post.id).should be_false
+  expect(BudgetPost.exists?(@budget_post.id)).to be_false
 end

@@ -1,8 +1,9 @@
 require 'spec_helper'
 
-describe BusinessUnitsController do
+describe BusinessUnitsController, type: :controller do
   def mock_business_unit(stubs = {})
     (@mock_business_unit ||= mock_model(BusinessUnit).as_null_object).tap do |business_unit|
+      stubs = stubs.reverse_merge(to_str: nil)
       stubs.each do |k, v|
         allow(business_unit).to receive(k).and_return(v)
       end
