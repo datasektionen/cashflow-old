@@ -42,15 +42,15 @@ end
 
 # Gems for test environment
 group :test do
-  gem 'capybara'
+  gem 'capybara', '>= 2.2.0'
   gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'headless'
   gem 'launchy'
   gem 'sunspot_test'
-  gem 'rspec', "~> 2.14.0"
-  gem 'rspec-rails', "~> 2.14.0"
+  gem 'rspec-activemodel-mocks'
+  gem 'rspec-rails', '~> 3.1'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'simplecov', '~> 0.9', require: false
