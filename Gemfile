@@ -49,7 +49,6 @@ group :test do
   gem 'headless'
   gem 'launchy'
   gem 'sunspot_test'
-  gem 'no_peeping_toms', git: 'https://github.com/dbalatero/no-peeping-toms.git'
   gem 'rspec', "~> 2.14.0"
   gem 'rspec-rails', "~> 2.14.0"
   gem 'selenium-webdriver'

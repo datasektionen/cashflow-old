@@ -7,14 +7,6 @@ GIT
       formtastic
       rails (>= 3.1.0)
 
-GIT
-  remote: https://github.com/dbalatero/no-peeping-toms.git
-  revision: 4c97f5da5b606da9bb7309f55658594e415d9a75
-  specs:
-    no_peeping_toms (2.1.1)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -313,7 +305,6 @@ DEPENDENCIES
   less-rails-bootstrap
   mysql2 (~> 0.3.10)
   net-ldap
-  no_peeping_toms!
   nokogiri (~> 1.5.4)
   oa-core
   oa-enterprise
