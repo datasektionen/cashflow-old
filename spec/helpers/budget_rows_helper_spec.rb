@@ -16,7 +16,7 @@ describe BudgetRowsHelper do
       budget_post = Factory :budget_post
       row = budget_post.row(Time.now.year)
 
-      helper.row_url(row).should == budget_row_path(budget_id: Time.now.year, id: row.id)
+      expect(helper.row_url(row)).to eq(budget_row_path(budget_id: Time.now.year, id: row.id))
     end
   end
 end

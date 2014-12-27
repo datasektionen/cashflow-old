@@ -34,28 +34,28 @@ describe BudgetPostsController do
 
   def stub_find
     @budget_post = mock_budget_post(id: 37)
-    BudgetPost.stub(:find).and_return(@budget_post)
+    allow(BudgetPost).to receive(:find).and_return(@budget_post)
   end
 
   def stub_save
     @budget_post = mock_budget_post(id: 37)
-    BudgetPost.stub(:save).and_return(@budget_post)
+    allow(BudgetPost).to receive(:save).and_return(@budget_post)
   end
 
   def stub_create
     @budget_post = mock_model(BudgetPost)
-    BudgetPost.stub(:new).and_return(@budget_post)
-    @budget_post.stub(:save).and_return(true)
+    allow(BudgetPost).to receive(:new).and_return(@budget_post)
+    allow(@budget_post).to receive(:save).and_return(true)
   end
 
   context 'GET actions' do
     describe 'GET index' do
       it 'assigns all budget_posts as @budget_posts' do
         budget_post = double('budget_post')
-        BudgetRow.stub(:create_rows_if_not_exists) # INFO: This doesn't really belong here, but is needed because of broken SRP in the controller
-        BudgetPost.stub(:all).and_return([budget_post])
+        allow(BudgetRow).to receive(:create_rows_if_not_exists) # INFO: This doesn't really belong here, but is needed because of broken SRP in the controller
+        allow(BudgetPost).to receive(:all).and_return([budget_post])
         get :index
-        assigns(:budget_posts).should eq([budget_post])
+        expect(assigns(:budget_posts)).to eq([budget_post])
       end
     end
 
@@ -63,14 +63,14 @@ describe BudgetPostsController do
       it 'assigns the requested budget_post as @budget_post' do
         stub_find
         get :show, id: @budget_post.id.to_s
-        assigns(:budget_post).should eq(@budget_post)
+        expect(assigns(:budget_post)).to eq(@budget_post)
       end
     end
 
     describe 'GET new' do
       it 'assigns a new budget_post as @budget_post' do
         get :new
-        assigns(:budget_post).should be_a_new(BudgetPost)
+        expect(assigns(:budget_post)).to be_a_new(BudgetPost)
       end
     end
 
@@ -78,7 +78,7 @@ describe BudgetPostsController do
       it 'assigns the requested budget_post as @budget_post' do
         stub_find
         get :edit, id: @budget_post.id.to_s
-        assigns(:budget_post).should == @budget_post
+        expect(assigns(:budget_post)).to eq(@budget_post)
       end
     end
   end
@@ -93,30 +93,30 @@ describe BudgetPostsController do
 
       it 'assigns a newly created budget_post as @budget_post' do
         post :create, budget_post: valid_attributes
-        assigns(:budget_post).should be_a(BudgetPost)
-        assigns(:budget_post).should be_persisted
+        expect(assigns(:budget_post)).to be_a(BudgetPost)
+        expect(assigns(:budget_post)).to be_persisted
       end
 
       it 'redirects to the created budget_post' do
         stub_create
         post :create, budget_post: valid_attributes
-        response.should redirect_to(budget_post_path(@budget_post.id))
+        expect(response).to redirect_to(budget_post_path(@budget_post.id))
       end
     end
 
     describe 'with invalid params' do
       it 'assigns a newly created but unsaved budget_post as @budget_post' do
         # Trigger the behavior that occurs when invalid params are submitted
-        BudgetPost.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(BudgetPost).to receive(:save).and_return(false)
         post :create, budget_post: {}
-        assigns(:budget_post).should be_a_new(BudgetPost)
+        expect(assigns(:budget_post)).to be_a_new(BudgetPost)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        BudgetPost.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(BudgetPost).to receive(:save).and_return(false)
         post :create, budget_post: {}
-        response.should render_template('new')
+        expect(response).to render_template('new')
       end
     end
   end
@@ -128,36 +128,36 @@ describe BudgetPostsController do
 
     describe 'with valid params' do
       it 'updates the requested budget_post' do
-        @budget_post.should_receive(:update_attributes).with('these' => 'params').and_return(true)
+        expect(@budget_post).to receive(:update_attributes).with('these' => 'params').and_return(true)
         put :update, id: @budget_post.id, budget_post: { 'these' => 'params' }
       end
 
       it 'assigns the requested budget_post as @budget_post' do
-        @budget_post.should_receive(:update_attributes).and_return(true)
+        expect(@budget_post).to receive(:update_attributes).and_return(true)
         put :update, id: @budget_post.id, budget_post: valid_attributes
-        assigns(:budget_post).should eq(@budget_post)
+        expect(assigns(:budget_post)).to eq(@budget_post)
       end
 
       it 'redirects to the budget_post' do
-        @budget_post.should_receive(:update_attributes).and_return(true)
+        expect(@budget_post).to receive(:update_attributes).and_return(true)
         put :update, id: @budget_post.id, budget_post: valid_attributes
-        response.should redirect_to(budget_post_path(@budget_post))
+        expect(response).to redirect_to(budget_post_path(@budget_post))
       end
     end
 
     describe 'with invalid params' do
       it 'assigns the budget_post as @budget_post' do
-        @budget_post.should_receive(:update_attributes).and_return(false)
+        expect(@budget_post).to receive(:update_attributes).and_return(false)
 
         put :update, id: @budget_post.id.to_s, budget_post: {}
-        assigns(:budget_post).should eq(@budget_post)
+        expect(assigns(:budget_post)).to eq(@budget_post)
       end
 
       it "re-renders the 'edit' template" do
-        @budget_post.should_receive(:update_attributes).and_return(false)
+        expect(@budget_post).to receive(:update_attributes).and_return(false)
 
         put :update, id: @budget_post.id.to_s, budget_post: {}
-        response.should render_template('edit')
+        expect(response).to render_template('edit')
       end
     end
   end
@@ -175,7 +175,7 @@ describe BudgetPostsController do
 
     it 'redirects to the budget_posts list' do
       delete :destroy, id: @budget_post.id.to_s
-      response.should redirect_to(budget_posts_url)
+      expect(response).to redirect_to(budget_posts_url)
     end
   end
 end
