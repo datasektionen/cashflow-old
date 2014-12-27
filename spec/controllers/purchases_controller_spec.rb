@@ -48,21 +48,28 @@ describe PurchasesController do
   end
 
   describe 'POST create' do
+    subject { mock_purchase(save: true) }
+
+    before do
+      Notifier.stub(:purchase_created).and_return(double(Mail).as_null_object)
+      Purchase.stub(:new) { subject }
+    end
+
     describe 'with valid params' do
       it 'assigns a newly created purchase as @purchase' do
-        Purchase.any_instance.stub(:save).and_return(true)
-        Purchase.stub(:new) { mock_purchase(save: true) }
         post :create, purchase: { 'these' => 'params' }
-        assigns(:purchase).should be(mock_purchase)
+        assigns(:purchase).should be(subject)
       end
 
       it 'redirects to the created purchase' do
-        Purchase.stub(:new) { mock_purchase(save: true) }
         post :create, purchase: {}
-        response.should redirect_to(purchase_url(mock_purchase))
+        response.should redirect_to(purchase_url(subject))
       end
 
-      it "sends an email to the owner and to the cashier"
+      it "sends an email to the owner and to the cashier" do
+        Notifier.should_receive(:purchase_created).with(subject)
+        post :create, purchase: {}
+      end
     end
 
     describe 'with invalid params' do
@@ -186,7 +193,14 @@ describe PurchasesController do
       put :keep, id: subject.id
     end
 
-    it "pushes the purchase to MAGE"
+    it "pushes the purchase to MAGE" do
+      subject.stub(:bookkept?) { true }
+      voucher = double(Mage::Voucher).as_null_object
+      Mage::Voucher.stub(:from_purchase).and_return(voucher)
+      Mage::Voucher.should_receive(:from_purchase).with(subject)
+      voucher.should_receive(:push)
+      put :keep, id: subject.id
+    end
   end
 
   describe "PUT cancel" do

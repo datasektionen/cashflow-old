@@ -40,6 +40,7 @@ class PurchasesController < ApplicationController
     end
 
     if @purchase.save
+      Notifier.purchase_created(@purchase).deliver
       redirect_to(@purchase, notice: I18n.t('notices.purchase.success.created'))
     else
       render action: 'new'
@@ -89,6 +90,14 @@ class PurchasesController < ApplicationController
   def keep
     authorize! :bookkeep, Purchase
     @purchase.keep!
+    @purchase.tap do |purchase|
+      if @purchase.bookkept?
+        voucher = Mage::Voucher.from_purchase(purchase)
+        unless voucher.push(purchase.last_updated_by)
+          fail "An error occured when pushing #{purchase.inspect} to MAGE (push returned false)"
+        end
+      end
+    end
     redirect_to(purchase_path(@purchase))
   end
 
