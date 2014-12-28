@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141222184518) do
+ActiveRecord::Schema.define(:version => 20141228153158) do
 
   create_table "budget_posts", :force => true do |t|
     t.integer "business_unit_id",        :null => false
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(:version => 20141222184518) do
     t.string   "email",               :default => "",   :null => false
     t.integer  "mage_number",                           :null => false
     t.string   "mage_default_series",                   :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   create_table "people", :force => true do |t|
@@ -48,16 +48,16 @@ ActiveRecord::Schema.define(:version => 20141222184518) do
     t.string   "bank_name",            :default => "", :null => false
     t.string   "persistence_token"
     t.string   "role",                 :default => "", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "product_types", :force => true do |t|
     t.string   "name",                :null => false
     t.string   "description",         :null => false
     t.integer  "mage_account_number", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "purchase_items", :force => true do |t|
@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(:version => 20141222184518) do
     t.integer  "purchase_id",                                                    :null => false
     t.decimal  "amount",          :precision => 20, :scale => 2,                 :null => false
     t.string   "comment",                                        :default => "", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
   end
 
   create_table "purchases", :force => true do |t|
@@ -77,8 +77,8 @@ ActiveRecord::Schema.define(:version => 20141222184518) do
     t.integer  "year",                              :null => false
     t.date     "purchased_on",                      :null => false
     t.string   "slug",           :default => "",    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "versions", :force => true do |t|
