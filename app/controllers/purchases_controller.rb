@@ -5,23 +5,13 @@ class PurchasesController < ApplicationController
   expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
   def index
+    # filter, search = extract_filter_params
     @purchases = Purchase
-    if params[:filter]
-      arel = Purchase.arel_table
-
-      filter = %w[purchased_on updated_at].reduce([]) do |acc, attr|
-        param = params[:filter].delete("#{attr}_from")
-        acc << arel[attr].gt(param) unless param.blank?
-
-        param = params[:filter].delete("#{attr}_to")
-        acc << arel[attr].lt(param) unless param.blank?
-        acc
-      end
-
-      search_params = ( params[:filter] || {} ).reject {|k,v| v.blank? }
-      @purchases = @purchases.search(search_params) unless search_params.blank?
-      @purchases = @purchases.where(*filter) unless filter.blank?
+    extract_filter_params.map do |filter|
+      @purchases = @purchases.where(filter)
     end
+    # @purchases = @purchases.search(search) unless search.blank?
+    # @purchases = @purchases.where(*filter) unless filter.blank?
 
     @purchases = @purchases.page(params[:page])
   end
@@ -126,7 +116,19 @@ class PurchasesController < ApplicationController
 
   private
 
-  def filter_param(name)
-    params[:filter].try(:[], name.to_s)
+  def extract_filter_params
+    return [] if params[:filter].blank?
+
+    arel = Purchase.arel_table
+    filter = params[:filter].reject {|k,v| v.blank? }
+
+    %w[purchased_on updated_at].reduce(filter) do |acc, attr|
+      param = params[:filter].delete("#{attr}_from")
+      acc << arel[attr].gt(param) unless param.blank?
+
+      param = params[:filter].delete("#{attr}_to")
+      acc << arel[attr].lt(param) unless param.blank?
+      acc
+    end
   end
 end
