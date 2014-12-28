@@ -72,39 +72,33 @@ class PurchasesController < ApplicationController
   end
 
   def confirm
-    @purchase.confirm!
-    @purchase.tap do |purchase|
-      Notifier.purchase_approved(purchase).deliver if purchase.confirmed?
+    if @purchase.confirm!
+      Notifier.purchase_approved(@purchase).deliver
     end
     redirect_to(purchase_path(@purchase))
   end
 
   def pay
-    @purchase.pay!
-    @purchase.tap do |purchase|
-      Notifier.purchase_paid(purchase).deliver if purchase.paid?
+    if @purchase.pay!
+      Notifier.purchase_paid(@purchase).deliver
     end
     redirect_to(purchase_path(@purchase))
   end
 
   def keep
     authorize! :bookkeep, Purchase
-    @purchase.keep!
-    @purchase.tap do |purchase|
-      if @purchase.bookkept?
-        voucher = Mage::Voucher.from_purchase(purchase)
-        unless voucher.push(purchase.last_updated_by)
-          fail "An error occured when pushing #{purchase.inspect} to MAGE (push returned false)"
-        end
+    if @purchase.keep!
+      voucher = Mage::Voucher.from_purchase(@purchase)
+      unless voucher.push(@purchase.last_updated_by)
+        fail "An error occured when pushing #{@purchase.inspect} to MAGE (push returned false)"
       end
     end
     redirect_to(purchase_path(@purchase))
   end
 
   def cancel
-    @purchase.cancel!
-    @purchase.tap do |purchase|
-      Notifier.purchase_denied(purchase).deliver if purchase.cancelled?
+    if @purchase.cancel!
+      Notifier.purchase_denied(@purchase).deliver
     end
     redirect_to(purchase_path(@purchase))
   end

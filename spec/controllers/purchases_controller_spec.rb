@@ -189,6 +189,7 @@ describe PurchasesController do
     end
 
     it "marks the purchase as bookkept" do
+      Mage::Voucher.any_instance.stub(:push).and_return(true)
       subject.should_receive(:keep!)
       put :keep, id: subject.id
     end
