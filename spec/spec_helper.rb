@@ -14,7 +14,6 @@ require 'formtastic'
 require 'headless'
 require 'database_cleaner'
 require 'webmock/rspec'
-require 'sunspot_test/rspec'
 
 WebMock.disable_net_connect!(:allow => "codeclimate.com")
 headless = Headless.new

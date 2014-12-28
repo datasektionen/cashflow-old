@@ -21,7 +21,6 @@
 require 'cucumber/rails'
 require 'capybara/rspec'
 require 'headless'
-require 'sunspot_test/cucumber'
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
@@ -61,5 +60,3 @@ end
 require 'webmock/cucumber'
 WebMock.allow_net_connect!
 
-# travis is really really slow to start stuff
-SunspotTest.solr_startup_timeout = 60
