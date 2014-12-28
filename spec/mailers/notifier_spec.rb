@@ -105,7 +105,7 @@ describe Notifier do
       end
 
       context "business_unit with no email" do
-        before(:all) { @purchase.business_unit.update_column(:email, nil) }
+        before(:all) { @purchase.business_unit.update_column(:email, "") }
 
         it "sets the correct to, from, and reply addresses" do
           subject.to.should       == [ @purchase.person.email ]
