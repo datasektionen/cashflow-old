@@ -218,7 +218,7 @@ describe Purchase do
     subject { Purchase.payable_grouped_by_person }
 
     it "keeps different people separate" do
-      subject.keys.should == [@person_1, @person_2]
+      subject.keys.sort_by(&:id).should == [@person_1, @person_2]
     end
 
     it "sums the total payable amount per person" do

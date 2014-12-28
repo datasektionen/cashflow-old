@@ -5,20 +5,25 @@ class PurchasesController < ApplicationController
   expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
   def index
-    @search = Purchase.joins(:budget_post).joins(:person).includes(:person).search do
-      with(:workflow_state, filter_param(:workflow_state)) unless filter_param(:workflow_state).blank?
-      with(:person_id, filter_param(:person_id)) unless filter_param(:person_id).blank?
-      with(:business_unit_id, filter_param(:business_unit_id)) unless filter_param(:business_unit_id).blank?
+    @purchases = Purchase
+    if params[:filter]
+      arel = Purchase.arel_table
 
-      with(:purchased_on).greater_than(filter_param :purchased_on_from) unless filter_param(:purchased_on_from).blank?
-      with(:purchased_on).less_than(filter_param :purchased_on_to) unless filter_param(:purchased_on_to).blank?
+      filter = %w[purchased_on updated_at].reduce([]) do |acc, attr|
+        param = params[:filter].delete("#{attr}_from")
+        acc << arel[attr].gt(param) unless param.blank?
 
-      with(:updated_at).greater_than(filter_param :updated_at_from) unless filter_param(:updated_at_from).blank?
-      with(:updated_at).less_than(filter_param :updated_at_to) unless filter_param(:updated_at_to).blank?
+        param = params[:filter].delete("#{attr}_to")
+        acc << arel[attr].lt(param) unless param.blank?
+        acc
+      end
 
-      paginate page: params[:page]
+      search_params = ( params[:filter] || {} ).reject {|k,v| v.blank? }
+      @purchases = @purchases.search(search_params) unless search_params.blank?
+      @purchases = @purchases.where(*filter) unless filter.blank?
     end
-    @purchases = @search.results
+
+    @purchases = @purchases.page(params[:page])
   end
 
   def show

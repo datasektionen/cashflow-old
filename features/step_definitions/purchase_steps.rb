@@ -136,8 +136,7 @@ Given(/^there exists at least one purchase of each status$/) do
   @purchases = []
   Purchase.workflow_spec.states.each do |_name, state|
     Given "a purchase"
-    @purchase.update_column(:workflow_state, state)
-    @purchases << @purchase
+    @purchase.update_column(:workflow_state, state.to_s)
   end
 end
 
