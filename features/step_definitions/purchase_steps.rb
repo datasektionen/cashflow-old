@@ -1,5 +1,19 @@
 # encoding: utf-8
 
+# Support for multiple selects (just call select_from_chosen as many times as required):
+module ChosenSelect
+  def select_from_chosen(item_text, options)
+    field = find_field(options[:from], visible: false)
+    option_value = page.evaluate_script("$(\"##{field[:id]} option:contains('#{item_text}')\").val()")
+    page.execute_script("value = ['#{option_value}']\; if ($('##{field[:id]}').val()) {$.merge(value, $('##{field[:id]}').val())}")
+    option_value = page.evaluate_script("value")
+    page.execute_script("$('##{field[:id]}').val(#{option_value})")
+    page.execute_script("$('##{field[:id]}').trigger('chosen:updated')")
+  end  
+end
+
+World(ChosenSelect)
+
 module PurchaseHelpers
   def select_from_chosen(item_text, options)
     field = find_field(options[:from])
@@ -119,9 +133,11 @@ Then(/^the description should be updated$/) do
 end
 
 Given(/^there exists at least one purchase of each status$/) do
+  @purchases = []
   Purchase.workflow_spec.states.each do |_name, state|
     Given "a purchase"
     @purchase.update_column(:workflow_state, state)
+    @purchases << @purchase
   end
 end
 
@@ -136,21 +152,26 @@ Then(/^I should see all purchases$/) do
 end
 
 When(/^I filter the purchases by statuses "([^"]*)"$/) do |statuses|
-  pending
-  statuses.split(/,/).map(&:strip).each do |_status|
-    # TODO: click element
+  page.find_by_id("purchase_filter_toggle").click
+  @statuses = statuses.split(",").map(&:strip)
+  @statuses.each do |status|
+    select_from_chosen(status, from: 'filter_workflow_state')
   end
-  click_button('Filtrera!')
+  page.find_by_id('filter_submit').click
 end
 
 Then(/^I should see purchases with statuses "([^"]*)"$/) do |statuses|
-  Purchase.where(workflow_status: statuses.split(/,/).map(&:strip)).each do |purchase|
+  Purchase.where(workflow_state: statuses.split(/,/).map(&:strip)).each do |purchase|
     page.should have_content purchase.id
+    page.should have_content purchase.description
   end
 end
 
 Then(/^I should not see any other purchases$/) do
-  pending
+  @purchases.reject {|p| @statuses.include? p.workflow_state }.each do |purchase|
+    page.should have_no_content("##{purchase.id}")
+    page.should have_no_content(purchase.description)
+  end
 end
 
 When(/^I remove the first of those items$/) do
