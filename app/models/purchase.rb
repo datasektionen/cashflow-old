@@ -54,38 +54,26 @@ class Purchase < ActiveRecord::Base
   #      \                   \
   #       ------------------> :cancel -->  (cancelled)
   #
+  states = {
+    new:        { confirm: :confirmed, cancel: :cancelled, edit: :edited },
+    edited:     { confirm: :confirmed, cancel: :cancelled },
+    confirmed:  { edit: :edited, pay: :paid, keep: :bookkept },
+    paid:       { keep: :finalized },
+    bookkept:   { pay: :finalized },
+    finalized:  {},
+    cancelled:  {}
+  }
+
   workflow do
-    state :new do
-      event :confirm, transitions_to: :confirmed
-      event :cancel, transitions_to: :cancelled
-      event :edit, transitions_to: :edited
+    states.each do |current, transitions|
+      state current do
+        transitions.each do |trigger, new_state|
+          event trigger, transitions_to: new_state
+        end
+      end
     end
-
-    state :edited do
-      event :cancel, transitions_to: :cancelled
-      event :confirm, transitions_to: :confirmed
-    end
-
-    state :confirmed do
-      event :edit, transitions_to: :edited
-      event :pay, transitions_to: :paid
-      event :keep, transitions_to: :bookkept
-    end
-
-    state :paid do
-      event :keep, transitions_to: :finalized
-    end
-
-    state :bookkept do
-      event :pay, transitions_to: :finalized
-    end
-
-    state :finalized
-
-    state :cancelled
   end
 
-  # calculate total amount for purchase items
   def total
     items.sum(:amount)
   end
