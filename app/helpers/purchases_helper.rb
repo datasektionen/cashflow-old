@@ -13,6 +13,11 @@ module PurchasesHelper
     end
   end
 
+  def filter_search_tag(name, placeholder)
+    options = { placeholder: placeholder }
+    text_field_tag "filter[#{name}]", params[:filter].try(:[], name), options
+  end
+
   def filter_select_tag(name, collection, value_method, text_method, placeholder, options)
     options = { :'data-placeholder' => placeholder }.merge(options)
     select_tag "filter[#{name}]", options_from_collection_for_select(collection, value_method, text_method, params[:filter].try(:[], name)), options

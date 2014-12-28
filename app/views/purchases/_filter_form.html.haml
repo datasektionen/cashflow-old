@@ -1,3 +1,9 @@
+%purchase_search
+  = form_tag purchases_path, method: :get, class: "form form-inline" do
+    = field_set_tag("Sök") do
+      = filter_search_tag 'search', 'Sök i beskrivning...'
+      = submit_tag "Sök!", id: 'search_submit'
+
 = content_tag :div, :id => 'purchase_filter_toggle', :class => 'btn' do
   %i.icon-search
   Visa/dölj filter

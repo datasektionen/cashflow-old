@@ -184,3 +184,17 @@ Then(/^only the second item should remain$/) do
 
   @purchase.items.count.should == 1
 end
+
+Given(/^there exists a purchase with "lorem ipsum" in the description$/) do
+  Given("a purchase")
+  @purchase.update_column(:description, "lorem ipsum")
+end
+
+When(/^I search for "lore"$/) do
+  fill_in("filter_search", with: "lorem")
+  click_button("search_submit")
+end
+
+Then(/^I should see that purchase among the results$/) do
+  page.should have_content(@purchase.description)
+end
