@@ -20,13 +20,13 @@ gem 'i18n_routing'
 gem 'jquery-rails', '~>1.0.19'
 gem 'kaminari'
 gem 'less-rails-bootstrap'
-gem 'mysql2', '~> 0.3.10'
+gem 'pg'
+gem 'textacular'
 gem 'net-ldap'
 gem 'nokogiri', '~> 1.5.4'
 gem 'paper_trail'
 gem 'rails', '~> 3.2.0'
 gem 'simple-navigation'
-gem 'sunspot_rails'
 gem 'uglifier'
 gem 'workflow'
 
@@ -37,7 +37,6 @@ end
 group :development do
   gem 'pry-nav'
   gem 'pry-rails'
-  gem 'sunspot_solr'
 end
 
 # Gems for test environment
@@ -48,7 +47,6 @@ group :test do
   gem 'factory_girl_rails'
   gem 'headless'
   gem 'launchy'
-  gem 'sunspot_test'
   gem 'rspec', "~> 2.14.0"
   gem 'rspec-rails', "~> 2.14.0"
   gem 'selenium-webdriver'
