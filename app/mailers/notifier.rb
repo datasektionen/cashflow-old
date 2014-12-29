@@ -18,7 +18,7 @@ class Notifier < ActionMailer::Base
     @administrator = purchase.last_updated_by
     options = mail_header_params(purchase, 'purchase_paid')
     unless purchase.business_unit.email.blank?
-      options[:cc]= purchase.business_unit.email
+      options[:cc] = purchase.business_unit.email
     end
     mail(options)
   end

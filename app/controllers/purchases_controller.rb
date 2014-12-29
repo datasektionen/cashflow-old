@@ -122,7 +122,7 @@ class PurchasesController < ApplicationController
 
     arel = Purchase.arel_table
     search = hash.delete(:search)
-    filter = hash.reject {|k,v| v.strip.blank? }
+    filter = hash.reject { |k,v| v.blank?  }
 
     filter = %w[purchased_on updated_at].reduce(filter) do |acc, attr|
       param = hash.delete("#{attr}_from")
