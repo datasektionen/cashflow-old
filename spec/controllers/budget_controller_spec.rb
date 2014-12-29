@@ -19,7 +19,7 @@ describe BudgetController do
     describe 'show' do
       it "assigns the selected year's budget_rows as @budget_rows" do
         rows = [mock_model(BudgetRow), mock_model(BudgetRow)]
-        BudgetRow.stub!(:year).and_return { rows }
+        BudgetRow.stub(:year).and_return { rows }
         get :show, id: @year
         assigns(:budget_rows).should eq rows
       end
@@ -28,7 +28,7 @@ describe BudgetController do
     describe 'edit' do
       it "assigns the selected year's budget_rows as @budget_rows" do
         rows = [mock_model(BudgetRow), mock_model(BudgetRow)]
-        BudgetRow.stub!(:year).and_return { rows }
+        BudgetRow.stub(:year).and_return { rows }
         get :show, id: @year
         assigns(:budget_rows).should eq rows
       end

@@ -4,7 +4,7 @@ describe BudgetRow do
   describe '#total' do
     let(:person) { Factory :person }
 
-    before(:all) do
+    before(:each) do
       PaperTrail.whodunnit = person.id
     end
 
