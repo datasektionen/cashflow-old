@@ -25,5 +25,11 @@ describe BudgetPost do
     end
   end
 
+  it "is invalid without a mage_arrangemen_number" do
+    post = Factory :budget_post
+    post.mage_arrangement_number = nil
+    post.should be_invalid
+  end
+
   pending 'write some more specs'
 end
