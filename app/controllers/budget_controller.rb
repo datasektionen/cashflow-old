@@ -16,20 +16,18 @@ class BudgetController < ApplicationController
   end
 
   def update
-    BudgetRow.connection.transaction do
-      params[:budget_rows].each do |k, h|
-        unless BudgetRow.find(k).update_attributes(h)
-          fail ActiveRecord::Rollback
-        end
+    ActiveRecord::Base.transaction do
+      rows = params[:budget_rows]
+      posts = params[:budget_posts]
+
+      rows = BudgetRow.update(rows.keys, rows.values)
+      posts = BudgetPost.update(posts.keys, posts.values)
+
+      if [rows, posts].flatten.any?(&:invalid?)
+        fail ActiveRecord::Rollback
       end
     end
-    BudgetPost.connection.transaction do
-      params[:budget_posts].each do |k, h|
-        unless BudgetPost.find(k).update_attributes(h)
-          fail ActiveRecord::Rollback
-        end
-      end
-    end
+
     redirect_to budget_path(id: @year)
   rescue
     edit
