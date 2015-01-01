@@ -5,6 +5,7 @@ before_script:
 branches:
   only:
     - master
+cache: bundler
 env: CODECLIMATE_REPO_TOKEN=a2f491eaa78f4544998858887ac10503b1b38d90b4868bfb6c5f8b1953911a70
 language: ruby
 notifications:
