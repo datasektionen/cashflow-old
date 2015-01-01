@@ -17,11 +17,8 @@ class BudgetController < ApplicationController
 
   def update
     ActiveRecord::Base.transaction do
-      rows = params[:budget_rows]
-      posts = params[:budget_posts]
-
-      rows = BudgetRow.update(rows.keys, rows.values)
-      posts = BudgetPost.update(posts.keys, posts.values)
+      rows = update_multiple(:budget_rows)
+      posts = update_multiple(:budget_posts)
 
       if [rows, posts].flatten.any?(&:invalid?)
         fail ActiveRecord::Rollback
@@ -38,5 +35,11 @@ class BudgetController < ApplicationController
 
   def get_or_set_year
     @year = params[:id] || Time.now.year
+  end
+
+  def update_multiple(key)
+    model = key.to_s.singularize.camelize.constantize
+    hash = params[key]
+    model.update(hash.keys, hash.values)
   end
 end
