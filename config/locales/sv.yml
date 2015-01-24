@@ -439,6 +439,7 @@
         delete: "Budgetpost borttagen"
   navigation:
     sign_in: "Logga in"
+    dev_sign_in: "Logga in (dev)"
     my_page: "Min sida"
     purchases: "Inköp"
     all_purchases: "Alla inköp"

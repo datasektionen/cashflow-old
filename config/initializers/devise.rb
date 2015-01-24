@@ -12,8 +12,8 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
-  require 'net/https'
+  require "devise/orm/active_record"
+  require "net/https"
   #  require 'omniauth/enterprise'
 
   # ==> Configuration for any authentication mechanism
@@ -143,5 +143,8 @@ Devise.setup do |config|
   # end
   #
   # config.cas_base_url = "https://login.kth.se"
-  config.omniauth :cas, cas_server: 'https://login.kth.se'
+  config.omniauth :cas, url: "https://login.kth.se"
+  if Cashflow::Application.settings["enable_developer_login_strategy"]
+    config.omniauth :developer, fields: [:ugid], uid_field: :ugid
+  end
 end
