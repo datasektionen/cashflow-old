@@ -6,5 +6,5 @@ Given(/^I (?:log|am logged) in as the person$/) do
 end
 
 Given(/^I am not authenticated$/) do
-  visit('/sign_out')
+  visit("/sign_out")
 end
