@@ -28,3 +28,20 @@ Feature: Filtering purchases
     Given there exists a purchase with "lorem ipsum" in the description
     When I search for "lore"
     Then I should see that purchase among the results
+
+  @javascript
+  Scenario: Filter purchased_on from a date
+    Given purchases purchased on a few different dates
+    When I filter purchased_on from a date
+    Then I should see a filtered list of purchases
+    And I should see purchases purchased from that date
+    And I should see no purchases older than that date
+
+  @javascript
+  Scenario: Filter purchased_on to a date
+    Given purchases purchased on a few different dates
+    When I filter purchased_on to a date
+    Then I should see a filtered list of purchases
+    And I should see purchases purchased to that date
+    And I should see no purchases newer than that date
+

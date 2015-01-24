@@ -26,7 +26,7 @@ class Purchase < ActiveRecord::Base
   accepts_nested_attributes_for :items, allow_destroy: true
 
   def self.searchable_language
-    'swedish'
+    "swedish"
   end
 
   scope :unpaid, -> { where(workflow_state: %w(new edited confirmed bookkept)) }

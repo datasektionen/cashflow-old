@@ -2,9 +2,16 @@
 
 module PurchaseHelpers
   def select_from_chosen(item_text, options)
-    field = find_field(options[:from], visible: false)
-    option_value = page.evaluate_script("$(\"##{field[:id]} option:contains('#{item_text}')\").val()")
-    page.execute_script("value = ['#{option_value}']\; if ($('##{field[:id]}').val()) {$.merge(value, $('##{field[:id]}').val())}")
+    field = find_field(options[:from])
+    option_js = "$(\"##{field[:id]} option:contains('#{item_text}')\").val()"
+    option_value = page.evaluate_script(option_js)
+    page.execute_script(<<-EOJS
+     value = ['#{option_value}']\;
+     if ($('##{field[:id]}').val()) {
+       $.merge(value, $('##{field[:id]}').val())
+     }
+    EOJS
+    )
     option_value = page.evaluate_script("value")
     page.execute_script("$('##{field[:id]}').val(#{option_value})")
     page.execute_script("$('##{field[:id]}').trigger('chosen:updated')")
@@ -145,20 +152,22 @@ When(/^I filter the purchases by statuses "([^"]*)"$/) do |statuses|
   @statuses = statuses.split(",").map(&:strip)
   @statuses.each do |status|
     status = I18n.t("workflow_state.#{status}")
-    value = select_from_chosen(status, from: 'filter_workflow_state')
+    select_from_chosen(status, from: "filter_workflow_state")
   end
-  page.find_by_id('filter_submit').click
+  page.find_by_id("filter_submit").click
 end
 
 Then(/^I should see purchases with statuses "([^"]*)"$/) do |statuses|
-  Purchase.where(workflow_state: statuses.split(/,/).map(&:strip)).each do |purchase|
+  purchases = Purchase.where(workflow_state: statuses.split(/,/).map(&:strip))
+  purchases.each do |purchase|
     page.should have_content purchase.id
     page.should have_content purchase.description
   end
 end
 
 Then(/^I should not see any other purchases$/) do
-  @purchases.reject {|p| @statuses.include? p.workflow_state }.each do |purchase|
+  relevant = @purchases.reject { |p| @statuses.include? p.workflow_state }
+  relevant.each do |purchase|
     page.should have_no_content("##{purchase.id}")
     page.should have_no_content(purchase.description)
   end
@@ -188,4 +197,48 @@ end
 
 Then(/^I should see that purchase among the results$/) do
   page.should have_content(@purchase.description)
+end
+
+Given(/^purchases purchased on a few different dates$/) do
+  @purchased_on_range = {
+    too_old: 3.days.ago.to_date.to_s,
+    from: 2.days.ago.to_date.to_s,
+    to: 1.days.ago.to_date.to_s,
+    too_new: Date.today.to_s
+  }
+  @purchases = @purchased_on_range.values.collect { |date|
+    Factory(:purchase, purchased_on: date)
+  }
+end
+
+When(/^I filter purchased_on from a date$/) do
+  page.find_by_id("purchase_filter_toggle").click
+  fill_in("filter_purchased_on_from", with: @purchased_on_range[:from])
+  page.find_by_id("filter_submit").click
+end
+
+When(/^I filter purchased_on to a date$/) do
+  page.find_by_id("purchase_filter_toggle").click
+  fill_in("filter_purchased_on_to", with: @purchased_on_range[:to])
+  page.find_by_id("filter_submit").click
+end
+
+Then(/^I should see a filtered list of purchases$/) do
+  page.should have_content("Inköp")
+end
+
+Then(/^I should see purchases purchased from that date$/) do
+  page.should have_content(@purchased_on_range[:from])
+end
+
+Then(/^I should see purchases purchased to that date$/) do
+  page.should have_content(@purchased_on_range[:to])
+end
+
+Then(/^I should see no purchases older than that date$/) do
+  page.should have_no_content(@purchased_on_range[:too_old])
+end
+
+Then(/^I should see no purchases newer than that date$/) do
+  page.should have_no_content(@purchased_on_range[:too_new])
 end
