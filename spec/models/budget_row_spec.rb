@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe BudgetRow do
+
+  it "is invalid if sum is negative" do
+    row = BudgetRow.new sum: -1
+    row.should be_invalid
+    row.errors.messages.keys.should include(:sum)
+  end
+
   describe '#total' do
     let(:person) { Factory :person }
 

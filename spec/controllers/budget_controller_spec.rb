@@ -36,38 +36,34 @@ describe BudgetController do
   end
 
   describe 'PUT update' do
-    before(:all) do
+    before(:each) do
       @year = Time.now.year
+      @rows = [Factory(:budget_row), Factory(:budget_row)]
+      @posts = @rows.map(&:budget_post)
+      @rows_params = Hash[*@rows.flat_map { |r| [r.id, { sum: r.sum + 1000 }]}]
+      @posts_params = Hash[*@posts.flat_map do |p|
+        [p.id, { mage_arrangement_number: p.mage_arrangement_number + 1 }]
+      end]
+
     end
+
+    let(:params) { { budget_rows: @rows_params, budget_posts: @posts_params } }
 
     describe 'with valid params' do
       it "updates the selected year's budget_rows" do
-        rows = [Factory(:budget_row), Factory(:budget_row)]
-        budget_rows = {}
-        budget_posts = {}
+        put :update, params.merge(id: @year)
 
-        rows.map do |row|
-          budget_rows[row.id] = { sum: row.sum + 1000 }
-          budget_posts[row.budget_post.id] = { mage_arrangement_number: row.budget_post.mage_arrangement_number + 1 }
-        end
-        put :update, id: @year, budget_rows: budget_rows, budget_posts: budget_posts
-        rows.map do |row|
-          BudgetRow.find(row.id).sum.should == row.sum + 1000
-          BudgetPost.find(row.budget_post.id).mage_arrangement_number.should == row.budget_post.mage_arrangement_number + 1
-        end
+        sums_from_db = BudgetRow.where(id: @rows.map(&:id)).map(&:sum)
+        mage_arr_numbers = BudgetPost.where(id: @posts.map(&:id)).
+          map(&:mage_arrangement_number)
+
+        sums_from_db.should == @rows.map { |r| r.sum + 1000 }
+        mage_arr_numbers.should ==
+          @posts.map { |p| p.mage_arrangement_number + 1 }
       end
 
       it "redirects to the selected year's budget" do
-        rows = [Factory(:budget_row), Factory(:budget_row)]
-        budget_rows = {}
-        budget_posts = {}
-
-        rows.map do |row|
-          budget_rows[row.id] = { sum: row.sum + 1000 }
-          budget_posts[row.budget_post.id] = { mage_arrangement_number: row.budget_post.mage_arrangement_number + 1 }
-        end
-
-        put :update, id: @year, budget_rows: budget_rows, budget_posts: budget_posts
+        put :update, params.merge(id: @year)
         response.should redirect_to budget_path(id: @year)
       end
     end
@@ -78,6 +74,34 @@ describe BudgetController do
         params = { foo: { bar: 'baz' } }
         put :update, id: @year, foo: params
         response.should render_template('edit')
+      end
+
+      context "rollback" do
+        it "doesn't update anything if budget row entry is invalid" do
+          @rows_params[@rows.first.id][:sum] = -4711
+
+          put :update, params.merge(id: @year)
+
+          sums_from_db = BudgetRow.where(id: @rows.map(&:id)).map(&:sum)
+          mage_arr_numbers = BudgetPost.where(id: @posts.map(&:id)).
+            map(&:mage_arrangement_number)
+
+          sums_from_db.should == @rows.map(&:sum)
+          mage_arr_numbers.should == @posts.map(&:mage_arrangement_number)
+        end
+
+        it "doesn't update anything if a budget post is invalid" do
+          @posts_params[@posts.first.id][:mage_arrangement_number] = nil
+
+          put :update, params.merge(id: @year)
+
+          sums_from_db = BudgetRow.where(id: @rows.map(&:id)).map(&:sum)
+          mage_arr_numbers = BudgetPost.where(id: @posts.map(&:id)).
+            map(&:mage_arrangement_number)
+
+          sums_from_db.should == @rows.map(&:sum)
+          mage_arr_numbers.should == @posts.map(&:mage_arrangement_number)
+        end
       end
     end
   end

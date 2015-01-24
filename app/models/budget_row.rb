@@ -4,6 +4,8 @@ class BudgetRow < ActiveRecord::Base
 
   scope :year, lambda { |year| includes(budget_post: :purchases).where(year: year) }
 
+  validates :sum, numericality: { greater_than_or_equal_to: 0 }
+
   def purchases
     budget_post.purchases.where(year: year)
   end
