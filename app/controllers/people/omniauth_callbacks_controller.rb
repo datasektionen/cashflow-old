@@ -6,7 +6,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def cas
-    @person = Person.find_for_cas_oath(env["omniauth.auth"], current_user)
+    @person = Person.find_for_oauth(env["omniauth.auth"], current_user)
     if @person.persisted?
       flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: "CAS"
       sign_in_and_redirect @person, event: :authentication
@@ -21,7 +21,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       return
     end
 
-    @person = Person.find_for_cas_oath(env["omniauth.auth"], current_user)
+    @person = Person.find_for_oauth(env["omniauth.auth"], current_user)
     if @person.persisted?
       flash[:notice] = I18n.t "devise.omniauth_callbacks.success",
                               kind: "Developer"

@@ -89,7 +89,7 @@ class Person < ActiveRecord::Base
     self.role == role.to_s
   end
 
-  def self.find_for_cas_oath(access_token, _signed_in_resource)
+  def self.find_for_oauth(access_token, _signed_in_resource)
     return nil if access_token.blank?
     person = Person.find_by_ugid(access_token['uid'])
     if person
