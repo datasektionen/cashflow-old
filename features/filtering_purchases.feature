@@ -45,3 +45,8 @@ Feature: Filtering purchases
     And I should see purchases purchased to that date
     And I should see no purchases newer than that date
 
+  @javascript
+  Scenario: Remembering filter parameters
+    Given purchases purchased on a few different dates
+    When I filter purchased_on from a date
+    Then the purchased_on filter value should be remembered

@@ -118,8 +118,8 @@ class PurchasesController < ApplicationController
 
   def extract_filter_params
     return "", [] if params[:filter].blank?
-    hash = params[:filter]
 
+    hash = params[:filter].clone
     arel = Purchase.arel_table
     search = hash.delete(:search)
 

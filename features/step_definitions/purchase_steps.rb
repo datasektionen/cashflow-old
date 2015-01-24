@@ -206,7 +206,7 @@ Given(/^purchases purchased on a few different dates$/) do
     to: 1.days.ago.to_date.to_s,
     too_new: Date.today.to_s
   }
-  @purchases = @purchased_on_range.values.collect { |date|
+  @purchases = @purchased_on_range.values.map { |date|
     Factory(:purchase, purchased_on: date)
   }
 end
@@ -241,4 +241,10 @@ end
 
 Then(/^I should see no purchases newer than that date$/) do
   page.should have_no_content(@purchased_on_range[:too_new])
+end
+
+Then(/^the purchased_on filter value should be remembered$/) do
+  page.find_by_id("purchase_filter_toggle").click
+  filter_field = find_field("filter_purchased_on_from")
+  filter_field.value.should eq(@purchased_on_range[:from])
 end
