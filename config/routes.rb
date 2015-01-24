@@ -1,9 +1,13 @@
 Cashflow::Application.routes.draw do
   resources :budget_posts
 
-  devise_for :users, class_name: 'Person', controllers: { omniauth_callbacks: 'people/omniauth_callbacks' } do
+  devise_for :users,
+    class_name: 'Person',
+    controllers: { omniauth_callbacks: 'people/omniauth_callbacks' }
+  devise_scope :user do
     get 'sign_in', to: 'people/omniauth_callbacks#new', as: :new_session
     get 'sign_out', to: 'people/omniauth_callbacks#destroy', as: :destroy_user_session
+    delete 'sign_out', to: 'people/omniauth_callbacks#destroy', as: :destroy_user_session
     root to: 'dashboard#welcome'
   end
 
