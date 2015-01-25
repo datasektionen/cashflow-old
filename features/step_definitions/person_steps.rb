@@ -12,7 +12,7 @@ end
 
 Given(/^I am logged in$/) do
   unless @person
-    Given 'a person with the "person" role'
+    step 'a person with the "person" role'
   end
   OmniAuth.config.test_mode = true
   OmniAuth.config.add_mock(:cas, uid: @person.ugid)

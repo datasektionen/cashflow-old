@@ -3,9 +3,13 @@
   = form.input :name
   = form.input :short_name
   = form.input :email
-  = form.input :mage_number, :as=>:select, :collection => Mage::Organ.all.map{|o| [o.name, o.number]}
-  = form.input :mage_default_series, :as=>:select, :collection => Mage::Series.all.map{|s| ["#{s.name} (#{s.letter})", s.letter]}
+  = form.input :mage_number,
+               as: :select,
+               collection: Mage::Organ.all.map { |o| [o.name, o.number] }
+  = form.input :mage_default_series,
+               :as => :select,
+               :collection => Mage::Series.all.map { |s| ["#{s.name} (#{s.letter})", s.letter] }
   = form.input :description
   = form.input :active
- = form.buttons do
-  = form.commit_button :commit
+ = form.actions do
+  = form.action :submit, as: :button
