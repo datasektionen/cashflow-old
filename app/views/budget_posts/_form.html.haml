@@ -3,8 +3,10 @@
     = form.input :name
     = form.input :business_unit
     - unless @budget_post.business_unit.nil? # THIS SHOULD NEVER BE
-      = form.input :mage_arrangement_number, as: :select, collection: Mage::Arrangement.all(@budget_post.business_unit.mage_number).map{|a| [a.name, a.number]}
+      = form.input :mage_arrangement_number,
+                   as: :select,
+                   collection: Mage::Arrangement.all(@budget_post.business_unit.mage_number).map { |a| [a.name, a.number] }
     - else
       = form.input :mage_arrangement_number, as: :hidden
-  = form.buttons do
-    = form.commit_button :commit
+  = form.actions do
+    = form.action :submit, as: :button

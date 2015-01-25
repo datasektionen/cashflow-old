@@ -16,8 +16,8 @@
     .links
       = link_to_add_association 'Lägg till inköpsdel', form, :items
 
-  = form.buttons do
-    = form.commit_button button_html: { class: "btn-primary" }
+  = form.actions do
+    = form.action :submit, as: :button, button_html: { class: "btn-primary" }
 
 :javascript
   $(document).ready(function() {
