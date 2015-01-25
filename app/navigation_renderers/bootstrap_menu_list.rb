@@ -1,15 +1,18 @@
-# Renders an ItemContainer as a <ul> element and its containing items as <li> elements.
-# Prepared to use inside the topbar of Twitter Bootstrap http://twitter.github.com/bootstrap/#navigation
+# Renders an ItemContainer as a <ul> element and its containing items as <li>
+# elements.  Prepared to use inside the topbar of Twitter Bootstrap
+# http://twitter.github.com/bootstrap/#navigation
 #
 # Register the renderer and use following code in your view:
-#   render_navigation(level: 1..2, renderer: :bootstrap_topbar_list, expand_all: true)
+#   render_navigation(level: 1..2,
+#                     renderer: :bootstrap_topbar_list,
+#                     expand_all: true)
 class BootstrapMenuList < SimpleNavigation::Renderer::Base
   def render(item_container)
     if options[:is_subnavigation]
-      ul_class = 'dropdown-menu'
+      ul_class = "dropdown-menu"
     else
-      ul_class = 'nav'
-      ul_class = [ul_class, options[:bootstrap_menu_type]].flatten.compact.join(' ')
+      ul_class = "nav"
+      ul_class = flat_string([ul_class, options[:bootstrap_menu_type]])
     end
 
     list_content = item_container.items.inject([]) do |list, item|
@@ -18,7 +21,7 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
 
       # add the dropdown html class if we have subitems and should render them
       if include_sub_navigation?(item)
-        li_options[:class] = [li_options[:class], 'dropdown'].flatten.compact.join(' ')
+        li_options[:class] = flat_string([li_options[:class], "dropdown"])
       end
 
       # create the link and add possible sub navigation
@@ -32,9 +35,12 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
     end.join
 
     if skip_if_empty? && item_container.empty?
-      ''
+      ""
     else
-      content_tag(:ul, list_content,  id: item_container.dom_id, class: [item_container.dom_class, ul_class].flatten.compact.join(' '))
+      content_tag(:ul,
+                  list_content,
+                  id: item_container.dom_id,
+                  class: flat_string([item_container.dom_class, ul_class]))
     end
   end
 
@@ -46,8 +52,8 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
 
   def tag_for(item)
     if include_sub_navigation?(item)
-      content = content_tag(:b, '', class: 'caret')
-      return link_to(item.name << content, '#', link_options_for(item))
+      link_name = item.name + content_tag(:b, "", class: "caret")
+      return link_to(link_name.html_safe, "#", link_options_for(item))
     end
 
     if item.url.nil?
@@ -63,19 +69,27 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
     special_options = { method: item.method }.reject { |_k, v| v.nil? }
 
     if include_sub_navigation?(item) && !options[:is_subnavigation]
-      special_options[:'data-toggle'] = 'dropdown'
+      special_options[:"data-toggle"] = "dropdown"
     end
 
     link_options = item.html_options[:link] || {}
     opts = special_options.merge(link_options)
-    opts[:class] = [link_options[:class], item.selected_class, dropdown_link_class(item)].flatten.compact.join(' ')
-    opts.delete(:class) if opts[:class].nil? || opts[:class] == ''
+    opts[:class] = flat_string([link_options[:class],
+                                item.selected_class,
+                                dropdown_link_class(item)])
+    opts.delete(:class) if opts[:class].nil? || opts[:class] == ""
     opts
   end
 
   def dropdown_link_class(item)
     if include_sub_navigation?(item) && !options[:is_subnavigation]
-      'dropdown-toggle'
+      "dropdown-toggle"
     end
+  end
+
+  private
+
+  def flat_string(array)
+    array.flatten.compact.join("")
   end
 end
