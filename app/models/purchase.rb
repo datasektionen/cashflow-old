@@ -25,15 +25,8 @@ class Purchase < ActiveRecord::Base
 
   accepts_nested_attributes_for :items, allow_destroy: true
 
-  searchable do
-    string :workflow_state
-    integer :person_id, references: Person
-    integer :business_unit_id
-
-    date :purchased_on
-    date :updated_at
-    text :description
-    float :total
+  def self.searchable_language
+    "swedish"
   end
 
   scope :unpaid, -> { where(workflow_state: %w(new edited confirmed bookkept)) }

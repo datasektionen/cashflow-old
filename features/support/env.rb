@@ -21,13 +21,12 @@
 require 'cucumber/rails'
 require 'capybara/rspec'
 require 'headless'
-require 'sunspot_test/cucumber'
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
 # prefer to use XPath just remove this line and adjust any selectors in your
 # steps to use the XPath syntax.
-Capybara.default_selector = :css
+# Capybara.default_selector = :css
 
 # By default, any exception happening in your Rails application will bubble up
 # to Cucumber so that your scenario will fail. This is a different from how
@@ -46,6 +45,8 @@ Capybara.default_selector = :css
 #
 ActionController::Base.allow_rescue = false
 
+Capybara.ignore_hidden_elements = true
+
 # Remove this line if your app doesn't have a database.
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
 DatabaseCleaner.strategy = :transaction
@@ -61,5 +62,3 @@ end
 require 'webmock/cucumber'
 WebMock.allow_net_connect!
 
-# travis is really really slow to start stuff
-SunspotTest.solr_startup_timeout = 60

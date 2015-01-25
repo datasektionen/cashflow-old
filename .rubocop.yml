@@ -7,3 +7,10 @@ Rails/ActionFilter:
 
 Style/DotPosition:
   EnforcedStyle: trailing
+
+Style/Blocks:
+  Enabled: false
+
+RedundantReturn:
+  AllowMultipleReturnValues: true
+

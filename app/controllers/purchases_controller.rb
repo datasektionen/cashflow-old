@@ -5,20 +5,15 @@ class PurchasesController < ApplicationController
   expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
 
   def index
-    @search = Purchase.joins(:budget_post).joins(:person).includes(:person).search do
-      with(:workflow_state, filter_param(:workflow_state)) unless filter_param(:workflow_state).blank?
-      with(:person_id, filter_param(:person_id)) unless filter_param(:person_id).blank?
-      with(:business_unit_id, filter_param(:business_unit_id)) unless filter_param(:business_unit_id).blank?
+    @purchases = Purchase
+    search, filter_params = extract_filter_params
+    @purchases = @purchases.fuzzy_search(search) unless search.blank?
 
-      with(:purchased_on).greater_than(filter_param :purchased_on_from) unless filter_param(:purchased_on_from).blank?
-      with(:purchased_on).less_than(filter_param :purchased_on_to) unless filter_param(:purchased_on_to).blank?
-
-      with(:updated_at).greater_than(filter_param :updated_at_from) unless filter_param(:updated_at_from).blank?
-      with(:updated_at).less_than(filter_param :updated_at_to) unless filter_param(:updated_at_to).blank?
-
-      paginate page: params[:page]
+    filter_params.map do |filter|
+      @purchases = @purchases.where(filter)
     end
-    @purchases = @search.results
+
+    @purchases = @purchases.page(params[:page])
   end
 
   def show
@@ -121,7 +116,24 @@ class PurchasesController < ApplicationController
 
   private
 
-  def filter_param(name)
-    params[:filter].try(:[], name.to_s)
+  def extract_filter_params
+    return "", [] if params[:filter].blank?
+
+    hash = params[:filter].clone
+    arel = Purchase.arel_table
+    search = hash.delete(:search)
+
+    filter = %w[purchased_on updated_at].reduce([]) do |acc, attr|
+      param = hash.delete("#{attr}_from")
+      acc << arel[attr].gteq(param) unless param.blank?
+
+      param = hash.delete("#{attr}_to")
+      acc << arel[attr].lteq(param) unless param.blank?
+      acc
+    end
+
+    filter << hash.reject { |_k, v| v.blank? }
+
+    return search, filter
   end
 end

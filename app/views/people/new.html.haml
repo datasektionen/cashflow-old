@@ -9,8 +9,8 @@
     = form.input :ugid, :input_html => {:class => "search"}
     - if current_user.is?(:admin)
       = form.input :role, :as => :select, :collection => Person::ROLES
-  = form.buttons do
-    = form.commit_button :commit
+  = form.actions do
+    = form.action :submit, as: :button
 
 - # TODO: refactor this javascript and put it into a .js file somewhere
 :javascript
@@ -29,7 +29,9 @@
                 $("input[name$='person[ugid]']").val(person.ugid);
               } else {
                 clearInputs();
-                $("form#new_person").prepend("<p class='error'>Användaren <a href='"+data.url+"'>"+data.person.name +"</a> finns redan.</p>");
+                $("form#new_person").prepend("<p class='error'>" +
+                  "Användaren <a href='"+data.url+"'>"+data.person.name +
+                  "</a> finns redan.</p>");
               }
             }
       );
