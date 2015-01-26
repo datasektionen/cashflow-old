@@ -1,10 +1,5 @@
 class DashboardController < ApplicationController
-  before_filter :authenticate_user!, except: :welcome
-
+  skip_before_filter :authenticate_user!
   def index
-    @page_title = 'start'
-  end
-
-  def welcome
   end
 end
