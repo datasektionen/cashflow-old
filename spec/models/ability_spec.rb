@@ -5,7 +5,7 @@ require 'cancan/matchers'
 describe Ability do
   describe 'admin' do
     before(:each) do
-      @user = Factory(:admin)
+      @user = create(:admin)
       @ability = Ability.new(@user)
     end
     it 'should be able to manage people' do
@@ -32,7 +32,7 @@ describe Ability do
 
   describe 'treasurer' do
     before(:each) do
-      @user = Factory(:treasurer)
+      @user = create(:treasurer)
       @ability = Ability.new(@user)
     end
 
@@ -71,7 +71,7 @@ describe Ability do
 
   describe 'bookkeeper' do
     before(:each) do
-      @user = Factory(:bookkeeper)
+      @user = create(:bookkeeper)
       @ability = Ability.new(@user)
     end
 
@@ -118,7 +118,7 @@ describe Ability do
 
   describe 'ordinary user' do
     before(:each) do
-      @user = Factory(:person)
+      @user = create(:person)
       @ability = Ability.new(@user)
     end
 
@@ -167,7 +167,7 @@ describe Ability do
 
   describe 'accountant' do
     before(:each) do
-      @user = Factory(:accountant)
+      @user = create(:accountant)
       @ability = Ability.new(@user)
     end
 

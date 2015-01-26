@@ -1,14 +1,14 @@
 # encoding: utf-8
-require 'spec_helper'
+require "spec_helper"
 
 describe Notifier do
 
   describe "purchases" do
     before(:all) do
-      @admin = Factory :person, role: 'admin'
+      @admin = create(:person, role: "admin")
       PaperTrail.enabled = true
       PaperTrail.whodunnit = @admin.id.to_s
-      @purchase = Factory :purchase
+      @purchase = create(:purchase)
     end
 
     before(:each) { ActionMailer::Base.deliveries = [] }
@@ -23,7 +23,7 @@ describe Notifier do
 
       it "sets the correct to, from, and reply addresses" do
         subject.to.should       == [ @purchase.person.email ]
-        subject.subject.should  == I18n.t('mailers.notifier.purchase_created')
+        subject.subject.should  == I18n.t("mailers.notifier.purchase_created")
         subject.cc.should       == [ @admin.email ]
         subject.reply_to.should == [ @admin.email ]
       end
@@ -45,14 +45,16 @@ describe Notifier do
 
       it "sets the correct to, from, and reply addresses" do
         subject.to.should       == [ @purchase.person.email ]
-        subject.subject.should  == I18n.t('mailers.notifier.purchase_approved')
+        subject.subject.should  == I18n.t("mailers.notifier.purchase_approved")
         subject.cc.should       == [ @admin.email ]
         subject.reply_to.should == [ @admin.email ]
       end
 
       it "renders the body correctly" do
+        name = @admin.name
+        id = @purchase.id
         assert subject.body.to_s.starts_with?(
-          "#{ @admin.name } har nu registrerat ditt inköp ##{@purchase.id} som godkänt."
+          "#{name} har nu registrerat ditt inköp ##{id} som godkänt."
         )
       end
     end
@@ -67,14 +69,16 @@ describe Notifier do
 
       it "sets the correct to, from, and reply addresses" do
         subject.to.should       == [ @purchase.person.email ]
-        subject.subject.should  == I18n.t('mailers.notifier.purchase_denied')
+        subject.subject.should  == I18n.t("mailers.notifier.purchase_denied")
         subject.cc.should       == [ @admin.email ]
         subject.reply_to.should == [ @admin.email ]
       end
 
       it "renders the body correctly" do
+        name = @admin.name
+        id = @purchase.id
         assert subject.body.to_s.starts_with?(
-          "#{ @admin.name } har nu registrerat ditt inköp ##{ @purchase.id } som avslaget."
+          "#{name} har nu registrerat ditt inköp ##{id} som avslaget."
         )
       end
     end
@@ -88,8 +92,11 @@ describe Notifier do
       end
 
       it "renders the body correctly" do
+        name = @admin.name
+        id = @purchase.id
         assert subject.body.to_s.starts_with?(
-          "#{ @admin.name } har nu registrerat ditt inköp ##{@purchase.id} som betalt, du borde få pengarna inom några dagar."
+          "#{name} har nu registrerat ditt inköp ##{id} som betalt," +
+          " du borde få pengarna inom några dagar."
         )
       end
 
@@ -98,7 +105,7 @@ describe Notifier do
 
         it "sets the correct to, from, and reply addresses" do
           subject.to.should       == [ @purchase.person.email ]
-          subject.subject.should  == I18n.t('mailers.notifier.purchase_paid')
+          subject.subject.should  == I18n.t("mailers.notifier.purchase_paid")
           subject.cc.should       == [ @purchase.business_unit.email ]
           subject.reply_to.should == [ @admin.email ]
         end
@@ -109,7 +116,7 @@ describe Notifier do
 
         it "sets the correct to, from, and reply addresses" do
           subject.to.should       == [ @purchase.person.email ]
-          subject.subject.should  == I18n.t('mailers.notifier.purchase_paid')
+          subject.subject.should  == I18n.t("mailers.notifier.purchase_paid")
           subject.cc.should       == [ @admin.email ]
           subject.reply_to.should == [ @admin.email ]
         end

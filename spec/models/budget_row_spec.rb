@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe BudgetRow do
 
@@ -8,8 +8,8 @@ describe BudgetRow do
     row.errors.messages.keys.should include(:sum)
   end
 
-  describe '#total' do
-    let(:person) { Factory :person }
+  describe "#total" do
+    let(:person) { create(:person) }
 
     before(:each) do
       PaperTrail.whodunnit = person.id
@@ -20,15 +20,17 @@ describe BudgetRow do
     end
 
     before(:each) do
-      stub_request(:post, 'http://localhost:8981/solr/update?wt=ruby').to_return(status: 200, body: '')
-      @purchase = Factory :purchase, year: Time.now.year
-      Factory :purchase_item, amount: 100, purchase_id: @purchase.id
+      stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").
+        to_return(status: 200, body: "")
+      year = Time.now.year
+      @purchase = create(:purchase, year: year)
+      create(:purchase_item, amount: 100, purchase_id: @purchase.id)
       @purchase.save
 
-      @budget_row = @purchase.budget_post.budget_rows.find_by_year(Time.now.year)
+      @budget_row = @purchase.budget_post.budget_rows.find_by_year(year)
     end
 
-    context 'irrelevant purchases' do
+    context "irrelevant purchases" do
       %w(new edited cancelled).each do |state|
         it "doesn't include edited purchases" do
           @purchase.update_attribute(:workflow_state, state)
@@ -38,7 +40,7 @@ describe BudgetRow do
       end
     end
 
-    context 'relevant purchases' do
+    context "relevant purchases" do
       %w(confirmed paid bookkept finalized).each do |state|
         it "includes #{state} purchases" do
           @purchase.update_attribute(:workflow_state, state)

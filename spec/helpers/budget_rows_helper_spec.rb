@@ -13,7 +13,7 @@ require 'spec_helper'
 describe BudgetRowsHelper do
   describe 'budget row urls' do
     it 'should add its year to the generated link' do
-      budget_post = Factory :budget_post
+      budget_post = create(:budget_post)
       row = budget_post.row(Time.now.year)
 
       helper.row_url(row).should == budget_row_path(budget_id: Time.now.year, id: row.id)

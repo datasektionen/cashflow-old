@@ -2,10 +2,10 @@ require "spec_helper"
 
 describe Person do
   before(:all) do
-    @admin = Factory(:admin)
+    @admin = create(:admin)
   end
   before(:each) do
-    @person = Factory(:person)
+    @person = create(:person)
   end
 
   it "should have a default role of \"\"" do
@@ -33,17 +33,17 @@ describe Person do
   it "should corretly sum the total of all purchases" do
     stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").
       to_return(status: 200, body: "")
-    p1 = Factory :purchase, person_id: @person.id
+    p1 = create(:purchase, person_id: @person.id)
     @person.reload.total_purchased_amount.should == p1.total
 
-    p2 = Factory :purchase, person_id: @person.id
+    p2 = create(:purchase, person_id: @person.id)
     @person.reload.total_purchased_amount.should == (p1.total + p2.total)
 
     p1.cancel!
     @person.reload.total_purchased_amount.should == p2.total
 
     p2.confirm!
-    p3 = Factory :purchase, person_id: @person.id
+    p3 = create(:purchase, person_id: @person.id)
     @person.reload.total_purchased_amount.should == (p2.total + p3.total)
 
     p2.edit!
