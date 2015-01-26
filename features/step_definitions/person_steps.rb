@@ -1,5 +1,9 @@
 Given(/^a person with the "([^"]*)" role$/) do |role|
-  @person = Factory(role.to_sym)
+  @person = create(role.to_sym)
+end
+
+Given(/^an ldap importable person exists$/) do
+  @person = build(:person, ugid: "u1dhz6b0")
 end
 
 Then(/^my credentials should have been retrieved$/) do
@@ -20,7 +24,7 @@ Given(/^I am logged in$/) do
 end
 
 Given(/^I am admin$/) do
-  @person ||= Factory :person
+  @person ||= create(:person)
   @person.role = 'admin'
   @person.save
   @person.reload

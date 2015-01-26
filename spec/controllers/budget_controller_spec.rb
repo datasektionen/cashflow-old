@@ -38,7 +38,7 @@ describe BudgetController do
   describe 'PUT update' do
     before(:each) do
       @year = Time.now.year
-      @rows = [Factory(:budget_row), Factory(:budget_row)]
+      @rows = [create(:budget_row), create(:budget_row)]
       @posts = @rows.map(&:budget_post)
       @rows_params = Hash[*@rows.flat_map { |r| [r.id, { sum: r.sum + 1000 }]}]
       @posts_params = Hash[*@posts.flat_map do |p|
