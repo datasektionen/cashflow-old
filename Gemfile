@@ -11,9 +11,11 @@ gem "cancan" # Authz
 # Forms
 gem "formtastic", "~> 3.1.3"
 gem "formtastic-bootstrap"
+gem "bootstrap-sass", "= 3.1.1.0"
+gem "bootstrap-datepicker-rails"
 
 # Views
-gem "less-rails-bootstrap"
+gem "sass-rails", ">= 3.2"
 gem "RedCloth", "~> 4.2.9" # Textile
 gem "haml-rails"
 gem "haml-contrib" # For rendering textile in haml views

@@ -15,13 +15,13 @@
         - if can?(:manage, ProductType)
           %td
             = link_to edit_product_type_path(product_type), class: 'btn' do
-              %i.icon-pencil
+              %i.glyphicon.glyphicon-pencil
               = t('edit')
             = link_to product_type, confirm: t('are_you_sure'), method: :delete, class: 'btn btn-danger' do
-              %i.icon-trash
+              %i.glyphicon.glyphicon-trash
               = t('destroy')
 
 .well
   = link_to new_product_type_path, class: 'btn btn-info' do
-    %i.icon-file
+    %i.glyphicon.glyphicon-file
     Ny produkttyp

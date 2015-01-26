@@ -5,22 +5,22 @@
       = submit_tag "Sök!", id: 'search_submit'
 
 = content_tag :div, :id => 'purchase_filter_toggle', :class => 'btn' do
-  %i.icon-search
+  %i.glyphicon.glyphicon-search
   Visa/dölj filter
 = content_tag :div, :id => 'purchase_filter' do
   = form_tag purchases_path, method: :get, class: "form form-inline" do
     = field_set_tag("Filter") do
-      #purchase_status_filter{style: "display: inline;"}
+      .form-group#purchase_status_filter
         = label_tag "Status"
-        = filter_select_tag 'workflow_state', Purchase.workflow_spec.states.map{ |s| name = s.first.to_s; [name, t("workflow_state.#{name}")] }, 'first', 'last', 'Välj status(ar)', :include_blank => true, :multiple => true
+        = filter_select_tag 'workflow_state', Purchase.workflow_spec.states.map{ |s| name = s.first.to_s; [name, t("workflow_state.#{name}")] }, 'first', 'last', 'Välj status(ar)', include_blank: true, multiple: true
 
-      #purchase_person_filter{style: "display: inline;"}
-        = label_tag "Inköpt av"
-        = filter_select_tag 'person_id', Person.all, 'id', 'name', 'Välj en person', :include_blank => true
+      .form-group#purchase_person_filter
+        = label_tag 'Inköpt av'
+        = filter_select_tag 'person_id', Person.all, 'id', 'name', 'Välj en person', include_blank: true
 
-      #purchase_business_unit_filter{style: "display: inline;"}
-        = label_tag "Affärsenhet"
-        = filter_select_tag 'business_unit_id', BusinessUnit.all, 'id', 'name', 'Välj affärsenhet(er)', :include_blank => true, :multiple => true
+      .form-group#purchase_business_unit_filter
+        = label_tag 'Affärsenhet'
+        = filter_select_tag 'business_unit_id', BusinessUnit.all, 'id', 'name', 'Välj affärsenhet(er)', include_blank: true, multiple: true
 
     = field_set_tag('Inköpsdatum') do
       = filter_date_range_tags :purchased_on
