@@ -7,6 +7,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require chosen
+//= require cocoon
+//= require bootstrap
 //= require bootstrap-datepicker
-//= require bootstrap-sprockets
-//= require_tree .

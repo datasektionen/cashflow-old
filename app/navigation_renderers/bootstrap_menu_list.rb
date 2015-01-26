@@ -11,7 +11,7 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
     if options[:is_subnavigation]
       ul_class = "dropdown-menu"
     else
-      ul_class = "nav"
+      ul_class = "nav navbar-nav"
       ul_class = flat_string([ul_class, options[:bootstrap_menu_type]])
     end
 
@@ -90,6 +90,6 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
   private
 
   def flat_string(array)
-    array.flatten.compact.join("")
+    array.flatten.compact.join(" ")
   end
 end

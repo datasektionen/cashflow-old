@@ -3,42 +3,43 @@
   %head
     %meta{:charset => "utf-8"}
     %title Cashflow
-    %meta{:name => "viewport", :content => "initial-scale=1.0, width=device-width, maximum-scale=1.0"}
+    %meta{name: "viewport",
+          content: "initial-scale=1.0, width=device-width"}
 
-    = stylesheet_link_tag "screen"
+    = stylesheet_link_tag "application", media: "screen"
     = stylesheet_link_tag "print", media: "print"
     = javascript_include_tag "application"
 
     = csrf_meta_tags
 
-    / [if lt IE 9]
-      = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
-
-    = render 'global/google_analytics'
+    = render "global/google_analytics"
 
   %body
-    %div.navbar.navbar-fixed-top
-      %div.navbar-inner
-        .container-fluid
-          %a.btn.btn-navbar{ data: { toggle: "collapse", target: ".nav-collapse" } }
+    %nav.navbar.navbar-inverse.navbar-fixed-top#main-navigation
+      .container
+        .navbar-header
+          %button.navbar-toggle.collapsed{ data: { target: "#navbar", toggle: "collapse"}, type: "button", "aria-controls" => "navbar", "aria-expanded" => "false"}
+            %span.sr-only Toggle navigation
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
 
-          %a.brand{ href: root_url } Cashflow
+          %a.navbar-brand{ href: root_url } Cashflow
 
-          .nav-collapse
-            = render_navigation(:level => 1..2, renderer: BootstrapMenuList, expand_all: true)
+        #navbar.navbar-collapse.collapse
+          = render_navigation(:level => 1..2, renderer: BootstrapMenuList, expand_all: true)
+
 
     - flash.each do |key, message|
-      .container-fluid
+      .container
         .alert
           = link_to "x", "#", class: "close", data: { dismiss: "alert" }
           = message
 
-    = content_for?(:content) ? yield(:content) : yield
+    .container
+      = content_for?(:content) ? yield(:content) : yield
 
-    %footer.container-fluid
+    %footer.container
       .row-fluid
         .span12
-          = textilize(t('layouts.application.footer')).html_safe
+          = textilize(t("layouts.application.footer")).html_safe

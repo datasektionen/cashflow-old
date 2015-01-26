@@ -3,20 +3,19 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *
- *= require formtastic-bootstrap
  *= require chosen
- *= require datepicker
  *= require_self
 */
 
-@import "bootstrap-sprockets";
+// @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "formtastic-bootstrap";
+@import "bootstrap-datepicker";
+@import "chosen";
 @import "alert_hero";
 
-@media (min-width: 980px) {
-  body {
-    padding-top: 60px;
-  }
+body {
+  padding-top: 60px;
 }
 
 body > footer .row-fluid {
