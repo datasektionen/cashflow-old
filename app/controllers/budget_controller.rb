@@ -1,6 +1,14 @@
 class BudgetController < ApplicationController
   before_filter :get_or_set_year
 
+  before_filter do
+    authorize! :read, :budget
+  end
+
+  before_filter only: [:edit, :update, :update_multiple] do
+    authorize! :manage, :budget
+  end
+
   def index
     redirect_to budget_path(id: @year)
   end

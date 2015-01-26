@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  load_and_authorize_resource :person, except: :search
+  load_and_authorize_resource :person
   before_filter :get_items
 
   def index

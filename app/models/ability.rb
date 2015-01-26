@@ -13,7 +13,7 @@ class Ability
 
   private
 
-  def setup_admin(user)
+  def setup_admin(_user)
     # Admin can do everything
     can :manage, :all
   end
@@ -26,7 +26,7 @@ class Ability
     can :manage, :budget
   end
 
-  def setup_bookkeeper(user)
+  def setup_bookkeeper(_user)
     can :index, [Person, Purchase, BusinessUnit, ProductType, BudgetPost]
     can :bookkeep, [Purchase]
     can :pay, [Purchase]

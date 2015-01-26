@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :authenticate_user!
+  check_authorization
 
   ##
   # Display a 403 error and an access denied page if the current user doesn't have proper access rights
