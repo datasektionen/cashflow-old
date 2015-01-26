@@ -1,10 +1,5 @@
 require "spec_helper"
 describe Mage::Voucher do
-  before(:each) do
-    stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").
-      to_return(status: 200, body: "")
-  end
-
   it "should have proper voucher_rows functionality" do
     v = Mage::Voucher.new
     v.accounting_date = "2011-11-11"

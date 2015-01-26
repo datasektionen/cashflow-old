@@ -4,8 +4,6 @@ describe BudgetPost do
   describe "all_years" do
     before(:each) do
       DatabaseCleaner.start
-      stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").
-        to_return(status: 200, body: "")
     end
 
     after(:each) do
