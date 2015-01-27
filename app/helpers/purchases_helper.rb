@@ -18,19 +18,30 @@ module PurchasesHelper
     text_field_tag "filter[#{name}]", params[:filter].try(:[], name), options
   end
 
-  def filter_select_tag(name, collection, value_method, text_method, placeholder, options)
-    options = { :'data-placeholder' => placeholder }.merge(options)
-    select_tag "filter[#{name}]", options_from_collection_for_select(collection, value_method, text_method, params[:filter].try(:[], name)), options
+  def filter_select_tag(name, collection, value_method, text_method, options)
+    filter = options_from_collection_for_select(collection,
+                                                value_method,
+                                                text_method,
+                                                params[:filter].try(:[], name))
+    select_tag "filter[#{name}]", filter, options
   end
 
   def filter_date_range_tags(name)
     content_tag :div, id: "purchase_#{name}_filter" do
-      content = ''
-      content += label_tag "filter[#{name}_from]", 'Från'
-      content += text_field_tag "filter[#{name}_from]", params['filter'].try(:[], "#{name}_from"), class: 'datepicker', placeholder: 'Välj ett startdatum'
-      content += label_tag "filter[#{name}_to]", 'till och med'
-      content += text_field_tag "filter[#{name}_to]", params['filter'].try(:[], "#{name}_to"), class: 'datepicker', placeholder: 'Välj ett slutdatum'
-      content.html_safe
+      concat date_picker_tag("#{name}_from", "Från", "Välj ett startdatum")
+      concat date_picker_tag("#{name}_to", "till och med", "Välj ett slutdatum")
+    end
+  end
+
+  private
+
+  def date_picker_tag(name, label, placeholder)
+    capture do
+      concat label_tag "filter[#{name}]", label
+      concat text_field_tag("filter[#{name}]",
+                            params[:filter].try(:[], name),
+                            class: "datepicker",
+                            placeholder: placeholder)
     end
   end
 end

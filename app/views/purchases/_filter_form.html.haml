@@ -1,42 +1,59 @@
 %purchase_search
   = form_tag purchases_path, method: :get, class: "form form-inline" do
     = field_set_tag("Sök") do
-      = filter_search_tag 'search', 'Sök i beskrivning...'
-      = submit_tag "Sök!", id: 'search_submit'
+      = filter_search_tag "search", "Sök i beskrivning..."
+      = submit_tag "Sök!", id: "search_submit"
 
-= content_tag :div, :id => 'purchase_filter_toggle', :class => 'btn' do
+= content_tag :div, :id => "purchase_filter_toggle", :class => "btn" do
   %i.icon-search
   Visa/dölj filter
-= content_tag :div, :id => 'purchase_filter' do
+= content_tag :div, :id => "purchase_filter" do
   = form_tag purchases_path, method: :get, class: "form form-inline" do
     = field_set_tag("Filter") do
       #purchase_status_filter{style: "display: inline;"}
         = label_tag "Status"
-        = filter_select_tag 'workflow_state', Purchase.workflow_spec.states.map{ |s| name = s.first.to_s; [name, t("workflow_state.#{name}")] }, 'first', 'last', 'Välj status(ar)', :include_blank => true, :multiple => true
+        = filter_select_tag "workflow_state",
+                            Purchase.states_collection,
+                            "first",
+                            "last",
+                            placeholder: "Välj status(ar)",
+                            include_blank: true,
+                            multiple: true
 
       #purchase_person_filter{style: "display: inline;"}
         = label_tag "Inköpt av"
-        = filter_select_tag 'person_id', Person.all, 'id', 'name', 'Välj en person', :include_blank => true
+        = filter_select_tag "person_id",
+                            Person.all,
+                            "id",
+                            "name",
+                            placeholder: "Välj en person",
+                            include_blank: true
 
       #purchase_business_unit_filter{style: "display: inline;"}
         = label_tag "Affärsenhet"
-        = filter_select_tag 'business_unit_id', BusinessUnit.all, 'id', 'name', 'Välj affärsenhet(er)', :include_blank => true, :multiple => true
+        = filter_select_tag "business_unit_id",
+                            BusinessUnit.all,
+                           "id",
+                           "name",
+                           placeholder: "Välj affärsenhet(er)",
+                           include_blank: true,
+                           multiple: true
 
-    = field_set_tag('Inköpsdatum') do
+    = field_set_tag("Inköpsdatum") do
       = filter_date_range_tags :purchased_on
 
-    = field_set_tag('Ändringsdatum') do
+    = field_set_tag("Ändringsdatum") do
       = filter_date_range_tags :updated_at
 
-    = submit_tag 'Filtrera', id: 'filter_submit', class: 'btn btn-primary'
+    = submit_tag "Filtrera", id: "filter_submit", class: "btn btn-primary"
 
 :javascript
-  $('#purchase_status_filter .btn').click(function() {
-    var element = "#filter_workflow_state_" + $(this).attr('value');
+  $("#purchase_status_filter .btn").click(function() {
+    var element = "#filter_workflow_state_" + $(this).attr("value");
     if($(this).hasClass("active")) {
-      $(element).attr('disabled', 'disabled');
+      $(element).attr("disabled", "disabled");
     } else {
-      $(element).removeAttr('disabled');
+      $(element).removeAttr("disabled");
     }
   });
 
@@ -50,11 +67,11 @@
   $("#purchase_filter_toggle").click(function() {
     if($("#purchase_filter").is(":visible")) {
       $("#purchase_filter").hide();
-      $("#purchase_filter_toggle").removeClass('active');
+      $("#purchase_filter_toggle").removeClass("active");
     }
     else {
       $("#purchase_filter").show();
-      $("#purchase_filter_toggle").addClass('active');
+      $("#purchase_filter_toggle").addClass("active");
     }
   });
 
