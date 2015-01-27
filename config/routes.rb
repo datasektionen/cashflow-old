@@ -14,7 +14,7 @@ Cashflow::Application.routes.draw do
     delete "sign_out",
            to: "people/omniauth_callbacks#destroy",
            as: :destroy_user_session
-    root to: "dashboard#welcome"
+    root to: "dashboard#index"
   end
 
   localized(["sv"]) do

@@ -18,6 +18,14 @@
 # * http://elabs.se/blog/15-you-re-cuking-it-wrong
 #
 
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails'
+end
+
 require 'cucumber/rails'
 require 'capybara/rspec'
 require 'headless'

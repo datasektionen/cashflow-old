@@ -49,6 +49,12 @@ module PurchaseHelpers
     end
     @purchase.reload
   end
+
+  def filter_purchase_date(to_or_from, date)
+    page.find_by_id("purchase_filter_toggle").click
+    fill_in("filter_purchased_on_#{to_or_from}", with: date)
+    page.find_by_id("filter_submit").click
+  end
 end
 
 World(PurchaseHelpers)
@@ -213,16 +219,8 @@ Given(/^purchases purchased on a few different dates$/) do
   }
 end
 
-When(/^I filter purchased_on from a date$/) do
-  page.find_by_id("purchase_filter_toggle").click
-  fill_in("filter_purchased_on_from", with: @purchased_on_range[:from])
-  page.find_by_id("filter_submit").click
-end
-
-When(/^I filter purchased_on to a date$/) do
-  page.find_by_id("purchase_filter_toggle").click
-  fill_in("filter_purchased_on_to", with: @purchased_on_range[:to])
-  page.find_by_id("filter_submit").click
+When(/^I filter purchased_on (to|from) a date$/) do |date|
+  filter_purchase_date(date, @purchased_on_range[date.to_sym])
 end
 
 Then(/^I should see a filtered list of purchases$/) do
