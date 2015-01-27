@@ -11,7 +11,7 @@ class Purchase < ActiveRecord::Base
   before_create :check_budget_rows_exists
   before_validation :set_year
 
-  has_many :items, class_name: 'PurchaseItem', dependent: :destroy
+  has_many :items, class_name: "PurchaseItem", dependent: :destroy
 
   validates_presence_of :person_id, :description, :purchased_on, :budget_post
 
@@ -34,7 +34,9 @@ class Purchase < ActiveRecord::Base
   scope :unpaid, -> { where(workflow_state: %w(new edited confirmed bookkept)) }
   scope :confirmed, -> { where(workflow_state: %w(confirmed edited)) }
   scope :keepable, -> { where(workflow_state: :paid) }
-  scope :accepted, -> { where(workflow_state: %w(confirmed bookkept paid finalized)) }
+  scope :accepted, -> {
+    where(workflow_state: %w(confirmed bookkept paid finalized))
+  }
   scope :payable, -> { where(workflow_state: %w(confirmed bookkept)) }
 
   # workflow for Purchase model
@@ -74,7 +76,7 @@ class Purchase < ActiveRecord::Base
   end
 
   # Check whether a purchase is editable
-  # A purchase is editable if it's in any of the "new", "edited" or "confirmed" states.
+  # A purchase is editable if it's "new", "edited" or "confirmed"
   def editable?
     %w(new edited confirmed).include?(workflow_state)
   end
@@ -97,8 +99,14 @@ class Purchase < ActiveRecord::Base
     states = []
     version = self
     until version.nil?
-      whodunnit = version.version && version.version.previous ? Person.find(version.version.previous.whodunnit.to_i) : version.last_updated_by
-      states << OpenStruct.new(version_date: version.updated_at, workflow_state: version.workflow_state, originator: whodunnit)
+      whodunnit = if version.version && version.version.previous
+                    Person.find(version.version.previous.whodunnit.to_i)
+                  else
+                    version.last_updated_by
+                  end
+      states << OpenStruct.new(version_date: version.updated_at,
+                               workflow_state: version.workflow_state,
+                               originator: whodunnit)
       version = version.previous_version
     end
     states
@@ -106,7 +114,7 @@ class Purchase < ActiveRecord::Base
 
   # Returns the last person to confirm this purchase (if any)
   def confirmed_by
-    s = state_history.find { |state| state.workflow_state == 'confirmed' }
+    s = state_history.detect { |state| state.workflow_state == "confirmed" }
     s.originator if s
   end
 
@@ -118,13 +126,18 @@ class Purchase < ActiveRecord::Base
 
   def cannot_purchase_stuff_in_the_future
     if !purchased_on.blank? && purchased_on > Date.today
-      errors.add(:base, I18n.t('activerecord.errors.models.purchase.purchased_in_future'))
-      errors.add(:purchased_on, I18n.t('activerecord.errors.models.purchase.attributes.purchased_on.purchased_in_future'))
+      translation_base = "activerecord.errors.models.purchase"
+      errors.add(:base, I18n.t("#{translation_base}.purchased_in_future"))
+      purchased_on_error =
+        "#{translation_base}.attributes.purchased_on.purchased_in_future"
+      errors.add(:purchased_on, I18n.t(purchased_on_error))
     end
   end
 
   def locked_when_finalized
-    errors.add(:base, I18n.t('activerecord.errors.models.purchase.finalized')) if finalized?
+    if finalized?
+      errors.add(:base, I18n.t("activerecord.errors.models.purchase.finalized"))
+    end
   end
 
   def generate_slug
@@ -133,7 +146,7 @@ class Purchase < ActiveRecord::Base
       return true
     end
 
-    slug = '%s%d-%d' % [business_unit.try(:short_name), year.to_i, id]
+    slug = "%s%d-%d" % [business_unit.try(:short_name), year.to_i, id]
 
     if self.slug !~ /#{slug}/
       Purchase.paper_trail_off!
@@ -164,5 +177,12 @@ class Purchase < ActiveRecord::Base
     purchases.map(&:pay!)
 
     purchases.map(&:id)
+  end
+
+  def self.states_collection
+    workflow_spec.states.map { |s|
+      name = s.first.to_s
+      [name, I18n.t("workflow_state.#{name}")]
+    }
   end
 end
