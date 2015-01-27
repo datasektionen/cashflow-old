@@ -1,18 +1,14 @@
 class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_filter :authorize_user!
 
+  before_filter :load_person, only: [:cas, :developer]
+
   def new
     redirect_to user_omniauth_authorize_path(:cas)
   end
 
   def cas
-    @person = Person.find_for_oauth(env["omniauth.auth"], current_user)
-    if @person.persisted?
-      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: "CAS"
-      sign_in_and_redirect @person, event: :authentication
-    else
-      redirect_to root_url
-    end
+    sign_in_if_persisted("CAS")
   end
 
   def developer
@@ -21,14 +17,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       return
     end
 
-    @person = Person.find_for_oauth(env["omniauth.auth"], current_user)
-    if @person.persisted?
-      flash[:notice] = I18n.t "devise.omniauth_callbacks.success",
-                              kind: "Developer"
-      sign_in_and_redirect @person, event: :authentication
-    else
-      redirect_to root_url
-    end
+    sign_in_if_persisted("Developer")
   end
 
   def destroy
@@ -37,5 +26,20 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def after_sign_in_path_for(resource)
     stored_location_for(resource) || person_path(current_user)
+  end
+
+  private
+
+  def load_person
+    @person = Person.find_for_oauth(env["omniauth.auth"], current_user)
+  end
+
+  def sign_in_if_persisted(kind)
+    if @person.persisted?
+      flash[:notice] = I18n.t("devise.omniauth_callbacks.success", kind: kind)
+      sign_in_and_redirect @person, event: :authentication
+    else
+      redirect_to root_url
+    end
   end
 end
