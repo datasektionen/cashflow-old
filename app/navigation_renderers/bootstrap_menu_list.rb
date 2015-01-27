@@ -8,40 +8,12 @@
 #                     expand_all: true)
 class BootstrapMenuList < SimpleNavigation::Renderer::Base
   def render(item_container)
-    if options[:is_subnavigation]
-      ul_class = "dropdown-menu"
-    else
-      ul_class = "nav navbar-nav"
-      ul_class = flat_string([ul_class, options[:bootstrap_menu_type]])
-    end
+    return "" if skip_if_empty? && item_container.empty?
 
-    list_content = item_container.items.inject([]) do |list, item|
-      # remove the link from the list item options
-      li_options = item.html_options.reject { |k, _v| k == :link }
-
-      # add the dropdown html class if we have subitems and should render them
-      if include_sub_navigation?(item)
-        li_options[:class] = flat_string([li_options[:class], "dropdown"])
-      end
-
-      # create the link and add possible sub navigation
-      li_content = tag_for(item)
-      if include_sub_navigation?(item)
-        li_content << render_sub_navigation_for(item)
-      end
-
-      # create the list item with oiur above content and options
-      list << content_tag(:li, li_content, li_options)
-    end.join
-
-    if skip_if_empty? && item_container.empty?
-      ""
-    else
-      content_tag(:ul,
-                  list_content,
-                  id: item_container.dom_id,
-                  class: flat_string([item_container.dom_class, ul_class]))
-    end
+    content_tag(:ul,
+                list_content(item_container),
+                id: item_container.dom_id,
+                class: flat_string([item_container.dom_class, ul_class]))
   end
 
   def render_sub_navigation_for(item)
@@ -64,7 +36,6 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
   end
 
   # Extracts the options relevant for the generated link
-  #
   def link_options_for(item)
     special_options = { method: item.method }.reject { |_k, v| v.nil? }
 
@@ -88,6 +59,40 @@ class BootstrapMenuList < SimpleNavigation::Renderer::Base
   end
 
   private
+
+  # remove the link from the list item options
+  def li_options(item)
+    item.html_options.reject { |k, _v| k == :link }.tap do |options|
+      if include_sub_navigation?(item)
+        options[:class] = flat_string([options[:class], "dropdown"])
+      end
+    end
+  end
+
+  # create the link and add possible sub navigation
+  def li_content(item)
+    tag_for(item).tap do |content|
+      if include_sub_navigation?(item)
+        content << render_sub_navigation_for(item)
+      end
+    end
+  end
+
+  # create the list item with oiur above content and options
+  def list_content(item_container)
+    list_content = item_container.items.inject([]) do |list, item|
+      list << content_tag(:li, li_content(item), li_options(item))
+    end
+    list_content.join
+  end
+
+  def ul_class
+    if options[:is_subnavigation]
+      "dropdown-menu"
+    else
+      flat_string(["nav navbar-nav", options[:bootstrap_menu_type]])
+    end
+  end
 
   def flat_string(array)
     array.flatten.compact.join(" ")
