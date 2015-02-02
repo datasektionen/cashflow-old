@@ -33,19 +33,19 @@ module PurchaseHelpers
   end
 
   def setup_purchase_prerequisits
-    @budget_post ||= Factory :budget_post
+    @budget_post ||= create(:budget_post)
     @business_unit ||= @budget_post.business_unit
-    @product_type ||= Factory :product_type
+    @product_type ||= create(:product_type)
   end
 
   def create_purchase(number_of_items =  1)
     setup_purchase_prerequisits
     PaperTrail.whodunnit = @person.id.to_s
 
-    @purchase = Factory :purchase, person: @person
+    @purchase = create(:purchase, person: @person)
 
     number_of_items.times do
-      @purchase.items << Factory(:purchase_item, purchase: @purchase)
+      @purchase.items << create(:purchase_item, purchase: @purchase)
     end
     @purchase.reload
   end
@@ -92,7 +92,8 @@ When(/^I forget to choose a "budget post"$/) do
 end
 
 Then(/^my purchase should be registered$/) do
-  page.should have_content(Purchase.last.slug)
+  page_header = "##{Purchase.last.slug.upcase}"
+  page.should have_content(page_header)
 end
 
 When(/^I fill out the new purchase form with "(\d+)" items$/) do |n|
@@ -214,7 +215,7 @@ Given(/^purchases purchased on a few different dates$/) do
     too_new: Date.today.to_s
   }
   @purchases = @purchased_on_range.values.map { |date|
-    Factory(:purchase, purchased_on: date)
+    create(:purchase, purchased_on: date)
   }
 end
 

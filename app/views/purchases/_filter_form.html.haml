@@ -10,7 +10,7 @@
 = content_tag :div, :id => "purchase_filter" do
   = form_tag purchases_path, method: :get, class: "form form-inline" do
     = field_set_tag("Filter") do
-      #purchase_status_filter{style: "display: inline;"}
+      .form-group#purchase_status_filter
         = label_tag "Status"
         = filter_select_tag "workflow_state",
                             Purchase.states_collection,

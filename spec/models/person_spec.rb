@@ -1,11 +1,11 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Person do
   before(:all) do
-    @admin = Factory(:admin)
+    @admin = create(:admin)
   end
   before(:each) do
-    @person = Factory(:person)
+    @person = create(:person)
   end
 
   it "should have a default role of \"\"" do
@@ -30,19 +30,18 @@ describe Person do
     end
   end
 
-  it 'should corretly sum the total of all purchases' do
-    stub_request(:post, 'http://localhost:8981/solr/update?wt=ruby').to_return(status: 200, body: '')
-    p1 = Factory :purchase, person_id: @person.id
+  it "should corretly sum the total of all purchases" do
+    p1 = create(:purchase, person_id: @person.id)
     @person.reload.total_purchased_amount.should == p1.total
 
-    p2 = Factory :purchase, person_id: @person.id
+    p2 = create(:purchase, person_id: @person.id)
     @person.reload.total_purchased_amount.should == (p1.total + p2.total)
 
     p1.cancel!
     @person.reload.total_purchased_amount.should == p2.total
 
     p2.confirm!
-    p3 = Factory :purchase, person_id: @person.id
+    p3 = create(:purchase, person_id: @person.id)
     @person.reload.total_purchased_amount.should == (p2.total + p3.total)
 
     p2.edit!
@@ -61,8 +60,8 @@ describe Person do
   end
 
   # create an LDAP connection for these specs to wor
-  describe 'LDAP connection' do
-    it 'should correctly fetch information from LDAP' do
+  describe "LDAP connection" do
+    it "should correctly fetch information from LDAP" do
       begin
         # make this spec search by:
         # * first_name, last_name
@@ -70,7 +69,10 @@ describe Person do
         # * ugid
         # * email
         local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
-        name_search_params  = { first_name: local_config[:yourself][:first_name], last_name: local_config[:yourself][:last_name] }
+        name_search_params  = {
+          first_name: local_config[:yourself][:first_name],
+          last_name: local_config[:yourself][:last_name]
+        }
         email_search_params = { email: local_config[:yourself][:email] }
         ugid  = { ugid: local_config[:yourself][:ugid] }
         login_search_params = { login: local_config[:yourself][:login] }
@@ -80,9 +82,11 @@ describe Person do
         Person.from_ldap(ugid).should_not be_nil
         Person.from_ldap(login_search_params).should_not be_nil
 
-        # TODO: verify a few more things than just searching... like some things should return nil (ugid search of "azovwemzavwmdzvway" for instance)
-      rescue Net::LDAP::LdapError => e
-        pending 'UNABLE TO CONNECT TO LDAP SERVER'
+        # TODO: verify a few more things than just searching...
+        # like some things should return nil
+        # (ugid search of "azovwemzavwmdzvway" for instance)
+      rescue Net::LDAP::Error => _e
+        pending "UNABLE TO CONNECT TO LDAP SERVER"
       end
     end
 
@@ -90,8 +94,8 @@ describe Person do
       begin
         local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
         Person.create_from_ldap(ugid: local_config[:yourself][:ugid])
-      rescue Net::LDAP::LdapError => e
-        pending 'UNABLE TO CONNECT TO LDAP SERVER'
+      rescue Net::LDAP::Error => _e
+        pending "UNABLE TO CONNECT TO LDAP SERVER"
       end
     end
   end

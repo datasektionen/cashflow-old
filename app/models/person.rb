@@ -1,4 +1,7 @@
 class Person < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :login
+
   devise :omniauthable
 
   # Setup accessible (or protected) attributes for your model
@@ -12,8 +15,6 @@ class Person < ActiveRecord::Base
   attr_accessible :email, :bank_clearing_number, :bank_account_number, :bank_name
 
   has_many :purchases, dependent: :restrict
-
-  has_friendly_id :login
 
   def to_s
     name

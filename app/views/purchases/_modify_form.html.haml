@@ -1,11 +1,11 @@
 .btn-group
   %button.btn
-    %i.icon-print
+    %i.glyphicon.glyphicon-print
 
 - if can?(:edit, purchase)
   .btn-group
     %a{ href: edit_purchase_path(purchase), class: "btn" }
-      %i.icon-pencil
+      %i.glyphicon.glyphicon-pencil
       = t('edit')
 
 - if can?(:manage, purchase)

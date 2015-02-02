@@ -9,7 +9,7 @@ module PurchasesHelper
     if version.originator
       link_to(version.originator.name, person_path(version.originator))
     else
-      ''
+      ""
     end
   end
 

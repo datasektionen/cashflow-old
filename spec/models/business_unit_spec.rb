@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe BusinessUnit do
   before(:each) do
-    @business_unit = Factory :business_unit
+    @business_unit = create(:business_unit)
   end
 
   it { should respond_to(:email) }

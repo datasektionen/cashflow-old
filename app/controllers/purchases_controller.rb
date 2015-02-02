@@ -2,8 +2,6 @@ class PurchasesController < ApplicationController
   load_and_authorize_resource except: [:confirmed, :pay_multiple]
   before_filter :get_items, only: [:show, :edit, :update, :destroy]
 
-  expose(:budget_posts) { BudgetPost.includes(:business_unit).all }
-
   def index
     @purchases = Purchase
     search, filter_params = extract_filter_params

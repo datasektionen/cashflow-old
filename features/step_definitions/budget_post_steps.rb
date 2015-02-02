@@ -1,5 +1,5 @@
 Given(/^a budget post exists without any purchases$/) do
-  @budget_post = Factory :budget_post
+  @budget_post = create(:budget_post)
 end
 
 Given(/^a budget post exists with a bunch of purchases$/) do

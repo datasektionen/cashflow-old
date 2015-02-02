@@ -16,13 +16,13 @@
         %td= business_unit.active_text
         %td
           = link_to edit_business_unit_path(business_unit), class: 'btn' do
-            %i.icon-pencil
+            %i.glyphicon.glyphicon-pencil
             = t('edit')
           = link_to business_unit, confirm: t('are_you_sure'), method: :delete, class: 'btn btn-danger' do
-            %i.icon-trash
+            %i.glyphicon.glyphicon-trash
             = t('destroy')
 
 .well
   = link_to new_business_unit_path, class: 'btn btn-info' do
-    %i.icon-file
+    %i.glyphicon.glyphicon-file
     Ny affärsenhet
