@@ -34,6 +34,10 @@ FactoryGirl.define do
     budget_posts[rand(budget_posts.length)]
   end
 
+  sequence :item_name do |n|
+    "blubb #{n}"
+  end
+
   factory :business_unit do
     transient do
       bu_name           { generate :unit_name }
@@ -71,7 +75,7 @@ FactoryGirl.define do
   end
 
   factory :purchase_item do
-    comment   { "blubb" }
+    comment   { generate :item_name }
     amount    { 17.0 }
     purchase
     product_type

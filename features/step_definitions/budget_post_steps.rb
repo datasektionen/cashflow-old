@@ -12,7 +12,6 @@ When(/^I try to delete the budget post$/) do
   href = "/budget_posts/#{@budget_post.id}"
   link = page.all(:xpath, "//a[@href='#{href}' and @data-method='delete']")[0]
   link.click
-  page.driver.browser.switch_to.alert.accept
 end
 
 Then(/^the budget post should still exist$/) do

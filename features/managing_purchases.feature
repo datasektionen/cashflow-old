@@ -33,6 +33,7 @@ Feature: Managing purchases
     Given a purchase
     When I edit the description of that purchase
     Then the description should be updated
+
   @javascript
   Scenario: Removing items from a purchase
     Given a purchase with "2" items

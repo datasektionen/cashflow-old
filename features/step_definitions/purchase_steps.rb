@@ -53,6 +53,7 @@ module PurchaseHelpers
   def filter_purchase_date(to_or_from, date)
     page.find_by_id("purchase_filter_toggle").click
     fill_in("filter_purchased_on_#{to_or_from}", with: date)
+    fill_in("filter_search", with: "")
     page.find_by_id("filter_submit").click
   end
 end
@@ -92,6 +93,7 @@ When(/^I forget to choose a "budget post"$/) do
 end
 
 Then(/^my purchase should be registered$/) do
+  page.should have_content("")
   page_header = "##{Purchase.last.slug.upcase}"
   page.should have_content(page_header)
 end
@@ -133,6 +135,7 @@ When(/^I edit the description of that purchase$/) do
 end
 
 Then(/^the description should be updated$/) do
+  page.should have_content @description
   @purchase = @purchase.reload
   @purchase.description.should == @description
 end
@@ -188,6 +191,7 @@ When(/^I remove the first of those items$/) do
 end
 
 Then(/^only the second item should remain$/) do
+  page.should have_no_content @purchase.items.first.comment
   @purchase.reload
 
   @purchase.items.count.should == 1
