@@ -1,4 +1,7 @@
 Given(/^I (?:log|am logged) in as the person$/) do
+  if page.driver.respond_to?(:block_unknown_urls)
+    page.driver.try(:block_unknown_urls)
+  end
   begin
     OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(:cas, uid: @person.ugid)

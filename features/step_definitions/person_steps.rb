@@ -15,6 +15,9 @@ Then(/^I should see a form for filling in my bank account information$/) do
 end
 
 Given(/^I am logged in$/) do
+  if page.driver.respond_to?(:block_unknown_urls)
+    page.driver.try(:block_unknown_urls)
+  end
   unless @person
     step 'a person with the "person" role'
   end
