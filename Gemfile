@@ -6,7 +6,7 @@ gem "rails", "~> 3.2.0"
 gem "devise", "~> 2.0"
 gem "omniauth", "~> 1.0"
 gem "omniauth-cas", "~> 1.0"
-gem "cancan" # Authz
+gem "cancancan" # Authz
 
 # Forms
 gem "formtastic", "~> 3.1.3"
