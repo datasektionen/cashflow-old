@@ -53,7 +53,8 @@ require 'headless'
 #
 ActionController::Base.allow_rescue = false
 
-Capybara.ignore_hidden_elements = true
+# Capybara.ignore_hidden_elements = true
+Capybara.javascript_driver = :webkit
 
 # Remove this line if your app doesn't have a database.
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
@@ -61,11 +62,12 @@ DatabaseCleaner.strategy = :transaction
 
 headless = Headless.new
 Before('@selenium,@javascript') do
-  headless.start if Capybara.current_driver == :selenium
+  headless.start
+  page.driver.block_unknown_urls
 end
 
 After do
-  headless.stop if Capybara.current_driver == :selenium
+  headless.stop
 end
 require 'webmock/cucumber'
 WebMock.allow_net_connect!

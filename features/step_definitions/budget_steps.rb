@@ -33,7 +33,7 @@ When(/^I go to the budget page for last year$/) do
   visit(budget_path(Time.now.year - 1))
 end
 
-Then(/^I should see the current year"s budget posts$/) do
+Then(/^I should see the current year's budget posts$/) do
   validate_visible_budget_posts(Time.now.year)
 end
 

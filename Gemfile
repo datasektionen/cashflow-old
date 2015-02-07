@@ -59,7 +59,7 @@ group :test do
   gem "launchy"
   gem "rspec", "~> 2.14.0"
   gem "rspec-rails", "~> 2.14.0"
-  gem "selenium-webdriver"
+  gem "capybara-webkit"
   gem "shoulda-matchers"
   gem "simplecov", "~> 0.9", require: false
   gem "webmock"
