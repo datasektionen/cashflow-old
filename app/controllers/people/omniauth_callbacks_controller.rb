@@ -1,5 +1,6 @@
 class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_filter :authorize_user!
+  skip_authorization_check
 
   before_filter :load_person, only: [:cas, :developer]
 

@@ -6,32 +6,36 @@ class Ability
       can [:edit, :update, :show], Person, id: user.id
       can [:read, :create, :edit, :update, :show], Purchase, person_id: user.id
       can :read, ProductType
-      if user.is? :admin
-        # Admin can do everything
-        can :manage, :all
-        # can :access, :all
-      elsif user.is? :treasurer
-        can [:index, :new, :create], Person
-        can [:edit, :update], Person, id: user.id
-        can :manage, [Purchase, PurchaseItem, BusinessUnit, ProductType, BudgetPost]
-        can :edit, :purchase_owner
-      elsif user.is? :bookkeeper
-        can :index, [Person, Purchase, BusinessUnit, ProductType, BudgetPost]
-        can :bookkeep, [Purchase]
-        can :pay, [Purchase]
-      elsif user.is? :accountant
-        # Accountants should be able to read everything
-        can :read, :all
-        can :manage, :people, id: user.id
-        can :index, :people
-      else
-        # Ordinary users can only edit themselves
-        cannot :manage, :people
-        can :manage, :people, id: user.id
-        cannot :confirm, :purchase
-        cannot :cancel, :purchases
-        cannot :index, :people
-      end
+
+      send("setup_#{user.role}", user) unless user.role.blank?
     end
+  end
+
+  private
+
+  def setup_admin(_user)
+    # Admin can do everything
+    can :manage, :all
+  end
+
+  def setup_treasurer(user)
+    can [:index, :new, :create], Person
+    can [:edit, :update], Person, id: user.id
+    can :manage, [Purchase, PurchaseItem, BusinessUnit, ProductType, BudgetPost]
+    can :edit, :purchase_owner
+    can :manage, :budget
+  end
+
+  def setup_bookkeeper(_user)
+    can :index, [Person, Purchase, BusinessUnit, ProductType, BudgetPost]
+    can :bookkeep, [Purchase]
+    can :pay, [Purchase]
+  end
+
+  def setup_accountant(user)
+    # Accountants should be able to read everything
+    can :read, :all
+    can :manage, :people, id: user.id
+    can :index, :people
   end
 end
