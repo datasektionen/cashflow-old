@@ -61,8 +61,9 @@ group :test do
   gem "factory_girl_rails"
   gem "headless"
   gem "launchy"
-  gem "rspec", "~> 2.99.0"
-  gem "rspec-rails", "~> 2.99.0"
+  gem "rspec", "~> 3.2.0"
+  gem "rspec-rails", "~> 3.2.0"
+  gem "rspec-activemodel-mocks"
   gem "capybara-webkit"
   gem "shoulda-matchers"
   gem "simplecov", "~> 0.9", require: false
