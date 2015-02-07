@@ -49,6 +49,10 @@ group :development do
   gem "pry-rails"
 end
 
+group :development, :test do
+  gem "teaspoon"
+end
+
 # Gems for test environment
 group :test do
   gem "capybara"
