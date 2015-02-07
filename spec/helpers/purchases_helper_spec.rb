@@ -45,7 +45,7 @@ describe PurchasesHelper do
 
     it "returns an empty string when originator is missing" do
       version = OpenStruct.new
-      expect(helper.link_to_originator(version)).to eq('')
+      expect(helper.link_to_originator(version)).to eq("")
     end
   end
 
@@ -69,7 +69,8 @@ describe PurchasesHelper do
         include_blank: true,
         multiple: true
       }
-      expect(helper.filter_select_tag("xs", collection, :foo, :bar, options)).to eq(
+      result = helper.filter_select_tag("xs", collection, :foo, :bar, options)
+      expect(result).to eq(
         '<select id="filter_xs" multiple="multiple" name="filter[xs][]" ' +
         'placeholder="foos?"><option value=""></option>' +
         "<option value=\"1\">one</option>\n<option value=\"2\">two</option>" +

@@ -22,10 +22,11 @@ describe Notifier do
       end
 
       it "sets the correct to, from, and reply addresses" do
-        expect(subject.to).to       eq([ @purchase.person.email ])
-        expect(subject.subject).to  eq(I18n.t("mailers.notifier.purchase_created"))
-        expect(subject.cc).to       eq([ @admin.email ])
-        expect(subject.reply_to).to eq([ @admin.email ])
+        expect(subject.to).to eq([@purchase.person.email])
+        expect(subject.subject).to eq(
+          I18n.t("mailers.notifier.purchase_created"))
+        expect(subject.cc).to eq([@admin.email])
+        expect(subject.reply_to).to eq([@admin.email])
       end
 
       it "renders the body correctly" do
@@ -44,10 +45,11 @@ describe Notifier do
       end
 
       it "sets the correct to, from, and reply addresses" do
-        expect(subject.to).to       eq([ @purchase.person.email ])
-        expect(subject.subject).to  eq(I18n.t("mailers.notifier.purchase_approved"))
-        expect(subject.cc).to       eq([ @admin.email ])
-        expect(subject.reply_to).to eq([ @admin.email ])
+        expect(subject.to).to eq([@purchase.person.email])
+        expect(subject.subject).to eq(
+          I18n.t("mailers.notifier.purchase_approved"))
+        expect(subject.cc).to eq([@admin.email])
+        expect(subject.reply_to).to eq([@admin.email])
       end
 
       it "renders the body correctly" do
@@ -68,10 +70,11 @@ describe Notifier do
       end
 
       it "sets the correct to, from, and reply addresses" do
-        expect(subject.to).to       eq([ @purchase.person.email ])
-        expect(subject.subject).to  eq(I18n.t("mailers.notifier.purchase_denied"))
-        expect(subject.cc).to       eq([ @admin.email ])
-        expect(subject.reply_to).to eq([ @admin.email ])
+        expect(subject.to).to eq([@purchase.person.email])
+        expect(subject.subject).to eq(
+          I18n.t("mailers.notifier.purchase_denied"))
+        expect(subject.cc).to eq([@admin.email])
+        expect(subject.reply_to).to eq([@admin.email])
       end
 
       it "renders the body correctly" do
@@ -104,10 +107,11 @@ describe Notifier do
         before(:all) { @purchase.business_unit.update_column(:email, "a@a.a") }
 
         it "sets the correct to, from, and reply addresses" do
-          expect(subject.to).to       eq([ @purchase.person.email ])
-          expect(subject.subject).to  eq(I18n.t("mailers.notifier.purchase_paid"))
-          expect(subject.cc).to       eq([ @purchase.business_unit.email ])
-          expect(subject.reply_to).to eq([ @admin.email ])
+          expect(subject.to).to eq([@purchase.person.email])
+          expect(subject.subject).to eq(
+            I18n.t("mailers.notifier.purchase_paid"))
+          expect(subject.cc).to eq([@purchase.business_unit.email])
+          expect(subject.reply_to).to eq([@admin.email])
         end
       end
 
@@ -115,10 +119,11 @@ describe Notifier do
         before(:all) { @purchase.business_unit.update_column(:email, "") }
 
         it "sets the correct to, from, and reply addresses" do
-          expect(subject.to).to       eq([ @purchase.person.email ])
-          expect(subject.subject).to  eq(I18n.t("mailers.notifier.purchase_paid"))
-          expect(subject.cc).to       eq([ @admin.email ])
-          expect(subject.reply_to).to eq([ @admin.email ])
+          expect(subject.to).to eq([@purchase.person.email])
+          expect(subject.subject).to eq(
+            I18n.t("mailers.notifier.purchase_paid"))
+          expect(subject.cc).to eq([@admin.email])
+          expect(subject.reply_to).to eq([@admin.email])
         end
       end
     end
