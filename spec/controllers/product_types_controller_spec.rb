@@ -1,125 +1,145 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe ProductTypesController do
   def mock_product_type(stubs = {})
-    (@mock_product_type ||= mock_model(ProductType).as_null_object).tap do |product_type|
+    @mock_product_type ||= mock_model(ProductType).as_null_object
+    @mock_product_type.tap do |product_type|
       stubs = stubs.reverse_merge(to_str: nil)
-      stubs.each do |k,v|
+      stubs.each do |k, v|
         allow(product_type).to receive(k).and_return(v)
       end
     end
   end
 
-  describe 'When logged in as admin' do
+  describe "When logged in as admin" do
     login_admin
-    describe 'GET index' do
-      it 'assigns all product_types as @product_types' do
+    describe "GET index" do
+      it "assigns all product_types as @product_types" do
         allow(ProductType).to receive(:all) { [mock_product_type] }
         get :index
         expect(assigns(:product_types)).to eq([mock_product_type])
       end
     end
 
-    describe 'GET show' do
-      it 'assigns the requested product_type as @product_type' do
-        allow(ProductType).to receive(:find).with('37') { mock_product_type }
-        get :show, id: '37'
+    describe "GET show" do
+      it "assigns the requested product_type as @product_type" do
+        allow(ProductType).to receive(:find).with("37") { mock_product_type }
+        get :show, id: "37"
         expect(assigns(:product_type)).to be(mock_product_type)
       end
     end
 
-    describe 'GET new' do
-      it 'assigns a new product_type as @product_type' do
+    describe "GET new" do
+      it "assigns a new product_type as @product_type" do
         allow(ProductType).to receive(:new) { mock_product_type }
         get :new
         expect(assigns(:product_type)).to be(mock_product_type)
       end
     end
 
-    describe 'GET edit' do
-      it 'assigns the requested product_type as @product_type' do
-        allow(ProductType).to receive(:find).with('37') { mock_product_type }
-        get :edit, id: '37'
+    describe "GET edit" do
+      it "assigns the requested product_type as @product_type" do
+        allow(ProductType).to receive(:find).with("37") { mock_product_type }
+        get :edit, id: "37"
         expect(assigns(:product_type)).to be(mock_product_type)
       end
     end
 
-    describe 'POST create' do
-      describe 'with valid params' do
-        it 'assigns a newly created product_type as @product_type' do
-          allow(ProductType).to receive(:new).with('these' => 'params') { mock_product_type(save: true) }
-          post :create, product_type: { 'these' => 'params' }
+    describe "POST create" do
+
+      describe "with valid params" do
+
+        before(:each) do
+          allow(ProductType).to receive(:new).
+                        with("these" => "params").
+                        and_return(mock_product_type(save: true))
+        end
+
+        it "assigns a newly created product_type as @product_type" do
+          post :create, product_type: { "these" => "params" }
           expect(assigns(:product_type)).to be(mock_product_type)
         end
 
-        it 'redirects to the created product_type' do
-          allow(ProductType).to receive(:new) { mock_product_type(save: true) }
-          post :create, product_type: {}
+        it "redirects to the created product_type" do
+          post :create, product_type: { "these" => "params" }
           expect(response).to redirect_to(product_type_url(mock_product_type))
         end
       end
 
-      describe 'with invalid params' do
-        it 'assigns a newly created but unsaved product_type as @product_type' do
-          allow(ProductType).to receive(:new).with('these' => 'params') { mock_product_type(save: false) }
-          post :create, product_type: { 'these' => 'params' }
+      describe "with invalid params" do
+
+        before(:each) do
+          allow(ProductType).to receive(:new).
+                        with("these" => "params").
+                        and_return(mock_product_type(save: false))
+        end
+
+        it "assigns a new but unsaved product_type as @product_type" do
+          post :create, product_type: { "these" => "params" }
           expect(assigns(:product_type)).to be(mock_product_type)
         end
 
         it "re-renders the 'new' template" do
-          allow(ProductType).to receive(:new) { mock_product_type(save: false) }
-          post :create, product_type: {}
-          expect(response).to render_template('new')
+          post :create, product_type: { "these" => "params" }
+          expect(response).to render_template("new")
         end
       end
     end
 
-    describe 'PUT update' do
-      describe 'with valid params' do
-        it 'updates the requested product_type' do
-          expect(ProductType).to receive(:find).with('37') { mock_product_type }
-          expect(mock_product_type).to receive(:update_attributes).with('these' => 'params')
-          put :update, id: '37', product_type: { 'these' => 'params' }
+    describe "PUT update" do
+      describe "with valid params" do
+
+        before(:each) do
+          allow(ProductType).to receive(:find).
+                        and_return(mock_product_type(update_attributes: true))
         end
 
-        it 'assigns the requested product_type as @product_type' do
-          allow(ProductType).to receive(:find) { mock_product_type(update_attributes: true) }
-          put :update, id: '1'
+        it "updates the requested product_type" do
+          expect(mock_product_type).to receive(:update_attributes).
+                                        with("these" => "params")
+          put :update, id: "37", product_type: { "these" => "params" }
+        end
+
+        it "assigns the requested product_type as @product_type" do
+          put :update, id: "1"
           expect(assigns(:product_type)).to be(mock_product_type)
         end
 
-        it 'redirects to the product_type' do
-          allow(ProductType).to receive(:find) { mock_product_type(update_attributes: true) }
-          put :update, id: '1'
+        it "redirects to the product_type" do
+          put :update, id: "1"
           expect(response).to redirect_to(product_type_url(mock_product_type))
         end
       end
 
-      describe 'with invalid params' do
-        it 'assigns the product_type as @product_type' do
-          allow(ProductType).to receive(:find) { mock_product_type(update_attributes: false) }
-          put :update, id: '1'
+      describe "with invalid params" do
+
+        before(:each) do
+          allow(ProductType).to receive(:find).
+                        and_return(mock_product_type(update_attributes: false))
+        end
+
+        it "assigns the product_type as @product_type" do
+          put :update, id: "1"
           expect(assigns(:product_type)).to be(mock_product_type)
         end
 
         it "re-renders the 'edit' template" do
-          allow(ProductType).to receive(:find) { mock_product_type(update_attributes: false) }
-          put :update, id: '1'
-          expect(response).to render_template('edit')
+          put :update, id: "1"
+          expect(response).to render_template("edit")
         end
       end
     end
 
-    describe 'DELETE destroy' do
-      it 'destroys the requested product_type' do
-        expect(ProductType).to receive(:find).with('37') { mock_product_type }
+    describe "DELETE destroy" do
+      it "destroys the requested product_type" do
+        expect(ProductType).to receive(:find).with("37") { mock_product_type }
         expect(mock_product_type).to receive(:destroy)
-        delete :destroy, id: '37'
+        delete :destroy, id: "37"
       end
 
-      it 'redirects to the product_types list' do
+      it "redirects to the product_types list" do
         allow(ProductType).to receive(:find) { mock_product_type }
-        delete :destroy, id: '1'
+        delete :destroy, id: "1"
         expect(response).to redirect_to(product_types_url)
       end
     end

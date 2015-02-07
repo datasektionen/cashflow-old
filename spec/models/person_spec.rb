@@ -8,9 +8,9 @@ describe Person do
     @person = create(:person)
   end
 
-  it "should have a default role of \"\"" do
+  it "should have a default role of ''" do
     @person = Person.new
-    expect(@person.role).to eq('')
+    expect(@person.role).to eq("")
   end
 
   %w(first_name last_name email ugid login).each do |attribute|
@@ -25,7 +25,7 @@ describe Person do
   %w(first_name last_name ugid login role).each do |attribute|
     it "should protect attribute #{attribute}" do
       attr_value = @person.send(attribute)
-      expect(@person.update_attributes(attribute.to_sym => 'blubb')).to be_truthy
+      expect(@person.update_attributes(attribute.to_sym => "foo")).to be_truthy
       expect(@person.send(attribute)).to eq(attr_value)
     end
   end
@@ -90,7 +90,7 @@ describe Person do
       end
     end
 
-    it 'should correctly create users from an LDAP search' do
+    it "should correctly create users from an LDAP search" do
       begin
         local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
         Person.create_from_ldap(ugid: local_config[:yourself][:ugid])

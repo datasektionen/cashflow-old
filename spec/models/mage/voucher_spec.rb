@@ -8,8 +8,9 @@ describe Mage::Voucher do
     expect(v.voucher_rows.count).to eq(1)
     expect(v.voucher_rows[0].sum).to eq(200)
     expect(v.voucher_rows[0].account_number).to eq(1921)
-    expect(v.attributes[:voucher_rows_attributes][0][:sum]).to eq(200)
-    expect(v.attributes[:voucher_rows_attributes][0][:account_number]).to eq(1921)
+    attrs = v.attributes[:voucher_rows_attributes][0]
+    expect(attrs[:sum]).to eq(200)
+    expect(attrs[:account_number]).to eq(1921)
     expect(v.attributes[:voucher_rows]).to be_nil
     expect(v.accounting_date).to eq("2011-11-11")
   end
@@ -27,7 +28,9 @@ describe Mage::Voucher do
     expect(voucher.accounting_date).to eq(purchase.purchased_on)
     expect(voucher.authorized_by).to eq(purchase.confirmed_by.ugid)
     expect(voucher.material_from).to eq(purchase.person.ugid)
-    expect(voucher.organ).to eq(purchase.budget_post.business_unit.mage_number)
-    expect(voucher.title).to eq("#{purchase.slug.upcase} - #{purchase.description}")
+    expect(voucher.organ).to eq(
+      purchase.budget_post.business_unit.mage_number)
+    expect(voucher.title).to eq(
+      "#{purchase.slug.upcase} - #{purchase.description}")
   end
 end

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 # Specs in this file have access to a helper object that includes
 # the BudgetRowsHelper. For example:
@@ -11,12 +11,13 @@ require 'spec_helper'
 #   end
 # end
 describe BudgetRowsHelper do
-  describe 'budget row urls' do
-    it 'should add its year to the generated link' do
+  describe "budget row urls" do
+    it "should add its year to the generated link" do
       budget_post = create(:budget_post)
       row = budget_post.row(Time.now.year)
 
-      expect(helper.row_url(row)).to eq(budget_row_path(budget_id: Time.now.year, id: row.id))
+      expect(helper.row_url(row)).to eq(
+        budget_row_path(budget_id: Time.now.year, id: row.id))
     end
   end
 end
