@@ -4,8 +4,8 @@ describe BudgetRow do
 
   it "is invalid if sum is negative" do
     row = BudgetRow.new sum: -1
-    row.should be_invalid
-    row.errors.messages.keys.should include(:sum)
+    expect(row).to be_invalid
+    expect(row.errors.messages.keys).to include(:sum)
   end
 
   describe "#total" do
@@ -33,7 +33,7 @@ describe BudgetRow do
         it "doesn't include edited purchases" do
           @purchase.update_attribute(:workflow_state, state)
 
-          @budget_row.total.should == 0
+          expect(@budget_row.total).to eq(0)
         end
       end
     end
@@ -43,7 +43,7 @@ describe BudgetRow do
         it "includes #{state} purchases" do
           @purchase.update_attribute(:workflow_state, state)
 
-          @budget_row.total.to_f.should == 100
+          expect(@budget_row.total.to_f).to eq(100)
         end
       end
     end

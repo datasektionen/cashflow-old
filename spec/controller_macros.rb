@@ -1,7 +1,7 @@
 module ControllerMacros
   def login_admin
     before(:each) do
-      @request.env['devise.mapping'] = Devise.mappings[:admin]
+      @request.env["devise.mapping"] = Devise.mappings[:admin]
       @current_user = create(:admin)
       sign_in @current_user
     end
@@ -9,7 +9,7 @@ module ControllerMacros
 
   def login_user
     before(:each) do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
+      @request.env["devise.mapping"] = Devise.mappings[:user]
       @current_user = create(:person)
       sign_in @current_user
     end
@@ -17,7 +17,7 @@ module ControllerMacros
 
   def login_treasurer
     before(:each) do
-      @request.env['devise.mapping'] = Devise.mappings[:treasurer]
+      @request.env["devise.mapping"] = Devise.mappings[:treasurer]
       @current_user = create(:person)
       sign_in @current_user
     end
@@ -25,7 +25,7 @@ module ControllerMacros
 
   def login_accountant
     before(:each) do
-      @request.env['devise.mapping'] = Devise.mappings[:accountant]
+      @request.env["devise.mapping"] = Devise.mappings[:accountant]
       @current_user = create(:person)
       sign_in @current_user
     end
@@ -33,16 +33,18 @@ module ControllerMacros
 
   # TODO: extract the access_denied string test to a view spec.
   def deny_access_for_ordinary_user
-    describe 'logged in as ordinary user' do
+    describe "logged in as ordinary user" do
       login_user
       render_views
 
-      (%w(index show new edit).map { |x|"GET #{x}" } | ['POST create', 'PUT update', 'DELETE destroy']).each do |page|
+      actions = %w(index show new edit).map { |x|"GET #{x}" } |
+                  ["POST create", "PUT update", "DELETE destroy"]
+      actions.each do |page|
         describe page do
           it "should render 'access denied'" do
             get :index
-            response.status.should == 403
-            response.body.should include(I18n.t('access_denied'))
+            expect(response.status).to eq(403)
+            expect(response.body).to include(I18n.t("access_denied"))
           end
         end
       end

@@ -6,7 +6,7 @@ gem "rails", "~> 3.2.0"
 gem "devise", "~> 2.0"
 gem "omniauth", "~> 1.0"
 gem "omniauth-cas", "~> 1.0"
-gem "cancan" # Authz
+gem "cancancan" # Authz
 
 # Forms
 gem "formtastic", "~> 3.1.3"
@@ -61,8 +61,9 @@ group :test do
   gem "factory_girl_rails"
   gem "headless"
   gem "launchy"
-  gem "rspec", "~> 2.14.0"
-  gem "rspec-rails", "~> 2.14.0"
+  gem "rspec", "~> 3.2.0"
+  gem "rspec-rails", "~> 3.2.0"
+  gem "rspec-activemodel-mocks"
   gem "capybara-webkit"
   gem "shoulda-matchers"
   gem "simplecov", "~> 0.9", require: false

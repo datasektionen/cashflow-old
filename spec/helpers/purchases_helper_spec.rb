@@ -19,12 +19,12 @@ describe PurchasesHelper do
                             business_unit: business_unit,
                             budget_post: budget_posts.first)
 
-      helper.budget_posts_for_purchase(purchase).should == budget_posts
+      expect(helper.budget_posts_for_purchase(purchase)).to eq(budget_posts)
     end
 
     it "returns nil if the purchase doesn't have a budget post" do
       purchase = stub_model(Purchase)
-      helper.budget_posts_for_purchase(purchase).should be nil
+      expect(helper.budget_posts_for_purchase(purchase)).to be nil
     end
   end
 
@@ -38,21 +38,23 @@ describe PurchasesHelper do
       version = OpenStruct.new(purchase_date: Time.now,
                                originator: person,
                                workflow_state: "New")
-      helper.link_to_originator(version).should ==
+      expect(helper.link_to_originator(version)).to eq(
         link_to(version.originator.name, person_path(version.originator))
+      )
     end
 
     it "returns an empty string when originator is missing" do
       version = OpenStruct.new
-      helper.link_to_originator(version).should == ''
+      expect(helper.link_to_originator(version)).to eq("")
     end
   end
 
   describe "filter_search_tag" do
     it "returns a text field tag with the filter name" do
-      helper.filter_search_tag("foo", "foo bar baz").should ==
+      expect(helper.filter_search_tag("foo", "foo bar baz")).to eq(
         '<input id="filter_foo" name="filter[foo]"' +
         ' placeholder="foo bar baz" type="text" />'
+      )
     end
   end
 
@@ -67,17 +69,19 @@ describe PurchasesHelper do
         include_blank: true,
         multiple: true
       }
-      helper.filter_select_tag("xs", collection, :foo, :bar, options).should ==
+      result = helper.filter_select_tag("xs", collection, :foo, :bar, options)
+      expect(result).to eq(
         '<select id="filter_xs" multiple="multiple" name="filter[xs][]" ' +
         'placeholder="foos?"><option value=""></option>' +
         "<option value=\"1\">one</option>\n<option value=\"2\">two</option>" +
         "</select>"
+      )
     end
   end
 
   describe "filter_date_range_tags" do
     it "returns a label and a date picker" do
-      helper.filter_date_range_tags("foo").should ==
+      expect(helper.filter_date_range_tags("foo")).to eq(
         '<div id="purchase_foo_filter">' +
         '<label for="filter_foo_from">Från</label>' +
         '<input class="datepicker" id="filter_foo_from"' +
@@ -88,6 +92,7 @@ describe PurchasesHelper do
               ' name="filter[foo_to]" placeholder="Välj ett slutdatum"' +
               ' type="text" />' +
         "</div>"
+      )
     end
   end
 end

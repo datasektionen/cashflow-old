@@ -1,13 +1,13 @@
-require 'spec_helper'
+require "spec_helper"
 describe Mage::Base do
-  it 'Setting and getting attributes should work' do
-    b = Mage::Base.new(foo: 'bar')
-    b.foo.should == 'bar'
-    b.baz = 'derp'
-    b.baz.should == 'derp'
-    b.foo.should == 'bar'
-    b.moo.should.nil?
-    b.moo?.should == false
-    b.baz?.should == true
+  it "Setting and getting attributes should work" do
+    b = Mage::Base.new(foo: "bar")
+    expect(b.foo).to eq("bar")
+    b.baz = "derp"
+    expect(b.baz).to eq("derp")
+    expect(b.foo).to eq("bar")
+    expect(b.moo).to be_nil
+    expect(b.moo?).to eq(false)
+    expect(b.baz?).to eq(true)
   end
 end

@@ -16,101 +16,101 @@ describe Purchase do
   subject { @purchase }
 
   it "should be versioned" do
-    subject.should be_versioned
+    expect(subject).to be_versioned
   end
 
   it "should be invalid without an owner" do
     subject.person = nil
-    subject.should_not be_valid
+    expect(subject).not_to be_valid
   end
 
   it "should not ever change owner" do
     new_person = create(:person)
-    subject.should be_valid
+    expect(subject).to be_valid
 
     subject.person = new_person
-    subject.save.should be_true
-    subject.reload.person.should_not == (new_person)
+    expect(subject.save).to be_truthy
+    expect(subject.reload.person).not_to eq(new_person)
 
     subject.update_attributes(person_id: new_person.id)
-    subject.save.should be_true
-    subject.reload.person.should_not == (new_person)
+    expect(subject.save).to be_truthy
+    expect(subject.reload.person).not_to eq(new_person)
   end
 
   it "should be invalid without a description" do
     subject.description = nil
-    subject.should be_invalid
+    expect(subject).to be_invalid
     subject.description = ""
-    subject.should be_invalid
+    expect(subject).to be_invalid
   end
 
   it "should be created by someone" do
-    subject.originator.should_not be_blank
+    expect(subject.originator).not_to be_blank
   end
 
   it "should have a default workflow_state of \"new\"" do
-    subject.workflow_state.should == "new"
+    expect(subject.workflow_state).to eq("new")
   end
 
   it "should be purchased at some date" do
-    subject.purchased_on.should_not be_blank
+    expect(subject.purchased_on).not_to be_blank
     subject.purchased_on = nil
-    subject.should_not be_valid
-    subject.errors[:purchased_on].should_not be_empty
+    expect(subject).not_to be_valid
+    expect(subject.errors[:purchased_on]).not_to be_empty
   end
 
   it "should not be purchased in the future" do
-    subject.purchased_on.should be <= Date.today
+    expect(subject.purchased_on).to be <= Date.today
     subject.purchased_on = Date.today + 1
-    subject.should be_invalid
-    subject.errors[:purchased_on].should_not be_empty
+    expect(subject).to be_invalid
+    expect(subject.errors[:purchased_on]).not_to be_empty
   end
 
   %w(new edited).each do |state|
     it "should be cancellable when #{state}" do
       subject.update_attribute(:workflow_state, state)
-      lambda { subject.cancel! }.should_not raise_error
+      expect { subject.cancel! }.not_to raise_error
     end
   end
 
   %w(new confirmed).each do |state|
     it "should be editable when #{state}" do
       subject.update_attribute(:workflow_state, state)
-      lambda { subject.edit! }.should_not raise_error
+      expect { subject.edit! }.not_to raise_error
     end
   end
 
   %w(new edited).each do |state|
     it "should be confirmable when #{state}" do
       subject.update_attribute(:workflow_state, state)
-      lambda { subject.confirm! }.should_not raise_error
+      expect { subject.confirm! }.not_to raise_error
     end
   end
 
   %w(confirmed paid).each do |state|
     it "should be bookkeepable when #{state}" do
       subject.update_attribute(:workflow_state, state)
-      lambda { subject.keep! }.should_not raise_error
+      expect { subject.keep! }.not_to raise_error
     end
   end
 
   %w(confirmed bookkept).each do |state|
     it "should be payable when #{state}" do
       subject.update_attribute(:workflow_state, state)
-      lambda { subject.pay! }.should_not raise_error
+      expect { subject.pay! }.not_to raise_error
     end
   end
 
   it "should be finalized when both paid and bookkept (in any order)" do
     subject.update_attribute(:workflow_state, "confirmed")
-    lambda { subject.pay! }.should_not raise_error
-    lambda { subject.keep! }.should_not raise_error
-    subject.should be_finalized
+    expect { subject.pay! }.not_to raise_error
+    expect { subject.keep! }.not_to raise_error
+    expect(subject).to be_finalized
 
     subject.update_attribute(:workflow_state, "confirmed")
-    lambda { subject.keep! }.should_not raise_error
-    lambda { subject.pay! }.should_not raise_error
-    subject.should be_finalized
+    expect { subject.keep! }.not_to raise_error
+    expect { subject.pay! }.not_to raise_error
+    expect(subject).to be_finalized
   end
 
   describe "" do
@@ -120,11 +120,11 @@ describe Purchase do
       end
 
       it "should not be cancellable when #{state}" do
-        lambda { subject.cancel! }.should raise_error
+        expect { subject.cancel! }.to raise_error
       end
 
       it "should have confirmed_by when #{state}" do
-        subject.confirmed_by.should_not be_nil
+        expect(subject.confirmed_by).not_to be_nil
       end
     end
   end
@@ -133,44 +133,44 @@ describe Purchase do
     %w(confirm pay edit bookkeep).each do |action|
       it "should throw exception on ##{action}! when #{state}" do
         subject.update_attribute(:workflow_state, state)
-        lambda { subject.send("#{action}!") }.should raise_error
+        expect { subject.send("#{action}!") }.to raise_error
       end
     end
   end
 
   it "should not be editable once finalized" do
     subject.update_attribute(:workflow_state, "finalized")
-    subject.save.should be_false
+    expect(subject.save).to be_falsey
   end
 
   it "should cascade delete its related purchase items" do
-    subject.items.should be_empty
+    expect(subject.items).to be_empty
     pi = build(:purchase_item)
     pi.purchase = subject
     pi.save
 
     item = subject.reload.items.first
 
-    item.should_not be_nil
+    expect(item).not_to be_nil
 
     item_id = item.id
     purchase_id = subject.id
 
     subject.destroy
-    Purchase.exists?(id: purchase_id).should be_false
-    PurchaseItem.exists?(id: item_id).should be_false
+    expect(Purchase.exists?(id: purchase_id)).to be_falsey
+    expect(PurchaseItem.exists?(id: item_id)).to be_falsey
   end
 
   it "should generate a slug before being saved" do
     subject.slug = ""
-    subject.should be_valid
-    subject.slug.should_not be_blank
+    expect(subject).to be_valid
+    expect(subject.slug).not_to be_blank
   end
 
   it "should update the generated slug properly after being saved" do
     subject.save
-    subject.slug.should_not be_blank
-    subject.slug.should =~ /-#{subject.id}$/
+    expect(subject.slug).not_to be_blank
+    expect(subject.slug).to match(/-#{subject.id}$/)
   end
 
   describe ".payable" do
@@ -189,13 +189,13 @@ describe Purchase do
 
     %w(confirmed bookkept).each do |state|
       it "should include #{state} purchase" do
-        Purchase.payable.should include(@purchases[state.to_sym])
+        expect(Purchase.payable).to include(@purchases[state.to_sym])
       end
     end
 
     %w(new edited paid finalized).each do |state|
       it "should include #{state} purchase" do
-        Purchase.payable.should_not include(@purchases[state.to_sym])
+        expect(Purchase.payable).not_to include(@purchases[state.to_sym])
       end
     end
 
@@ -216,7 +216,7 @@ describe Purchase do
     subject { Purchase.payable_grouped_by_person }
 
     it "keeps different people separate" do
-      subject.keys.sort_by(&:id).should == [@person_1, @person_2]
+      expect(subject.keys.sort_by(&:id)).to eq([@person_1, @person_2])
     end
 
     it "sums the total payable amount per person" do
@@ -227,11 +227,11 @@ describe Purchase do
         @person_2 => @purchase_2.total
       }
 
-      subject.should == expected
+      expect(subject).to eq(expected)
     end
   end
 
   describe ".pay_payable_by!" do
-    pending("write some tests")
+    skip("write some tests")
   end
 end
