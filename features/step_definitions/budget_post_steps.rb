@@ -8,8 +8,8 @@ Given(/^a budget post exists with a bunch of purchases$/) do
 end
 
 When(/^I try to delete the budget post$/) do
-  visit('/budget_posts')
-  href = "/budget_posts/#{@budget_post.id}"
+  visit("/budgetposter")
+  href = "/budgetposter/#{@budget_post.id}"
   link = page.all(:xpath, "//a[@href='#{href}' and @data-method='delete']")[0]
   link.click
 end
@@ -19,10 +19,10 @@ Then(/^the budget post should still exist$/) do
 end
 
 Then(/^I should get a message saying so$/) do
-  page.should have_content('kunde inte tas bort')
+  page.should have_content("kunde inte tas bort")
 end
 
 Then(/^the budget post should be deleted$/) do
-  page.should have_content('Budgetpost borttagen')
+  page.should have_content("Budgetpost borttagen")
   expect(BudgetPost.exists?(@budget_post.id)).to eq(false)
 end

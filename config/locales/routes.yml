@@ -1,0 +1,18 @@
+en:
+  routes:
+
+sv:
+  routes:
+    people: personer
+    product_types: produkttyper
+    business_units: affarsenheter
+    purchases: inkop
+    budget: budget
+    budget_posts: budgetposter
+    budget_rows: budgetrader
+    new: ny
+    edit: redigera
+    confirmed: bekraftade
+    pay_multiple: betala
+    search: sok
+

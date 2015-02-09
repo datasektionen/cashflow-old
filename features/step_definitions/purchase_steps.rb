@@ -74,7 +74,7 @@ Given(/^a purchase with "([^"]*)" items$/) do |_number_of_items|
 end
 
 When(/^I fill out the new purchase form accordingly$/) do
-  visit("/purchases/new")
+  visit("/inkop/ny")
   fill_out_purchase_details
   fill_out_last_purchase_item_details
   click_button("Spara Inköp")
@@ -83,7 +83,7 @@ end
 When(/^I forget to choose a "budget post"$/) do
   @description = Time.now.to_s
 
-  visit("/purchases/new")
+  visit("/inkop/ny")
 
   fill_in("purchase_purchased_on", with: Date.today.to_s)
   fill_in("purchase_description", with: @description)
@@ -100,7 +100,7 @@ end
 
 When(/^I fill out the new purchase form with "(\d+)" items$/) do |n|
   n = n.to_i
-  visit("/purchases/new")
+  visit("/inkop/ny")
   fill_out_purchase_details
   fill_out_last_purchase_item_details
   (1...n).each do |_i|
@@ -127,7 +127,7 @@ end
 When(/^I edit the description of that purchase$/) do
   @description = Time.now.to_s
 
-  visit("/purchases/#{@purchase.slug}/edit")
+  visit("/inkop/#{@purchase.slug}/redigera")
 
   fill_in("purchase_description", with: @description)
 

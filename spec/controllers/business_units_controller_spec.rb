@@ -12,6 +12,7 @@ describe BusinessUnitsController, type: :controller do
   end
 
   deny_access_for_ordinary_user
+  let(:default_params) { { locale: "sv" } }
 
   describe "logged in as accountant accountant" do
     login_accountant

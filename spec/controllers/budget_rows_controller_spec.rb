@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe BudgetRowsController do
   login_admin
+  let(:default_params) { { locale: "sv" } }
 
   before(:all) do
     @year = Time.now.year.to_s

@@ -22,8 +22,6 @@ headless = Headless.new
 # in ./support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
-local_config = YAML.load(File.read("#{Rails.root}/config/local.yml"))
-
 RSpec.configure do |config|
   config.mock_with :rspec
   config.fail_fast = false
@@ -33,6 +31,7 @@ RSpec.configure do |config|
   config.extend ControllerMacros, type: :controller
   config.include Devise::TestHelpers, type: :view
   config.extend ControllerMacros, type: :view
+  config.include DefaultParams, type: :controller
   config.infer_base_class_for_anonymous_controllers = false
 
   config.before(:suite) do
