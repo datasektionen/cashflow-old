@@ -38,7 +38,7 @@ describe BusinessUnitsController do
           to route_to("business_units#destroy", id: "1", locale: "sv")
       end
     end
-
+     
     context "locale = 'en'" do
       it "recognizes and generates #index" do
         expect(get: "/en/business_units").
@@ -72,7 +72,7 @@ describe BusinessUnitsController do
 
       it "recognizes and generates #destroy" do
         expect(delete: "/en/business_units/1").
-          to route_to("business_units#destroy", id: "1", locale: "en")
+          to route_to( "business_units#destroy", id: "1", locale: "en")
       end
     end
   end
