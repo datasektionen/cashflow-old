@@ -20,8 +20,8 @@ describe BudgetPostsController do
       end
 
       it "routes to #edit" do
-        expect(get("/budgetposter/1/redigera")).to route_to("budget_posts#edit",
-                                                           id: "1", locale: "sv")
+        expect(get("/budgetposter/1/redigera")).
+          to route_to("budget_posts#edit", id: "1", locale: "sv")
       end
 
       it "routes to #create" do
@@ -58,8 +58,8 @@ describe BudgetPostsController do
       end
 
       it "routes to #edit" do
-        expect(get("/en/budget_posts/1/edit")).to route_to("budget_posts#edit",
-                                                           id: "1", locale: "en")
+        expect(get("/en/budget_posts/1/edit")).
+          to route_to("budget_posts#edit", id: "1", locale: "en")
       end
 
       it "routes to #create" do
