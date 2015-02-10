@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gem "rails", "~> 3.2.0"
 
 # Auth
-gem "devise", "~> 2.0"
+gem "devise", "~> 3.4.0"
 gem "omniauth", "~> 1.0"
 gem "omniauth-cas", "~> 1.0"
 gem "cancancan" # Authz
