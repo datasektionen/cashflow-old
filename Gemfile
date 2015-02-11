@@ -20,7 +20,7 @@ gem "RedCloth", "~> 4.2.9" # Textile
 gem "haml-rails"
 gem "haml-contrib" # For rendering textile in haml views
 
-gem "i18n_routing" # localized routes
+gem "rails-translate-routes" # localized routes
 gem "friendly_id"  # pretty routes
 
 # Javascript

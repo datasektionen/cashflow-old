@@ -3,6 +3,7 @@ require "mage_api"
 
 describe BudgetController do
   login_admin
+  let(:default_params) { { locale: "sv" } }
 
   context "GET" do
     before(:all) do

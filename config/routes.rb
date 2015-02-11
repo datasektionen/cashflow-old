@@ -17,32 +17,32 @@ Cashflow::Application.routes.draw do
     root to: "dashboard#index"
   end
 
-  localized(["sv"]) do
-    resources :product_types
-    resources :budget, except: [:destroy] do
-      resources :budget_rows, as: "rows", only: [:index, :show, :edit, :update]
-    end
-    resources :budget_posts
-    resources :business_units
-    resources :purchases do
-      collection do
-        get :confirmed
-        put :pay_multiple
-      end
-      member do
-        put :confirm
-        put :pay
-        put :keep
-        put :cancel
-      end
-    end
-
-    resources :people, except: [:destroy] do
-      collection do
-        get :search
-      end
-    end
-
-    root to: "dashboard#index"
+  resources :product_types
+  resources :budget, except: [:destroy] do
+    resources :budget_rows, as: "rows", only: [:index, :show, :edit, :update]
   end
+  resources :budget_posts
+  resources :business_units
+  resources :purchases do
+    collection do
+      get :confirmed
+      put :pay_multiple
+    end
+    member do
+      put :confirm
+      put :pay
+      put :keep
+      put :cancel
+    end
+  end
+
+  resources :people, except: [:destroy] do
+    collection do
+      get :search
+    end
+  end
+
+  root to: "dashboard#index"
 end
+ActionDispatch::Routing::Translator.translate_from_file(
+  "config/locales/routes.yml")

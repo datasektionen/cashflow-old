@@ -11,6 +11,8 @@ describe ProductTypesController do
     end
   end
 
+  let(:default_params) { { locale: "sv" } }
+
   describe "When logged in as admin" do
     login_admin
     describe "GET index" do

@@ -396,25 +396,6 @@
     finalized:  "Avslutad"
     anulled:    "Struken"
 
-  resources:
-    people: "personer"
-    product_types: "produkttyper"
-    business_units: "affarsenheter"
-    purchases: "inkop"
-    budget_posts: "budgetposter"
-  path_names:
-    new: "ny"
-    edit: "redigera"
-  routes:
-    purchases:
-      path_names:
-        new: "nytt"
-        confirmed: "bekraftade"
-        pay_multiple: "betala"
-    people:
-      path_names:
-        search: "sok"
-
   notices:
     person:
       success:

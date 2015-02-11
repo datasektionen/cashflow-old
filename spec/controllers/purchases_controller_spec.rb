@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe PurchasesController do
   login_admin
+  let(:default_params) { { locale: "sv" } }
 
   def mock_purchase(stubs = {})
     stubs = stubs.reverse_merge(to_str: nil)
