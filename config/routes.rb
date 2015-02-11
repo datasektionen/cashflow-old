@@ -8,13 +8,9 @@ Cashflow::Application.routes.draw do
     get "sign_in",
         to: "people/omniauth_callbacks#new",
         as: :new_session
-    get "sign_out",
-        to: "people/omniauth_callbacks#destroy",
-        as: :destroy_user_session
     delete "sign_out",
            to: "people/omniauth_callbacks#destroy",
            as: :destroy_user_session
-    root to: "dashboard#index"
   end
 
   resources :product_types
