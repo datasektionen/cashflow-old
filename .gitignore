@@ -19,3 +19,4 @@ config/exceptional.yml
 public/stylesheets/*
 solr/data/
 solr/pids/
+config/secrets.yml
