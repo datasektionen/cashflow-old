@@ -4,17 +4,12 @@ class Person < ActiveRecord::Base
 
   devise :omniauthable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-
   ROLES = %w(bookkeeper treasurer admin accountant)
 
   validates_presence_of :first_name, :last_name, :login, :email, :ugid
-  validates :email, email: true
+  validates :email, presence: true, uniqueness: true, format: RFC822::EMAIL
 
-  attr_accessible :email, :bank_clearing_number, :bank_account_number, :bank_name
-
-  has_many :purchases, dependent: :restrict
+  has_many :purchases, dependent: :restrict_with_error
 
   def to_s
     name
