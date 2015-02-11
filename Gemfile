@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 3.2.0"
+gem "rails", "~> 4.1.0"
 
 # Auth
 gem "devise", "~> 3.4.0"
@@ -15,7 +15,7 @@ gem "bootstrap-sass", "= 3.1.1.0"
 gem "bootstrap-datepicker-rails"
 
 # Views
-gem "sass-rails", ">= 3.2"
+gem "sass-rails", ">= 4.0.0"
 gem "RedCloth", "~> 4.2.9" # Textile
 gem "haml-rails"
 gem "haml-contrib" # For rendering textile in haml views
@@ -39,6 +39,7 @@ gem "net-ldap"          # Import people from LDAP
 gem "paper_trail"       # Who did what?
 gem "simple-navigation" # Navigation
 gem "workflow"          # state machines for purchases
+gem "rfc-822"           # validate email
 
 group :production do
   gem "unicorn"
@@ -47,6 +48,7 @@ end
 group :development do
   gem "pry-nav"
   gem "pry-rails"
+  gem "spring"
 end
 
 group :development, :test do
