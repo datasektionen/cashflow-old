@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe BudgetRowsController do
+RSpec.describe BudgetRowsController do
   describe "routing" do
     context "locale = 'sv'" do
       it "routes to #index" do

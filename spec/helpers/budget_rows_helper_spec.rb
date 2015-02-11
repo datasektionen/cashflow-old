@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 # Specs in this file have access to a helper object that includes
 # the BudgetRowsHelper. For example:
@@ -10,7 +10,7 @@ require "spec_helper"
 #     end
 #   end
 # end
-describe BudgetRowsHelper do
+RSpec.describe BudgetRowsHelper do
   describe "budget row urls" do
     it "should add its year to the generated link" do
       budget_post = create(:budget_post)

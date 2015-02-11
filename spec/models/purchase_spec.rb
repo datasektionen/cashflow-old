@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Purchase do
+RSpec.describe Purchase do
 
   before(:all) do
     @person = create(:person)

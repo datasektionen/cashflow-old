@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe PeopleController do
+RSpec.describe PeopleController do
   let(:default_params) { { locale: "sv" } }
 
   def mock_person(stubs = {})

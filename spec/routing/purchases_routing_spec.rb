@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PurchasesController do
+RSpec.describe PurchasesController do
   describe "routing" do
     context "locale = 'sv'" do
       it "recognizes and generates #index" do

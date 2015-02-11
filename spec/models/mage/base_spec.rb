@@ -1,5 +1,5 @@
 require "spec_helper"
-describe Mage::Base do
+RSpec.describe Mage::Base do
   it "Setting and getting attributes should work" do
     b = Mage::Base.new(foo: "bar")
     expect(b.foo).to eq("bar")

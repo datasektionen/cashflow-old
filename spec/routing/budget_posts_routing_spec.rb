@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe BudgetPostsController do
+RSpec.describe BudgetPostsController do
   describe "routing" do
     context "locale = 'sv'" do
 

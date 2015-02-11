@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BusinessUnit do
+RSpec.describe BusinessUnit do
   before(:each) do
     @business_unit = create(:business_unit)
   end

@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe ProductTypesController do
+RSpec.describe ProductTypesController do
   def mock_product_type(stubs = {})
     @mock_product_type ||= mock_model(ProductType).as_null_object
     @mock_product_type.tap do |product_type|

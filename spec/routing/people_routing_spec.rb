@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PeopleController do
+RSpec.describe PeopleController do
   describe "routing" do
     context "locale = 'sv'" do
       it "recognizes and generates #index" do

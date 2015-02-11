@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe BusinessUnitsController, type: :controller do
+RSpec.describe BusinessUnitsController, type: :controller do
   def mock_business_unit(stubs = {})
     @mock_business_unit ||= mock_model(BusinessUnit).as_null_object
     @mock_business_unit.tap do |business_unit|

@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 # Specs in this file have access to a helper object that includes
 # the PurchasesHelper. For example:
@@ -10,7 +10,7 @@ require "spec_helper"
 #     end
 #   end
 # end
-describe PurchasesHelper do
+RSpec.describe PurchasesHelper do
   describe "budget_posts_for_purchase" do
     it "returns the available budget posts to the purchase's business unit" do
       budget_posts = [create(:budget_post), create(:budget_post)]

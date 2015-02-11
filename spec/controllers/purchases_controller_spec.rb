@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe PurchasesController do
+RSpec.describe PurchasesController do
   login_admin
   let(:default_params) { { locale: "sv" } }
 

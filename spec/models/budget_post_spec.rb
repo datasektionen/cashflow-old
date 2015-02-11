@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe BudgetPost do
+RSpec.describe BudgetPost do
   describe "all_years" do
     before(:each) do
       DatabaseCleaner.start

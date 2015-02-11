@@ -1,7 +1,7 @@
-require "spec_helper"
+require "rails_helper"
 require "mage_api"
 
-describe BudgetController do
+RSpec.describe BudgetController do
   login_admin
   let(:default_params) { { locale: "sv" } }
 

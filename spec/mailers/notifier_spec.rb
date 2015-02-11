@@ -1,7 +1,7 @@
 # encoding: utf-8
-require "spec_helper"
+require "rails_helper"
 
-describe Notifier do
+RSpec.describe Notifier do
 
   describe "purchases" do
     before(:all) do

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe BudgetController do
+RSpec.describe BudgetController do
   describe "routing" do
 
     context "locale = 'sv'" do
