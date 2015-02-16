@@ -14,6 +14,7 @@ require 'formtastic'
 require 'headless'
 require 'database_cleaner'
 require 'webmock/rspec'
+require 'paper_trail/frameworks/rspec'
 
 WebMock.disable_net_connect!(:allow => "codeclimate.com")
 headless = Headless.new
@@ -26,6 +27,7 @@ RSpec.configure do |config|
   config.mock_with :rspec
   config.use_transactional_fixtures = true
 
+  config.include Rails.application.routes.url_helpers
   config.include Devise::TestHelpers, type: :controller
   config.include DefaultParams, type: :controller
   config.extend ControllerMacros, type: :controller
@@ -38,7 +40,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.clean_with(:deletion)
   end
 
   config.before(:each) do
