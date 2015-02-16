@@ -1,6 +1,10 @@
 class Person < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :login
+  friendly_id :login, use: [:finders]
+
+  def slug
+    login
+  end
 
   devise :omniauthable
 
