@@ -1,6 +1,7 @@
 class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_filter :authorize_user!
   skip_authorization_check
+  skip_before_filter :verify_authenticity_token, only: [:developer]
 
   before_filter :load_person, only: [:cas, :developer]
 
@@ -9,7 +10,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def cas
-    sign_in_if_persisted("CAS")
+    sign_in_if_persisted
   end
 
   def developer
@@ -18,7 +19,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       return
     end
 
-    sign_in_if_persisted("Developer")
+    sign_in_if_persisted
   end
 
   def destroy
@@ -35,12 +36,12 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @person = Person.find_for_oauth(env["omniauth.auth"], current_user)
   end
 
-  def sign_in_if_persisted(kind)
+  def sign_in_if_persisted
     if @person.persisted?
-      flash[:notice] = I18n.t("devise.omniauth_callbacks.success", kind: kind)
+      flash[:notice] = I18n.t("devise.omniauth_callbacks.success")
       sign_in_and_redirect @person, event: :authentication
     else
-      redirect_to root_url
+      redirect_to root_sv_url
     end
   end
 end

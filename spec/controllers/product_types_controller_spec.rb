@@ -17,9 +17,8 @@ RSpec.describe ProductTypesController do
     login_admin
     describe "GET index" do
       it "assigns all product_types as @product_types" do
-        allow(ProductType).to receive(:all) { [mock_product_type] }
         get :index
-        expect(assigns(:product_types)).to eq([mock_product_type])
+        expect(assigns(:product_types)).to eq(ProductType.all)
       end
     end
 
@@ -64,7 +63,7 @@ RSpec.describe ProductTypesController do
 
         it "redirects to the created product_type" do
           post :create, product_type: { "these" => "params" }
-          expect(response).to redirect_to(product_type_url(mock_product_type))
+          expect(response).to redirect_to(product_type_path(mock_product_type))
         end
       end
 
@@ -109,7 +108,7 @@ RSpec.describe ProductTypesController do
 
         it "redirects to the product_type" do
           put :update, id: "1"
-          expect(response).to redirect_to(product_type_url(mock_product_type))
+          expect(response).to redirect_to(product_type_path(mock_product_type))
         end
       end
 
@@ -142,7 +141,7 @@ RSpec.describe ProductTypesController do
       it "redirects to the product_types list" do
         allow(ProductType).to receive(:find) { mock_product_type }
         delete :destroy, id: "1"
-        expect(response).to redirect_to(product_types_url)
+        expect(response).to redirect_to(product_types_path)
       end
     end
   end

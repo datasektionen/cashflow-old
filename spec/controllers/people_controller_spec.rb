@@ -11,7 +11,7 @@ RSpec.describe PeopleController do
   describe "unauthenticated user" do
     it "should be redirected to the login page" do
       get :index
-      expect(response).to redirect_to(root_url)
+      expect(response).to redirect_to(root_path)
     end
   end
 
@@ -33,7 +33,6 @@ RSpec.describe PeopleController do
     end
 
     describe "GET show" do
-      # render_views
       it "assigns the requested person as @person" do
         allow(Person).to receive(:find).with("37") { mock_person }
         get :show, id: "37"
@@ -66,12 +65,14 @@ RSpec.describe PeopleController do
       end
 
       describe "with valid params" do
+        let(:person) { mock_person(save: true) }
+        before(:each) do
+          allow(@controller).to receive(:retrieve_user) { person }
+        end
+
         it "assigns a newly created person as @person" do
-          allow(Person).to receive(:new).
-                            with("these" => "params").
-                            and_return(mock_person(save: true))
-          post :create, person: { "these" => "params" }
-          expect(assigns(:person)).to be(mock_person)
+          post :create, person: { email: "some-email@example.com" }
+          expect(assigns(:person)).to be(person)
         end
 
         # TODO: PeopleController#create does some magic with ldap, since we
@@ -81,23 +82,25 @@ RSpec.describe PeopleController do
           @ability.can(:manage, :all)
           allow(@controller).to receive(:current_ability).and_return(@ability)
           allow(Person).to receive(:new) { mock_person(save: true) }
-          post :create, person: {}
-          expect(response).to redirect_to(person_url(mock_person))
+          post :create, person: { email: "foo.bar@example.com" }
+          expect(response).to redirect_to(person_path(person))
         end
       end
 
       describe "with invalid params" do
+        let(:person) { mock_person(save: false) }
+
+        before(:each) do
+          allow(@controller).to receive(:retrieve_user) { person }
+        end
+
         it "assigns a newly created but unsaved person as @person" do
-          allow(Person).to receive(:new).
-                            with("these" => "params").
-                            and_return(mock_person(save: false))
-          post :create, person: { "these" => "params" }
-          expect(assigns(:person)).to be(mock_person)
+          post :create, person: { email: "x" }
+          expect(assigns(:person)).to be(person)
         end
 
         it "re-renders the 'new' template" do
-          allow(Person).to receive(:new) { mock_person(save: false) }
-          post :create, person: {}
+          post :create, person: { "foo" => "bar" }
           expect(response).to render_template("new")
         end
       end
@@ -122,7 +125,7 @@ RSpec.describe PeopleController do
 
         it "redirects to the person" do
           put :update, id: "1"
-          expect(response).to redirect_to(person_url(mock_person))
+          expect(response).to redirect_to(person_path(mock_person))
         end
       end
 
