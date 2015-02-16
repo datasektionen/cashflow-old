@@ -415,8 +415,10 @@
         updated: "Produkttyp uppdaterad"
     budget_post:
       error:
-        delete_restricted: "Budgetpost kunde inte tas bort eftersom den har relaterade inköp"
+        delete_restricted: "Budgetposten kunde inte tas bort eftersom den har relaterade inköp"
       success:
+        created: "Budgetpost skapad"
+        updated: "Budgetpost uppdaterad"
         delete: "Budgetpost borttagen"
   navigation:
     sign_in: "Logga in"
@@ -453,3 +455,18 @@
       logout: 'Klicka "här":https://login.kth.se/logout för att även logga ut från KTH.'
   show_budget_rows_for: "Visa budget för år:"
   budget_for_year: 'Budget %{year}'
+
+  routes:
+    people: personer
+    product_types: produkttyper
+    business_units: affarsenheter
+    purchases: inkop
+    budget: budget
+    budget_posts: budgetposter
+    budget_rows: budgetrader
+    new: ny
+    edit: redigera
+    confirmed: bekraftade
+    pay_multiple: betala
+    search: sok
+
