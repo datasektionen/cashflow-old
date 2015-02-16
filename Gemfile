@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 4.1.0"
+gem "rails", "~> 4.2.0"
 
 # Auth
 gem "devise", "~> 3.4.0"
@@ -11,7 +11,7 @@ gem "cancancan" # Authz
 # Forms
 gem "formtastic", "~> 3.1.3"
 gem "formtastic-bootstrap"
-gem "bootstrap-sass", "= 3.1.1.0"
+gem "bootstrap-sass", "~> 3.2.0.2"
 gem "bootstrap-datepicker-rails"
 
 # Views
@@ -24,8 +24,8 @@ gem "route_translator" # localized routes
 gem "friendly_id"  # pretty routes
 
 # Javascript
-gem "jquery-rails"
-gem "chosen_rails"
+gem "jquery-rails", "~> 4.0.0"
+gem "chosen-rails"
 gem "cocoon"
 gem "uglifier"
 
@@ -36,7 +36,7 @@ gem "pg"
 gem "textacular" # Search
 
 gem "net-ldap"          # Import people from LDAP
-gem "paper_trail"       # Who did what?
+gem "paper_trail", ">= 4.0.0.beta2"      # Who did what?
 gem "simple-navigation" # Navigation
 gem "workflow"          # state machines for purchases
 gem "rfc-822"           # validate email
@@ -45,7 +45,7 @@ group :production do
   gem "unicorn"
 end
 
-group :development do
+group :development, :test do
   gem "pry-nav"
   gem "pry-rails"
   gem "spring"
