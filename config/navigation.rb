@@ -45,7 +45,8 @@ SimpleNavigation::Configuration.run do |navigation|
                    current_user.name,
                    person_path(current_user) do |secondary|
         secondary.item :my_page, localize["my_page"], person_path(current_user)
-        secondary.item :logout, "Logga ut", destroy_user_session_path
+        secondary.item :logout, "Logga ut",
+                       destroy_user_session_path, method: :delete
       end
     else
       primary.item :login, I18n.t("navigation.sign_in"), "/users/auth/cas"
