@@ -18,9 +18,7 @@ class PeopleController < ApplicationController
   end
 
   def create
-    search_options = params[:person].slice(*%w(login ugid email))
-    @person = Person.where(search_options).first unless search_options.blank?
-    @person ||= Person.from_ldap(search_options)
+    @person = retrieve_user(person_params)
 
     if @person.save
       redirect_to(@person, notice: I18n.t('notices.person.success.created'))
@@ -59,6 +57,21 @@ class PeopleController < ApplicationController
   end
 
   protected
+
+  def person_params
+    params.require(:person).permit(:login,
+                                   :ugid,
+                                   :email,
+                                   :bank_clearing_number,
+                                   :bank_account_number,
+                                   :bank_name)
+  end
+
+  def retrieve_user(params)
+    search_options = person_params.slice(*%w(login ugid email))
+    @person = Person.where(search_options).first unless search_options.blank?
+    @person ||= Person.from_ldap(search_options)
+  end
 
   def get_items
     if @person && @person.persisted?

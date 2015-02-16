@@ -25,9 +25,10 @@ describe BusinessUnitsController, type: :controller do
 
     describe "GET index" do
       it "assigns all business_units as @business_units" do
-        allow(BusinessUnit).to receive(:all) { [mock_business_unit] }
+        business_unit = create(:business_unit)
         get :index
-        expect(assigns(:business_units)).to eq([mock_business_unit])
+        expect(assigns(:business_units)).to eq(BusinessUnit.all)
+        expect(assigns(:business_units)).to include(business_unit)
       end
     end
 
@@ -45,9 +46,10 @@ describe BusinessUnitsController, type: :controller do
 
     describe "GET index" do
       it "assigns all business_units as @business_units" do
-        allow(BusinessUnit).to receive(:all) { [mock_business_unit] }
+        business_unit = create(:business_unit)
         get :index
-        expect(assigns(:business_units)).to eq([mock_business_unit])
+        expect(assigns(:business_units)).to eq(BusinessUnit.all)
+        expect(assigns(:business_units)).to include(business_unit)
       end
     end
 
@@ -89,7 +91,7 @@ describe BusinessUnitsController, type: :controller do
           allow(BusinessUnit).to receive(:new).
                                   and_return(mock_business_unit(save: true))
           post :create, business_unit: {}
-          expect(response).to redirect_to(business_unit_url(mock_business_unit))
+          expect(response).to redirect_to(business_unit_path(mock_business_unit))
         end
       end
 
@@ -135,7 +137,7 @@ describe BusinessUnitsController, type: :controller do
             mock_business_unit(update_attributes: true)
           }
           put :update, id: "1"
-          expect(response).to redirect_to(business_unit_url(mock_business_unit))
+          expect(response).to redirect_to(business_unit_path(mock_business_unit))
         end
       end
 
@@ -167,7 +169,7 @@ describe BusinessUnitsController, type: :controller do
       it "redirects to the business_units list" do
         allow(BusinessUnit).to receive(:find) { mock_business_unit }
         delete :destroy, id: "1"
-        expect(response).to redirect_to(business_units_url)
+        expect(response).to redirect_to(business_units_path)
       end
     end
   end
