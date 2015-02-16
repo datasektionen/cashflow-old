@@ -36,7 +36,7 @@ class BudgetController < ApplicationController
     redirect_to budget_path(id: @year)
   rescue
     edit
-    render 'edit'
+    render "edit"
   end
 
   protected

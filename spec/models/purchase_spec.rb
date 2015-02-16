@@ -113,10 +113,12 @@ RSpec.describe Purchase do
     expect(subject).to be_finalized
   end
 
-  describe "" do
+  describe "cancellable and confirmed_by" do
     %w(paid bookkept finalized confirmed).each do |state|
+      subject { create(:confirmed_purchase) }
+
       before(:each) do
-        subject.update_attribute(:workflow_state, state)
+        subject.update_column(:workflow_state, state)
       end
 
       it "should not be cancellable when #{state}" do
@@ -124,6 +126,8 @@ RSpec.describe Purchase do
       end
 
       it "should have confirmed_by when #{state}" do
+        puts subject.state_history.inspect
+        expect(subject.state_history).not_to eq([])
         expect(subject.confirmed_by).not_to be_nil
       end
     end

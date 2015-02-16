@@ -1,8 +1,8 @@
 class Notifier < ActionMailer::Base
   add_template_helper(ApplicationHelper)
-  default from: 'noreply@d.ths.kth.se'
-  default cc: 'kassor@d.kth.se'
-  default_url_options[:host] = Cashflow::Application.settings['default_host']
+  default from: "noreply@d.ths.kth.se"
+  default cc: "kassor@d.kth.se"
+  default_url_options[:host] = Cashflow::Application.settings["default_host"]
 
   %w[created approved denied].each do |method|
     name = "purchase_#{method}"
@@ -16,7 +16,7 @@ class Notifier < ActionMailer::Base
   def purchase_paid(purchase)
     @purchase = purchase
     @administrator = purchase.last_updated_by
-    options = mail_header_params(purchase, 'purchase_paid')
+    options = mail_header_params(purchase, "purchase_paid")
     unless purchase.business_unit.email.blank?
       options[:cc] = purchase.business_unit.email
     end

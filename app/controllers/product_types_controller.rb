@@ -20,23 +20,23 @@ class ProductTypesController < ApplicationController
     @product_type = ProductType.new(params[:product_type])
 
     if @product_type.save
-      redirect_to(@product_type, notice: I18n.t('notices.product_type.success.created'))
+      redirect_to(@product_type, notice: I18n.t("notices.product_type.success.created"))
     else
-      render action: 'new'
+      render action: "new"
     end
   end
 
   def update
     if @product_type.update_attributes(params[:product_type])
-      redirect_to(@product_type, notice: I18n.t('notices.product_type.success.updated'))
+      redirect_to(@product_type, notice: I18n.t("notices.product_type.success.updated"))
     else
-      render action: 'edit'
+      render action: "edit"
     end
   end
 
   def destroy
     unless @product_type.destroy
-      flash[:error] = I18n.t('activerecord.errors.models.product_type.cannot_be_removed')
+      flash[:error] = I18n.t("activerecord.errors.models.product_type.cannot_be_removed")
     end
 
     redirect_to(product_types_url)
@@ -49,7 +49,7 @@ class ProductTypesController < ApplicationController
                 name: @product_type.name,
                 url: product_type_path(@product_type) },
               { key: :edit_product_type,
-                name: I18n.t('edit'),
+                name: I18n.t("edit"),
                 url: edit_product_type_path(@product_type) }
              ]
   end

@@ -16,9 +16,10 @@ class BudgetRowsController < ApplicationController
 
   def update
     if @budget_row.update_attributes(params[:budget_row])
-      redirect_to(budget_row_path(budget_id: @year, id: @budget_row), notice: 'Budget row was successfully updated.')
+      redirect_to(budget_row_path(budget_id: @year, id: @budget_row),
+                  notice: "Budget row was successfully updated.")
     else
-      render action: 'edit'
+      render action: "edit"
     end
   end
 
@@ -29,16 +30,17 @@ class BudgetRowsController < ApplicationController
   end
 
   def get_items
+    path_params = { budget_id: @budget_row.year, id: @budget_row.id }
     @items = [{ key:  :show_budget,
-                name: t('budget_for_year', year: @year),
+                name: t("budget_for_year", year: @year),
                 url:   budget_path(id: @year)
               },
               { key: :show_budget_row,
                 name: @budget_row.budget_post.name,
-                url: budget_row_path(budget_id: @budget_row.year, id: @budget_row.id) },
+                url: budget_row_path(path_params) },
               { key: :edit_budget_row,
-                name: I18n.t('edit'),
-                url: edit_budget_row_path(budget_id: @budget_row.year, id: @budget_row.id) }
+                name: I18n.t("edit"),
+                url: edit_budget_row_path(path_params) }
              ]
   end
 end

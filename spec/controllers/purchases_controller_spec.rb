@@ -30,9 +30,9 @@ RSpec.describe PurchasesController do
   describe "GET new" do
     it "assigns a new purchase as @purchase" do
       purchase = spy("purchase",
-                        :items => double("array", build: []),
-                        :person= => nil,
-                        :person_id= => nil
+                     :items => double("array", build: []),
+                     :person= => nil,
+                     :person_id= => nil
       )
       allow(Purchase).to receive(:new) { purchase }
 
@@ -155,7 +155,7 @@ RSpec.describe PurchasesController do
   end
 
   describe "PUT confirm" do
-    subject { mock_purchase({id: 4711, confirmed?: false })}
+    subject { mock_purchase(id: 4711, confirmed?: false) }
 
     before do
       allow(Notifier).to receive(:purchase_approved).
@@ -176,7 +176,7 @@ RSpec.describe PurchasesController do
   end
 
   describe "PUT pay" do
-    subject { mock_purchase({ id: 4711, paid?: false })}
+    subject { mock_purchase(id: 4711, paid?: false) }
 
     before do
       allow(Notifier).to receive(:purchase_paid).
@@ -197,7 +197,7 @@ RSpec.describe PurchasesController do
   end
 
   describe "PUT keep" do
-    subject { mock_purchase({ id: 4711, bookkept?: false })}
+    subject { mock_purchase(id: 4711, bookkept?: false) }
 
     before do
       allow(Purchase).to receive(:find).and_return(subject)
@@ -220,7 +220,7 @@ RSpec.describe PurchasesController do
   end
 
   describe "PUT cancel" do
-    subject { mock_purchase({ id: 4711, cancelled?: false })}
+    subject { mock_purchase(id: 4711, cancelled?: false) }
 
     before do
       allow(Notifier).to receive(:purchase_denied).

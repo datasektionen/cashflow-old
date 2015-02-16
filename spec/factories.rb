@@ -48,7 +48,7 @@ FactoryGirl.define do
     active              { true }
     mage_number         { 1 }
     mage_default_series { "C" }
-    email               { "" }
+    email               { generate :email }
   end
 
   factory :product_type do
@@ -61,8 +61,14 @@ FactoryGirl.define do
     login "blame"
     first_name "Martin"
     last_name "Frost"
-    email
+    email { generate :email }
     ugid
+
+    Person::ROLES.each do |p_role|
+      factory p_role.to_sym do
+        role { p_role }
+      end
+    end
   end
 
   factory :purchase do
@@ -72,6 +78,10 @@ FactoryGirl.define do
     year          { Time.now.year }
     person
     budget_post
+
+    factory :confirmed_purchase do
+      workflow_state "confirmed"
+    end
   end
 
   factory :purchase_item do
@@ -79,12 +89,6 @@ FactoryGirl.define do
     amount    { 17.0 }
     purchase
     product_type
-  end
-
-  Person::ROLES.each do |p_role|
-    factory p_role.to_sym, parent: :person do
-      role { p_role }
-    end
   end
 
   factory :budget_post do

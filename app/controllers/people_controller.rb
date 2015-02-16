@@ -21,9 +21,9 @@ class PeopleController < ApplicationController
     @person = retrieve_user(person_params)
 
     if @person.save
-      redirect_to(@person, notice: I18n.t('notices.person.success.created'))
+      redirect_to(@person, notice: I18n.t("notices.person.success.created"))
     else
-      render action: 'new'
+      render action: "new"
     end
   end
 
@@ -33,9 +33,9 @@ class PeopleController < ApplicationController
       @person.save
     end
     if @person.update_attributes(params[:person])
-      redirect_to(@person, notice: I18n.t('notices.person.success.created'))
+      redirect_to(@person, notice: I18n.t("notices.person.success.created"))
     else
-      render action: 'edit'
+      render action: "edit"
     end
   end
 
@@ -45,8 +45,13 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       format.json do
-        if Person.where(search_options).any? && person = Person.where(search_options).first
-          render json: { person: { name: person.name }, error: I18n.t('activerecord.errors.models.person.exists'), url: person_url(person) }
+        person = Person.where(search_options).first
+        if person
+          render json: {
+            person: { name: person.name },
+            error: I18n.t("activerecord.errors.models.person.exists"),
+            url: person_url(person)
+          }
         else
           person = Person.from_ldap(search_options)
           Rails.logger.info(person)
@@ -68,7 +73,7 @@ class PeopleController < ApplicationController
   end
 
   def retrieve_user(params)
-    search_options = person_params.slice(*%w(login ugid email))
+    search_options = params.slice(*%w(login ugid email))
     @person = Person.where(search_options).first unless search_options.blank?
     @person ||= Person.from_ldap(search_options)
   end
@@ -76,13 +81,17 @@ class PeopleController < ApplicationController
   def get_items
     if @person && @person.persisted?
       @items = [
-        { key: :show_person, name: @person.name, url: person_path(@person) },
-        { key: :edit_person, name: I18n.t('edit'), url: edit_person_path(@person) }
+        { key: :show_person,
+          name: @person.name, url: person_path(@person) },
+        { key: :edit_person,
+          name: I18n.t("edit"), url: edit_person_path(@person) }
       ]
     else
       @items = [
-        { key: :all_people, name: I18n.t('navigation.all_people'), url: people_path },
-        { key: :new_person, name: I18n.t('navigation.new_person'), url: new_person_path }
+        { key: :all_people,
+          name: I18n.t("navigation.all_people"), url: people_path },
+        { key: :new_person,
+          name: I18n.t("navigation.new_person"), url: new_person_path }
       ]
     end
   end

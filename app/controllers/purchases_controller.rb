@@ -35,19 +35,19 @@ class PurchasesController < ApplicationController
 
     if @purchase.save
       Notifier.purchase_created(@purchase).deliver_now
-      redirect_to(@purchase, notice: I18n.t('notices.purchase.success.created'))
+      redirect_to(@purchase, notice: I18n.t("notices.purchase.success.created"))
     else
-      render action: 'new'
+      render action: "new"
     end
   end
 
   def update
-    @purchase.workflow_state = 'edited'
+    @purchase.workflow_state = "edited"
 
     if @purchase.update_attributes(purchase_params)
-      redirect_to(@purchase, notice: I18n.t('notices.purchase.success.updated'))
+      redirect_to(@purchase, notice: I18n.t("notices.purchase.success.updated"))
     else
-      render action: 'edit'
+      render action: "edit"
     end
   end
 
@@ -84,7 +84,8 @@ class PurchasesController < ApplicationController
     if @purchase.keep!
       voucher = Mage::Voucher.from_purchase(@purchase)
       unless voucher.push(@purchase.last_updated_by)
-        fail "An error occured when pushing #{@purchase.inspect} to MAGE (push returned false)"
+        fail "An error occured when pushing #{@purchase.inspect}\
+        to MAGE (push returned false)".gsub(/\s+/, " ")
       end
     end
     redirect_to(purchase_path(@purchase))
@@ -123,7 +124,7 @@ class PurchasesController < ApplicationController
     if @purchase.editable?
       @items << {
         key: :edit_purchase_path,
-        name: I18n.t('edit'),
+        name: I18n.t("edit"),
         url: edit_purchase_path(@purchase)
       }
     end

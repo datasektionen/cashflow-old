@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  layout 'application'
+  layout "application"
 
   protect_from_forgery
 

@@ -98,14 +98,13 @@ RSpec.describe Notifier do
         name = admin.name
         id = purchase.id
         assert subject.body.to_s.starts_with?(
-          "#{name} har nu registrerat ditt inköp ##{id} som betalt," +
-          " du borde få pengarna inom några dagar."
+          "#{name} har nu registrerat ditt inköp ##{id} som betalt,"
         )
       end
 
       context "business_unit with email" do
         it "sets the correct to, from, and reply addresses" do
-          purchase.business_unit.update_column(:email, "a@a.a") 
+          purchase.business_unit.update_column(:email, "a@a.a")
 
           expect(subject.to).to eq([purchase.person.email])
           expect(subject.subject).to eq(
@@ -117,7 +116,7 @@ RSpec.describe Notifier do
 
       context "business_unit with no email" do
         it "sets the correct to, from, and reply addresses" do
-          purchase.business_unit.update_column(:email, "") 
+          purchase.business_unit.update_column(:email, "")
 
           expect(subject.to).to eq([purchase.person.email])
           expect(subject.subject).to eq(

@@ -1,20 +1,20 @@
 require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
-ENV['RAILS_ENV'] ||= 'test'
+ENV["RAILS_ENV"] ||= "test"
 
-if ENV['COVERAGE']
-  require 'simplecov'
-  SimpleCov.start 'rails'
+if ENV["COVERAGE"]
+  require "simplecov"
+  SimpleCov.start "rails"
 end
 
-require File.expand_path('../../config/environment', __FILE__)
-require 'rspec/rails'
-require 'controller_macros'
-require 'formtastic'
-require 'headless'
-require 'database_cleaner'
-require 'webmock/rspec'
-require 'paper_trail/frameworks/rspec'
+require File.expand_path("../../config/environment", __FILE__)
+require "rspec/rails"
+require "controller_macros"
+require "formtastic"
+require "headless"
+require "database_cleaner"
+require "webmock/rspec"
+require "paper_trail/frameworks/rspec"
 
 WebMock.disable_net_connect!(:allow => "codeclimate.com")
 headless = Headless.new

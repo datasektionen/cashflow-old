@@ -1,13 +1,13 @@
 class BudgetPost < ActiveRecord::Base
   has_many :purchases, dependent: :restrict_with_exception
-  has_many :budget_rows, -> { order 'year desc' }, dependent: :destroy
+  has_many :budget_rows, -> { order "year desc" }, dependent: :destroy
   belongs_to :business_unit
 
   validates :mage_arrangement_number, presence: true
 
   after_create :create_rows
 
-  default_scope -> { order('name ASC') }
+  default_scope -> { order("name ASC") }
 
   def to_s
     name
@@ -15,7 +15,7 @@ class BudgetPost < ActiveRecord::Base
 
   # return an array of all years for which there are any budget rows
   def self.all_years
-    [Time.now.year] | BudgetRow.group(:year).select(:year).order('year desc').map(&:year)
+    [Time.now.year] | BudgetRow.group(:year).order("year desc").pluck(:year)
   end
 
   def row(year)

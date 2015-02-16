@@ -20,20 +20,20 @@ class Person < ActiveRecord::Base
   end
 
   def cn
-    '%s %s (%s)' % [first_name, last_name, login]
+    "%s %s (%s)" % [first_name, last_name, login]
   end
 
   def name
-    '%s %s' % [first_name, last_name]
+    "%s %s" % [first_name, last_name]
   end
 
   def total_purchased_amount
-    purchases.unpaid.inject(0) { |sum, x| sum += x.total }.to_f
+    purchases.unpaid.reduce(0.0) { |a, e| a + e.total }
   end
 
   # search KTH's LDAP server for a user.
-  # This method will return a new Person object if it finds any information from the LDAP server.
-  # The options hash should contain search filters.
+  # This method will return a new Person object if it finds any information from
+  # the LDAP server. The options hash should contain search filters.
   # The following filters are allowed:
   # * first_name
   # * last_name
@@ -41,15 +41,17 @@ class Person < ActiveRecord::Base
   # * login
   # * email
   #
-  # If supplied with more than one filter, the search will be more specific (first_name=foo & last_name=bar).
+  # If supplied with more than one filter, the search will be more specific
+  # (first_name=foo & last_name=bar).
   #
-  # Make sure to supply it with specific filters, since it will only return the first user it finds.
+  # Make sure to supply it with specific filters, since it will only return the
+  # first user it finds.
   def self.from_ldap(options = {})
-    filters = { givenName: options[:first_name] || options['first_name'],
-                sn: options[:last_name] || options['last_name'],
-                ugKthid: options[:ugid] || options['ugid'],
-                ugUsername: options[:login] || options['login'],
-                mail: options[:email] || options['email'] }
+    filters = { givenName: options[:first_name] || options["first_name"],
+                sn: options[:last_name] || options["last_name"],
+                ugKthid: options[:ugid] || options["ugid"],
+                ugUsername: options[:login] || options["login"],
+                mail: options[:email] || options["email"] }
 
     filters.reject! { |_k, v| v.blank? }
 
@@ -57,11 +59,12 @@ class Person < ActiveRecord::Base
     return nil if filters.empty?
     # map filters to proper ldap filters,
     # and join them into a big query
-    filter = filters.map { |k, v| Net::LDAP::Filter.eq(k, v) }.inject { |x, y| x & y }
+    filter = filters.map { |k, v| Net::LDAP::Filter.eq(k, v) }.
+                     reduce { |a, e| a & e }
 
-    ldap = Net::LDAP.new(host: Cashflow::Application.settings['ldap_host'],
-                         base: Cashflow::Application.settings['ldap_basedn'],
-                         port: Cashflow::Application.settings['ldap_port'])
+    ldap = Net::LDAP.new(host: Cashflow::Application.settings["ldap_host"],
+                         base: Cashflow::Application.settings["ldap_basedn"],
+                         port: Cashflow::Application.settings["ldap_port"])
 
     ldap.search(filter: filter) do |user|
       person = new
@@ -76,7 +79,8 @@ class Person < ActiveRecord::Base
   end
 
   # Utilize Person.from_ldap and save the resulting user.
-  # This is for example used by PersonSessionController in order to make sure that all logged in CAS users have a corresponding Person-object.
+  # This is for example used by PersonSessionController in order to make sure
+  # that all logged in CAS users have a corresponding Person-object.
   def self.create_from_ldap(options)
     p = from_ldap(options)
     if p
@@ -91,11 +95,11 @@ class Person < ActiveRecord::Base
 
   def self.find_for_oauth(access_token, _signed_in_resource)
     return nil if access_token.blank?
-    person = Person.find_by_ugid(access_token['uid'])
+    person = Person.find_by_ugid(access_token["uid"])
     if person
       person
     else
-      Person.create_from_ldap(ugid: access_token['uid'])
+      Person.create_from_ldap(ugid: access_token["uid"])
     end
   end
 

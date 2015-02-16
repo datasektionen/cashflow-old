@@ -20,7 +20,8 @@ class BusinessUnitsController < ApplicationController
     @business_unit = BusinessUnit.new(params[:business_unit])
 
     if @business_unit.save
-      redirect_to(@business_unit, notice: I18n.t('notices.business_unit.success.created'))
+      redirect_to(@business_unit,
+                  notice: I18n.t("notices.business_unit.success.created"))
     else
       render :new
     end
@@ -28,7 +29,8 @@ class BusinessUnitsController < ApplicationController
 
   def update
     if @business_unit.update_attributes(params[:business_unit])
-      redirect_to(@business_unit, notice: I18n.t('notices.business_unit.success.updated'))
+      redirect_to(@business_unit,
+                  notice: I18n.t("notices.business_unit.success.updated"))
     else
       render :edit
     end
@@ -36,7 +38,8 @@ class BusinessUnitsController < ApplicationController
 
   def destroy
     unless @business_unit.destroy
-      flash[:error] = I18n.t('activerecord.errors.models.business_unit.cannot_be_removed')
+      i18n_path = "activerecord.errors.models.business_unit.cannot_be_removed"
+      flash[:error] = I18n.t(i18n_path)
     end
 
     redirect_to(business_units_url)
@@ -49,7 +52,7 @@ class BusinessUnitsController < ApplicationController
                 name: @business_unit.name,
                 url: business_unit_path(@business_unit) },
               { key: :edit_business_unit,
-                name: I18n.t('edit'),
+                name: I18n.t("edit"),
                 url: edit_business_unit_path(@business_unit) }
              ]
   end

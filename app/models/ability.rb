@@ -2,13 +2,13 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user
-      can [:edit, :update, :show], Person, id: user.id
-      can [:read, :create, :edit, :update, :show], Purchase, person_id: user.id
-      can :read, ProductType
+    return unless user
 
-      send("setup_#{user.role}", user) unless user.role.blank?
-    end
+    can [:edit, :update, :show], Person, id: user.id
+    can [:read, :create, :edit, :update, :show], Purchase, person_id: user.id
+    can :read, ProductType
+
+    send("setup_#{user.role}", user) unless user.role.blank?
   end
 
   private
