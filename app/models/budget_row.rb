@@ -2,7 +2,7 @@ class BudgetRow < ActiveRecord::Base
   belongs_to :budget_post
   delegate :business_unit, to: :budget_post
 
-  scope :year, lambda { |year| includes(budget_post: :purchases).where(year: year) }
+  scope :year, ->(year) { includes(budget_post: :purchases).where(year: year) }
 
   validates :sum, numericality: { greater_than_or_equal_to: 0 }
 
