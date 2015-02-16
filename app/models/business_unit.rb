@@ -8,7 +8,7 @@ class BusinessUnit < ActiveRecord::Base
   has_many :budget_posts
   has_many :purchases, through: :budget_posts
 
-  default_scope order('name ASC')
+  default_scope -> { order('name ASC') }
 
   def to_s
     name
