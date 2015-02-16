@@ -1,6 +1,6 @@
 class Purchase < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :slug
+  friendly_id :slug, use: [:slugged, :finders]
 
   include Workflow
   has_paper_trail
