@@ -2,10 +2,11 @@ class Purchase < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug, use: [:slugged, :finders]
 
-  include Workflow
   has_paper_trail
+  include Workflow
 
   belongs_to :person
+  # belongs_to :last_modified_by, foreign_key: :originator, class_name: "Person"
   belongs_to :budget_post
 
   before_create :check_budget_rows_exists
@@ -105,6 +106,15 @@ class Purchase < ActiveRecord::Base
 
   # Returns the last person to confirm this purchase (if any)
   def confirmed_by
+    return Person.find(originator) if confirmed?
+    s = state_history.find { |state| state.workflow_state == "confirmed" }
+    if s
+      Person.find(s.originator)
+    end
+  end
+
+  def confirmed_by_id
+    return originator if confirmed?
     s = state_history.find { |state| state.workflow_state == "confirmed" }
     s.originator if s
   end

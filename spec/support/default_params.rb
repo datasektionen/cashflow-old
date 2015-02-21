@@ -4,9 +4,9 @@ module DefaultParams
   extend ActiveSupport::Concern
 
   included do
-    let(:default_params) { {locale: I18n.locale} }
+    let(:default_params) { { locale: I18n.locale } }
 
-    def process_with_default_params(action, http_method = 'GET', *args)
+    def process_with_default_params(action, http_method = "GET", *args)
       parameters = args.shift
 
       parameters = default_params.merge(parameters || {})

@@ -7,7 +7,7 @@ class BudgetPost < ActiveRecord::Base
 
   after_create :create_rows
 
-  default_scope -> { order("name ASC") }
+  default_scope { order("name ASC") }
 
   def to_s
     name

@@ -42,13 +42,13 @@ FactoryGirl.define do
     transient do
       bu_name           { generate :unit_name }
     end
-    name             { bu_name }
+    name                { bu_name }
+    email               { generate :email }
     short_name          { bu_name.slice(0, 3) }
     description         { "blubb" }
     active              { true }
     mage_number         { 1 }
     mage_default_series { "C" }
-    email               { generate :email }
   end
 
   factory :product_type do
@@ -62,7 +62,7 @@ FactoryGirl.define do
     first_name "Martin"
     last_name "Frost"
     email { generate :email }
-    ugid
+    ugid { generate :ugid }
 
     Person::ROLES.each do |p_role|
       factory p_role.to_sym do

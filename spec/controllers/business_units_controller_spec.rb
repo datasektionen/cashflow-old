@@ -92,7 +92,8 @@ RSpec.describe BusinessUnitsController, type: :controller do
           allow(BusinessUnit).to receive(:new).
                                   and_return(mock_business_unit(save: true))
           post :create, business_unit: {}
-          expect(response).to redirect_to(business_unit_path(mock_business_unit))
+          expect(response).to redirect_to(
+            business_unit_path(mock_business_unit))
         end
       end
 
@@ -138,7 +139,8 @@ RSpec.describe BusinessUnitsController, type: :controller do
             mock_business_unit(update_attributes: true)
           }
           put :update, id: "1"
-          expect(response).to redirect_to(business_unit_path(mock_business_unit))
+          expect(response).to redirect_to(
+            business_unit_path(mock_business_unit))
         end
       end
 

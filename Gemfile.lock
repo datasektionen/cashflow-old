@@ -339,7 +339,7 @@ DEPENDENCIES
   net-ldap
   omniauth (~> 1.0)
   omniauth-cas (~> 1.0)
-  paper_trail (>= 4.0.0.beta2)
+  paper_trail (~> 4.0.0.beta)
   pg
   pry-nav
   pry-rails

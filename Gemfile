@@ -36,7 +36,7 @@ gem "pg"
 gem "textacular" # Search
 
 gem "net-ldap"          # Import people from LDAP
-gem "paper_trail", ">= 4.0.0.beta2"      # Who did what?
+gem "paper_trail", "~> 4.0.0.beta"      # Who did what?
 gem "simple-navigation" # Navigation
 gem "workflow"          # state machines for purchases
 gem "rfc-822"           # validate email

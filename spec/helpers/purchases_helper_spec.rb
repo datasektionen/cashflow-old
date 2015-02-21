@@ -36,10 +36,10 @@ RSpec.describe PurchasesHelper do
                           first_name: "foo",
                           last_name: "bar")
       version = OpenStruct.new(purchase_date: Time.now,
-                               originator: person,
+                               last_modified_by: person,
                                workflow_state: "New")
       expect(helper.link_to_originator(version)).to eq(
-        link_to(version.originator.name, person_path(version.originator))
+        link_to(person.name, person_path(person))
       )
     end
 

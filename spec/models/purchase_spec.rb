@@ -115,7 +115,12 @@ RSpec.describe Purchase do
 
   describe "cancellable and confirmed_by" do
     %w(paid bookkept finalized confirmed).each do |state|
-      subject { create(:confirmed_purchase) }
+      before(:all) do
+        PaperTrail.enabled = true
+        PaperTrail.whodunnit = 4711
+      end
+
+      subject { create(:purchase).tap(&:confirm!) }
 
       before(:each) do
         subject.update_column(:workflow_state, state)
@@ -126,8 +131,6 @@ RSpec.describe Purchase do
       end
 
       it "should have confirmed_by when #{state}" do
-        puts subject.state_history.inspect
-        expect(subject.state_history).not_to eq([])
         expect(subject.confirmed_by).not_to be_nil
       end
     end

@@ -13,7 +13,6 @@ RSpec.describe PurchasesController do
     xit "assigns all purchases as @purchases" do
       allow(Purchase).to receive(:all) { [mock_purchase] }
       get :index
-      debugger
       expect(assigns(:purchases)).to eq([mock_purchase])
     end
   end
@@ -104,7 +103,7 @@ RSpec.describe PurchasesController do
 
       it "updates the requested purchase" do
         expect(mock_purchase).to receive(:update_attributes).
-                                  with("description" => "foo bar")
+          with("description" => "foo bar")
         put :update, id: "37", purchase: { "description" => "foo bar" }
       end
 
