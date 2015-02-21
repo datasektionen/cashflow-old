@@ -53,7 +53,7 @@ module PurchaseHelpers
   def filter_purchase_date(to_or_from, date)
     page.find_by_id("purchase_filter_toggle").click
     fill_in("filter_purchased_on_#{to_or_from}", with: date)
-    page.find_by_id("filter_submit").trigger('click')
+    page.find_by_id("filter_submit").trigger("click")
   end
 end
 

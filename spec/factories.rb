@@ -42,12 +42,12 @@ FactoryGirl.define do
     transient do
       bu_name           { generate :unit_name }
     end
-    name                { bu_name }
-    email               { generate :email }
-    short_name          { bu_name.slice(0, 3) }
-    description         { "blubb" }
-    active              { true }
-    mage_number         { 1 }
+    name { bu_name }
+    email { generate :email }
+    short_name { bu_name.slice(0, 3) }
+    description { "blubb" }
+    active { true }
+    mage_number { 1 }
     mage_default_series { "C" }
   end
 
