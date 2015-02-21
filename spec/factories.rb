@@ -10,12 +10,10 @@ FactoryGirl.define do
                       inredning
                       mat)
 
-  business_units = %w(DKM Mottagningen QN Ior ESCapo Drek)
-
   budget_posts = %w(BP1 BP2 BP3 BP4 BP5)
 
-  sequence :unit_name do |_n|
-    business_units[rand(business_units.length)]
+  sequence :unit_name do |n|
+    "Business Unit #{n}"
   end
 
   sequence :ugid do |n|
@@ -44,7 +42,7 @@ FactoryGirl.define do
     end
     name { bu_name }
     email { generate :email }
-    short_name { bu_name.slice(0, 3) }
+    short_name { "BU#{id}" }
     description { "blubb" }
     active { true }
     mage_number { 1 }
@@ -76,8 +74,24 @@ FactoryGirl.define do
     slug          { "test" }
     purchased_on  { Date.today }
     year          { Time.now.year }
-    person
-    budget_post
+    person        { create(:person) }
+    budget_post   { create(:budget_post) }
+
+    transient do
+      item_count { 1 }
+    end
+
+    factory :purchase_with_items do
+      after(:build) do |purchase, evaluator|
+        evaluator.item_count.times do |i|
+          purchase.items.new(
+            comment: "item ##{i}",
+            amount: 17,
+            product_type: create(:product_type)
+          )
+        end
+      end
+    end
 
     factory :confirmed_purchase do
       workflow_state "confirmed"

@@ -27,7 +27,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || person_path(current_user)
+    stored_location_for(resource) || new_purchase_path
   end
 
   private
