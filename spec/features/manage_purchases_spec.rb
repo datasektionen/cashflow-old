@@ -208,4 +208,12 @@ RSpec.feature "Manage purchases" do
       end
     end
   end
+
+  describe "Pay confirmed purchases" do
+    # As an admin
+    # In order to reduce workload
+    # We want to be able to mark multiple purchases as paid at once
+
+    skip "TODO: write specs"
+  end
 end
