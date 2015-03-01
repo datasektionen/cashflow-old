@@ -2,7 +2,7 @@ require "spec_helper"
 require "cancan"
 require "cancan/matchers"
 
-describe Ability do
+RSpec.describe Ability do
   describe "admin" do
     before(:each) do
       @user = create(:admin)

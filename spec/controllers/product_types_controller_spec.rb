@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe ProductTypesController do
+RSpec.describe ProductTypesController do
   def mock_product_type(stubs = {})
     @mock_product_type ||= mock_model(ProductType).as_null_object
     @mock_product_type.tap do |product_type|
@@ -17,9 +17,8 @@ describe ProductTypesController do
     login_admin
     describe "GET index" do
       it "assigns all product_types as @product_types" do
-        allow(ProductType).to receive(:all) { [mock_product_type] }
         get :index
-        expect(assigns(:product_types)).to eq([mock_product_type])
+        expect(assigns(:product_types)).to eq(ProductType.all)
       end
     end
 
@@ -64,7 +63,7 @@ describe ProductTypesController do
 
         it "redirects to the created product_type" do
           post :create, product_type: { "these" => "params" }
-          expect(response).to redirect_to(product_type_url(mock_product_type))
+          expect(response).to redirect_to(product_type_path(mock_product_type))
         end
       end
 
@@ -109,7 +108,7 @@ describe ProductTypesController do
 
         it "redirects to the product_type" do
           put :update, id: "1"
-          expect(response).to redirect_to(product_type_url(mock_product_type))
+          expect(response).to redirect_to(product_type_path(mock_product_type))
         end
       end
 
@@ -142,7 +141,7 @@ describe ProductTypesController do
       it "redirects to the product_types list" do
         allow(ProductType).to receive(:find) { mock_product_type }
         delete :destroy, id: "1"
-        expect(response).to redirect_to(product_types_url)
+        expect(response).to redirect_to(product_types_path)
       end
     end
   end

@@ -1,5 +1,6 @@
 .nested-fields.purchase_item
   = f.inputs do
+    = f.input :id, as: :hidden
     = f.input :amount
     = f.input :comment
     = f.input :product_type, :collection => ProductType.all, :include_blank => false

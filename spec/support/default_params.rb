@@ -3,14 +3,18 @@ require "active_support/concern"
 module DefaultParams
   extend ActiveSupport::Concern
 
-  def process_with_default_params(action, parameters, session, flash, method)
-    process_without_default_params(action,
-                                   default_params.merge(parameters || {}),
-                                   session, flash, method)
-  end
-
   included do
-    let(:default_params) { {} }
+    let(:default_params) { { locale: I18n.locale } }
+
+    def process_with_default_params(action, http_method = "GET", *args)
+      parameters = args.shift
+
+      parameters = default_params.merge(parameters || {})
+      args.unshift(parameters)
+
+      process_without_default_params(action, http_method, *args)
+    end
+
     alias_method_chain :process, :default_params
   end
 end

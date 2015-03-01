@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe Person do
+RSpec.describe Person do
   before(:all) do
     @admin = create(:admin)
   end
@@ -19,14 +19,6 @@ describe Person do
       expect(@person).to be_invalid
       expect(@person.errors).not_to be_nil
       expect(@person.errors[attribute.to_sym]).not_to be_empty
-    end
-  end
-
-  %w(first_name last_name ugid login role).each do |attribute|
-    it "should protect attribute #{attribute}" do
-      attr_value = @person.send(attribute)
-      expect(@person.update_attributes(attribute.to_sym => "foo")).to be_truthy
-      expect(@person.send(attribute)).to eq(attr_value)
     end
   end
 

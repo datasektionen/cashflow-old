@@ -1,7 +1,7 @@
-require "spec_helper"
+require "rails_helper"
 require "mage_api"
 
-describe BudgetController do
+RSpec.describe BudgetController do
   login_admin
   let(:default_params) { { locale: "sv" } }
 
@@ -41,7 +41,7 @@ describe BudgetController do
       @year = Time.now.year
       @rows = [create(:budget_row), create(:budget_row)]
       @posts = @rows.map(&:budget_post)
-      @rows_params = Hash[*@rows.flat_map { |r| [r.id, { sum: r.sum + 1000 }]}]
+      @rows_params = Hash[*@rows.flat_map { |r| [r.id, { sum: r.sum + 1000 }] }]
       @posts_params = Hash[*@posts.flat_map do |p|
         [p.id, { mage_arrangement_number: p.mage_arrangement_number + 1 }]
       end]

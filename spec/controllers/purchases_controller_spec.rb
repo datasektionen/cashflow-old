@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe PurchasesController do
+RSpec.describe PurchasesController do
   login_admin
   let(:default_params) { { locale: "sv" } }
 
@@ -13,7 +13,6 @@ describe PurchasesController do
     xit "assigns all purchases as @purchases" do
       allow(Purchase).to receive(:all) { [mock_purchase] }
       get :index
-      debugger
       expect(assigns(:purchases)).to eq([mock_purchase])
     end
   end
@@ -29,14 +28,11 @@ describe PurchasesController do
 
   describe "GET new" do
     it "assigns a new purchase as @purchase" do
-      purchase = double("purchase",
-                        :items => double("array", build: []),
-                        :person= => nil,
-                        :person_id= => nil
-      )
+      purchase = spy("purchase", items: double("array", build: []))
       allow(Purchase).to receive(:new) { purchase }
 
       get :new
+
       expect(assigns(:purchase)).to be(purchase)
     end
   end
@@ -60,18 +56,18 @@ describe PurchasesController do
 
     describe "with valid params" do
       it "assigns a newly created purchase as @purchase" do
-        post :create, purchase: { "these" => "params" }
+        post :create, purchase: { description: "foo bar" }
         expect(assigns(:purchase)).to be(subject)
       end
 
       it "redirects to the created purchase" do
-        post :create, purchase: {}
-        expect(response).to redirect_to(purchase_url(subject))
+        post :create, purchase: { description: "foo bar" }
+        expect(response).to redirect_to(purchase_path(subject))
       end
 
       it "sends an email to the owner and to the cashier" do
         expect(Notifier).to receive(:purchase_created).with(subject)
-        post :create, purchase: {}
+        post :create, purchase: { description: "foo bar" }
       end
     end
 
@@ -80,13 +76,13 @@ describe PurchasesController do
         allow_any_instance_of(Purchase).to receive(:save).and_return(false)
         allow(Purchase).to receive(:new).and_return(mock_purchase)
         purchase = mock_purchase
-        post :create, purchase: { "these" => "params" }
+        post :create, purchase: { description: "foo bar" }
         expect(assigns(:purchase)).to be(purchase)
       end
 
       it "re-renders the 'new' template" do
         allow(Purchase).to receive(:new) { mock_purchase(save: false) }
-        post :create, purchase: {}
+        post :create, purchase: { description: "foo bar" }
         expect(response).to render_template("new")
       end
     end
@@ -103,18 +99,18 @@ describe PurchasesController do
 
       it "updates the requested purchase" do
         expect(mock_purchase).to receive(:update_attributes).
-                                  with("these" => "params")
-        put :update, id: "37", purchase: { "these" => "params" }
+          with("description" => "foo bar")
+        put :update, id: "37", purchase: { "description" => "foo bar" }
       end
 
       it "assigns the requested purchase as @purchase" do
-        put :update, id: "37", purchase: { "these" => "params" }
+        put :update, id: "37", purchase: { description: "foo bar" }
         expect(assigns(:purchase)).to be(mock_purchase)
       end
 
       it "redirects to the purchase" do
-        put :update, id: "37"
-        expect(response).to redirect_to(purchase_url(mock_purchase))
+        put :update, id: "37", purchase: { description: "foo bar" }
+        expect(response).to redirect_to(purchase_path(mock_purchase))
       end
     end
 
@@ -126,12 +122,12 @@ describe PurchasesController do
       end
 
       it "assigns the purchase as @purchase" do
-        put :update, id: "1"
+        put :update, id: "37", purchase: { description: "foo bar" }
         expect(assigns(:purchase)).to be(mock_purchase)
       end
 
       it "re-renders the 'edit' template" do
-        put :update, id: "1"
+        put :update, id: "37", purchase: { description: "foo bar" }
         expect(response).to render_template("edit")
       end
     end
@@ -154,7 +150,7 @@ describe PurchasesController do
   end
 
   describe "PUT confirm" do
-    subject { mock_purchase({id: 4711, confirmed?: false })}
+    subject { mock_purchase(id: 4711, confirmed?: false) }
 
     before do
       allow(Notifier).to receive(:purchase_approved).
@@ -175,7 +171,7 @@ describe PurchasesController do
   end
 
   describe "PUT pay" do
-    subject { mock_purchase({ id: 4711, paid?: false })}
+    subject { mock_purchase(id: 4711, paid?: false) }
 
     before do
       allow(Notifier).to receive(:purchase_paid).
@@ -196,7 +192,7 @@ describe PurchasesController do
   end
 
   describe "PUT keep" do
-    subject { mock_purchase({ id: 4711, bookkept?: false })}
+    subject { mock_purchase(id: 4711, bookkept?: false) }
 
     before do
       allow(Purchase).to receive(:find).and_return(subject)
@@ -219,7 +215,7 @@ describe PurchasesController do
   end
 
   describe "PUT cancel" do
-    subject { mock_purchase({ id: 4711, cancelled?: false })}
+    subject { mock_purchase(id: 4711, cancelled?: false) }
 
     before do
       allow(Notifier).to receive(:purchase_denied).

@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe BudgetPostsController do
+RSpec.describe BudgetPostsController do
   login_admin
 
   let(:default_params) { { locale: "sv" } }
@@ -35,13 +35,10 @@ describe BudgetPostsController do
   context "GET actions" do
     describe "GET index" do
       it "assigns all budget_posts as @budget_posts" do
-        budget_post = double("budget_post")
-        # INFO: This doesn't really belong here,
-        # but is needed because of broken SRP in the controller
-        allow(BudgetRow).to receive(:create_rows_if_not_exists)
-        allow(BudgetPost).to receive(:all).and_return([budget_post])
+        budget_post = create(:budget_post)
         get :index
-        expect(assigns(:budget_posts)).to eq([budget_post])
+        expect(assigns(:budget_posts)).to eq(BudgetPost.all)
+        expect(assigns(:budget_posts)).to include(budget_post)
       end
     end
 
@@ -94,14 +91,14 @@ describe BudgetPostsController do
       it "assigns a newly created but unsaved budget_post as @budget_post" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(BudgetPost).to receive(:save).and_return(false)
-        post :create, budget_post: {}
+        post :create, budget_post: { name: "foo" }
         expect(assigns(:budget_post)).to be_a_new(BudgetPost)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(BudgetPost).to receive(:save).and_return(false)
-        post :create, budget_post: {}
+        post :create, budget_post: { name: "foo" }
         expect(response).to render_template("new")
       end
     end
@@ -163,7 +160,7 @@ describe BudgetPostsController do
 
     it "redirects to the budget_posts list" do
       delete :destroy, id: @budget_post.id.to_s
-      expect(response).to redirect_to(budget_posts_url)
+      expect(response).to redirect_to(budget_posts_path)
     end
   end
 end

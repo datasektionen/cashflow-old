@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 # Specs in this file have access to a helper object that includes
 # the PurchasesHelper. For example:
@@ -10,7 +10,7 @@ require "spec_helper"
 #     end
 #   end
 # end
-describe PurchasesHelper do
+RSpec.describe PurchasesHelper do
   describe "budget_posts_for_purchase" do
     it "returns the available budget posts to the purchase's business unit" do
       budget_posts = [create(:budget_post), create(:budget_post)]
@@ -36,10 +36,10 @@ describe PurchasesHelper do
                           first_name: "foo",
                           last_name: "bar")
       version = OpenStruct.new(purchase_date: Time.now,
-                               originator: person,
+                               last_modified_by: person,
                                workflow_state: "New")
       expect(helper.link_to_originator(version)).to eq(
-        link_to(version.originator.name, person_path(version.originator))
+        link_to(person.name, person_path(person))
       )
     end
 
@@ -52,8 +52,8 @@ describe PurchasesHelper do
   describe "filter_search_tag" do
     it "returns a text field tag with the filter name" do
       expect(helper.filter_search_tag("foo", "foo bar baz")).to eq(
-        '<input id="filter_foo" name="filter[foo]"' +
-        ' placeholder="foo bar baz" type="text" />'
+        '<input type="text" name="filter[foo]" id="filter_foo"' +
+        ' placeholder="foo bar baz" />'
       )
     end
   end
@@ -71,8 +71,8 @@ describe PurchasesHelper do
       }
       result = helper.filter_select_tag("xs", collection, :foo, :bar, options)
       expect(result).to eq(
-        '<select id="filter_xs" multiple="multiple" name="filter[xs][]" ' +
-        'placeholder="foos?"><option value=""></option>' +
+        '<select name="filter[xs][]" id="filter_xs" placeholder="foos?" ' +
+        'multiple="multiple"><option value=""></option>' +
         "<option value=\"1\">one</option>\n<option value=\"2\">two</option>" +
         "</select>"
       )
@@ -84,13 +84,11 @@ describe PurchasesHelper do
       expect(helper.filter_date_range_tags("foo")).to eq(
         '<div id="purchase_foo_filter">' +
         '<label for="filter_foo_from">Från</label>' +
-        '<input class="datepicker" id="filter_foo_from"' +
-              ' name="filter[foo_from]" placeholder="Välj ett startdatum"' +
-              ' type="text" />' +
+        '<input type="text" name="filter[foo_from]" id="filter_foo_from"' +
+              ' class="datepicker" placeholder="Välj ett startdatum" />' +
         '<label for="filter_foo_to">till och med</label>' +
-        '<input class="datepicker" id="filter_foo_to"' +
-              ' name="filter[foo_to]" placeholder="Välj ett slutdatum"' +
-              ' type="text" />' +
+        '<input type="text" name="filter[foo_to]" id="filter_foo_to"' +
+              ' class="datepicker" placeholder="Välj ett slutdatum" />' +
         "</div>"
       )
     end

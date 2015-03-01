@@ -1,11 +1,12 @@
 class Purchase < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :slug
+  friendly_id :slug, use: [:slugged, :finders]
 
-  include Workflow
   has_paper_trail
+  include Workflow
 
   belongs_to :person
+  # belongs_to :last_modified_by, foreign_key: :originator, class_name: "Person"
   belongs_to :budget_post
 
   before_create :check_budget_rows_exists
@@ -96,25 +97,25 @@ class Purchase < ActiveRecord::Base
   end
 
   def state_history
-    states = []
-    version = self
-    until version.nil?
-      whodunnit = if version.version && version.version.previous
-                    Person.find(version.version.previous.whodunnit.to_i)
-                  else
-                    version.last_updated_by
-                  end
-      states << OpenStruct.new(version_date: version.updated_at,
-                               workflow_state: version.workflow_state,
-                               originator: whodunnit)
-      version = version.previous_version
+    versions.drop(1).reverse.map do |version|
+      OpenStruct.new(version_date: version.created_at,
+                     workflow_state: version.reify.workflow_state,
+                     originator: version.whodunnit.to_i)
     end
-    states
   end
 
   # Returns the last person to confirm this purchase (if any)
   def confirmed_by
-    s = state_history.detect { |state| state.workflow_state == "confirmed" }
+    return Person.find(originator) if confirmed?
+    s = state_history.find { |state| state.workflow_state == "confirmed" }
+    if s
+      Person.find(s.originator)
+    end
+  end
+
+  def confirmed_by_id
+    return originator if confirmed?
+    s = state_history.find { |state| state.workflow_state == "confirmed" }
     s.originator if s
   end
 
@@ -150,7 +151,7 @@ class Purchase < ActiveRecord::Base
 
     if self.slug !~ /#{slug}/
       Purchase.paper_trail_off!
-      update_attribute(:slug, slug)
+      update_column(:slug, slug)
       Purchase.paper_trail_on!
     end
   end
@@ -167,11 +168,11 @@ class Purchase < ActiveRecord::Base
 
   def self.payable_grouped_by_person
     grouped = Purchase.payable.group_by(&:person)
-    grouped.reduce({}) {|hash, (key, val)| hash.merge(key => val.sum(&:total))}
+    grouped.reduce({}) { |hash, (k, v)| hash.merge(k => v.sum(&:total)) }
   end
 
   def self.pay_multiple!(params)
-    people_ids = params[:pay].collect { |k, v| k if v.to_i == 1 }
+    people_ids = params[:pay].map { |k, v| k if v.to_i == 1 }
     purchases = Purchase.where(person_id: people_ids).payable
 
     purchases.map(&:pay!)

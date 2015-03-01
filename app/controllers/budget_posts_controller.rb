@@ -5,7 +5,9 @@ class BudgetPostsController < ApplicationController
     @budget_posts = BudgetPost.all
     @year = params[:year]
     @year = Time.now.year if @year.nil?
-    BudgetRow.create_rows_if_not_exists(@year) # TODO: Refactor this to put it elsewhere. It doesn't belong here.
+
+    # TODO: Refactor this to put it elsewhere. It doesn't belong here.
+    BudgetRow.create_rows_if_not_exists(@year)
 
     @edit = params[:edit]
   end
@@ -22,20 +24,22 @@ class BudgetPostsController < ApplicationController
   end
 
   def create
-    @budget_post = BudgetPost.new(params[:budget_post])
+    @budget_post = BudgetPost.new(budget_post_params)
 
     if @budget_post.save
-      redirect_to(@budget_post, notice: 'Budget post was successfully created.')
+      redirect_to(@budget_post,
+                  notice: I18n.t("notices.budget_post.success.created"))
     else
-      render action: 'new'
+      render action: "new"
     end
   end
 
   def update
     if @budget_post.update_attributes(params[:budget_post])
-      redirect_to(budget_post_path(@budget_post), notice: I18n.t('notices.budget_post.success.updated'))
+      redirect_to(budget_post_path(@budget_post),
+                  notice: I18n.t("notices.budget_post.success.updated"))
     else
-      render action: 'edit'
+      render action: "edit"
     end
   end
 
@@ -43,11 +47,19 @@ class BudgetPostsController < ApplicationController
     @budget_post = BudgetPost.find(params[:id])
     begin
       @budget_post.destroy
-      notice = I18n.t('notices.budget_post.success.delete')
-    rescue ActiveRecord::DeleteRestrictionError => e
-      notice = I18n.t('notices.budget_post.error.delete_restricted')
+      notice = I18n.t("notices.budget_post.success.delete")
+    rescue ActiveRecord::DeleteRestrictionError => _e
+      notice = I18n.t("notices.budget_post.error.delete_restricted")
     end
 
     redirect_to(budget_posts_url, notice: notice)
+  end
+
+  protected
+
+  def budget_post_params
+    params.require(:budget_post).permit(:business_unit_id,
+                                        :name,
+                                        :mage_arrangement_number)
   end
 end

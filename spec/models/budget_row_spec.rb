@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe BudgetRow do
+RSpec.describe BudgetRow do
 
   it "is invalid if sum is negative" do
     row = BudgetRow.new sum: -1

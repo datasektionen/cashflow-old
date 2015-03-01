@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe ProductTypesController do
+RSpec.describe ProductTypesController do
   describe "routing" do
     context "locale = 'sv'" do
       it "recognizes and generates #index" do

@@ -7,6 +7,7 @@ module Cashflow
   class Application < Rails::Application
     attr_accessor :settings
     config.encoding = 'utf-8'
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end
 

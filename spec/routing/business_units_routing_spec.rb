@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe BusinessUnitsController do
+RSpec.describe BusinessUnitsController do
   describe "routing" do
     context "locale = 'sv'" do
       it "recognizes and generates #index" do

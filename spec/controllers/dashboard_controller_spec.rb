@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe DashboardController do
+RSpec.describe DashboardController do
   let(:default_params) { { locale: "sv" } }
   describe "GET index" do
     it "responds successfully" do

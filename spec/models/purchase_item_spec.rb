@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PurchaseItem do
+RSpec.describe PurchaseItem do
   subject { create(:purchase_item) }
 
   %w(purchase product_type).each do |relation|

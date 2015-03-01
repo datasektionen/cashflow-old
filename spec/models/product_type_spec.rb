@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe ProductType do
+RSpec.describe ProductType do
   subject { create(:product_type) }
 
   %w(name description).each do |field|

@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe Purchase do
+RSpec.describe Purchase do
 
   before(:all) do
     @person = create(:person)
@@ -113,10 +113,17 @@ describe Purchase do
     expect(subject).to be_finalized
   end
 
-  describe "" do
+  describe "cancellable and confirmed_by" do
     %w(paid bookkept finalized confirmed).each do |state|
+      before(:all) do
+        PaperTrail.enabled = true
+        PaperTrail.whodunnit = 4711
+      end
+
+      subject { create(:purchase).tap(&:confirm!) }
+
       before(:each) do
-        subject.update_attribute(:workflow_state, state)
+        subject.update_column(:workflow_state, state)
       end
 
       it "should not be cancellable when #{state}" do

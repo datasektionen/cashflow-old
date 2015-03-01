@@ -1,5 +1,5 @@
 require "spec_helper"
-describe Mage::Voucher do
+RSpec.describe Mage::Voucher do
   it "should have proper voucher_rows functionality" do
     v = Mage::Voucher.new
     v.accounting_date = "2011-11-11"
