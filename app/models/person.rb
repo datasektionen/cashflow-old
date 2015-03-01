@@ -28,7 +28,7 @@ class Person < ActiveRecord::Base
   end
 
   def total_purchased_amount
-    purchases.unpaid.reduce(0.0) { |a, e| a + e.total }
+    purchases.unpaid.includes(:items).sum("purchase_items.amount")
   end
 
   # search KTH's LDAP server for a user.

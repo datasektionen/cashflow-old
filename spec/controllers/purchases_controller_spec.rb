@@ -28,11 +28,7 @@ RSpec.describe PurchasesController do
 
   describe "GET new" do
     it "assigns a new purchase as @purchase" do
-      purchase = spy("purchase",
-                     :items => double("array", build: []),
-                     :person= => nil,
-                     :person_id= => nil
-      )
+      purchase = spy("purchase", items: double("array", build: []))
       allow(Purchase).to receive(:new) { purchase }
 
       get :new
