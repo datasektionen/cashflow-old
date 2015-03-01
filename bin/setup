@@ -26,4 +26,7 @@ if [ ! -f config/mage_fake.yml ]; then
     cp config/fake_mage.yml.sample config/fake_mage.yml
 fi
 
+if [ ! -f config/secrets.yml ]; then
+    cp config/secrets.yml.sample config/secrets.yml
+fi
 bundle exec rake db:create db:migrate db:seed
