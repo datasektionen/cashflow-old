@@ -76,7 +76,7 @@ RSpec.feature "Manage purchases" do
       purchase = create(:purchase_with_items, item_count: 2, person: person)
       visit(edit_purchase_path(purchase))
 
-      description = "updated description: #{Time.now.to_s}"
+      description = "updated: #{Time.now.to_s}"
       fill_in("purchase_description", with:description)
       click_button("Uppdatera Inköp")
 
@@ -101,64 +101,111 @@ RSpec.feature "Manage purchases" do
   end
 
   describe "Filtering purchases", js: true, versioning: true, slow: true do
+    let(:person) { create(:person, role: "treasurer") }
+
     before(:each) do
-      # Background:
-      #   Given a person with the "treasurer" role
-      #   And I am logged in as the person
-      #   And there exists at least one purchase of each status
-      #   And I go to the purchases page
-      skip "TODO: implement"
+      login_as person
+      visit purchases_path
     end
 
-    scenario "No filter specified" do
-      # Then I should see all purchases
-      skip "TODO: implement"
+    context "filter by status" do
+      before(:all) do
+        Purchase.workflow_spec.states.each do |_name, state|
+          create(:purchase, description: "test #{state}").tap do |purchase|
+            purchase.update( workflow_state: state)
+          end
+        end
+      end
+
+      after(:all) do
+        Purchase.all.map(&:delete)
+      end
+
+      scenario "No filter specified" do
+        Purchase.all.each do |purchase|
+          expect(page).to have_content purchase.description
+        end
+      end
+
+      scenario "Filter by single status" do
+        filter_statuses("new")
+
+        purchases = Purchase.where(workflow_state: "new")
+        purchases.each do |purchase|
+          expect(page).to have_content purchase.id
+          expect(page).to have_content purchase.description
+        end
+
+        filtered = Purchase.where.not(id: purchases)
+        filtered.each do |purchase|
+          expect(page).to have_no_content("##{purchase.id}")
+          expect(page).to have_no_content(purchase.description)
+        end
+      end
+
+      scenario "Filter by multiple statuses" do
+        filter_statuses("new", "edited")
+
+        purchases = Purchase.where(workflow_state: ["new", "edited"])
+        purchases.each do |purchase|
+          expect(page).to have_content purchase.id
+          expect(page).to have_content purchase.description
+        end
+
+        filtered = Purchase.where.not(id: purchases)
+        filtered.each do |purchase|
+          expect(page).to have_no_content("##{purchase.id}")
+          expect(page).to have_no_content(purchase.description)
+        end
+      end
     end
 
-    scenario "Filter by single status" do
-      # When I filter the purchases by statuses "new"
-      # Then I should see purchases with statuses "new"
-      # And I should not see any other purchases
-      skip "TODO: implement"
+    context "search" do
+      scenario "Search purchases by description text" do
+        purchase = create(:purchase, description: "purchase lorem ipsum")
+        other_purchase = create(:purchase, description: "no search hit")
+        visit purchases_path
+
+        fill_in("filter_search", with: "lorem")
+        page.find_by_id("search_submit").click
+
+        expect(page).to have_content(purchase.description)
+        expect(page).to have_no_content(other_purchase.description)
+      end
     end
 
-    scenario "Filter by multiple statuses" do
-      # When I filter the purchases by statuses "new, edited"
-      # Then I should see purchases with statuses "new, edited"
-      # And I should not see any other purchases
-      skip "TODO: implement"
-    end
+    context "filter by date" do
+      before(:all) do
+        3.downto(0) do |n|
+          create(:purchase, purchased_on: n.days.ago.to_date.to_s)
+        end
+      end
 
-    scenario "Search purchases by description text" do
-      # Given there exists a purchase with "lorem ipsum" in the description
-      # When I search for "lore"
-      # Then I should see that purchase among the results
-      skip "TODO: implement"
-    end
+      scenario "Filter purchased_on from a date" do
+        date = 2.days.ago.to_date.to_s
+        filter_purchase_date(:from, date)
 
-    scenario "Filter purchased_on from a date" do
-      # Given purchases purchased on a few different dates
-      # When I filter purchased_on from a date
-      # Then I should see a filtered list of purchases
-      # And I should see purchases purchased from that date
-      # And I should see no purchases older than that date
-      skip "TODO: implement"
-    end
+        expect(page).to have_content(date)
+        expect(page).to have_no_content(3.days.ago.to_date.to_s)
+      end
 
-    scenario "Filter purchased_on to a date" do
-      # Given purchases purchased on a few different dates
-      # When I filter purchased_on to a date
-      # Then I should see a filtered list of purchases
-      # And I should see purchases purchased to that date
-      # And I should see no purchases newer than that date
-      skip "TODO: implement"
-    end
+      scenario "Filter purchased_on to a date" do
+        date = 1.days.ago.to_date.to_s
+        filter_purchase_date(:to, date)
 
-    scenario "Remembering filter parameters" do
-      # Given purchases purchased on a few different dates
-      # When I filter purchased_on from a date
-      # Then the purchased_on filter value should be remembered
-      skip "TODO: implement"
+        expect(page).to have_content(date)
+        expect(page).to have_no_content(0.days.ago.to_date.to_s)
+      end
+
+      scenario "Remembering filter parameters" do
+        date = 2.days.ago.to_date.to_s
+        filter_purchase_date(:from, date)
+
+        page.find_by_id("purchase_filter_toggle").click
+        filter_field = find_field("filter_purchased_on_from")
+
+        expect(filter_field.value).to eq(date)
+      end
     end
   end
 end

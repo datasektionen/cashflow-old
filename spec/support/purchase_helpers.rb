@@ -22,6 +22,16 @@ module PurchaseHelpers
     page.find_by_id("filter_submit").trigger("click")
   end
 
+  def filter_statuses(*statuses)
+    page.find_by_id("purchase_filter_toggle").click
+    statuses = statuses.map(&:strip)
+    statuses.each do |status|
+      status = I18n.t("workflow_state.#{status}")
+      select_from_chosen(status, from: "filter_workflow_state")
+    end
+    page.find_by_id("filter_submit").click
+  end
+
   def fill_out_purchase_form(purchase = nil)
     purchase ||= build(:purchase)
 
