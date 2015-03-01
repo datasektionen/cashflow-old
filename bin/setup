@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+
+set -e
+
+if ! which bundle > /dev/null; then
+    gem install bundler
+fi
+
+if ! bundle check > /dev/null; then
+    [ -z "$CI" ] && bundle install
+fi
+
+if [ ! -f config/configuration.yml ]; then
+    cp config/configuration.yml.sample config/configuration.yml
+fi
+
+if [ ! -f config/database.yml ]; then
+    cp config/database.yml.sample config/database.yml
+fi
+
+if [ ! -f config/local.yml ]; then
+    cp config/local.yml.sample config/local.yml
+fi
+
+if [ ! -f config/mage_fake.yml ]; then
+    cp config/fake_mage.yml.sample config/fake_mage.yml
+fi
+
+bundle exec rake db:create db:migrate db:seed
