@@ -25,8 +25,6 @@ RSpec.describe "Manage budgets", type: :feature, js: true, slow: true do
   scenario "View the budget for the current year" do
     visit budget_path(Time.now.year)
 
-    page.save_screenshot("screenshot.png")
-
     @current_year.each do |row|
       expect(page).to have_content(row.budget_post.name)
       expect(page).to have_content(row.sum)
