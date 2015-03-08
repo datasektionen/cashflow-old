@@ -60,7 +60,6 @@ group :test do
   gem "capybara"
   gem "database_cleaner"
   gem "factory_girl_rails"
-  gem "headless"
   gem "launchy"
   gem "rspec", "~> 3.2.0"
   gem "rspec-rails", "~> 3.2.0"
