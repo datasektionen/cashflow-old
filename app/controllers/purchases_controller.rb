@@ -4,11 +4,16 @@ class PurchasesController < ApplicationController
   before_filter :get_items, only: [:show, :edit, :update, :destroy]
 
   def index
+    # Set pg_trgm similarity threshold a bit lower than the default (0.3) to be
+    # able to match some partial words.
+    # This lives here because the threshold is a per-connection thing.
     ActiveRecord::Base.connection.execute("select set_limit(0.2)")
+
     @purchases = Purchase
     search, filter = extract_filter_params
     @purchases = @purchases.fuzzy_search(search) unless search.blank?
     @purchases = filter.reduce(@purchases) { |query, f| query.where(f) }
+
     @purchases = @purchases.page(params.permit(:page)[:page])
   end
 
