@@ -62,7 +62,7 @@ class PurchasesController < ApplicationController
   def pay_multiple
     authorize! :manage, Purchase
 
-    purchase_ids = Purchase.pay_multiple!(params)
+    purchase_ids = Purchase.pay_multiple!(params).sort
 
     redirect_to(confirmed_purchases_path, notice: "Betalda (#{purchase_ids})!")
   end

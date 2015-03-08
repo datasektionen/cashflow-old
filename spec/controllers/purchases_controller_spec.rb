@@ -147,6 +147,11 @@ RSpec.describe PurchasesController do
 
       post :pay_multiple,  pay: {}
     end
+
+    it "redirects to confirmed_purchases_path" do
+      post :pay_multiple, pay: {}
+      expect(response).to redirect_to(confirmed_purchases_path)
+    end
   end
 
   describe "PUT confirm" do
