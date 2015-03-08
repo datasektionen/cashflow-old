@@ -37,8 +37,16 @@ replacing KTHID with your KTH username, like `koronen`.
 
 ## Running the tests
 
+Run the tests by either running `bin/rake` or `bin/rspec`
+
 Insert your ugid into config/local.yml in order to get the controller specs to
 work properly (otherwise the test code can't log in).
+
+By default, only the reasonably fast tests will actually run. This
+typically includes feature specs.
+
+If you want to run all the tests, including the slow ones, you can
+set one of the CI or RUN_ALL environment variables.
 
 ### Test coverage
 
