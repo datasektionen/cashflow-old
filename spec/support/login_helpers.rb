@@ -9,7 +9,7 @@ module LoginHelpers
 
     begin
       visit(new_session_path)
-    rescue Net::LDAP::Error => _e
+    rescue Net::LDAP::Error
       skip "Set up a connection to LDAP to run this test"
     end
   end

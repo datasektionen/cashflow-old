@@ -61,8 +61,8 @@ FactoryGirl.define do
     end
   end
 
-  factory :purchase do
-    description   { "test purchase" }
+  factory :purchase do |n|
+    description   { "test purchase #{n}" }
     slug          { "test" }
     purchased_on  { Date.today }
     year          { Time.now.year }

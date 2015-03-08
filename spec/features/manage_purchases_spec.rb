@@ -24,9 +24,7 @@ RSpec.feature "Manage purchases", js: true, slow: true do
         click_button("Spara Inköp")
 
         expect(page).to have_content("Inköp skapat")
-        business_unit = purchase.business_unit
-        slug_match = "#{business_unit.short_name.upcase}#{Time.now.year}"
-        expect(page).to have_content("##{slug_match}-")
+        expect(page).to have_content(purchase.description)
         expect(page).to have_selector("#items tbody tr", count: 1)
       end
 
@@ -219,16 +217,17 @@ RSpec.feature "Manage purchases", js: true, slow: true do
     scenario "view multiple confirmed purchases" do
       confirmed_purchases = [
         create(:purchase_with_items, workflow_state: "confirmed"),
-        create(:purchase_with_items, person: person, workflow_state: "confirmed"),
-        create(:purchase_with_items, person: person, workflow_state: "confirmed"),
-      ]
+        create_list(:purchase_with_items, 2,
+                    person: person, workflow_state: "confirmed")
+      ].flatten
       new_purchase = create(:purchase, person: person, workflow_state: :new)
 
       visit confirmed_purchases_path
 
       confirmed_purchases.each do |purchase|
         expect(page).to have_content(purchase.person.name)
-        expect(page).to have_content(number_to_currency purchase.person.total_purchased_amount)
+        amount = purchase.person.total_purchased_amount
+        expect(page).to have_content(number_to_currency amount)
       end
 
       expect(page).to have_no_content(new_purchase.description)
