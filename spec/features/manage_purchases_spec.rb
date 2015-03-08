@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Manage purchases", js: true, slow: true do
+  include ActiveSupport::NumberHelper
   include PurchaseHelpers
 
   before(:all) do
@@ -76,7 +77,7 @@ RSpec.feature "Manage purchases", js: true, slow: true do
       purchase = create(:purchase_with_items, item_count: 2, person: person)
       visit(edit_purchase_path(purchase))
 
-      description = "updated: #{Time.now}"
+      description = "upd: #{Time.now}"
       fill_in("purchase_description", with: description)
       click_button("Uppdatera Inköp")
 
@@ -110,6 +111,7 @@ RSpec.feature "Manage purchases", js: true, slow: true do
 
     context "filter by status" do
       before(:all) do
+        Purchase.destroy_all
         Purchase.workflow_spec.states.each do |_name, state|
           create(:purchase, description: "test #{state}").tap do |purchase|
             purchase.update(workflow_state: state)
@@ -210,10 +212,42 @@ RSpec.feature "Manage purchases", js: true, slow: true do
   end
 
   describe "Pay confirmed purchases" do
-    # As an admin
-    # In order to reduce workload
-    # We want to be able to mark multiple purchases as paid at once
+    let(:person) { create(:admin) }
 
-    skip "TODO: write specs"
+    before(:each) { login_as(person) }
+
+    scenario "view multiple confirmed purchases" do
+      confirmed_purchases = [
+        create(:purchase_with_items, workflow_state: "confirmed"),
+        create(:purchase_with_items, person: person, workflow_state: "confirmed"),
+        create(:purchase_with_items, person: person, workflow_state: "confirmed"),
+      ]
+      new_purchase = create(:purchase, person: person, workflow_state: :new)
+
+      visit confirmed_purchases_path
+
+      confirmed_purchases.each do |purchase|
+        expect(page).to have_content(purchase.person.name)
+        expect(page).to have_content(number_to_currency purchase.person.total_purchased_amount)
+      end
+
+      expect(page).to have_no_content(new_purchase.description)
+    end
+
+    scenario "mark multiple confirmed purchases as paid" do
+      confirmed_purchases = create_list(:confirmed_purchase, 5)
+      visit confirmed_purchases_path
+      confirmed_purchases.each do |purchase|
+        within "#person-#{purchase.person.id}" do
+          check "Betala"
+        end
+      end
+      click_button "Betala!"
+
+      expect(page).to have_content("Betalda (#{confirmed_purchases.map(&:id)})")
+      confirmed_purchases.each do |purchase|
+        expect(purchase.reload).to be_paid
+      end
+    end
   end
 end
