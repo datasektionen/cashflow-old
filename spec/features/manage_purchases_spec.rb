@@ -1,9 +1,11 @@
 require "rails_helper"
 
-RSpec.feature "Manage purchases" do
+RSpec.feature "Manage purchases", js: true, slow: true do
   include PurchaseHelpers
 
-  before(:all) { PaperTrail.enabled = true }
+  before(:all) do
+    PaperTrail.enabled = true
+  end
 
   let(:person) { create(:person) }
 
@@ -37,7 +39,8 @@ RSpec.feature "Manage purchases" do
 
         click_button("Spara Inköp")
 
-        expect(page).to have_css("#purchase_budget_post_id.error")
+        expect(page).to have_css("#purchase_budget_post_id.error",
+                                 visible: false)
       end
     end
 

@@ -4,14 +4,6 @@ require "digest/md5"
 srand(4711)
 
 FactoryGirl.define do
-  product_types = %w( förbrukningsvaror
-                      förbrukningsinventarier
-                      inventarier
-                      inredning
-                      mat)
-
-  budget_posts = %w(BP1 BP2 BP3 BP4 BP5)
-
   sequence :unit_name do |n|
     "Business Unit #{n}"
   end
@@ -24,12 +16,12 @@ FactoryGirl.define do
     "test-#{n}@example.com"
   end
 
-  sequence :type_name do |_n|
-    product_types[rand(product_types.length)]
+  sequence :type_name do |n|
+    "Produkttyp #{n}"
   end
 
-  sequence :post_name do |_n|
-    budget_posts[rand(budget_posts.length)]
+  sequence :post_name do |n|
+    "BP#{n}"
   end
 
   sequence :item_name do |n|
