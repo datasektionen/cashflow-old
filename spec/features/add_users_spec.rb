@@ -18,7 +18,6 @@ RSpec.feature "Add users", type: :feature do
       login_as(person)
 
       imported_person = Person.find_by(ugid: person.ugid)
-
       expect(imported_person.first_name).to eq("Martin")
       expect(imported_person.last_name).to eq("Frost")
 

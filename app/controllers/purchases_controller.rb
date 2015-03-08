@@ -8,11 +8,7 @@ class PurchasesController < ApplicationController
     @purchases = Purchase
     search, filter = extract_filter_params
     @purchases = @purchases.fuzzy_search(search) unless search.blank?
-
-    filter.map do |f|
-      @purchases = @purchases.where(f)
-    end
-
+    @purchases = filter.reduce(@purchases) { |query, f| query.where(f) }
     @purchases = @purchases.page(params.permit(:page)[:page])
   end
 

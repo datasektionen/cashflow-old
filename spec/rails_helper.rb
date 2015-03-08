@@ -11,7 +11,6 @@ require File.expand_path("../../config/environment", __FILE__)
 require "rspec/rails"
 require "controller_macros"
 require "formtastic"
-require "headless"
 require "database_cleaner"
 require "webmock/rspec"
 require "paper_trail/frameworks/rspec"
@@ -19,7 +18,6 @@ require "capybara/rspec"
 Capybara.javascript_driver = :webkit
 
 WebMock.disable_net_connect!(allow: "codeclimate.com", allow_localhost: true)
-# headless = Headless.new
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

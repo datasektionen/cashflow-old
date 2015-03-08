@@ -24,8 +24,7 @@ module PurchaseHelpers
 
   def filter_statuses(*statuses)
     page.find_by_id("purchase_filter_toggle").click
-    statuses = statuses.map(&:strip)
-    statuses.each do |status|
+    statuses.map(&:strip).each do |status|
       status = I18n.t("workflow_state.#{status}")
       select_from_chosen(status, from: "filter_workflow_state")
     end
@@ -41,7 +40,7 @@ module PurchaseHelpers
     purchase.items.each do |item|
       amount = all(".purchase_item .number.required input").last[:id]
       product_type = all(".purchase_item fieldset .select.required span select",
-                               visible: false).last[:id]
+                         visible: false).last[:id]
       fill_in(amount, with: item.amount)
       select_from_chosen(item.product_type.name, from: product_type)
 

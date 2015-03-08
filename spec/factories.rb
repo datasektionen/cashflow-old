@@ -41,7 +41,7 @@ FactoryGirl.define do
       bu_name           { generate :unit_name }
     end
     name { bu_name }
-    email { generate :email }
+    email
     short_name { "BU#{id}" }
     description { "blubb" }
     active { true }
@@ -59,7 +59,7 @@ FactoryGirl.define do
     login "blame"
     first_name "Martin"
     last_name "Frost"
-    email { generate :email }
+    email
     ugid { generate :ugid }
 
     Person::ROLES.each do |p_role|
@@ -74,8 +74,8 @@ FactoryGirl.define do
     slug          { "test" }
     purchased_on  { Date.today }
     year          { Time.now.year }
-    person        { create(:person) }
-    budget_post   { create(:budget_post) }
+    person
+    budget_post
 
     transient do
       item_count { 1 }

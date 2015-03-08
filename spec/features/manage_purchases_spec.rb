@@ -37,10 +37,7 @@ RSpec.feature "Manage purchases" do
 
         click_button("Spara Inköp")
 
-        expect(page).to have_content("")
-
-        purchase = Purchase.last
-        expect(purchase.try(:description)).not_to eq(description)
+        expect(page).to have_css("#purchase_budget_post_id.error")
       end
     end
 
@@ -76,8 +73,8 @@ RSpec.feature "Manage purchases" do
       purchase = create(:purchase_with_items, item_count: 2, person: person)
       visit(edit_purchase_path(purchase))
 
-      description = "updated: #{Time.now.to_s}"
-      fill_in("purchase_description", with:description)
+      description = "updated: #{Time.now}"
+      fill_in("purchase_description", with: description)
       click_button("Uppdatera Inköp")
 
       slug_match = "#{purchase.business_unit.short_name.upcase}#{Time.now.year}"
@@ -112,18 +109,18 @@ RSpec.feature "Manage purchases" do
       before(:all) do
         Purchase.workflow_spec.states.each do |_name, state|
           create(:purchase, description: "test #{state}").tap do |purchase|
-            purchase.update( workflow_state: state)
+            purchase.update(workflow_state: state)
           end
         end
       end
 
       after(:all) do
-        Purchase.all.map(&:delete)
+        Purchase.destroy_all
       end
 
       scenario "No filter specified" do
         Purchase.all.each do |purchase|
-          expect(page).to have_content purchase.description
+          expect(page).to have_content(purchase.description)
         end
       end
 
@@ -132,8 +129,8 @@ RSpec.feature "Manage purchases" do
 
         purchases = Purchase.where(workflow_state: "new")
         purchases.each do |purchase|
-          expect(page).to have_content purchase.id
-          expect(page).to have_content purchase.description
+          expect(page).to have_content(purchase.id)
+          expect(page).to have_content(purchase.description)
         end
 
         filtered = Purchase.where.not(id: purchases)
@@ -148,8 +145,8 @@ RSpec.feature "Manage purchases" do
 
         purchases = Purchase.where(workflow_state: ["new", "edited"])
         purchases.each do |purchase|
-          expect(page).to have_content purchase.id
-          expect(page).to have_content purchase.description
+          expect(page).to have_content(purchase.id)
+          expect(page).to have_content(purchase.description)
         end
 
         filtered = Purchase.where.not(id: purchases)
