@@ -10,9 +10,9 @@ RSpec.feature "Manage purchases", js: true, slow: true do
 
   let(:person) { create(:person) }
 
-  before(:each) { login_as(person) }
-
   describe "Registering purchases", js: true, versioning: true, slow: true do
+    before(:each) { login_as(person) }
+
     context "with a single item" do
       scenario "saves the purchase with the item" do
         purchase = build(:purchase_with_items)
@@ -63,43 +63,119 @@ RSpec.feature "Manage purchases", js: true, slow: true do
   end
 
   describe "Editing purchases", js: true, versioning: true, slow: true do
-    scenario "Confirming a purchase"
-    scenario "Rejecting a bad purchase"
-    scenario "Cancelling an edited purchase"
-    scenario "Marking a confirmed purchase as bookkept"
-    scenario "Marking a confirmed purchase as paid"
-    scenario "Finalizing a confirmed purchase"
-    scenario "Finalizing a paid purchase"
 
-    scenario "Editing a purchase" do
-      purchase = create(:purchase_with_items, item_count: 2, person: person)
-      visit(edit_purchase_path(purchase))
+    context "administrative tasks" do
+      let(:treasurer) { create(:treasurer) }
+      before(:each) do
+        PaperTrail.whodunnit = treasurer.id
+        login_as(treasurer)
+      end
 
-      description = "upd: #{Time.now}"
-      fill_in("purchase_description", with: description)
-      click_button("Uppdatera Inköp")
+      scenario "Confirming a purchase" do
+        purchase = create(:purchase_with_items, person: person)
 
-      slug_match = "#{purchase.business_unit.short_name.upcase}#{Time.now.year}"
-      expect(page).to have_content("Inköp uppdaterat")
-      expect(page).to have_content("##{slug_match}-")
-      expect(page).to have_content(description)
+        visit purchase_path(purchase)
+        click_link("Bekräfta")
+
+        expect(page).to have_content("Bekräftad")
+      end
+
+      scenario "Rejecting a bad purchase" do
+        purchase = create(:purchase_with_items, person: person)
+
+        visit purchase_path(purchase)
+        click_link("Avslå")
+
+        expect(page).to have_content("Avslagen")
+      end
+
+      scenario "Cancelling an edited purchase" do
+        purchase = create(:purchase_with_items,
+                          person: person,
+                          workflow_state: "edited")
+
+        visit purchase_path(purchase)
+        click_link("Avslå")
+
+        expect(page).to have_content("Avslagen")
+      end
+
+      scenario "Marking a confirmed purchase as bookkept" do
+        skip("MAGE integration is too coupled for this")
+
+        purchase = create(:confirmed_purchase, person: person)
+
+        visit purchase_path(purchase)
+        click_link("Bokför")
+
+        expect(page).to have_content("Bokförd")
+      end
+
+      scenario "Marking a confirmed purchase as paid" do
+        purchase = create(:confirmed_purchase, person: person)
+
+        visit purchase_path(purchase)
+        click_link("Markera som betald")
+
+        expect(page).to have_content("Utbetalad")
+      end
+
+      scenario "Finalizing a bookkept purchase" do
+        purchase = create(:purchase, person: person, workflow_state: "bookkept")
+
+        visit purchase_path(purchase)
+        click_link("Markera som betald")
+
+        expect(page).to have_content("Avslutad")
+      end
+
+      scenario "Finalizing a paid purchase" do
+        skip("MAGE integration is too coupled for this")
+
+        purchase = create(:purchase, person: person, workflow_state: "paid")
+
+        visit purchase_path(purchase)
+        click_link("Bokför")
+
+        expect(page).to have_content("Avslutad")
+      end
     end
 
-    scenario "Removing items from a purchase" do
-      purchase = create(:purchase_with_items, item_count: 2, person: person)
-      visit(edit_purchase_path(purchase))
+    context "Editing as normal person" do
+      before(:each) { login_as(person) }
 
-      first(:link, "Ta bort inköpsdel").click
-      click_button("Uppdatera Inköp")
+      scenario "Editing a purchase" do
+        purchase = create(:purchase_with_items, item_count: 2, person: person)
+        visit(edit_purchase_path(purchase))
 
-      slug_match = "#{purchase.business_unit.short_name.upcase}#{Time.now.year}"
-      expect(page).to have_content("Inköp uppdaterat")
-      expect(page).to have_content("##{slug_match}-")
-      expect(page).to have_selector("#items tbody tr", count: 1)
+        description = "upd: #{Time.now}"
+        fill_in("purchase_description", with: description)
+        click_button("Uppdatera Inköp")
+
+        slug_match = "#{purchase.business_unit.short_name.upcase}#{Time.now.year}"
+        expect(page).to have_content("Inköp uppdaterat")
+        expect(page).to have_content("##{slug_match}-")
+        expect(page).to have_content(description)
+      end
+
+      scenario "Removing items from a purchase" do
+        purchase = create(:purchase_with_items, item_count: 2, person: person)
+        visit(edit_purchase_path(purchase))
+
+        first(:link, "Ta bort inköpsdel").click
+        click_button("Uppdatera Inköp")
+
+        slug_match = "#{purchase.business_unit.short_name.upcase}#{Time.now.year}"
+        expect(page).to have_content("Inköp uppdaterat")
+        expect(page).to have_content("##{slug_match}-")
+        expect(page).to have_selector("#items tbody tr", count: 1)
+      end
     end
   end
 
   describe "Filtering purchases", js: true, versioning: true, slow: true do
+    before(:each) { login_as(person) }
+
     let(:person) { create(:person, role: "treasurer") }
 
     before(:each) do
@@ -210,7 +286,7 @@ RSpec.feature "Manage purchases", js: true, slow: true do
   end
 
   describe "Pay confirmed purchases" do
-    let(:person) { create(:admin) }
+    let(:person) { create(:treasurer) }
 
     before(:each) { login_as(person) }
 

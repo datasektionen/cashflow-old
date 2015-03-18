@@ -28,11 +28,13 @@ class PeopleController < ApplicationController
   end
 
   def update
-    if params[:person].try(:[], :role) && current_user.is?(:admin)
-      @person.role = params[:person][:role]
+    attributes = person_params
+    role = attributes.try(:delete, :role)
+    if role && current_user.is?(:admin)
+      @person.role = role
       @person.save
     end
-    if @person.update_attributes(params[:person])
+    if @person.update_attributes(person_params)
       redirect_to(@person, notice: I18n.t("notices.person.success.created"))
     else
       render action: "edit"

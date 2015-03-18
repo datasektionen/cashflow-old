@@ -62,10 +62,10 @@ FactoryGirl.define do
   end
 
   factory :purchase do |n|
-    description   { "test purchase #{n}" }
-    slug          { "test" }
-    purchased_on  { Date.today }
-    year          { Time.now.year }
+    description { "test purchase #{n}" }
+    slug { "test" }
+    purchased_on { Date.today }
+    year { Time.now.year }
     person
     budget_post
 
