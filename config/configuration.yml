@@ -1,0 +1,23 @@
+common: &common
+  ldap_basedn: ou=Addressbook,dc=kth,dc=se
+  ldap_host: ldap.kth.se
+  ldap_port: 389
+  default_host: "cashflow.staging.datasektionen.se"
+  google_analytics: UA-SOMERANDOMSTRING
+  mage_url: "http://mage.staging.datasektionen.se"
+  mage_apikey: KEY
+  mage_private_apikey: private_key
+  secret_token: <%= ENV['SECRET_TOKEN'] %>
+  fake_mage: false
+
+development: &development
+  <<: *common
+  ldap_host: localhost
+  ldap_port: 9999
+  fake_mage: true
+
+test:
+  <<: *development
+
+production:
+  <<: *development
