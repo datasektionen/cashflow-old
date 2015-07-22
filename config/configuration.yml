@@ -20,4 +20,9 @@ test:
   <<: *development
 
 production:
+  default_host: "cashflow.datasektionen.se"
+  mage_url: "http://mage.datasektionen.se"
+  mage_apikey: <%= ENV["MAGE_KEY"] %>
+  mage_private_apikey: <%= ENV["MAGE_PRIVATE_KEY"] %>
+  fake_mage: false
   <<: *development
