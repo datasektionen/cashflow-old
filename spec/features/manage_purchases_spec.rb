@@ -63,7 +63,6 @@ RSpec.feature "Manage purchases", js: true, slow: true do
   end
 
   describe "Editing purchases", js: true, versioning: true, slow: true do
-
     context "administrative tasks" do
       let(:treasurer) { create(:treasurer) }
       before(:each) do
