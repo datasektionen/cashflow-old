@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby File.read(".ruby-version").strip
+
 gem "rails", "~> 4.2.0"
 
 # Auth
@@ -42,7 +44,7 @@ gem "workflow"          # state machines for purchases
 gem "rfc-822"           # validate email
 
 group :production do
-  gem "unicorn"
+  gem "puma"
 end
 
 group :development, :test do
