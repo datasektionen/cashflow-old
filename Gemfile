@@ -44,7 +44,7 @@ gem "workflow"          # state machines for purchases
 gem "rfc-822"           # validate email
 
 group :production do
-  gem "unicorn"
+  gem "puma"
 end
 
 group :development, :test do
