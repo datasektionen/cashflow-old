@@ -16,7 +16,7 @@
           %tr{ :class => cycle(:odd, :even) }
             %td= label_tag "budget_rows[#{row.id}][sum]", row.budget_post.name
             %td= row.budget_post.business_unit
-            - if can?(:manage, :budget_posts)
+            - if can?(:manage, :budget)
               %td= text_field_tag "budget_rows[#{row.id}][sum]", row.sum
               %td= select_tag "budget_posts[#{row.budget_post.id}][mage_arrangement_number]", options_from_collection_for_select(@mage_arrangements_grouped[row.business_unit.mage_number] || @mage_arrangements, :number, :name, row.budget_post.mage_arrangement_number)
 

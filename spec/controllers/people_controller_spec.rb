@@ -113,18 +113,17 @@ RSpec.describe PeopleController do
                             and_return(mock_person(update_attributes: true))
         end
         it "updates the requested person" do
-          expect(mock_person).to receive(:update_attributes).
-                                  with("these" => "params")
+          expect(mock_person).to receive(:update_attributes)
           put :update, id: "37", person: { "these" => "params" }
         end
 
         it "assigns the requested person as @person" do
-          put :update, id: "1"
+          put :update, id: "1", person: { first_name: "foo" }
           expect(assigns(:person)).to be(mock_person)
         end
 
         it "redirects to the person" do
-          put :update, id: "1"
+          put :update, id: "1", person: { first_name: "foo" }
           expect(response).to redirect_to(person_path(mock_person))
         end
       end
@@ -136,12 +135,12 @@ RSpec.describe PeopleController do
         end
 
         it "assigns the person as @person" do
-          put :update, id: "1"
+          put :update, id: "1", person: { first_name: "foo" }
           expect(assigns(:person)).to be(mock_person)
         end
 
         it "re-renders the 'edit' template" do
-          put :update, id: "1"
+          put :update, id: "1", person: { first_name: "foo" }
           expect(response).to render_template("edit")
         end
       end

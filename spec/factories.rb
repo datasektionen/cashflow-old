@@ -4,18 +4,8 @@ require "digest/md5"
 srand(4711)
 
 FactoryGirl.define do
-  product_types = %w( förbrukningsvaror
-                      förbrukningsinventarier
-                      inventarier
-                      inredning
-                      mat)
-
-  business_units = %w(DKM Mottagningen QN Ior ESCapo Drek)
-
-  budget_posts = %w(BP1 BP2 BP3 BP4 BP5)
-
-  sequence :unit_name do |_n|
-    business_units[rand(business_units.length)]
+  sequence :unit_name do |n|
+    "Business Unit #{n}"
   end
 
   sequence :ugid do |n|
@@ -26,12 +16,12 @@ FactoryGirl.define do
     "test-#{n}@example.com"
   end
 
-  sequence :type_name do |_n|
-    product_types[rand(product_types.length)]
+  sequence :type_name do |n|
+    "Produkttyp #{n}"
   end
 
-  sequence :post_name do |_n|
-    budget_posts[rand(budget_posts.length)]
+  sequence :post_name do |n|
+    "BP#{n}"
   end
 
   sequence :item_name do |n|
@@ -43,8 +33,8 @@ FactoryGirl.define do
       bu_name           { generate :unit_name }
     end
     name { bu_name }
-    email { generate :email }
-    short_name { bu_name.slice(0, 3) }
+    email
+    short_name { "BU#{id}" }
     description { "blubb" }
     active { true }
     mage_number { 1 }
@@ -61,7 +51,7 @@ FactoryGirl.define do
     login "blame"
     first_name "Martin"
     last_name "Frost"
-    email { generate :email }
+    email
     ugid { generate :ugid }
 
     Person::ROLES.each do |p_role|
@@ -71,13 +61,29 @@ FactoryGirl.define do
     end
   end
 
-  factory :purchase do
-    description   { "test purchase" }
-    slug          { "test" }
-    purchased_on  { Date.today }
-    year          { Time.now.year }
+  factory :purchase do |n|
+    description { "test purchase #{n}" }
+    slug { "test" }
+    purchased_on { Date.today }
+    year { Time.now.year }
     person
     budget_post
+
+    transient do
+      item_count { 1 }
+    end
+
+    factory :purchase_with_items do
+      after(:build) do |purchase, evaluator|
+        evaluator.item_count.times do |i|
+          purchase.items.new(
+            comment: "item ##{i}",
+            amount: 17,
+            product_type: create(:product_type)
+          )
+        end
+      end
+    end
 
     factory :confirmed_purchase do
       workflow_state "confirmed"

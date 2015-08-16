@@ -29,4 +29,11 @@ RSpec.describe BudgetPost do
     post.mage_arrangement_number = nil
     expect(post).to be_invalid
   end
+
+  it "prevents deletion if it has dependent purchases" do
+    post = create(:budget_post)
+    create(:purchase, budget_post: post)
+
+    expect { post.destroy }.to raise_error(ActiveRecord::DeleteRestrictionError)
+  end
 end

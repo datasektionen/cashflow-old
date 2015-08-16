@@ -25,6 +25,6 @@
               %progress{ min: 0, max: row.sum, value: row.total, style: "vertical-align: middle"}
 
     .well
-      = link_to edit_budget_path(@year), class: 'btn btn-info' do
+      = link_to edit_budget_path(@year), id: "edit_budget", class: 'btn btn-info' do
         %i.glyphicon.glyphicon-pencil
         Redigera budget

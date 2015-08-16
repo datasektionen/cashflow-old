@@ -13,6 +13,3 @@ development:
 test: &test
   <<: *common
   database: cashflow_test
-
-cucumber:
-  <<: *test
